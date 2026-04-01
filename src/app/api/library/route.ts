@@ -42,13 +42,13 @@ async function fetchPlantInfo(plantName: string): Promise<LibraryPlantInfo> {
   }
 
   const client = ModelClient(
-    "https://models.github.ai",
+    "https://models.inference.ai.azure.com",
     new AzureKeyCredential(token)
   );
 
   const response = await client.path("/chat/completions").post({
     body: {
-      model: "openai/gpt-4.1",
+      model: "gpt-4.1",
       messages: [
         {
           role: "system",

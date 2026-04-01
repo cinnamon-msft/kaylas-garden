@@ -1,1 +1,33 @@
-{}
+{
+  "basil": {
+    "name": "Basil",
+    "scientificName": "Ocimum basilicum",
+    "description": "Basil is a popular aromatic herb commonly used in culinary dishes, especially in Italian and Mediterranean cuisine. It features bright green, tender leaves and produces small white flowers. Basil is easy to grow and thrives in warm, sunny environments.",
+    "sunlight": "Full sun",
+    "wateringSchedule": "Water regularly to keep soil consistently moist but not waterlogged; typically 2-3 times per week depending on weather.",
+    "soilType": "Well-draining, fertile soil rich in organic matter",
+    "hardinessZones": "USDA zones 10-11",
+    "plantingGuidelines": "Plant basil outdoors after the last frost when soil temperatures are above 50°F. Sow seeds 1/4 inch deep or transplant seedlings, spacing plants 12-18 inches apart.",
+    "companionPlants": [
+      "Tomato",
+      "Peppers",
+      "Oregano",
+      "Chives",
+      "Marigold"
+    ],
+    "commonPests": [
+      "Aphids",
+      "Japanese beetles",
+      "Slugs",
+      "Spider mites"
+    ],
+    "growingTips": [
+      "Pinch off flower buds to encourage leaf growth",
+      "Harvest leaves regularly to promote bushiness",
+      "Avoid overhead watering to reduce fungal disease",
+      "Mulch to retain soil moisture and suppress weeds"
+    ],
+    "daysToHarvest": "50-60 days from sowing",
+    "category": "herb"
+  }
+}
