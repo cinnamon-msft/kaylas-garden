@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+/* Theme definitions using data attributes */
+:root,
+[data-theme="green"] {
+  --color-primary: #16a34a;
+  --color-primary-light: #22c55e;
+  --color-primary-dark: #15803d;
+  --color-secondary: #065f46;
+  --color-accent: #d9f99d;
+  --color-bg-page: #f0fdf4;
+  --color-bg-card: #ffffff;
+  --color-bg-header: #15803d;
+  --color-text-primary: #14532d;
+  --color-text-secondary: #166534;
+  --color-text-on-primary: #ffffff;
+  --color-border: #bbf7d0;
+  --color-hover: #dcfce7;
+}
+
+[data-theme="earth"] {
+  --color-primary: #a16207;
+  --color-primary-light: #ca8a04;
+  --color-primary-dark: #854d0e;
+  --color-secondary: #78350f;
+  --color-accent: #fef08a;
+  --color-bg-page: #fefce8;
+  --color-bg-card: #ffffff;
+  --color-bg-header: #854d0e;
+  --color-text-primary: #422006;
+  --color-text-secondary: #713f12;
+  --color-text-on-primary: #ffffff;
+  --color-border: #fde68a;
+  --color-hover: #fef9c3;
+}
+
+[data-theme="ocean"] {
+  --color-primary: #0284c7;
+  --color-primary-light: #0ea5e9;
+  --color-primary-dark: #0369a1;
+  --color-secondary: #164e63;
+  --color-accent: #bae6fd;
+  --color-bg-page: #f0f9ff;
+  --color-bg-card: #ffffff;
+  --color-bg-header: #0369a1;
+  --color-text-primary: #0c4a6e;
+  --color-text-secondary: #075985;
+  --color-text-on-primary: #ffffff;
+  --color-border: #bae6fd;
+  --color-hover: #e0f2fe;
+}
+
+@theme inline {
+  --color-primary: var(--color-primary);
+  --color-primary-light: var(--color-primary-light);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
+  --color-bg-page: var(--color-bg-page);
+  --color-bg-card: var(--color-bg-card);
+  --color-bg-header: var(--color-bg-header);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-on-primary: var(--color-text-on-primary);
+  --color-border: var(--color-border);
+  --color-hover: var(--color-hover);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background-color: var(--color-bg-page);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+}
