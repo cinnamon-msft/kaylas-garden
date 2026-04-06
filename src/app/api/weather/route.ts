@@ -31,7 +31,9 @@ const CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes
 let cache: CacheEntry | null = null;
 
 async function geocodeLocation(location: string): Promise<GeoResult> {
-  const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(location)}&count=1&language=en&format=json`;
+  // Open-Meteo geocoding works best with just the city name (strip state/country suffixes)
+  const cityName = location.split(",")[0].trim();
+  const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1&language=en&format=json`;
   const res = await fetch(url);
 
   if (!res.ok) {
