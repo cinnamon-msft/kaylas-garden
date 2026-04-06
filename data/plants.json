@@ -1,1 +1,44 @@
-[]
+[
+  {
+    "name": "Sugar Snap Pea",
+    "species": "Pisum sativum var. macrocarpon",
+    "thumbnailImage": "",
+    "careInfo": {
+      "sunlight": "Full sun",
+      "wateringSchedule": "Water regularly to keep soil evenly moist, about 1 inch per week; avoid waterlogging.",
+      "soilType": "Well-drained, fertile loam with a neutral to slightly alkaline pH (6.0-7.5)",
+      "hardinessZone": "3-9",
+      "companionPlants": [
+        "carrots",
+        "radishes",
+        "lettuce",
+        "spinach",
+        "turnips"
+      ],
+      "commonPests": [
+        "aphids",
+        "pea weevils",
+        "thrips",
+        "cutworms"
+      ],
+      "generalNotes": "Plant seeds directly outdoors 4-6 weeks before the last spring frost, spacing seeds 1 inch apart and rows 18-24 inches apart. Provide support with trellises or netting as vines grow."
+    },
+    "id": "4216af54-1af1-4984-bd41-c86bd06f1094",
+    "dateAdded": "2026-04-01T22:00:15.374Z",
+    "entries": [
+      {
+        "date": "2026-03-30",
+        "note": "Planted and fully watered :)",
+        "images": [
+          {
+            "id": "feffed1c-f6cb-4638-bf47-225e229e0e0f",
+            "filename": "7df73186-15e9-421b-b91e-e4458dcaf2ad.jpg",
+            "caption": "dirt-pile-scaled.jpg",
+            "uploadedAt": "2026-04-01T22:01:36.635Z"
+          }
+        ],
+        "id": "6e37c8bd-060b-45c1-89dd-900d3b00d788"
+      }
+    ]
+  }
+]

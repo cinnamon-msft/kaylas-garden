@@ -43,3 +43,10 @@ export interface UserSettings {
   theme: "green" | "earth" | "ocean";
   frostDates: FrostDates | null;
 }
+
+export interface WeatherData {
+  temperature: number; // °F
+  weatherCode: number; // WMO weather code
+  precipitationProbability: number; // 0–100
+  locationName: string;
+}

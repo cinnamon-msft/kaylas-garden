@@ -1,5 +1,9 @@
 {
   "location": "Boston, MA",
   "theme": "green",
-  "frostDates": null
+  "frostDates": {
+    "lastSpringFrost": "April 15",
+    "firstFallFrost": "October 15",
+    "growingSeasonDays": 183
+  }
 }
