@@ -38,10 +38,10 @@ export function ThemeSwitcher() {
               ? "bg-white/20 text-text-on-primary shadow-sm"
               : "text-text-on-primary/70 hover:bg-white/10"
           }`}
-          title={theme.label}
-          aria-label={`Switch to ${theme.label} theme`}
+          aria-pressed={activeTheme === theme.id}
+          aria-label={`${theme.label} theme`}
         >
-          {theme.emoji}
+          <span aria-hidden="true">{theme.emoji}</span>
         </button>
       ))}
     </div>

@@ -19,6 +19,10 @@ export default function SettingsPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    document.title = "Settings — Kayla's Garden";
+  }, []);
+
+  useEffect(() => {
     fetch("/api/settings")
       .then((res) => res.json())
       .then((data: UserSettings) => {
@@ -70,34 +74,41 @@ export default function SettingsPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-8 px-4 py-8">
-      <h1 className="text-3xl font-bold text-text-primary">⚙️ Settings</h1>
+      <h1 className="text-3xl font-bold text-text-primary"><span aria-hidden="true">⚙️</span> Settings</h1>
 
       {/* Location & Frost Dates */}
       <section className="rounded-xl border border-border bg-bg-card p-6 shadow-sm">
-        <h2 className="mb-4 text-xl font-semibold text-text-primary">📍 Location &amp; Frost Dates</h2>
-        <div className="flex gap-3">
-          <input
-            type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="City name or zip code"
-            className="flex-1 rounded-lg border border-border bg-bg-page px-4 py-2 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-primary"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                void lookUpFrostDates();
-              }
-            }}
-          />
-          <button
-            onClick={() => void lookUpFrostDates()}
-            disabled={loading || !location.trim()}
-            className="rounded-lg bg-primary px-5 py-2 font-medium text-text-on-primary transition-colors hover:opacity-90 disabled:opacity-50"
-          >
-            {loading ? "Looking up…" : "Look Up Frost Dates"}
-          </button>
+        <h2 className="mb-4 text-xl font-semibold text-text-primary"><span aria-hidden="true">📍</span> Location &amp; Frost Dates</h2>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="location-input" className="text-sm font-medium text-text-secondary">
+            City name or zip code
+          </label>
+          <div className="flex gap-3">
+            <input
+              id="location-input"
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="e.g., Seattle, WA or 98101"
+              className="flex-1 rounded-lg border border-border bg-bg-page px-4 py-2 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-primary"
+              aria-describedby={error ? "location-error" : undefined}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  void lookUpFrostDates();
+                }
+              }}
+            />
+            <button
+              onClick={() => void lookUpFrostDates()}
+              disabled={loading || !location.trim()}
+              className="rounded-lg bg-primary px-5 py-2 font-medium text-text-on-primary transition-colors hover:opacity-90 disabled:opacity-50"
+            >
+              {loading ? "Looking up…" : "Look Up Frost Dates"}
+            </button>
+          </div>
         </div>
 
-        {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+        {error && <p id="location-error" role="alert" className="mt-3 text-sm text-red-600">{error}</p>}
 
         {frostDates && (
           <div className="mt-5 rounded-lg border border-border bg-bg-page p-5">
@@ -128,21 +139,22 @@ export default function SettingsPage() {
 
       {/* Theme */}
       <section className="rounded-xl border border-border bg-bg-card p-6 shadow-sm">
-        <h2 className="mb-4 text-xl font-semibold text-text-primary">🎨 Theme</h2>
+        <h2 className="mb-4 text-xl font-semibold text-text-primary"><span aria-hidden="true">🎨</span> Theme</h2>
         <div className="grid grid-cols-3 gap-4">
           {themes.map((theme) => (
             <button
               key={theme.id}
               onClick={() => void handleThemeChange(theme.id)}
+              aria-pressed={settings.theme === theme.id}
               className={`flex flex-col items-center gap-3 rounded-xl border-2 p-5 transition-all ${
                 settings.theme === theme.id
                   ? "border-primary bg-accent shadow-md"
                   : "border-border bg-bg-page hover:bg-hover"
               }`}
             >
-              <span className="text-3xl">{theme.emoji}</span>
+              <span aria-hidden="true" className="text-3xl">{theme.emoji}</span>
               <span className="text-sm font-semibold text-text-primary">{theme.label}</span>
-              <div className="flex gap-1.5">
+              <div className="flex gap-1.5" aria-hidden="true">
                 {theme.swatches.map((swatch) => (
                   <div key={swatch} className={`h-4 w-4 rounded-full ${swatch}`} />
                 ))}
@@ -154,7 +166,7 @@ export default function SettingsPage() {
 
       {/* About */}
       <section className="rounded-xl border border-border bg-bg-card p-6 shadow-sm">
-        <h2 className="mb-3 text-xl font-semibold text-text-primary">🌱 About</h2>
+        <h2 className="mb-3 text-xl font-semibold text-text-primary"><span aria-hidden="true">🌱</span> About</h2>
         <p className="text-text-secondary">
           Kayla&apos;s Garden helps you track your plants, monitor their progress, and learn about gardening. 🌱
         </p>

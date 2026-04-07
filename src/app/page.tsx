@@ -21,9 +21,9 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
       : null;
 
   return (
-    <a
-      href={`/plants/${plant.id}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-bg-card shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+    <article
+      aria-labelledby={`plant-${plant.id}-name`}
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-bg-card shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
     >
       <div className="relative flex h-48 items-center justify-center bg-hover">
         {plant.thumbnailImage ? (
@@ -34,13 +34,18 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
             className="object-cover"
           />
         ) : (
-          <span className="text-6xl">🌿</span>
+          <span aria-hidden="true" className="text-6xl">🌿</span>
         )}
       </div>
 
       <div className="flex flex-1 flex-col gap-1 p-4">
-        <h3 className="text-lg font-bold text-text-primary group-hover:text-primary">
-          {plant.name}
+        <h3 id={`plant-${plant.id}-name`} className="text-lg font-bold text-text-primary">
+          <a
+            href={`/plants/${plant.id}`}
+            className="group-hover:text-primary after:absolute after:inset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-1"
+          >
+            {plant.name}
+          </a>
         </h3>
         {plant.species && (
           <p className="text-sm italic text-text-secondary">{plant.species}</p>
@@ -50,13 +55,14 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
         </p>
         <div className="mt-auto flex items-center justify-between pt-3 text-xs text-text-secondary">
           <span>
-            📝 {plant.entries.length}{" "}
+            <span aria-hidden="true">📝</span>{" "}
+            {plant.entries.length}{" "}
             {plant.entries.length === 1 ? "entry" : "entries"}
           </span>
           {lastEntry && <span>Last: {formatDate(lastEntry.date)}</span>}
         </div>
       </div>
-    </a>
+    </article>
   );
 }
 
@@ -89,7 +95,7 @@ export default function Home() {
     <>
       {/* Welcome Banner */}
       <section className="mb-8 rounded-2xl bg-primary p-6 text-text-on-primary shadow-md">
-        <h2 className="text-3xl font-bold">🌱 My Garden</h2>
+        <h2 className="text-3xl font-bold"><span aria-hidden="true">🌱</span> My Garden</h2>
         <p className="mt-1 text-text-on-primary/80">
           Track your plants, upload photos, and watch them grow!
         </p>
@@ -113,13 +119,13 @@ export default function Home() {
 
       {/* Content */}
       {loading && (
-        <div className="flex justify-center py-20 text-text-secondary">
+        <div role="status" aria-live="polite" className="flex justify-center py-20 text-text-secondary">
           <span className="animate-pulse text-lg">Loading your garden…</span>
         </div>
       )}
 
       {error && (
-        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-center text-red-700">
+        <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-center text-red-700">
           {error}
         </div>
       )}

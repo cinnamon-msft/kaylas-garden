@@ -57,8 +57,8 @@ export function FrostDateBanner() {
 
   if (!frostDates) {
     return (
-      <div className="rounded-lg border border-border bg-bg-card px-4 py-3 text-sm text-text-secondary">
-        📍 Set your location in{" "}
+      <div role="status" className="rounded-lg border border-border bg-bg-card px-4 py-3 text-sm text-text-secondary">
+        <span aria-hidden="true">📍</span>{" "}Set your location in{" "}
         <a href="/settings" className="font-medium text-primary underline">
           Settings
         </a>{" "}
@@ -70,7 +70,12 @@ export function FrostDateBanner() {
   const { message, className } = getBannerContent(frostDates);
 
   return (
-    <div className={`rounded-lg border px-4 py-3 text-sm font-medium ${className}`}>
+    <div
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      className={`rounded-lg border px-4 py-3 text-sm font-medium ${className}`}
+    >
       {message}
     </div>
   );

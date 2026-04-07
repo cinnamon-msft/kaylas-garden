@@ -3,9 +3,9 @@
 /* Theme definitions using data attributes */
 :root,
 [data-theme="green"] {
-  --color-primary: #16a34a;
+  --color-primary: #15803d;
   --color-primary-light: #22c55e;
-  --color-primary-dark: #15803d;
+  --color-primary-dark: #166534;
   --color-secondary: #065f46;
   --color-accent: #d9f99d;
   --color-bg-page: #f0fdf4;
@@ -35,9 +35,9 @@
 }
 
 [data-theme="ocean"] {
-  --color-primary: #0284c7;
+  --color-primary: #0369a1;
   --color-primary-light: #0ea5e9;
-  --color-primary-dark: #0369a1;
+  --color-primary-dark: #075985;
   --color-secondary: #164e63;
   --color-accent: #bae6fd;
   --color-bg-page: #f0f9ff;
@@ -72,4 +72,10 @@ body {
   background-color: var(--color-bg-page);
   color: var(--color-text-primary);
   font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
 }

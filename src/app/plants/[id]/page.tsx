@@ -29,6 +29,11 @@ function PlantHeader({
   onDelete: () => void;
 }) {
   const [confirming, setConfirming] = useState(false);
+  const confirmRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (confirming) confirmRef.current?.focus();
+  }, [confirming]);
 
   return (
     <section className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -40,7 +45,7 @@ function PlantHeader({
             className="h-28 w-28 rounded-lg border border-border object-cover"
           />
         ) : (
-          <div className="flex h-28 w-28 items-center justify-center rounded-lg border border-border bg-bg-card text-5xl">
+          <div aria-hidden="true" className="flex h-28 w-28 items-center justify-center rounded-lg border border-border bg-bg-card text-5xl">
             🌱
           </div>
         )}
@@ -61,12 +66,17 @@ function PlantHeader({
           href="/"
           className="rounded-lg border border-border px-4 py-2 text-sm text-text-secondary hover:bg-hover"
         >
-          ← Back
+          <span aria-hidden="true">←</span> Back to My Plants
         </Link>
 
         {confirming ? (
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-red-600">Delete this plant?</span>
+          <div
+            ref={confirmRef}
+            tabIndex={-1}
+            role="alert"
+            className="flex items-center gap-2 rounded-lg border border-red-300 p-2 focus:outline-none"
+          >
+            <span className="text-sm text-red-600">Delete this plant? This cannot be undone.</span>
             <button
               onClick={onDelete}
               className="rounded-lg bg-red-600 px-3 py-2 text-sm text-white hover:bg-red-700"
@@ -139,7 +149,7 @@ function CareInfoCard({
     <section className="rounded-lg border border-border bg-bg-card p-6">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-xl font-semibold text-text-primary">
-          🌿 Care Information
+          <span aria-hidden="true">🌿</span> Care Information
         </h2>
         {editing ? (
           <div className="flex gap-2">
@@ -172,33 +182,38 @@ function CareInfoCard({
 
       {/* Top grid: sunlight, watering, soil, hardiness */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {infoGrid.map(({ label, emoji, key }) => (
-          <div key={key} className="rounded-lg border border-border p-3">
-            <p className="mb-1 text-xs font-medium text-text-secondary">
-              {emoji} {label}
-            </p>
-            {editing ? (
-              <input
-                value={draft[key] as string}
-                onChange={(e) => updateField(key, e.target.value)}
-                className="w-full rounded border border-border bg-bg-page px-2 py-1 text-sm text-text-primary"
-              />
-            ) : (
-              <p className="text-sm font-medium text-text-primary">
-                {(careInfo[key] as string) || "—"}
-              </p>
-            )}
-          </div>
-        ))}
+        {infoGrid.map(({ label, emoji, key }) => {
+          const inputId = `care-${key}`;
+          return (
+            <div key={key} className="rounded-lg border border-border p-3">
+              <label htmlFor={inputId} className="mb-1 block text-xs font-medium text-text-secondary">
+                <span aria-hidden="true">{emoji}</span> {label}
+              </label>
+              {editing ? (
+                <input
+                  id={inputId}
+                  value={draft[key] as string}
+                  onChange={(e) => updateField(key, e.target.value)}
+                  className="w-full rounded border border-border bg-bg-page px-2 py-1 text-sm text-text-primary"
+                />
+              ) : (
+                <p className="text-sm font-medium text-text-primary">
+                  {(careInfo[key] as string) || "—"}
+                </p>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {/* Companion plants */}
       <div className="mt-4 rounded-lg border border-border p-3">
-        <p className="mb-1 text-xs font-medium text-text-secondary">
-          🌻 Companion Plants
-        </p>
+        <label htmlFor="care-companionPlants" className="mb-1 block text-xs font-medium text-text-secondary">
+          <span aria-hidden="true">🌻</span> Companion Plants
+        </label>
         {editing ? (
           <input
+            id="care-companionPlants"
             value={draft.companionPlants.join(", ")}
             onChange={(e) =>
               updateField(
@@ -227,11 +242,12 @@ function CareInfoCard({
 
       {/* Common pests */}
       <div className="mt-4 rounded-lg border border-border p-3">
-        <p className="mb-1 text-xs font-medium text-text-secondary">
-          🐛 Common Pests
-        </p>
+        <label htmlFor="care-commonPests" className="mb-1 block text-xs font-medium text-text-secondary">
+          <span aria-hidden="true">🐛</span> Common Pests
+        </label>
         {editing ? (
           <input
+            id="care-commonPests"
             value={draft.commonPests.join(", ")}
             onChange={(e) =>
               updateField(
@@ -260,11 +276,12 @@ function CareInfoCard({
 
       {/* General notes */}
       <div className="mt-4 rounded-lg border border-border p-3">
-        <p className="mb-1 text-xs font-medium text-text-secondary">
-          📝 General Notes
-        </p>
+        <label htmlFor="care-generalNotes" className="mb-1 block text-xs font-medium text-text-secondary">
+          <span aria-hidden="true">📝</span> General Notes
+        </label>
         {editing ? (
           <textarea
+            id="care-generalNotes"
             value={draft.generalNotes}
             onChange={(e) => updateField("generalNotes", e.target.value)}
             rows={3}
@@ -363,15 +380,16 @@ function AddEntryForm({
       className="rounded-lg border border-border bg-bg-card p-4"
     >
       <h3 className="mb-3 text-lg font-semibold text-text-primary">
-        📝 Add Progress Entry
+        <span aria-hidden="true">📝</span> Add Progress Entry
       </h3>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div>
-          <label className="mb-1 block text-xs font-medium text-text-secondary">
+          <label htmlFor="entry-date" className="mb-1 block text-xs font-medium text-text-secondary">
             Date
           </label>
           <input
+            id="entry-date"
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
@@ -381,10 +399,11 @@ function AddEntryForm({
         </div>
 
         <div>
-          <label className="mb-1 block text-xs font-medium text-text-secondary">
+          <label htmlFor="entry-photos" className="mb-1 block text-xs font-medium text-text-secondary">
             Photos
           </label>
           <input
+            id="entry-photos"
             ref={fileInputRef}
             type="file"
             accept="image/*"
@@ -396,10 +415,11 @@ function AddEntryForm({
       </div>
 
       <div className="mt-3">
-        <label className="mb-1 block text-xs font-medium text-text-secondary">
+        <label htmlFor="entry-note" className="mb-1 block text-xs font-medium text-text-secondary">
           Note
         </label>
         <textarea
+          id="entry-note"
           value={note}
           onChange={(e) => setNote(e.target.value)}
           rows={3}
@@ -415,7 +435,7 @@ function AddEntryForm({
         </p>
       )}
 
-      {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+      {error && <p role="alert" className="mt-2 text-sm text-red-600">{error}</p>}
 
       <button
         type="submit"
@@ -439,7 +459,10 @@ function Lightbox({
   alt: string;
   onClose: () => void;
 }) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
+    closeRef.current?.focus();
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -449,9 +472,21 @@ function Lightbox({
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Image: ${alt}`}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
       onClick={onClose}
     >
+      <button
+        ref={closeRef}
+        type="button"
+        onClick={onClose}
+        className="absolute right-4 top-4 rounded-lg bg-white/20 p-2 text-white hover:bg-white/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
+        aria-label="Close image"
+      >
+        ✕
+      </button>
       <img
         src={src}
         alt={alt}
@@ -500,11 +535,12 @@ function TimelineEntry({ entry }: { entry: PlantEntry }) {
                     alt: img.caption || entry.note,
                   })
                 }
-                className="overflow-hidden rounded-lg border border-border"
+                aria-label={`View full size: ${img.caption || "entry photo from " + formatDate(entry.date)}`}
+                className="overflow-hidden rounded-lg border border-border focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
               >
                 <img
                   src={`/api/uploads/${img.filename}`}
-                  alt={img.caption || "Entry photo"}
+                  alt=""
                   className="h-20 w-20 object-cover transition-transform hover:scale-105"
                 />
               </button>
@@ -544,6 +580,10 @@ export default function PlantDetailPage() {
   }, [params.id]);
 
   useEffect(() => {
+    if (plant) document.title = `${plant.name} — Kayla's Garden`;
+  }, [plant]);
+
+  useEffect(() => {
     fetchPlant();
   }, [fetchPlant]);
 
@@ -577,7 +617,7 @@ export default function PlantDetailPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
+      <div role="status" aria-live="polite" className="flex min-h-[60vh] items-center justify-center">
         <p className="text-text-secondary">Loading plant…</p>
       </div>
     );
@@ -585,13 +625,13 @@ export default function PlantDetailPage() {
 
   if (error || !plant) {
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
+      <div role="alert" className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
         <p className="text-lg text-red-600">{error || "Plant not found"}</p>
         <Link
           href="/"
           className="rounded-lg bg-primary px-4 py-2 text-sm text-text-on-primary hover:bg-primary-dark"
         >
-          ← Back to Dashboard
+          <span aria-hidden="true">←</span> Back to My Plants
         </Link>
       </div>
     );
@@ -610,7 +650,7 @@ export default function PlantDetailPage() {
       {/* Progress Timeline */}
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-text-primary">
-          📅 Progress Timeline
+          <span aria-hidden="true">📅</span> Progress Timeline
         </h2>
 
         <AddEntryForm plantId={params.id} onAdded={fetchPlant} />

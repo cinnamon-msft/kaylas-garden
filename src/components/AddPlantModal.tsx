@@ -103,11 +103,14 @@ export function AddPlantModal({ open, onClose, onPlantAdded }: AddPlantModalProp
   return (
     <dialog
       ref={dialogRef}
+      aria-labelledby="add-plant-dialog-title"
       className="w-full max-w-lg rounded-2xl border border-border bg-bg-card p-0 shadow-xl backdrop:bg-black/50"
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-5 p-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-text-primary">🌿 Add a New Plant</h2>
+          <h2 id="add-plant-dialog-title" className="text-xl font-bold text-text-primary">
+            <span aria-hidden="true">🌿</span> Add a New Plant
+          </h2>
           <button
             type="button"
             onClick={onClose}
@@ -119,14 +122,16 @@ export function AddPlantModal({ open, onClose, onPlantAdded }: AddPlantModalProp
         </div>
 
         {error && (
-          <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+          <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
             {error}
           </p>
         )}
 
         <label className="flex flex-col gap-1">
           <span className="text-sm font-medium text-text-secondary">
-            Name <span className="text-red-500">*</span>
+            Name{" "}
+            <span className="text-red-500" aria-hidden="true">*</span>
+            <span className="sr-only">(required)</span>
           </span>
           <input
             type="text"
