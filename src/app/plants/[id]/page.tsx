@@ -280,7 +280,119 @@ function CareInfoCard({
   );
 }
 
-// ── Add Entry Form ───────────────────────────────────────────────────
+// ── Watering Date Card ───────────────────────────────────────────────
+
+function WateringDateCard({
+  plant,
+  onSave,
+}: {
+  plant: Plant;
+  onSave: (date: string | null) => Promise<void>;
+}) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState<string>(
+    plant.nextWateringDate ? plant.nextWateringDate.slice(0, 10) : ""
+  );
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    setDraft(plant.nextWateringDate ? plant.nextWateringDate.slice(0, 10) : "");
+  }, [plant.nextWateringDate]);
+
+  const today = todayISO();
+  const isDueToday =
+    plant.nextWateringDate && plant.nextWateringDate.slice(0, 10) === today;
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await onSave(draft ? draft : null);
+      setEditing(false);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <section className="rounded-lg border border-border bg-bg-card p-6">
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-xl font-semibold text-text-primary">
+          💧 Watering Schedule
+        </h2>
+        {editing ? (
+          <div className="flex gap-2">
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="rounded-lg bg-primary px-4 py-1.5 text-sm text-text-on-primary hover:bg-primary-dark disabled:opacity-50"
+            >
+              {saving ? "Saving…" : "Save"}
+            </button>
+            <button
+              onClick={() => {
+                setDraft(
+                  plant.nextWateringDate
+                    ? plant.nextWateringDate.slice(0, 10)
+                    : ""
+                );
+                setEditing(false);
+              }}
+              className="rounded-lg border border-border px-4 py-1.5 text-sm text-text-secondary hover:bg-hover"
+            >
+              Cancel
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => setEditing(true)}
+            className="rounded-lg border border-border px-4 py-1.5 text-sm text-text-secondary hover:bg-hover"
+          >
+            Edit
+          </button>
+        )}
+      </div>
+
+      {editing ? (
+        <div className="flex flex-col gap-2">
+          <label className="text-xs font-medium text-text-secondary">
+            Next Watering Date
+          </label>
+          <input
+            type="date"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            className="w-full max-w-xs rounded border border-border bg-bg-page px-3 py-2 text-sm text-text-primary"
+          />
+          <p className="text-xs text-text-secondary">
+            Leave blank to clear the watering schedule.
+          </p>
+        </div>
+      ) : plant.nextWateringDate ? (
+        <div
+          className={`rounded-lg border p-3 ${
+            isDueToday
+              ? "border-blue-300 bg-blue-50"
+              : "border-border bg-bg-page"
+          }`}
+        >
+          <p
+            className={`text-sm font-medium ${
+              isDueToday ? "text-blue-800" : "text-text-primary"
+            }`}
+          >
+            {isDueToday
+              ? "💧 Due today!"
+              : `Next watering: ${formatDate(plant.nextWateringDate)}`}
+          </p>
+        </div>
+      ) : (
+        <p className="text-sm text-text-secondary">
+          No watering date set. Click Edit to schedule the next watering.
+        </p>
+      )}
+    </section>
+  );
+}
 
 function AddEntryForm({
   plantId,
@@ -573,6 +685,19 @@ export default function PlantDetailPage() {
     setPlant(updatedPlant);
   };
 
+  const handleSaveWateringDate = async (date: string | null) => {
+    const res = await fetch(`/api/plants/${params.id}/water`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nextWateringDate: date }),
+    });
+
+    if (!res.ok) throw new Error("Failed to update watering date");
+
+    const updatedPlant = (await res.json()) as Plant;
+    setPlant(updatedPlant);
+  };
+
   // ── Render states ──
 
   if (loading) {
@@ -606,6 +731,8 @@ export default function PlantDetailPage() {
       <PlantHeader plant={plant} onDelete={handleDelete} />
 
       <CareInfoCard careInfo={plant.careInfo} onSave={handleSaveCare} />
+
+      <WateringDateCard plant={plant} onSave={handleSaveWateringDate} />
 
       {/* Progress Timeline */}
       <section className="space-y-4">
