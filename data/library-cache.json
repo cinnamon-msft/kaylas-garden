@@ -29,5 +29,103 @@
     ],
     "daysToHarvest": "50-60 days from sowing",
     "category": "herb"
+  },
+  "sugar snap peas": {
+    "name": "Sugar Snap Pea",
+    "scientificName": "Pisum sativum var. macrocarpon",
+    "description": "Sugar snap peas are a crisp, sweet vegetable prized for their edible pods and seeds. They are easy to grow, thriving in cool weather and producing abundant harvests in spring and early summer. Their crunchy pods are enjoyed fresh, steamed, or stir-fried.",
+    "sunlight": "Full sun",
+    "wateringSchedule": "Water regularly to keep soil evenly moist, about 1 inch per week; avoid waterlogging.",
+    "soilType": "Well-drained, fertile loam with a neutral to slightly alkaline pH (6.0-7.5)",
+    "hardinessZones": "3-9",
+    "plantingGuidelines": "Plant seeds directly outdoors 4-6 weeks before the last spring frost, spacing seeds 1 inch apart and rows 18-24 inches apart. Provide support with trellises or netting as vines grow.",
+    "companionPlants": [
+      "carrots",
+      "radishes",
+      "lettuce",
+      "spinach",
+      "turnips"
+    ],
+    "commonPests": [
+      "aphids",
+      "pea weevils",
+      "thrips",
+      "cutworms"
+    ],
+    "growingTips": [
+      "Harvest pods when they are plump but before seeds fully mature",
+      "Mulch to retain moisture and suppress weeds",
+      "Rotate crops yearly to prevent disease",
+      "Avoid planting in hot weather to prevent poor pod set"
+    ],
+    "daysToHarvest": "60-70 days",
+    "category": "vegetable"
+  },
+  "sugar snap pea": {
+    "name": "Sugar Snap Pea",
+    "scientificName": "Pisum sativum var. macrocarpon",
+    "description": "Sugar snap peas are a type of edible-pod pea known for their sweet, crisp pods and tender peas inside. They are a cool-season vegetable, popular for fresh eating, stir-fries, and salads. The plants are vining and benefit from support as they grow.",
+    "sunlight": "Full sun",
+    "wateringSchedule": "Water regularly to keep soil evenly moist, about 1 inch per week; do not let soil dry out completely.",
+    "soilType": "Well-drained, loamy soil rich in organic matter; prefers slightly acidic to neutral pH (6.0-7.0).",
+    "hardinessZones": "3-9",
+    "plantingGuidelines": "Sow seeds directly outdoors 2-4 weeks before the last expected spring frost, 1 inch deep and 2 inches apart. Provide a trellis or support for vines to climb.",
+    "companionPlants": [
+      "carrots",
+      "radishes",
+      "lettuce",
+      "spinach",
+      "turnips",
+      "beans"
+    ],
+    "commonPests": [
+      "aphids",
+      "pea weevils",
+      "powdery mildew",
+      "root rot",
+      "cutworms"
+    ],
+    "growingTips": [
+      "Mulch around plants to retain moisture and suppress weeds.",
+      "Harvest pods when they are plump and crisp, before seeds fully mature.",
+      "Avoid handling plants when wet to prevent disease spread.",
+      "Rotate crops yearly to reduce soil-borne diseases."
+    ],
+    "daysToHarvest": "60-70 days after sowing",
+    "category": "vegetable"
+  },
+  "tomato": {
+    "name": "Tomato",
+    "scientificName": "Solanum lycopersicum",
+    "description": "Tomatoes are warm-season fruiting plants prized for their juicy, flavorful fruits used in a wide range of culinary dishes. They grow as annuals in most climates and come in many varieties, including cherry, plum, and beefsteak. Tomatoes are highly productive when given proper care and conditions.",
+    "sunlight": "Full sun",
+    "wateringSchedule": "Water deeply 1-2 times per week, keeping soil consistently moist but not waterlogged",
+    "soilType": "Well-draining, fertile loam rich in organic matter",
+    "hardinessZones": "USDA zones 3-11 (grown as annuals)",
+    "plantingGuidelines": "Start seeds indoors 6-8 weeks before the last frost date or transplant seedlings after all danger of frost has passed. Plant 18-24 inches apart, burying the stem deeply to encourage strong root growth.",
+    "companionPlants": [
+      "Basil",
+      "Carrots",
+      "Onions",
+      "Marigold",
+      "Lettuce",
+      "Parsley"
+    ],
+    "commonPests": [
+      "Aphids",
+      "Tomato hornworm",
+      "Whiteflies",
+      "Cutworms",
+      "Spider mites"
+    ],
+    "growingTips": [
+      "Mulch to retain moisture and suppress weeds",
+      "Stake or cage plants for support",
+      "Prune lower leaves to improve air circulation",
+      "Rotate crops yearly to prevent disease",
+      "Feed with balanced fertilizer during growth"
+    ],
+    "daysToHarvest": "60-85 days from transplanting",
+    "category": "vegetable"
   }
 }

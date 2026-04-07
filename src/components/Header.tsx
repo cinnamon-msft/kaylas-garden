@@ -1,4 +1,5 @@
 import { ThemeSwitcher } from "./ThemeSwitcher";
+import { WeatherIndicator } from "./WeatherIndicator";
 
 export function Header() {
   return (
@@ -30,6 +31,9 @@ export function Header() {
             Settings
           </a>
           <div className="ml-2 border-l border-white/20 pl-3">
+            <WeatherIndicator />
+          </div>
+          <div className="border-l border-white/20 pl-3">
             <ThemeSwitcher />
           </div>
         </nav>
