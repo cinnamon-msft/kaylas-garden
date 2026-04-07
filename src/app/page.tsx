@@ -5,6 +5,7 @@ import Image from "next/image";
 import type { Plant } from "@/lib/types";
 import { AddPlantModal } from "@/components/AddPlantModal";
 import { FrostDateBanner } from "@/components/FrostDateBanner";
+import { WateringReminderBanner } from "@/components/WateringReminderBanner";
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString(undefined, {
@@ -14,11 +15,19 @@ function formatDate(iso: string): string {
   });
 }
 
+function todayISO(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
 function PlantCard({ plant }: { readonly plant: Plant }) {
   const lastEntry =
     plant.entries.length > 0
       ? plant.entries[plant.entries.length - 1]
       : null;
+
+  const today = todayISO();
+  const needsWateringToday =
+    plant.nextWateringDate && plant.nextWateringDate.slice(0, 10) === today;
 
   return (
     <a
@@ -55,6 +64,11 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
           </span>
           {lastEntry && <span>Last: {formatDate(lastEntry.date)}</span>}
         </div>
+        {plant.nextWateringDate && (
+          <p className={`mt-2 text-xs font-medium ${needsWateringToday ? "text-blue-700" : "text-text-secondary"}`}>
+            💧 Next watering: {needsWateringToday ? "Today!" : formatDate(plant.nextWateringDate)}
+          </p>
+        )}
       </div>
     </a>
   );
@@ -97,6 +111,9 @@ export default function Home() {
 
       {/* Frost Date Alert */}
       <FrostDateBanner />
+
+      {/* Watering Reminder */}
+      {!loading && !error && <WateringReminderBanner plants={plants} />}
 
       {/* Actions */}
       <div className="mb-6 flex items-center justify-between">

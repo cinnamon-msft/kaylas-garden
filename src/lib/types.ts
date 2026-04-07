@@ -28,6 +28,7 @@ export interface Plant {
   species: string;
   dateAdded: string; // ISO date
   thumbnailImage: string; // filename in public/uploads
+  nextWateringDate: string | null; // ISO date or null
   careInfo: PlantCareInfo;
   entries: PlantEntry[];
 }
