@@ -40,6 +40,21 @@ export interface Plant {
   wateringHistory: WateringEvent[];
 }
 
+export interface WeatherDayForecast {
+  date: string; // ISO date
+  precipitationMm: number;
+}
+
+export interface WeatherForecast {
+  location: string | null;
+  days: WeatherDayForecast[];
+  nextRain: {
+    date: string; // ISO date
+    daysUntil: number;
+    precipitationMm: number;
+  } | null;
+}
+
 export interface FrostDates {
   lastSpringFrost: string; // e.g., "April 15"
   firstFallFrost: string; // e.g., "October 20"

@@ -2,9 +2,10 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import type { Plant } from "@/lib/types";
+import type { Plant, WeatherForecast } from "@/lib/types";
 import { AddPlantModal } from "@/components/AddPlantModal";
 import { FrostDateBanner } from "@/components/FrostDateBanner";
+import { WeatherBanner } from "@/components/WeatherBanner";
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString(undefined, {
@@ -27,12 +28,19 @@ function getWateringStatus(plant: Plant): WateringStatus {
     return { label: "Not yet watered", urgent: false, daysUntil: null };
   }
 
+  const msPerDay = 1000 * 60 * 60 * 24;
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
   const lastWatering = plant.wateringHistory
-    .map((w) => new Date(w.date).getTime())
+    .map((w) => {
+      const date = new Date(w.date);
+      date.setHours(0, 0, 0, 0);
+      return date.getTime();
+    })
     .reduce((a, b) => Math.max(a, b), 0);
 
-  const now = Date.now();
-  const daysSinceWatering = Math.floor((now - lastWatering) / (1000 * 60 * 60 * 24));
+  const daysSinceWatering = Math.max(0, Math.floor((startOfToday.getTime() - lastWatering) / msPerDay));
   const interval = plant.wateringIntervalDays || 3;
   const daysUntil = interval - daysSinceWatering;
 
@@ -45,11 +53,50 @@ function getWateringStatus(plant: Plant): WateringStatus {
   return { label: `Water in ${daysUntil}d`, urgent: false, daysUntil };
 }
 
-function PlantCard({ plant }: { readonly plant: Plant }) {
+function getWateringPlanLabel(plant: Plant, weather: WeatherForecast | null): string {
+  const status = getWateringStatus(plant);
+  const nextRainIn = weather?.nextRain?.daysUntil ?? null;
+
+  if (status.daysUntil === null) {
+    if (nextRainIn === 0 || nextRainIn === 1) {
+      return "Plan: wait for near-term rain, then check soil moisture.";
+    }
+    return "Plan: give an initial watering today, then monitor as usual.";
+  }
+
+  if (status.daysUntil <= 0) {
+    if (nextRainIn === 0) {
+      return "Plan: rain today should cover watering unless the soil is dry.";
+    }
+    if (nextRainIn === 1) {
+      return "Plan: likely safe to wait for tomorrow's rain.";
+    }
+    return "Plan: water now.";
+  }
+
+  if (nextRainIn !== null && nextRainIn <= status.daysUntil) {
+    if (nextRainIn === 0) {
+      return "Plan: rain today may replace your next watering.";
+    }
+    return `Plan: hold off — rain is expected in ${nextRainIn}d before your next due date.`;
+  }
+
+  return `Plan: next watering in ${status.daysUntil}d unless soil dries out sooner.`;
+}
+
+function PlantCard({
+  plant,
+  weather,
+}: {
+  readonly plant: Plant;
+  readonly weather: WeatherForecast | null;
+}) {
   const lastEntry =
     plant.entries.length > 0
       ? plant.entries[plant.entries.length - 1]
       : null;
+  const status = getWateringStatus(plant);
+  const wateringPlanLabel = getWateringPlanLabel(plant, weather);
 
   return (
     <article
@@ -81,18 +128,16 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
         {plant.species && (
           <p className="text-sm italic text-text-secondary">{plant.species}</p>
         )}
-        {(() => {
-          const status = getWateringStatus(plant);
-          return (
-            <div className={`mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${
-              status.urgent
-                ? "bg-red-100 text-red-700"
-                : "bg-blue-50 text-blue-600"
-            }`}>
-              💧 {status.label}
-            </div>
-          );
-        })()}
+        <div className={`mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${
+          status.urgent
+            ? "bg-red-100 text-red-700"
+            : "bg-blue-50 text-blue-600"
+        }`}>
+          💧 {status.label}
+        </div>
+        <p className="mt-2 text-xs text-text-secondary">
+          {wateringPlanLabel}
+        </p>
         <p className="mt-1 text-xs text-text-secondary">
           Added {formatDate(plant.dateAdded)}
         </p>
@@ -114,6 +159,8 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [weather, setWeather] = useState<WeatherForecast | null>(null);
+  const [weatherLoading, setWeatherLoading] = useState(true);
 
   const fetchPlants = useCallback(async () => {
     try {
@@ -134,6 +181,16 @@ export default function Home() {
     void fetchPlants();
   }, [fetchPlants]);
 
+  useEffect(() => {
+    fetch("/api/weather")
+      .then((res) => res.ok ? res.json() : null)
+      .then((data: WeatherForecast | null) => {
+        setWeather(data);
+      })
+      .catch(() => setWeather(null))
+      .finally(() => setWeatherLoading(false));
+  }, []);
+
   return (
     <>
       {/* Welcome Banner */}
@@ -146,6 +203,9 @@ export default function Home() {
 
       {/* Frost Date Alert */}
       <FrostDateBanner />
+      <div className="mt-3">
+        <WeatherBanner forecast={weather} loading={weatherLoading} />
+      </div>
 
       {/* Actions */}
       <div className="mb-6 flex items-center justify-between">
@@ -191,7 +251,7 @@ export default function Home() {
       {!loading && !error && plants.length > 0 && (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {plants.map((plant) => (
-            <PlantCard key={plant.id} plant={plant} />
+            <PlantCard key={plant.id} plant={plant} weather={weather} />
           ))}
         </div>
       )}
