@@ -4,6 +4,8 @@ import type { WeatherDayForecast, WeatherForecast } from "@/lib/types";
 
 // Keep this intentionally small so "will it rain enough to skip watering?" errs on the conservative side.
 const MIN_MEANINGFUL_RAIN_MM = 1;
+const MAX_LOCATION_LENGTH = 100;
+const LOCATION_PATTERN = /^[\p{L}\p{N}\s,.'-]+$/u;
 
 interface GeocodingResult {
   latitude: number;
@@ -34,6 +36,9 @@ export async function GET(): Promise<NextResponse<WeatherForecast | { error: str
 
     if (!location) {
       return NextResponse.json({ location: null, days: [], nextRain: null });
+    }
+    if (location.length > MAX_LOCATION_LENGTH || !LOCATION_PATTERN.test(location)) {
+      return NextResponse.json({ location, days: [], nextRain: null });
     }
 
     const geocodeRes = await fetch(
@@ -70,6 +75,7 @@ export async function GET(): Promise<NextResponse<WeatherForecast | { error: str
       precipitationMm: precipitation[index] ?? 0,
     }));
 
+    // The forecast is chronological; find the first day with meaningful rain.
     const nextRainIndex = days.findIndex((day) => day.precipitationMm >= MIN_MEANINGFUL_RAIN_MM);
     const nextRain = nextRainIndex === -1
       ? null

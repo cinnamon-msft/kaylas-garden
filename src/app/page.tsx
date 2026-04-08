@@ -25,13 +25,13 @@ interface WateringStatus {
 
 const RAIN_TODAY = 0;
 const RAIN_TOMORROW = 1;
+const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
 function getWateringStatus(plant: Plant): WateringStatus {
   if (!plant.wateringHistory || plant.wateringHistory.length === 0) {
     return { label: "Not yet watered", urgent: false, daysUntil: null };
   }
 
-  const msPerDay = 1000 * 60 * 60 * 24;
   const startOfToday = new Date();
   startOfToday.setHours(0, 0, 0, 0);
 
@@ -43,7 +43,7 @@ function getWateringStatus(plant: Plant): WateringStatus {
     })
     .reduce((a, b) => Math.max(a, b), 0);
 
-  const daysSinceWatering = Math.max(0, Math.floor((startOfToday.getTime() - lastWatering) / msPerDay));
+  const daysSinceWatering = Math.max(0, Math.floor((startOfToday.getTime() - lastWatering) / MS_PER_DAY));
   const interval = plant.wateringIntervalDays || 3;
   const daysUntil = interval - daysSinceWatering;
 
@@ -196,7 +196,10 @@ export default function Home() {
       .then((data: WeatherForecast | null) => {
         setWeather(data);
       })
-      .catch(() => setWeather(null))
+      .catch((err: unknown) => {
+        console.error("Weather fetch failed:", err);
+        setWeather(null);
+      })
       .finally(() => setWeatherLoading(false));
   }, []);
 
