@@ -11,6 +11,12 @@ function getBannerContent(forecast: WeatherForecast): { message: string; classNa
   }
 
   if (!forecast.nextRain) {
+    if (forecast.days.length === 0) {
+      return {
+        message: "☁️ Live rain data is unavailable right now. Watering plans are based on your plant history.",
+        className: "border-border bg-bg-card text-text-secondary",
+      };
+    }
     return {
       message: "☀️ No meaningful rain expected this week. Keep watering on schedule.",
       className: "border-amber-300 bg-amber-50 text-amber-900",

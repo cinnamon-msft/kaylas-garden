@@ -41,7 +41,7 @@ export async function GET(): Promise<NextResponse<WeatherForecast | { error: str
     );
 
     if (!geocodeRes.ok) {
-      throw new Error("Failed to geocode location");
+      return NextResponse.json({ location, days: [], nextRain: null });
     }
 
     const geocodeData = (await geocodeRes.json()) as GeocodingResponse;
@@ -57,7 +57,7 @@ export async function GET(): Promise<NextResponse<WeatherForecast | { error: str
     );
 
     if (!forecastRes.ok) {
-      throw new Error("Failed to fetch forecast");
+      return NextResponse.json({ location: buildDisplayLocation(geocode), days: [], nextRain: null });
     }
 
     const forecastData = (await forecastRes.json()) as ForecastResponse;
@@ -83,8 +83,8 @@ export async function GET(): Promise<NextResponse<WeatherForecast | { error: str
       days,
       nextRain,
     });
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Failed to fetch weather";
-    return NextResponse.json({ error: message }, { status: 500 });
+  } catch {
+    const settings = await getSettings();
+    return NextResponse.json({ location: settings.location?.trim() || null, days: [], nextRain: null });
   }
 }
