@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import type { Plant } from "@/lib/types";
+import { filterPlants } from "@/lib/plantFilter";
 import { AddPlantModal } from "@/components/AddPlantModal";
 import { FrostDateBanner } from "@/components/FrostDateBanner";
 
@@ -114,6 +115,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [query, setQuery] = useState("");
 
   const fetchPlants = useCallback(async () => {
     try {
@@ -134,6 +136,8 @@ export default function Home() {
     void fetchPlants();
   }, [fetchPlants]);
 
+  const filteredPlants = useMemo(() => filterPlants(plants, query), [plants, query]);
+
   return (
     <>
       {/* Welcome Banner */}
@@ -148,9 +152,9 @@ export default function Home() {
       <FrostDateBanner />
 
       {/* Actions */}
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-4 flex items-center justify-between">
         <h3 className="text-lg font-semibold text-text-primary">
-          Your Plants{!loading && ` (${plants.length})`}
+          Your Plants{!loading && ` (${filteredPlants.length}${filteredPlants.length !== plants.length ? `/${plants.length}` : ""})`}
         </h3>
         <button
           onClick={() => setModalOpen(true)}
@@ -159,6 +163,30 @@ export default function Home() {
           + Add Plant
         </button>
       </div>
+
+      {/* Search */}
+      {!loading && !error && plants.length > 0 && (
+        <div className="mb-6 flex items-center gap-2 rounded-2xl border border-border bg-bg-card px-4 py-2.5 shadow-sm">
+          <span aria-hidden="true" className="text-text-secondary">🔍</span>
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search by name or species…"
+            aria-label="Search plants"
+            className="flex-1 bg-transparent text-sm text-text-primary placeholder:text-text-secondary focus:outline-none"
+          />
+          {query && (
+            <button
+              onClick={() => setQuery("")}
+              aria-label="Clear search"
+              className="rounded-full p-0.5 text-text-secondary hover:text-text-primary"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Content */}
       {loading && (
@@ -188,9 +216,24 @@ export default function Home() {
         </div>
       )}
 
-      {!loading && !error && plants.length > 0 && (
+      {!loading && !error && plants.length > 0 && filteredPlants.length === 0 && (
+        <div className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-bg-card py-16 text-center">
+          <span className="text-4xl">🔍</span>
+          <p className="text-text-secondary">
+            No plants match <span className="font-medium text-text-primary">&ldquo;{query}&rdquo;</span>.
+          </p>
+          <button
+            onClick={() => setQuery("")}
+            className="text-sm text-primary hover:underline"
+          >
+            Clear search
+          </button>
+        </div>
+      )}
+
+      {!loading && !error && filteredPlants.length > 0 && (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {plants.map((plant) => (
+          {filteredPlants.map((plant) => (
             <PlantCard key={plant.id} plant={plant} />
           ))}
         </div>
