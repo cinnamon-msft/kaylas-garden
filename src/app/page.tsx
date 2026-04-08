@@ -183,7 +183,13 @@ export default function Home() {
 
   useEffect(() => {
     fetch("/api/weather")
-      .then((res) => res.ok ? res.json() : null)
+      .then((res) => {
+        if (!res.ok) {
+          console.error("Weather API returned status:", res.status);
+          return null;
+        }
+        return res.json();
+      })
       .then((data: WeatherForecast | null) => {
         setWeather(data);
       })

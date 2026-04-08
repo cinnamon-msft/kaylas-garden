@@ -83,7 +83,8 @@ export async function GET(): Promise<NextResponse<WeatherForecast | { error: str
       days,
       nextRain,
     });
-  } catch {
+  } catch (err: unknown) {
+    console.error("Weather API fallback due to error:", err);
     const settings = await getSettings();
     return NextResponse.json({ location: settings.location?.trim() || null, days: [], nextRain: null });
   }
