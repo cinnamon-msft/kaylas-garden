@@ -4,6 +4,7 @@ import type { WeatherDayForecast, WeatherForecast } from "@/lib/types";
 
 // Keep this intentionally small so "will it rain enough to skip watering?" errs on the conservative side.
 const MIN_MEANINGFUL_RAIN_MM = 1;
+const WEATHER_CACHE_TTL_SECONDS = 3600;
 const MAX_LOCATION_LENGTH = 100;
 const LOCATION_PATTERN = /^[\p{L}\p{N}\s,.'-]+$/u;
 
@@ -43,7 +44,7 @@ export async function GET(): Promise<NextResponse<WeatherForecast | { error: str
 
     const geocodeRes = await fetch(
       `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(location)}&count=1`,
-      { next: { revalidate: 3600 } },
+      { next: { revalidate: WEATHER_CACHE_TTL_SECONDS } },
     );
 
     if (!geocodeRes.ok) {
@@ -59,7 +60,7 @@ export async function GET(): Promise<NextResponse<WeatherForecast | { error: str
 
     const forecastRes = await fetch(
       `https://api.open-meteo.com/v1/forecast?latitude=${geocode.latitude}&longitude=${geocode.longitude}&daily=precipitation_sum&forecast_days=7&timezone=auto`,
-      { next: { revalidate: 3600 } },
+      { next: { revalidate: WEATHER_CACHE_TTL_SECONDS } },
     );
 
     if (!forecastRes.ok) {
@@ -92,7 +93,11 @@ export async function GET(): Promise<NextResponse<WeatherForecast | { error: str
     });
   } catch (err: unknown) {
     console.error("Weather API fallback due to error:", err);
-    const settings = await getSettings();
-    return NextResponse.json({ location: settings.location?.trim() || null, days: [], nextRain: null });
+    try {
+      const settings = await getSettings();
+      return NextResponse.json({ location: settings.location?.trim() || null, days: [], nextRain: null });
+    } catch {
+      return NextResponse.json({ location: null, days: [], nextRain: null });
+    }
   }
 }

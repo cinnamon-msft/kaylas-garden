@@ -33,12 +33,12 @@ function getWateringStatus(plant: Plant): WateringStatus {
   }
 
   const startOfToday = new Date();
-  startOfToday.setHours(0, 0, 0, 0);
+  startOfToday.setUTCHours(0, 0, 0, 0);
 
   const lastWatering = plant.wateringHistory
     .map((w) => {
       const date = new Date(w.date);
-      date.setHours(0, 0, 0, 0);
+      date.setUTCHours(0, 0, 0, 0);
       return date.getTime();
     })
     .reduce((a, b) => Math.max(a, b), 0);
