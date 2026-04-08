@@ -51,3 +51,11 @@ export interface UserSettings {
   theme: "green" | "earth" | "ocean";
   frostDates: FrostDates | null;
 }
+
+export interface WeatherForecast {
+  location: string | null;
+  nextRainDate: string | null; // ISO date string
+  nextRainAmount: number | null; // mm
+  daysUntilRain: number | null;
+  noRainExpected: boolean;
+}

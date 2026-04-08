@@ -29,5 +29,39 @@
     ],
     "daysToHarvest": "50-60 days from sowing",
     "category": "herb"
+  },
+  "tomato": {
+    "name": "Tomato",
+    "scientificName": "Solanum lycopersicum",
+    "description": "Tomatoes are warm-season, fruit-bearing plants widely grown for their edible, juicy fruits. They come in many varieties, ranging from small cherry types to large beefsteak tomatoes. Tomatoes are a staple in home gardens and require careful attention to sunlight, watering, and support.",
+    "sunlight": "Full sun",
+    "wateringSchedule": "Water deeply 1-2 times per week, allowing soil to dry slightly between waterings",
+    "soilType": "Well-drained, fertile loam rich in organic matter",
+    "hardinessZones": "3-11 (grown as annuals)",
+    "plantingGuidelines": "Start seeds indoors 6-8 weeks before last frost or transplant seedlings after all danger of frost has passed. Plant 18-24 inches apart, burying stems deeply to encourage strong root growth.",
+    "companionPlants": [
+      "basil",
+      "marigold",
+      "carrot",
+      "onion",
+      "lettuce",
+      "parsley"
+    ],
+    "commonPests": [
+      "aphids",
+      "tomato hornworm",
+      "whiteflies",
+      "cutworms",
+      "spider mites"
+    ],
+    "growingTips": [
+      "Provide sturdy support with cages or stakes",
+      "Mulch to retain moisture and suppress weeds",
+      "Prune suckers for better airflow",
+      "Rotate crops annually to prevent disease",
+      "Avoid overhead watering to reduce fungal issues"
+    ],
+    "daysToHarvest": "60-85 days from transplanting",
+    "category": "vegetable"
   }
 }

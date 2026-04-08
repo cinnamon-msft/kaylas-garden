@@ -5,6 +5,7 @@ import Image from "next/image";
 import type { Plant } from "@/lib/types";
 import { AddPlantModal } from "@/components/AddPlantModal";
 import { FrostDateBanner } from "@/components/FrostDateBanner";
+import { WeatherBanner } from "@/components/WeatherBanner";
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString(undefined, {
@@ -146,6 +147,11 @@ export default function Home() {
 
       {/* Frost Date Alert */}
       <FrostDateBanner />
+
+      {/* Weather & Rain Forecast */}
+      <div className="mt-3">
+        <WeatherBanner />
+      </div>
 
       {/* Actions */}
       <div className="mb-6 flex items-center justify-between">
