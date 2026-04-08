@@ -23,6 +23,9 @@ interface WateringStatus {
   daysUntil: number | null;
 }
 
+const RAIN_TODAY = 0;
+const RAIN_TOMORROW = 1;
+
 function getWateringStatus(plant: Plant): WateringStatus {
   if (!plant.wateringHistory || plant.wateringHistory.length === 0) {
     return { label: "Not yet watered", urgent: false, daysUntil: null };
@@ -58,24 +61,24 @@ function getWateringPlanLabel(plant: Plant, weather: WeatherForecast | null): st
   const nextRainIn = weather?.nextRain?.daysUntil ?? null;
 
   if (status.daysUntil === null) {
-    if (nextRainIn === 0 || nextRainIn === 1) {
+    if (nextRainIn === RAIN_TODAY || nextRainIn === RAIN_TOMORROW) {
       return "Plan: wait for near-term rain, then check soil moisture.";
     }
     return "Plan: give an initial watering today, then monitor as usual.";
   }
 
   if (status.daysUntil <= 0) {
-    if (nextRainIn === 0) {
+    if (nextRainIn === RAIN_TODAY) {
       return "Plan: rain today should cover watering unless the soil is dry.";
     }
-    if (nextRainIn === 1) {
+    if (nextRainIn === RAIN_TOMORROW) {
       return "Plan: likely safe to wait for tomorrow's rain.";
     }
     return "Plan: water now.";
   }
 
   if (nextRainIn !== null && nextRainIn <= status.daysUntil) {
-    if (nextRainIn === 0) {
+    if (nextRainIn === RAIN_TODAY) {
       return "Plan: rain today may replace your next watering.";
     }
     return `Plan: hold off — rain is expected in ${nextRainIn}d before your next due date.`;
@@ -185,7 +188,7 @@ export default function Home() {
     fetch("/api/weather")
       .then((res) => {
         if (!res.ok) {
-          console.error("Weather API returned status:", res.status);
+          console.error("Failed to fetch weather forecast. Status:", res.status);
           return null;
         }
         return res.json();

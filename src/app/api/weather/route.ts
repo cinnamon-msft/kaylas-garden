@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getSettings } from "@/lib/data";
 import type { WeatherDayForecast, WeatherForecast } from "@/lib/types";
 
+// Keep this intentionally small so "will it rain enough to skip watering?" errs on the conservative side.
 const MIN_MEANINGFUL_RAIN_MM = 1;
 
 interface GeocodingResult {
