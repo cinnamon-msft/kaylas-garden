@@ -32,6 +32,7 @@ export interface Plant {
   id: string;
   name: string;
   species: string;
+  category?: string;
   dateAdded: string; // ISO date
   thumbnailImage: string; // filename in public/uploads
   careInfo: PlantCareInfo;
