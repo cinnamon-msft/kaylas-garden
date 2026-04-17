@@ -4,7 +4,8 @@ const aspire_js_1 = require("./.modules/aspire.js");
 async function main() {
     const builder = await (0, aspire_js_1.createBuilder)();
     await builder.addAzureContainerAppEnvironment('acaenv');
-    const githubToken = builder.addParameter('github-token', { secret: true });
+    const foundry = builder.addFoundry('foundry');
+    const gpt = foundry.addDeployment('gpt', 'gpt-4.1', '2025-04-14', 'OpenAI');
     const plantdata = builder.addAzureStorage('storage')
         .runAsEmulator({
         configureContainer: async (azurite) => {
@@ -16,7 +17,7 @@ async function main() {
     await builder
         .addNextJsApp('web', '.')
         .withReference(plantdata)
-        .withEnvironment('GITHUB_TOKEN', githubToken)
+        .withReference(gpt)
         .withHttpEndpoint({ port: 3000, env: 'PORT' })
         .withExternalHttpEndpoints();
     await builder.build().run();

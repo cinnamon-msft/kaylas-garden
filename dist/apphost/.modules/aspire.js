@@ -5,7 +5,7 @@
 //
 // GENERATED CODE - DO NOT EDIT
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReferenceExpression = exports.refExpr = exports.registerCallback = exports.CapabilityError = exports.CancellationToken = exports.AppHostUsageError = exports.Handle = exports.WaitBehavior = exports.UrlDisplayLocation = exports.ProtocolType = exports.ProbeType = exports.OtlpProtocol = exports.ImagePullPolicy = exports.IconVariant = exports.HttpCommandResultMode = exports.EndpointProperty = exports.DistributedApplicationOperation = exports.DeploymentScope = exports.ContainerLifetime = exports.CommandResultFormat = exports.CertificateTrustScope = exports.AzureStorageRole = exports.AzureContainerRegistryRole = void 0;
+exports.ReferenceExpression = exports.refExpr = exports.registerCallback = exports.CapabilityError = exports.CancellationToken = exports.AppHostUsageError = exports.Handle = exports.WaitBehavior = exports.UrlDisplayLocation = exports.ProtocolType = exports.ProbeType = exports.OtlpProtocol = exports.ImagePullPolicy = exports.IconVariant = exports.HttpCommandResultMode = exports.FoundryRole = exports.EndpointProperty = exports.DistributedApplicationOperation = exports.DeploymentScope = exports.ContainerLifetime = exports.CommandResultFormat = exports.CertificateTrustScope = exports.AzureStorageRole = exports.AzureSearchRole = exports.AzureKeyVaultRole = exports.AzureContainerRegistryRole = void 0;
 exports.connect = connect;
 exports.createBuilder = createBuilder;
 const transport_js_1 = require("./transport.js");
@@ -23,6 +23,30 @@ var AzureContainerRegistryRole;
     AzureContainerRegistryRole["AcrQuarantineReader"] = "AcrQuarantineReader";
     AzureContainerRegistryRole["AcrQuarantineWriter"] = "AcrQuarantineWriter";
 })(AzureContainerRegistryRole || (exports.AzureContainerRegistryRole = AzureContainerRegistryRole = {}));
+/** Enum type for AzureKeyVaultRole */
+var AzureKeyVaultRole;
+(function (AzureKeyVaultRole) {
+    AzureKeyVaultRole["KeyVaultAdministrator"] = "KeyVaultAdministrator";
+    AzureKeyVaultRole["KeyVaultCertificateUser"] = "KeyVaultCertificateUser";
+    AzureKeyVaultRole["KeyVaultCertificatesOfficer"] = "KeyVaultCertificatesOfficer";
+    AzureKeyVaultRole["KeyVaultContributor"] = "KeyVaultContributor";
+    AzureKeyVaultRole["KeyVaultCryptoOfficer"] = "KeyVaultCryptoOfficer";
+    AzureKeyVaultRole["KeyVaultCryptoServiceEncryptionUser"] = "KeyVaultCryptoServiceEncryptionUser";
+    AzureKeyVaultRole["KeyVaultCryptoServiceReleaseUser"] = "KeyVaultCryptoServiceReleaseUser";
+    AzureKeyVaultRole["KeyVaultCryptoUser"] = "KeyVaultCryptoUser";
+    AzureKeyVaultRole["KeyVaultDataAccessAdministrator"] = "KeyVaultDataAccessAdministrator";
+    AzureKeyVaultRole["KeyVaultReader"] = "KeyVaultReader";
+    AzureKeyVaultRole["KeyVaultSecretsOfficer"] = "KeyVaultSecretsOfficer";
+    AzureKeyVaultRole["KeyVaultSecretsUser"] = "KeyVaultSecretsUser";
+    AzureKeyVaultRole["ManagedHsmContributor"] = "ManagedHsmContributor";
+})(AzureKeyVaultRole || (exports.AzureKeyVaultRole = AzureKeyVaultRole = {}));
+/** Enum type for AzureSearchRole */
+var AzureSearchRole;
+(function (AzureSearchRole) {
+    AzureSearchRole["SearchIndexDataContributor"] = "SearchIndexDataContributor";
+    AzureSearchRole["SearchIndexDataReader"] = "SearchIndexDataReader";
+    AzureSearchRole["SearchServiceContributor"] = "SearchServiceContributor";
+})(AzureSearchRole || (exports.AzureSearchRole = AzureSearchRole = {}));
 /** Enum type for AzureStorageRole */
 var AzureStorageRole;
 (function (AzureStorageRole) {
@@ -94,6 +118,13 @@ var EndpointProperty;
     EndpointProperty["HostAndPort"] = "HostAndPort";
     EndpointProperty["TlsEnabled"] = "TlsEnabled";
 })(EndpointProperty || (exports.EndpointProperty = EndpointProperty = {}));
+/** Enum type for FoundryRole */
+var FoundryRole;
+(function (FoundryRole) {
+    FoundryRole["CognitiveServicesOpenAIContributor"] = "CognitiveServicesOpenAIContributor";
+    FoundryRole["CognitiveServicesOpenAIUser"] = "CognitiveServicesOpenAIUser";
+    FoundryRole["CognitiveServicesUser"] = "CognitiveServicesUser";
+})(FoundryRole || (exports.FoundryRole = FoundryRole = {}));
 /** Enum type for HttpCommandResultMode */
 var HttpCommandResultMode;
 (function (HttpCommandResultMode) {
@@ -1602,6 +1633,65 @@ class ExecuteCommandContextImpl {
             await this._client.invokeCapability('Aspire.Hosting.ApplicationModel/ExecuteCommandContext.setLogger', { context: this._handle, value });
         }
     };
+}
+// ============================================================================
+// HostedAgentConfigurationImpl
+// ============================================================================
+/**
+ * Type class for HostedAgentConfiguration.
+ */
+class HostedAgentConfigurationImpl {
+    _handle;
+    _client;
+    constructor(_handle, _client) {
+        this._handle = _handle;
+        this._client = _client;
+    }
+    /** Serialize for JSON-RPC transport */
+    toJSON() { return this._handle.toJSON(); }
+    /** Gets the Description property */
+    description = {
+        get: async () => {
+            return await this._client.invokeCapability('Aspire.Hosting.Foundry/HostedAgentConfiguration.description', { context: this._handle });
+        },
+        set: async (value) => {
+            await this._client.invokeCapability('Aspire.Hosting.Foundry/HostedAgentConfiguration.setDescription', { context: this._handle, value });
+        }
+    };
+    /** Gets the Metadata property */
+    _metadata;
+    get metadata() {
+        if (!this._metadata) {
+            this._metadata = new base_js_1.AspireDict(this._handle, this._client, 'Aspire.Hosting.Foundry/HostedAgentConfiguration.metadata', 'Aspire.Hosting.Foundry/HostedAgentConfiguration.metadata');
+        }
+        return this._metadata;
+    }
+    /** Gets the Cpu property */
+    cpu = {
+        get: async () => {
+            return await this._client.invokeCapability('Aspire.Hosting.Foundry/HostedAgentConfiguration.cpu', { context: this._handle });
+        },
+        set: async (value) => {
+            await this._client.invokeCapability('Aspire.Hosting.Foundry/HostedAgentConfiguration.setCpu', { context: this._handle, value });
+        }
+    };
+    /** Gets the Memory property */
+    memory = {
+        get: async () => {
+            return await this._client.invokeCapability('Aspire.Hosting.Foundry/HostedAgentConfiguration.memory', { context: this._handle });
+        },
+        set: async (value) => {
+            await this._client.invokeCapability('Aspire.Hosting.Foundry/HostedAgentConfiguration.setMemory', { context: this._handle, value });
+        }
+    };
+    /** Gets the EnvironmentVariables property */
+    _environmentVariables;
+    get environmentVariables() {
+        if (!this._environmentVariables) {
+            this._environmentVariables = new base_js_1.AspireDict(this._handle, this._client, 'Aspire.Hosting.Foundry/HostedAgentConfiguration.environmentVariables', 'Aspire.Hosting.Foundry/HostedAgentConfiguration.environmentVariables');
+        }
+        return this._environmentVariables;
+    }
 }
 // ============================================================================
 // InitializeResourceEventImpl
@@ -3546,6 +3636,16 @@ class DistributedApplicationBuilderImpl {
     addAzureStorage(name) {
         return new AzureStorageResourcePromiseImpl(this._addAzureStorageInternal(name), this._client);
     }
+    /** Adds a Microsoft Foundry resource to the distributed application model. */
+    /** @internal */
+    async _addFoundryInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/addFoundry', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    addFoundry(name) {
+        return new FoundryResourcePromiseImpl(this._addFoundryInternal(name), this._client);
+    }
     /** Adds an Azure Bicep template resource from a file */
     /** @internal */
     async _addBicepTemplateInternal(name, bicepFile) {
@@ -3611,6 +3711,16 @@ class DistributedApplicationBuilderImpl {
     addAzureUserAssignedIdentity(name) {
         return new AzureUserAssignedIdentityResourcePromiseImpl(this._addAzureUserAssignedIdentityInternal(name), this._client);
     }
+    /** Adds an Azure Application Insights resource */
+    /** @internal */
+    async _addAzureApplicationInsightsInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ApplicationInsights/addAzureApplicationInsights', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    addAzureApplicationInsights(name) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._addAzureApplicationInsightsInternal(name), this._client);
+    }
     /** Adds an Azure Container Registry resource to the distributed application model. */
     /** @internal */
     async _addAzureContainerRegistryInternal(name) {
@@ -3621,6 +3731,26 @@ class DistributedApplicationBuilderImpl {
     addAzureContainerRegistry(name) {
         return new AzureContainerRegistryResourcePromiseImpl(this._addAzureContainerRegistryInternal(name), this._client);
     }
+    /** Adds an Azure Cosmos DB resource */
+    /** @internal */
+    async _addAzureCosmosDBInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.CosmosDB/addAzureCosmosDB', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    addAzureCosmosDB(name) {
+        return new AzureCosmosDBResourcePromiseImpl(this._addAzureCosmosDBInternal(name), this._client);
+    }
+    /** Adds an Azure Key Vault resource */
+    /** @internal */
+    async _addAzureKeyVaultInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/addAzureKeyVault', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    addAzureKeyVault(name) {
+        return new AzureKeyVaultResourcePromiseImpl(this._addAzureKeyVaultInternal(name), this._client);
+    }
     /** Adds an Azure Log Analytics Workspace resource */
     /** @internal */
     async _addAzureLogAnalyticsWorkspaceInternal(name) {
@@ -3630,6 +3760,16 @@ class DistributedApplicationBuilderImpl {
     }
     addAzureLogAnalyticsWorkspace(name) {
         return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._addAzureLogAnalyticsWorkspaceInternal(name), this._client);
+    }
+    /** Adds an Azure AI Search service resource */
+    /** @internal */
+    async _addAzureSearchInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/addAzureSearch', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    addAzureSearch(name) {
+        return new AzureSearchResourcePromiseImpl(this._addAzureSearchInternal(name), this._client);
     }
 }
 /**
@@ -3788,6 +3928,10 @@ class DistributedApplicationBuilderPromiseImpl {
     addAzureStorage(name) {
         return new AzureStorageResourcePromiseImpl(this._promise.then(obj => obj.addAzureStorage(name)), this._client);
     }
+    /** Adds a Microsoft Foundry resource to the distributed application model. */
+    addFoundry(name) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.addFoundry(name)), this._client);
+    }
     /** Adds an Azure Bicep template resource from a file */
     addBicepTemplate(name, bicepFile) {
         return new AzureBicepResourcePromiseImpl(this._promise.then(obj => obj.addBicepTemplate(name, bicepFile)), this._client);
@@ -3812,13 +3956,29 @@ class DistributedApplicationBuilderPromiseImpl {
     addAzureUserAssignedIdentity(name) {
         return new AzureUserAssignedIdentityResourcePromiseImpl(this._promise.then(obj => obj.addAzureUserAssignedIdentity(name)), this._client);
     }
+    /** Adds an Azure Application Insights resource */
+    addAzureApplicationInsights(name) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.addAzureApplicationInsights(name)), this._client);
+    }
     /** Adds an Azure Container Registry resource to the distributed application model. */
     addAzureContainerRegistry(name) {
         return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.addAzureContainerRegistry(name)), this._client);
     }
+    /** Adds an Azure Cosmos DB resource */
+    addAzureCosmosDB(name) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.addAzureCosmosDB(name)), this._client);
+    }
+    /** Adds an Azure Key Vault resource */
+    addAzureKeyVault(name) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.addAzureKeyVault(name)), this._client);
+    }
     /** Adds an Azure Log Analytics Workspace resource */
     addAzureLogAnalyticsWorkspace(name) {
         return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._promise.then(obj => obj.addAzureLogAnalyticsWorkspace(name)), this._client);
+    }
+    /** Adds an Azure AI Search service resource */
+    addAzureSearch(name) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.addAzureSearch(name)), this._client);
     }
 }
 // ============================================================================
@@ -4798,22 +4958,852 @@ class UserSecretsManagerPromiseImpl {
     }
 }
 // ============================================================================
+// AzureApplicationInsightsResourceImpl
+// ============================================================================
+class AzureApplicationInsightsResourceImpl extends base_js_1.ResourceBuilderBase {
+    constructor(handle, client) {
+        super(handle, client);
+    }
+    /** @internal */
+    async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
+        const rpcArgs = { builder: this._handle };
+        if (buildImage !== undefined)
+            rpcArgs.buildImage = buildImage;
+        if (runtimeImage !== undefined)
+            rpcArgs.runtimeImage = runtimeImage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfileBaseImage', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        const buildImage = options?.buildImage;
+        const runtimeImage = options?.runtimeImage;
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withDockerfileBaseImageInternal(buildImage, runtimeImage), this._client);
+    }
+    /** @internal */
+    async _withRequiredCommandInternal(command, helpLink) {
+        const rpcArgs = { builder: this._handle, command };
+        if (helpLink !== undefined)
+            rpcArgs.helpLink = helpLink;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRequiredCommand', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        const helpLink = options?.helpLink;
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withRequiredCommandInternal(command, helpLink), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionProperty', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withConnectionPropertyInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionPropertyValue', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withConnectionPropertyValueInternal(name, value), this._client);
+    }
+    /** Gets a connection property by key */
+    async getConnectionProperty(key) {
+        const rpcArgs = { resource: this._handle, key };
+        return await this._client.invokeCapability('Aspire.Hosting/getConnectionProperty', rpcArgs);
+    }
+    /** @internal */
+    async _withUrlsCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new ResourceUrlsCallbackContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlsCallback', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withUrlsCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withUrlInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrl', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        const displayText = options?.displayText;
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withUrlInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlExpressionInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlExpression', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        const displayText = options?.displayText;
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withUrlExpressionInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const obj = (0, transport_js_1.wrapIfHandle)(objData);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpoint', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withUrlForEndpointInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _excludeFromManifestInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromManifest', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._excludeFromManifestInternal(), this._client);
+    }
+    /** @internal */
+    async _withExplicitStartInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExplicitStart', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withExplicitStartInternal(), this._client);
+    }
+    /** @internal */
+    async _withHealthCheckInternal(key) {
+        const rpcArgs = { builder: this._handle, key };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHealthCheck', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withHealthCheckInternal(key), this._client);
+    }
+    /** @internal */
+    async _withCommandInternal(name, displayName, executeCommand, commandOptions) {
+        const executeCommandId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ExecuteCommandContextImpl(argHandle, this._client);
+            return await executeCommand(arg);
+        });
+        const rpcArgs = { builder: this._handle, name, displayName, executeCommand: executeCommandId };
+        if (commandOptions !== undefined)
+            rpcArgs.commandOptions = commandOptions;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withCommand', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        const commandOptions = options?.commandOptions;
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withCommandInternal(name, displayName, executeCommand, commandOptions), this._client);
+    }
+    /** @internal */
+    async _withRelationshipInternal(resourceBuilder, type) {
+        resourceBuilder = (0, transport_js_1.isPromiseLike)(resourceBuilder) ? await resourceBuilder : resourceBuilder;
+        const rpcArgs = { builder: this._handle, resourceBuilder, type };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderRelationship', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withRelationshipInternal(resourceBuilder, type), this._client);
+    }
+    /** @internal */
+    async _withParentRelationshipInternal(parent) {
+        parent = (0, transport_js_1.isPromiseLike)(parent) ? await parent : parent;
+        const rpcArgs = { builder: this._handle, parent };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderParentRelationship', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withParentRelationshipInternal(parent), this._client);
+    }
+    /** @internal */
+    async _withChildRelationshipInternal(child) {
+        child = (0, transport_js_1.isPromiseLike)(child) ? await child : child;
+        const rpcArgs = { builder: this._handle, child };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderChildRelationship', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withChildRelationshipInternal(child), this._client);
+    }
+    /** @internal */
+    async _withIconNameInternal(iconName, iconVariant) {
+        const rpcArgs = { builder: this._handle, iconName };
+        if (iconVariant !== undefined)
+            rpcArgs.iconVariant = iconVariant;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withIconName', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        const iconVariant = options?.iconVariant;
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withIconNameInternal(iconName, iconVariant), this._client);
+    }
+    /** @internal */
+    async _excludeFromMcpInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromMcp', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._excludeFromMcpInternal(), this._client);
+    }
+    /** @internal */
+    async _withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new PipelineStepContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, stepName, callback: callbackId };
+        if (dependsOn !== undefined)
+            rpcArgs.dependsOn = dependsOn;
+        if (requiredBy !== undefined)
+            rpcArgs.requiredBy = requiredBy;
+        if (tags !== undefined)
+            rpcArgs.tags = tags;
+        if (description !== undefined)
+            rpcArgs.description = description;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineStepFactory', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        const dependsOn = options?.dependsOn;
+        const requiredBy = options?.requiredBy;
+        const tags = options?.tags;
+        const description = options?.description;
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description), this._client);
+    }
+    /** @internal */
+    async _withPipelineConfigurationInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new PipelineConfigurationContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineConfiguration', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withPipelineConfigurationInternal(callback), this._client);
+    }
+    /** Gets the resource name */
+    async getResourceName() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/getResourceName', rpcArgs);
+    }
+    /** @internal */
+    async _onBeforeResourceStartedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new BeforeResourceStartedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onBeforeResourceStarted', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._onBeforeResourceStartedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceStoppedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceStoppedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceStopped', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._onResourceStoppedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onConnectionStringAvailableInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ConnectionStringAvailableEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onConnectionStringAvailable', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._onConnectionStringAvailableInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onInitializeResourceInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new InitializeResourceEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onInitializeResource', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._onInitializeResourceInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceReadyInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceReadyEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceReady', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._onResourceReadyInternal(callback), this._client);
+    }
+    /** Creates an execution configuration builder */
+    async createExecutionConfiguration() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/createExecutionConfiguration', rpcArgs);
+    }
+    /** @internal */
+    async _withStorageRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Storage/withStorageRoleAssignments', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    async getOutput(name) {
+        const rpcArgs = { builder: this._handle, name };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getOutput', rpcArgs);
+    }
+    /** @internal */
+    async _withParameterInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameter', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withParameterInternal(name), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValue', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withParameterStringValueInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValuesInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValues', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withParameterStringValuesInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromParameterInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromParameter', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withParameterFromParameterInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromConnectionStringInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromConnectionString', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withParameterFromConnectionStringInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromOutputInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromOutput', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withParameterFromOutputInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromReferenceExpressionInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromReferenceExpression', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withParameterFromReferenceExpressionInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromEndpointInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromEndpoint', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withParameterFromEndpointInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _configureInfrastructureInternal(configure) {
+        const configureId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new AzureResourceInfrastructureImpl(objHandle, this._client);
+            await configure(obj);
+        });
+        const rpcArgs = { builder: this._handle, configure: configureId };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/configureInfrastructure', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._configureInfrastructureInternal(configure), this._client);
+    }
+    /** @internal */
+    async _publishAsConnectionStringInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsConnectionString', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._publishAsConnectionStringInternal(), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    async getBicepIdentifier() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getBicepIdentifier', rpcArgs);
+    }
+    /** @internal */
+    async _clearDefaultRoleAssignmentsInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/clearDefaultRoleAssignments', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._clearDefaultRoleAssignmentsInternal(), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    async isExisting() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/isExisting', rpcArgs);
+    }
+    /** @internal */
+    async _runAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/runAsExisting', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureApplicationInsightsResourcePromiseImpl(this._runAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _publishAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsExisting', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureApplicationInsightsResourcePromiseImpl(this._publishAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _asExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/asExisting', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureApplicationInsightsResourcePromiseImpl(this._asExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _withLogAnalyticsWorkspaceInternal(logAnalyticsWorkspace) {
+        logAnalyticsWorkspace = (0, transport_js_1.isPromiseLike)(logAnalyticsWorkspace) ? await logAnalyticsWorkspace : logAnalyticsWorkspace;
+        const rpcArgs = { builder: this._handle, logAnalyticsWorkspace };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ApplicationInsights/withLogAnalyticsWorkspace', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Configures the Application Insights resource to use a Log Analytics Workspace */
+    withLogAnalyticsWorkspace(logAnalyticsWorkspace) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withLogAnalyticsWorkspaceInternal(logAnalyticsWorkspace), this._client);
+    }
+    /** @internal */
+    async _withAzureContainerRegistryInternal(registryBuilder) {
+        registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
+        const rpcArgs = { builder: this._handle, registryBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryAzureContainerRegistry', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withAzureContainerRegistryInternal(registryBuilder), this._client);
+    }
+    /** @internal */
+    async _getAzureContainerRegistryInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/getAzureContainerRegistry', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._getAzureContainerRegistryInternal(), this._client);
+    }
+    /** @internal */
+    async _withContainerRegistryRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryRoleAssignments', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureApplicationInsightsResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
+}
+/**
+ * Thenable wrapper for AzureApplicationInsightsResource that enables fluent chaining.
+ * @example
+ * await builder.addSomething().withX().withY();
+ */
+class AzureApplicationInsightsResourcePromiseImpl {
+    _promise;
+    _client;
+    constructor(_promise, _client, track = true) {
+        this._promise = _promise;
+        this._client = _client;
+        if (track) {
+            _client.trackPromise(_promise);
+        }
+    }
+    then(onfulfilled, onrejected) {
+        return this._promise.then(onfulfilled, onrejected);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withDockerfileBaseImage(options)), this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withRequiredCommand(command, options)), this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withConnectionProperty(name, value)), this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withConnectionPropertyValue(name, value)), this._client);
+    }
+    /** Gets a connection property by key */
+    getConnectionProperty(key) {
+        return this._promise.then(obj => obj.getConnectionProperty(key));
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withUrlsCallback(callback)), this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withUrl(url, options)), this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withUrlExpression(url, options)), this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpoint(endpointName, callback)), this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.excludeFromManifest()), this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withExplicitStart()), this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withHealthCheck(key)), this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withCommand(name, displayName, executeCommand, options)), this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withRelationship(resourceBuilder, type)), this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withParentRelationship(parent)), this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withChildRelationship(child)), this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withIconName(iconName, options)), this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.excludeFromMcp()), this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withPipelineStepFactory(stepName, callback, options)), this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withPipelineConfiguration(callback)), this._client);
+    }
+    /** Gets the resource name */
+    getResourceName() {
+        return this._promise.then(obj => obj.getResourceName());
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.onBeforeResourceStarted(callback)), this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.onResourceStopped(callback)), this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.onConnectionStringAvailable(callback)), this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.onInitializeResource(callback)), this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.onResourceReady(callback)), this._client);
+    }
+    /** Creates an execution configuration builder */
+    createExecutionConfiguration() {
+        return this._promise.then(obj => obj.createExecutionConfiguration());
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    getOutput(name) {
+        return this._promise.then(obj => obj.getOutput(name));
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withParameter(name)), this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValue(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValues(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromParameter(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromConnectionString(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromOutput(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromReferenceExpression(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromEndpoint(name, value)), this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.configureInfrastructure(configure)), this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.publishAsConnectionString()), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    getBicepIdentifier() {
+        return this._promise.then(obj => obj.getBicepIdentifier());
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.clearDefaultRoleAssignments()), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    isExisting() {
+        return this._promise.then(obj => obj.isExisting());
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.runAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.publishAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.asExisting(name, options)), this._client);
+    }
+    /** Configures the Application Insights resource to use a Log Analytics Workspace */
+    withLogAnalyticsWorkspace(logAnalyticsWorkspace) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withLogAnalyticsWorkspace(logAnalyticsWorkspace)), this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.getAzureContainerRegistry()), this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureApplicationInsightsResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
+}
+// ============================================================================
 // AzureBicepResourceImpl
 // ============================================================================
 class AzureBicepResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureBicepResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureBicepResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -5126,6 +6116,17 @@ class AzureBicepResourceImpl extends base_js_1.ResourceBuilderBase {
     withStorageRoleAssignments(target, roles) {
         return new AzureBicepResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureBicepResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureBicepResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     async getOutput(name) {
         const rpcArgs = { builder: this._handle, name };
@@ -5322,6 +6323,28 @@ class AzureBicepResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureBicepResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureBicepResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureBicepResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureBicepResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureBicepResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureBicepResource that enables fluent chaining.
@@ -5340,10 +6363,6 @@ class AzureBicepResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureBicepResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -5441,6 +6460,10 @@ class AzureBicepResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureBicepResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureBicepResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     getOutput(name) {
         return this._promise.then(obj => obj.getOutput(name));
@@ -5517,6 +6540,14 @@ class AzureBicepResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureBicepResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureBicepResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureBicepResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureBlobStorageContainerResourceImpl
@@ -5524,17 +6555,6 @@ class AzureBicepResourcePromiseImpl {
 class AzureBlobStorageContainerResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureBlobStorageContainerResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureBlobStorageContainerResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -5888,6 +6908,17 @@ class AzureBlobStorageContainerResourceImpl extends base_js_1.ResourceBuilderBas
         return new AzureBlobStorageContainerResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureBlobStorageContainerResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureBlobStorageContainerResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -5919,6 +6950,28 @@ class AzureBlobStorageContainerResourceImpl extends base_js_1.ResourceBuilderBas
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureBlobStorageContainerResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureBlobStorageContainerResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureBlobStorageContainerResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureBlobStorageContainerResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureBlobStorageContainerResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureBlobStorageContainerResource that enables fluent chaining.
@@ -5937,10 +6990,6 @@ class AzureBlobStorageContainerResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureBlobStorageContainerResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -6054,6 +7103,10 @@ class AzureBlobStorageContainerResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureBlobStorageContainerResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureBlobStorageContainerResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new AzureBlobStorageContainerResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -6066,6 +7119,14 @@ class AzureBlobStorageContainerResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureBlobStorageContainerResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureBlobStorageContainerResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureBlobStorageContainerResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureBlobStorageResourceImpl
@@ -6073,17 +7134,6 @@ class AzureBlobStorageContainerResourcePromiseImpl {
 class AzureBlobStorageResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureBlobStorageResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureBlobStorageResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -6437,6 +7487,17 @@ class AzureBlobStorageResourceImpl extends base_js_1.ResourceBuilderBase {
         return new AzureBlobStorageResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureBlobStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureBlobStorageResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -6468,6 +7529,28 @@ class AzureBlobStorageResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureBlobStorageResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureBlobStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureBlobStorageResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureBlobStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureBlobStorageResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureBlobStorageResource that enables fluent chaining.
@@ -6486,10 +7569,6 @@ class AzureBlobStorageResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureBlobStorageResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -6603,6 +7682,10 @@ class AzureBlobStorageResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureBlobStorageResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureBlobStorageResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new AzureBlobStorageResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -6615,6 +7698,1772 @@ class AzureBlobStorageResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureBlobStorageResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureBlobStorageResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureBlobStorageResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
+}
+// ============================================================================
+// AzureCognitiveServicesProjectConnectionResourceImpl
+// ============================================================================
+class AzureCognitiveServicesProjectConnectionResourceImpl extends base_js_1.ResourceBuilderBase {
+    constructor(handle, client) {
+        super(handle, client);
+    }
+    /** @internal */
+    async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
+        const rpcArgs = { builder: this._handle };
+        if (buildImage !== undefined)
+            rpcArgs.buildImage = buildImage;
+        if (runtimeImage !== undefined)
+            rpcArgs.runtimeImage = runtimeImage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfileBaseImage', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        const buildImage = options?.buildImage;
+        const runtimeImage = options?.runtimeImage;
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withDockerfileBaseImageInternal(buildImage, runtimeImage), this._client);
+    }
+    /** @internal */
+    async _withRequiredCommandInternal(command, helpLink) {
+        const rpcArgs = { builder: this._handle, command };
+        if (helpLink !== undefined)
+            rpcArgs.helpLink = helpLink;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRequiredCommand', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        const helpLink = options?.helpLink;
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withRequiredCommandInternal(command, helpLink), this._client);
+    }
+    /** @internal */
+    async _withUrlsCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new ResourceUrlsCallbackContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlsCallback', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withUrlsCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withUrlInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrl', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        const displayText = options?.displayText;
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withUrlInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlExpressionInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlExpression', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        const displayText = options?.displayText;
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withUrlExpressionInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const obj = (0, transport_js_1.wrapIfHandle)(objData);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpoint', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withUrlForEndpointInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _excludeFromManifestInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromManifest', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._excludeFromManifestInternal(), this._client);
+    }
+    /** @internal */
+    async _withExplicitStartInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExplicitStart', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withExplicitStartInternal(), this._client);
+    }
+    /** @internal */
+    async _withHealthCheckInternal(key) {
+        const rpcArgs = { builder: this._handle, key };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHealthCheck', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withHealthCheckInternal(key), this._client);
+    }
+    /** @internal */
+    async _withCommandInternal(name, displayName, executeCommand, commandOptions) {
+        const executeCommandId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ExecuteCommandContextImpl(argHandle, this._client);
+            return await executeCommand(arg);
+        });
+        const rpcArgs = { builder: this._handle, name, displayName, executeCommand: executeCommandId };
+        if (commandOptions !== undefined)
+            rpcArgs.commandOptions = commandOptions;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withCommand', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        const commandOptions = options?.commandOptions;
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withCommandInternal(name, displayName, executeCommand, commandOptions), this._client);
+    }
+    /** @internal */
+    async _withRelationshipInternal(resourceBuilder, type) {
+        resourceBuilder = (0, transport_js_1.isPromiseLike)(resourceBuilder) ? await resourceBuilder : resourceBuilder;
+        const rpcArgs = { builder: this._handle, resourceBuilder, type };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderRelationship', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withRelationshipInternal(resourceBuilder, type), this._client);
+    }
+    /** @internal */
+    async _withParentRelationshipInternal(parent) {
+        parent = (0, transport_js_1.isPromiseLike)(parent) ? await parent : parent;
+        const rpcArgs = { builder: this._handle, parent };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderParentRelationship', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withParentRelationshipInternal(parent), this._client);
+    }
+    /** @internal */
+    async _withChildRelationshipInternal(child) {
+        child = (0, transport_js_1.isPromiseLike)(child) ? await child : child;
+        const rpcArgs = { builder: this._handle, child };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderChildRelationship', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withChildRelationshipInternal(child), this._client);
+    }
+    /** @internal */
+    async _withIconNameInternal(iconName, iconVariant) {
+        const rpcArgs = { builder: this._handle, iconName };
+        if (iconVariant !== undefined)
+            rpcArgs.iconVariant = iconVariant;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withIconName', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        const iconVariant = options?.iconVariant;
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withIconNameInternal(iconName, iconVariant), this._client);
+    }
+    /** @internal */
+    async _excludeFromMcpInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromMcp', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._excludeFromMcpInternal(), this._client);
+    }
+    /** @internal */
+    async _withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new PipelineStepContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, stepName, callback: callbackId };
+        if (dependsOn !== undefined)
+            rpcArgs.dependsOn = dependsOn;
+        if (requiredBy !== undefined)
+            rpcArgs.requiredBy = requiredBy;
+        if (tags !== undefined)
+            rpcArgs.tags = tags;
+        if (description !== undefined)
+            rpcArgs.description = description;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineStepFactory', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        const dependsOn = options?.dependsOn;
+        const requiredBy = options?.requiredBy;
+        const tags = options?.tags;
+        const description = options?.description;
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description), this._client);
+    }
+    /** @internal */
+    async _withPipelineConfigurationInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new PipelineConfigurationContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineConfiguration', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withPipelineConfigurationInternal(callback), this._client);
+    }
+    /** Gets the resource name */
+    async getResourceName() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/getResourceName', rpcArgs);
+    }
+    /** @internal */
+    async _onBeforeResourceStartedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new BeforeResourceStartedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onBeforeResourceStarted', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._onBeforeResourceStartedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceStoppedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceStoppedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceStopped', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._onResourceStoppedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onInitializeResourceInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new InitializeResourceEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onInitializeResource', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._onInitializeResourceInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceReadyInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceReadyEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceReady', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._onResourceReadyInternal(callback), this._client);
+    }
+    /** Creates an execution configuration builder */
+    async createExecutionConfiguration() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/createExecutionConfiguration', rpcArgs);
+    }
+    /** @internal */
+    async _withStorageRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Storage/withStorageRoleAssignments', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    async getOutput(name) {
+        const rpcArgs = { builder: this._handle, name };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getOutput', rpcArgs);
+    }
+    /** @internal */
+    async _withParameterInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameter', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withParameterInternal(name), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValue', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withParameterStringValueInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValuesInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValues', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withParameterStringValuesInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromParameterInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromParameter', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withParameterFromParameterInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromConnectionStringInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromConnectionString', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withParameterFromConnectionStringInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromOutputInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromOutput', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withParameterFromOutputInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromReferenceExpressionInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromReferenceExpression', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withParameterFromReferenceExpressionInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromEndpointInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromEndpoint', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withParameterFromEndpointInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _configureInfrastructureInternal(configure) {
+        const configureId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new AzureResourceInfrastructureImpl(objHandle, this._client);
+            await configure(obj);
+        });
+        const rpcArgs = { builder: this._handle, configure: configureId };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/configureInfrastructure', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._configureInfrastructureInternal(configure), this._client);
+    }
+    /** @internal */
+    async _publishAsConnectionStringInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsConnectionString', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._publishAsConnectionStringInternal(), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    async getBicepIdentifier() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getBicepIdentifier', rpcArgs);
+    }
+    /** @internal */
+    async _clearDefaultRoleAssignmentsInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/clearDefaultRoleAssignments', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._clearDefaultRoleAssignmentsInternal(), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    async isExisting() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/isExisting', rpcArgs);
+    }
+    /** @internal */
+    async _runAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/runAsExisting', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._runAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _publishAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsExisting', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._publishAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _asExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/asExisting', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._asExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _withAzureContainerRegistryInternal(registryBuilder) {
+        registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
+        const rpcArgs = { builder: this._handle, registryBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryAzureContainerRegistry', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withAzureContainerRegistryInternal(registryBuilder), this._client);
+    }
+    /** @internal */
+    async _getAzureContainerRegistryInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/getAzureContainerRegistry', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._getAzureContainerRegistryInternal(), this._client);
+    }
+    /** @internal */
+    async _withContainerRegistryRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryRoleAssignments', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
+}
+/**
+ * Thenable wrapper for AzureCognitiveServicesProjectConnectionResource that enables fluent chaining.
+ * @example
+ * await builder.addSomething().withX().withY();
+ */
+class AzureCognitiveServicesProjectConnectionResourcePromiseImpl {
+    _promise;
+    _client;
+    constructor(_promise, _client, track = true) {
+        this._promise = _promise;
+        this._client = _client;
+        if (track) {
+            _client.trackPromise(_promise);
+        }
+    }
+    then(onfulfilled, onrejected) {
+        return this._promise.then(onfulfilled, onrejected);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withDockerfileBaseImage(options)), this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withRequiredCommand(command, options)), this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withUrlsCallback(callback)), this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withUrl(url, options)), this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withUrlExpression(url, options)), this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpoint(endpointName, callback)), this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.excludeFromManifest()), this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withExplicitStart()), this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withHealthCheck(key)), this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withCommand(name, displayName, executeCommand, options)), this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withRelationship(resourceBuilder, type)), this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withParentRelationship(parent)), this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withChildRelationship(child)), this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withIconName(iconName, options)), this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.excludeFromMcp()), this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withPipelineStepFactory(stepName, callback, options)), this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withPipelineConfiguration(callback)), this._client);
+    }
+    /** Gets the resource name */
+    getResourceName() {
+        return this._promise.then(obj => obj.getResourceName());
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.onBeforeResourceStarted(callback)), this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.onResourceStopped(callback)), this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.onInitializeResource(callback)), this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.onResourceReady(callback)), this._client);
+    }
+    /** Creates an execution configuration builder */
+    createExecutionConfiguration() {
+        return this._promise.then(obj => obj.createExecutionConfiguration());
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    getOutput(name) {
+        return this._promise.then(obj => obj.getOutput(name));
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withParameter(name)), this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValue(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValues(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromParameter(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromConnectionString(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromOutput(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromReferenceExpression(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromEndpoint(name, value)), this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.configureInfrastructure(configure)), this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.publishAsConnectionString()), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    getBicepIdentifier() {
+        return this._promise.then(obj => obj.getBicepIdentifier());
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.clearDefaultRoleAssignments()), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    isExisting() {
+        return this._promise.then(obj => obj.isExisting());
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.runAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.publishAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.asExisting(name, options)), this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.getAzureContainerRegistry()), this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
+}
+// ============================================================================
+// AzureCognitiveServicesProjectResourceImpl
+// ============================================================================
+class AzureCognitiveServicesProjectResourceImpl extends base_js_1.ResourceBuilderBase {
+    constructor(handle, client) {
+        super(handle, client);
+    }
+    /** @internal */
+    async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
+        const rpcArgs = { builder: this._handle };
+        if (buildImage !== undefined)
+            rpcArgs.buildImage = buildImage;
+        if (runtimeImage !== undefined)
+            rpcArgs.runtimeImage = runtimeImage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfileBaseImage', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        const buildImage = options?.buildImage;
+        const runtimeImage = options?.runtimeImage;
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withDockerfileBaseImageInternal(buildImage, runtimeImage), this._client);
+    }
+    /** @internal */
+    async _withRequiredCommandInternal(command, helpLink) {
+        const rpcArgs = { builder: this._handle, command };
+        if (helpLink !== undefined)
+            rpcArgs.helpLink = helpLink;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRequiredCommand', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        const helpLink = options?.helpLink;
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withRequiredCommandInternal(command, helpLink), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionProperty', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withConnectionPropertyInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionPropertyValue', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withConnectionPropertyValueInternal(name, value), this._client);
+    }
+    /** Gets a connection property by key */
+    async getConnectionProperty(key) {
+        const rpcArgs = { resource: this._handle, key };
+        return await this._client.invokeCapability('Aspire.Hosting/getConnectionProperty', rpcArgs);
+    }
+    /** @internal */
+    async _withUrlsCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new ResourceUrlsCallbackContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlsCallback', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withUrlsCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withUrlInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrl', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        const displayText = options?.displayText;
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withUrlInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlExpressionInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlExpression', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        const displayText = options?.displayText;
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withUrlExpressionInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const obj = (0, transport_js_1.wrapIfHandle)(objData);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpoint', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withUrlForEndpointInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _excludeFromManifestInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromManifest', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._excludeFromManifestInternal(), this._client);
+    }
+    /** @internal */
+    async _withExplicitStartInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExplicitStart', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withExplicitStartInternal(), this._client);
+    }
+    /** @internal */
+    async _withHealthCheckInternal(key) {
+        const rpcArgs = { builder: this._handle, key };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHealthCheck', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withHealthCheckInternal(key), this._client);
+    }
+    /** @internal */
+    async _withCommandInternal(name, displayName, executeCommand, commandOptions) {
+        const executeCommandId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ExecuteCommandContextImpl(argHandle, this._client);
+            return await executeCommand(arg);
+        });
+        const rpcArgs = { builder: this._handle, name, displayName, executeCommand: executeCommandId };
+        if (commandOptions !== undefined)
+            rpcArgs.commandOptions = commandOptions;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withCommand', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        const commandOptions = options?.commandOptions;
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withCommandInternal(name, displayName, executeCommand, commandOptions), this._client);
+    }
+    /** @internal */
+    async _withRelationshipInternal(resourceBuilder, type) {
+        resourceBuilder = (0, transport_js_1.isPromiseLike)(resourceBuilder) ? await resourceBuilder : resourceBuilder;
+        const rpcArgs = { builder: this._handle, resourceBuilder, type };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderRelationship', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withRelationshipInternal(resourceBuilder, type), this._client);
+    }
+    /** @internal */
+    async _withParentRelationshipInternal(parent) {
+        parent = (0, transport_js_1.isPromiseLike)(parent) ? await parent : parent;
+        const rpcArgs = { builder: this._handle, parent };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderParentRelationship', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withParentRelationshipInternal(parent), this._client);
+    }
+    /** @internal */
+    async _withChildRelationshipInternal(child) {
+        child = (0, transport_js_1.isPromiseLike)(child) ? await child : child;
+        const rpcArgs = { builder: this._handle, child };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderChildRelationship', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withChildRelationshipInternal(child), this._client);
+    }
+    /** @internal */
+    async _withIconNameInternal(iconName, iconVariant) {
+        const rpcArgs = { builder: this._handle, iconName };
+        if (iconVariant !== undefined)
+            rpcArgs.iconVariant = iconVariant;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withIconName', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        const iconVariant = options?.iconVariant;
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withIconNameInternal(iconName, iconVariant), this._client);
+    }
+    /** @internal */
+    async _excludeFromMcpInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromMcp', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._excludeFromMcpInternal(), this._client);
+    }
+    /** @internal */
+    async _withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new PipelineStepContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, stepName, callback: callbackId };
+        if (dependsOn !== undefined)
+            rpcArgs.dependsOn = dependsOn;
+        if (requiredBy !== undefined)
+            rpcArgs.requiredBy = requiredBy;
+        if (tags !== undefined)
+            rpcArgs.tags = tags;
+        if (description !== undefined)
+            rpcArgs.description = description;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineStepFactory', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        const dependsOn = options?.dependsOn;
+        const requiredBy = options?.requiredBy;
+        const tags = options?.tags;
+        const description = options?.description;
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description), this._client);
+    }
+    /** @internal */
+    async _withPipelineConfigurationInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new PipelineConfigurationContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineConfiguration', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withPipelineConfigurationInternal(callback), this._client);
+    }
+    /** Gets the resource name */
+    async getResourceName() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/getResourceName', rpcArgs);
+    }
+    /** @internal */
+    async _onBeforeResourceStartedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new BeforeResourceStartedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onBeforeResourceStarted', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._onBeforeResourceStartedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceStoppedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceStoppedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceStopped', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._onResourceStoppedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onConnectionStringAvailableInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ConnectionStringAvailableEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onConnectionStringAvailable', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._onConnectionStringAvailableInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onInitializeResourceInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new InitializeResourceEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onInitializeResource', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._onInitializeResourceInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceReadyInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceReadyEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceReady', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._onResourceReadyInternal(callback), this._client);
+    }
+    /** Creates an execution configuration builder */
+    async createExecutionConfiguration() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/createExecutionConfiguration', rpcArgs);
+    }
+    /** @internal */
+    async _withStorageRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Storage/withStorageRoleAssignments', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _addCosmosConnectionInternal(db) {
+        db = (0, transport_js_1.isPromiseLike)(db) ? await db : db;
+        const rpcArgs = { builder: this._handle, db };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/addCosmosConnection', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds an Azure Cosmos DB connection to a Microsoft Foundry project. */
+    addCosmosConnection(db) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._addCosmosConnectionInternal(db), this._client);
+    }
+    /** @internal */
+    async _addStorageConnectionInternal(storage) {
+        storage = (0, transport_js_1.isPromiseLike)(storage) ? await storage : storage;
+        const rpcArgs = { builder: this._handle, storage };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/addStorageConnection', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds an Azure Storage connection to a Microsoft Foundry project. */
+    addStorageConnection(storage) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._addStorageConnectionInternal(storage), this._client);
+    }
+    /** @internal */
+    async _addContainerRegistryConnectionInternal(registry) {
+        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
+        const rpcArgs = { builder: this._handle, registry };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/addContainerRegistryConnection', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds an Azure Container Registry connection to a Microsoft Foundry project. */
+    addContainerRegistryConnection(registry) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._addContainerRegistryConnectionInternal(registry), this._client);
+    }
+    /** @internal */
+    async _addKeyVaultConnectionInternal(keyVault) {
+        keyVault = (0, transport_js_1.isPromiseLike)(keyVault) ? await keyVault : keyVault;
+        const rpcArgs = { builder: this._handle, keyVault };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/addKeyVaultConnection', rpcArgs);
+        return new AzureCognitiveServicesProjectConnectionResourceImpl(result, this._client);
+    }
+    /** Adds an Azure Key Vault connection to a Microsoft Foundry project. */
+    addKeyVaultConnection(keyVault) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._addKeyVaultConnectionInternal(keyVault), this._client);
+    }
+    /** @internal */
+    async _withContainerRegistryInternal(registryBuilder) {
+        registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
+        const rpcArgs = { builder: this._handle, registryBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withContainerRegistry', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Associates a container registry with a Microsoft Foundry project resource. */
+    withContainerRegistry(registryBuilder) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withContainerRegistryInternal(registryBuilder), this._client);
+    }
+    /** @internal */
+    async _withKeyVaultInternal(keyVault) {
+        keyVault = (0, transport_js_1.isPromiseLike)(keyVault) ? await keyVault : keyVault;
+        const rpcArgs = { builder: this._handle, keyVault };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withKeyVault', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Associates an Azure Key Vault resource with a Microsoft Foundry project. */
+    withKeyVault(keyVault) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withKeyVaultInternal(keyVault), this._client);
+    }
+    /** @internal */
+    async _withAppInsightsInternal(appInsights) {
+        appInsights = (0, transport_js_1.isPromiseLike)(appInsights) ? await appInsights : appInsights;
+        const rpcArgs = { builder: this._handle, appInsights };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withAppInsights', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Associates an Azure Application Insights resource with a Microsoft Foundry project. */
+    withAppInsights(appInsights) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withAppInsightsInternal(appInsights), this._client);
+    }
+    /** @internal */
+    async _addCapabilityHostInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/addCapabilityHostProject', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a capability host to a Microsoft Foundry project. */
+    addCapabilityHost(name) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._addCapabilityHostInternal(name), this._client);
+    }
+    /** @internal */
+    async _withCapabilityHostInternal(resource) {
+        resource = (0, transport_js_1.isPromiseLike)(resource) ? await resource : resource;
+        const rpcArgs = { builder: this._handle, resource };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withCapabilityHost', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Associates a supported resource with a capability host on a Microsoft Foundry project. */
+    withCapabilityHost(resource) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withCapabilityHostInternal(resource), this._client);
+    }
+    /** @internal */
+    async _addModelDeploymentFromModelInternal(name, model) {
+        const rpcArgs = { builder: this._handle, name, model };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/addModelDeploymentFromModel', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Adds a model deployment to the parent Microsoft Foundry resource by using a model descriptor. */
+    addModelDeploymentFromModel(name, model) {
+        return new FoundryDeploymentResourcePromiseImpl(this._addModelDeploymentFromModelInternal(name, model), this._client);
+    }
+    /** @internal */
+    async _addModelDeploymentInternal(name, modelName, modelVersion, format) {
+        const rpcArgs = { builder: this._handle, name, modelName, modelVersion, format };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/addModelDeployment', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Adds a model deployment to the parent Microsoft Foundry resource. */
+    addModelDeployment(name, modelName, modelVersion, format) {
+        return new FoundryDeploymentResourcePromiseImpl(this._addModelDeploymentInternal(name, modelName, modelVersion, format), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    async getOutput(name) {
+        const rpcArgs = { builder: this._handle, name };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getOutput', rpcArgs);
+    }
+    /** @internal */
+    async _withParameterInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameter', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withParameterInternal(name), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValue', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withParameterStringValueInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValuesInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValues', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withParameterStringValuesInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromParameterInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromParameter', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withParameterFromParameterInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromConnectionStringInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromConnectionString', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withParameterFromConnectionStringInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromOutputInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromOutput', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withParameterFromOutputInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromReferenceExpressionInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromReferenceExpression', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withParameterFromReferenceExpressionInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromEndpointInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromEndpoint', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withParameterFromEndpointInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _configureInfrastructureInternal(configure) {
+        const configureId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new AzureResourceInfrastructureImpl(objHandle, this._client);
+            await configure(obj);
+        });
+        const rpcArgs = { builder: this._handle, configure: configureId };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/configureInfrastructure', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._configureInfrastructureInternal(configure), this._client);
+    }
+    /** @internal */
+    async _publishAsConnectionStringInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsConnectionString', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._publishAsConnectionStringInternal(), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    async getBicepIdentifier() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getBicepIdentifier', rpcArgs);
+    }
+    /** @internal */
+    async _clearDefaultRoleAssignmentsInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/clearDefaultRoleAssignments', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._clearDefaultRoleAssignmentsInternal(), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    async isExisting() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/isExisting', rpcArgs);
+    }
+    /** @internal */
+    async _runAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/runAsExisting', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._runAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _publishAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsExisting', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._publishAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _asExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/asExisting', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._asExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _withAzureContainerRegistryInternal(registryBuilder) {
+        registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
+        const rpcArgs = { builder: this._handle, registryBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryAzureContainerRegistry', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withAzureContainerRegistryInternal(registryBuilder), this._client);
+    }
+    /** @internal */
+    async _getAzureContainerRegistryInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/getAzureContainerRegistry', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._getAzureContainerRegistryInternal(), this._client);
+    }
+    /** @internal */
+    async _withContainerRegistryRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryRoleAssignments', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
+}
+/**
+ * Thenable wrapper for AzureCognitiveServicesProjectResource that enables fluent chaining.
+ * @example
+ * await builder.addSomething().withX().withY();
+ */
+class AzureCognitiveServicesProjectResourcePromiseImpl {
+    _promise;
+    _client;
+    constructor(_promise, _client, track = true) {
+        this._promise = _promise;
+        this._client = _client;
+        if (track) {
+            _client.trackPromise(_promise);
+        }
+    }
+    then(onfulfilled, onrejected) {
+        return this._promise.then(onfulfilled, onrejected);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withDockerfileBaseImage(options)), this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withRequiredCommand(command, options)), this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withConnectionProperty(name, value)), this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withConnectionPropertyValue(name, value)), this._client);
+    }
+    /** Gets a connection property by key */
+    getConnectionProperty(key) {
+        return this._promise.then(obj => obj.getConnectionProperty(key));
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withUrlsCallback(callback)), this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withUrl(url, options)), this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withUrlExpression(url, options)), this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpoint(endpointName, callback)), this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.excludeFromManifest()), this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withExplicitStart()), this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withHealthCheck(key)), this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withCommand(name, displayName, executeCommand, options)), this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withRelationship(resourceBuilder, type)), this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withParentRelationship(parent)), this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withChildRelationship(child)), this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withIconName(iconName, options)), this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.excludeFromMcp()), this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withPipelineStepFactory(stepName, callback, options)), this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withPipelineConfiguration(callback)), this._client);
+    }
+    /** Gets the resource name */
+    getResourceName() {
+        return this._promise.then(obj => obj.getResourceName());
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.onBeforeResourceStarted(callback)), this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.onResourceStopped(callback)), this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.onConnectionStringAvailable(callback)), this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.onInitializeResource(callback)), this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.onResourceReady(callback)), this._client);
+    }
+    /** Creates an execution configuration builder */
+    createExecutionConfiguration() {
+        return this._promise.then(obj => obj.createExecutionConfiguration());
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Adds an Azure Cosmos DB connection to a Microsoft Foundry project. */
+    addCosmosConnection(db) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.addCosmosConnection(db)), this._client);
+    }
+    /** Adds an Azure Storage connection to a Microsoft Foundry project. */
+    addStorageConnection(storage) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.addStorageConnection(storage)), this._client);
+    }
+    /** Adds an Azure Container Registry connection to a Microsoft Foundry project. */
+    addContainerRegistryConnection(registry) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.addContainerRegistryConnection(registry)), this._client);
+    }
+    /** Adds an Azure Key Vault connection to a Microsoft Foundry project. */
+    addKeyVaultConnection(keyVault) {
+        return new AzureCognitiveServicesProjectConnectionResourcePromiseImpl(this._promise.then(obj => obj.addKeyVaultConnection(keyVault)), this._client);
+    }
+    /** Associates a container registry with a Microsoft Foundry project resource. */
+    withContainerRegistry(registryBuilder) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registryBuilder)), this._client);
+    }
+    /** Associates an Azure Key Vault resource with a Microsoft Foundry project. */
+    withKeyVault(keyVault) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withKeyVault(keyVault)), this._client);
+    }
+    /** Associates an Azure Application Insights resource with a Microsoft Foundry project. */
+    withAppInsights(appInsights) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withAppInsights(appInsights)), this._client);
+    }
+    /** Adds a capability host to a Microsoft Foundry project. */
+    addCapabilityHost(name) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.addCapabilityHost(name)), this._client);
+    }
+    /** Associates a supported resource with a capability host on a Microsoft Foundry project. */
+    withCapabilityHost(resource) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withCapabilityHost(resource)), this._client);
+    }
+    /** Adds a model deployment to the parent Microsoft Foundry resource by using a model descriptor. */
+    addModelDeploymentFromModel(name, model) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.addModelDeploymentFromModel(name, model)), this._client);
+    }
+    /** Adds a model deployment to the parent Microsoft Foundry resource. */
+    addModelDeployment(name, modelName, modelVersion, format) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.addModelDeployment(name, modelName, modelVersion, format)), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    getOutput(name) {
+        return this._promise.then(obj => obj.getOutput(name));
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withParameter(name)), this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValue(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValues(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromParameter(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromConnectionString(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromOutput(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromReferenceExpression(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromEndpoint(name, value)), this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.configureInfrastructure(configure)), this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.publishAsConnectionString()), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    getBicepIdentifier() {
+        return this._promise.then(obj => obj.getBicepIdentifier());
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.clearDefaultRoleAssignments()), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    isExisting() {
+        return this._promise.then(obj => obj.isExisting());
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.runAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.publishAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.asExisting(name, options)), this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.getAzureContainerRegistry()), this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureContainerAppEnvironmentResourceImpl
@@ -6622,17 +9471,6 @@ class AzureBlobStorageResourcePromiseImpl {
 class AzureContainerAppEnvironmentResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureContainerAppEnvironmentResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureContainerAppEnvironmentResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -7002,6 +9840,17 @@ class AzureContainerAppEnvironmentResourceImpl extends base_js_1.ResourceBuilder
     withStorageRoleAssignments(target, roles) {
         return new AzureContainerAppEnvironmentResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureContainerAppEnvironmentResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureContainerAppEnvironmentResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     async getOutput(name) {
         const rpcArgs = { builder: this._handle, name };
@@ -7213,6 +10062,28 @@ class AzureContainerAppEnvironmentResourceImpl extends base_js_1.ResourceBuilder
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureContainerAppEnvironmentResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureContainerAppEnvironmentResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureContainerAppEnvironmentResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureContainerAppEnvironmentResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureContainerAppEnvironmentResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureContainerAppEnvironmentResource that enables fluent chaining.
@@ -7231,10 +10102,6 @@ class AzureContainerAppEnvironmentResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureContainerAppEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -7352,6 +10219,10 @@ class AzureContainerAppEnvironmentResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureContainerAppEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureContainerAppEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     getOutput(name) {
         return this._promise.then(obj => obj.getOutput(name));
@@ -7432,6 +10303,14 @@ class AzureContainerAppEnvironmentResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureContainerAppEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureContainerAppEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureContainerAppEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureContainerRegistryResourceImpl
@@ -7439,17 +10318,6 @@ class AzureContainerAppEnvironmentResourcePromiseImpl {
 class AzureContainerRegistryResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureContainerRegistryResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureContainerRegistryResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -7762,6 +10630,17 @@ class AzureContainerRegistryResourceImpl extends base_js_1.ResourceBuilderBase {
     withStorageRoleAssignments(target, roles) {
         return new AzureContainerRegistryResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureContainerRegistryResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     async getOutput(name) {
         const rpcArgs = { builder: this._handle, name };
@@ -7995,6 +10874,28 @@ class AzureContainerRegistryResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureContainerRegistryResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureContainerRegistryResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureContainerRegistryResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureContainerRegistryResource that enables fluent chaining.
@@ -8013,10 +10914,6 @@ class AzureContainerRegistryResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -8114,6 +11011,10 @@ class AzureContainerRegistryResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     getOutput(name) {
         return this._promise.then(obj => obj.getOutput(name));
@@ -8198,6 +11099,4382 @@ class AzureContainerRegistryResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
+}
+// ============================================================================
+// AzureCosmosDBContainerResourceImpl
+// ============================================================================
+class AzureCosmosDBContainerResourceImpl extends base_js_1.ResourceBuilderBase {
+    constructor(handle, client) {
+        super(handle, client);
+    }
+    /** @internal */
+    async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
+        const rpcArgs = { builder: this._handle };
+        if (buildImage !== undefined)
+            rpcArgs.buildImage = buildImage;
+        if (runtimeImage !== undefined)
+            rpcArgs.runtimeImage = runtimeImage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfileBaseImage', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        const buildImage = options?.buildImage;
+        const runtimeImage = options?.runtimeImage;
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withDockerfileBaseImageInternal(buildImage, runtimeImage), this._client);
+    }
+    /** @internal */
+    async _withRequiredCommandInternal(command, helpLink) {
+        const rpcArgs = { builder: this._handle, command };
+        if (helpLink !== undefined)
+            rpcArgs.helpLink = helpLink;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRequiredCommand', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        const helpLink = options?.helpLink;
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withRequiredCommandInternal(command, helpLink), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionProperty', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withConnectionPropertyInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionPropertyValue', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withConnectionPropertyValueInternal(name, value), this._client);
+    }
+    /** Gets a connection property by key */
+    async getConnectionProperty(key) {
+        const rpcArgs = { resource: this._handle, key };
+        return await this._client.invokeCapability('Aspire.Hosting/getConnectionProperty', rpcArgs);
+    }
+    /** @internal */
+    async _withUrlsCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new ResourceUrlsCallbackContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlsCallback', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withUrlsCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withUrlInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrl', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        const displayText = options?.displayText;
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withUrlInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlExpressionInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlExpression', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        const displayText = options?.displayText;
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withUrlExpressionInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const obj = (0, transport_js_1.wrapIfHandle)(objData);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpoint', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withUrlForEndpointInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _excludeFromManifestInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromManifest', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._excludeFromManifestInternal(), this._client);
+    }
+    /** @internal */
+    async _withExplicitStartInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExplicitStart', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withExplicitStartInternal(), this._client);
+    }
+    /** @internal */
+    async _withHealthCheckInternal(key) {
+        const rpcArgs = { builder: this._handle, key };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHealthCheck', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withHealthCheckInternal(key), this._client);
+    }
+    /** @internal */
+    async _withCommandInternal(name, displayName, executeCommand, commandOptions) {
+        const executeCommandId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ExecuteCommandContextImpl(argHandle, this._client);
+            return await executeCommand(arg);
+        });
+        const rpcArgs = { builder: this._handle, name, displayName, executeCommand: executeCommandId };
+        if (commandOptions !== undefined)
+            rpcArgs.commandOptions = commandOptions;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withCommand', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        const commandOptions = options?.commandOptions;
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withCommandInternal(name, displayName, executeCommand, commandOptions), this._client);
+    }
+    /** @internal */
+    async _withRelationshipInternal(resourceBuilder, type) {
+        resourceBuilder = (0, transport_js_1.isPromiseLike)(resourceBuilder) ? await resourceBuilder : resourceBuilder;
+        const rpcArgs = { builder: this._handle, resourceBuilder, type };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderRelationship', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withRelationshipInternal(resourceBuilder, type), this._client);
+    }
+    /** @internal */
+    async _withParentRelationshipInternal(parent) {
+        parent = (0, transport_js_1.isPromiseLike)(parent) ? await parent : parent;
+        const rpcArgs = { builder: this._handle, parent };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderParentRelationship', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withParentRelationshipInternal(parent), this._client);
+    }
+    /** @internal */
+    async _withChildRelationshipInternal(child) {
+        child = (0, transport_js_1.isPromiseLike)(child) ? await child : child;
+        const rpcArgs = { builder: this._handle, child };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderChildRelationship', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withChildRelationshipInternal(child), this._client);
+    }
+    /** @internal */
+    async _withIconNameInternal(iconName, iconVariant) {
+        const rpcArgs = { builder: this._handle, iconName };
+        if (iconVariant !== undefined)
+            rpcArgs.iconVariant = iconVariant;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withIconName', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        const iconVariant = options?.iconVariant;
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withIconNameInternal(iconName, iconVariant), this._client);
+    }
+    /** @internal */
+    async _excludeFromMcpInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromMcp', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._excludeFromMcpInternal(), this._client);
+    }
+    /** @internal */
+    async _withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new PipelineStepContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, stepName, callback: callbackId };
+        if (dependsOn !== undefined)
+            rpcArgs.dependsOn = dependsOn;
+        if (requiredBy !== undefined)
+            rpcArgs.requiredBy = requiredBy;
+        if (tags !== undefined)
+            rpcArgs.tags = tags;
+        if (description !== undefined)
+            rpcArgs.description = description;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineStepFactory', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        const dependsOn = options?.dependsOn;
+        const requiredBy = options?.requiredBy;
+        const tags = options?.tags;
+        const description = options?.description;
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description), this._client);
+    }
+    /** @internal */
+    async _withPipelineConfigurationInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new PipelineConfigurationContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineConfiguration', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withPipelineConfigurationInternal(callback), this._client);
+    }
+    /** Gets the resource name */
+    async getResourceName() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/getResourceName', rpcArgs);
+    }
+    /** @internal */
+    async _onBeforeResourceStartedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new BeforeResourceStartedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onBeforeResourceStarted', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._onBeforeResourceStartedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceStoppedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceStoppedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceStopped', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._onResourceStoppedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onConnectionStringAvailableInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ConnectionStringAvailableEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onConnectionStringAvailable', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._onConnectionStringAvailableInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onInitializeResourceInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new InitializeResourceEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onInitializeResource', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._onInitializeResourceInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceReadyInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceReadyEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceReady', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._onResourceReadyInternal(callback), this._client);
+    }
+    /** Creates an execution configuration builder */
+    async createExecutionConfiguration() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/createExecutionConfiguration', rpcArgs);
+    }
+    /** @internal */
+    async _withStorageRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Storage/withStorageRoleAssignments', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withAzureContainerRegistryInternal(registryBuilder) {
+        registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
+        const rpcArgs = { builder: this._handle, registryBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryAzureContainerRegistry', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withAzureContainerRegistryInternal(registryBuilder), this._client);
+    }
+    /** @internal */
+    async _getAzureContainerRegistryInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/getAzureContainerRegistry', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._getAzureContainerRegistryInternal(), this._client);
+    }
+    /** @internal */
+    async _withContainerRegistryRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryRoleAssignments', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
+}
+/**
+ * Thenable wrapper for AzureCosmosDBContainerResource that enables fluent chaining.
+ * @example
+ * await builder.addSomething().withX().withY();
+ */
+class AzureCosmosDBContainerResourcePromiseImpl {
+    _promise;
+    _client;
+    constructor(_promise, _client, track = true) {
+        this._promise = _promise;
+        this._client = _client;
+        if (track) {
+            _client.trackPromise(_promise);
+        }
+    }
+    then(onfulfilled, onrejected) {
+        return this._promise.then(onfulfilled, onrejected);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withDockerfileBaseImage(options)), this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withRequiredCommand(command, options)), this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withConnectionProperty(name, value)), this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withConnectionPropertyValue(name, value)), this._client);
+    }
+    /** Gets a connection property by key */
+    getConnectionProperty(key) {
+        return this._promise.then(obj => obj.getConnectionProperty(key));
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withUrlsCallback(callback)), this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withUrl(url, options)), this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withUrlExpression(url, options)), this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpoint(endpointName, callback)), this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.excludeFromManifest()), this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withExplicitStart()), this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withHealthCheck(key)), this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withCommand(name, displayName, executeCommand, options)), this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withRelationship(resourceBuilder, type)), this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withParentRelationship(parent)), this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withChildRelationship(child)), this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withIconName(iconName, options)), this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.excludeFromMcp()), this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withPipelineStepFactory(stepName, callback, options)), this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withPipelineConfiguration(callback)), this._client);
+    }
+    /** Gets the resource name */
+    getResourceName() {
+        return this._promise.then(obj => obj.getResourceName());
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.onBeforeResourceStarted(callback)), this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.onResourceStopped(callback)), this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.onConnectionStringAvailable(callback)), this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.onInitializeResource(callback)), this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.onResourceReady(callback)), this._client);
+    }
+    /** Creates an execution configuration builder */
+    createExecutionConfiguration() {
+        return this._promise.then(obj => obj.createExecutionConfiguration());
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.getAzureContainerRegistry()), this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
+}
+// ============================================================================
+// AzureCosmosDBDatabaseResourceImpl
+// ============================================================================
+class AzureCosmosDBDatabaseResourceImpl extends base_js_1.ResourceBuilderBase {
+    constructor(handle, client) {
+        super(handle, client);
+    }
+    /** @internal */
+    async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
+        const rpcArgs = { builder: this._handle };
+        if (buildImage !== undefined)
+            rpcArgs.buildImage = buildImage;
+        if (runtimeImage !== undefined)
+            rpcArgs.runtimeImage = runtimeImage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfileBaseImage', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        const buildImage = options?.buildImage;
+        const runtimeImage = options?.runtimeImage;
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withDockerfileBaseImageInternal(buildImage, runtimeImage), this._client);
+    }
+    /** @internal */
+    async _withRequiredCommandInternal(command, helpLink) {
+        const rpcArgs = { builder: this._handle, command };
+        if (helpLink !== undefined)
+            rpcArgs.helpLink = helpLink;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRequiredCommand', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        const helpLink = options?.helpLink;
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withRequiredCommandInternal(command, helpLink), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionProperty', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withConnectionPropertyInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionPropertyValue', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withConnectionPropertyValueInternal(name, value), this._client);
+    }
+    /** Gets a connection property by key */
+    async getConnectionProperty(key) {
+        const rpcArgs = { resource: this._handle, key };
+        return await this._client.invokeCapability('Aspire.Hosting/getConnectionProperty', rpcArgs);
+    }
+    /** @internal */
+    async _withUrlsCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new ResourceUrlsCallbackContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlsCallback', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withUrlsCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withUrlInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrl', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        const displayText = options?.displayText;
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withUrlInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlExpressionInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlExpression', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        const displayText = options?.displayText;
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withUrlExpressionInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const obj = (0, transport_js_1.wrapIfHandle)(objData);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpoint', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withUrlForEndpointInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _excludeFromManifestInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromManifest', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._excludeFromManifestInternal(), this._client);
+    }
+    /** @internal */
+    async _withExplicitStartInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExplicitStart', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withExplicitStartInternal(), this._client);
+    }
+    /** @internal */
+    async _withHealthCheckInternal(key) {
+        const rpcArgs = { builder: this._handle, key };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHealthCheck', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withHealthCheckInternal(key), this._client);
+    }
+    /** @internal */
+    async _withCommandInternal(name, displayName, executeCommand, commandOptions) {
+        const executeCommandId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ExecuteCommandContextImpl(argHandle, this._client);
+            return await executeCommand(arg);
+        });
+        const rpcArgs = { builder: this._handle, name, displayName, executeCommand: executeCommandId };
+        if (commandOptions !== undefined)
+            rpcArgs.commandOptions = commandOptions;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withCommand', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        const commandOptions = options?.commandOptions;
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withCommandInternal(name, displayName, executeCommand, commandOptions), this._client);
+    }
+    /** @internal */
+    async _withRelationshipInternal(resourceBuilder, type) {
+        resourceBuilder = (0, transport_js_1.isPromiseLike)(resourceBuilder) ? await resourceBuilder : resourceBuilder;
+        const rpcArgs = { builder: this._handle, resourceBuilder, type };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderRelationship', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withRelationshipInternal(resourceBuilder, type), this._client);
+    }
+    /** @internal */
+    async _withParentRelationshipInternal(parent) {
+        parent = (0, transport_js_1.isPromiseLike)(parent) ? await parent : parent;
+        const rpcArgs = { builder: this._handle, parent };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderParentRelationship', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withParentRelationshipInternal(parent), this._client);
+    }
+    /** @internal */
+    async _withChildRelationshipInternal(child) {
+        child = (0, transport_js_1.isPromiseLike)(child) ? await child : child;
+        const rpcArgs = { builder: this._handle, child };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderChildRelationship', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withChildRelationshipInternal(child), this._client);
+    }
+    /** @internal */
+    async _withIconNameInternal(iconName, iconVariant) {
+        const rpcArgs = { builder: this._handle, iconName };
+        if (iconVariant !== undefined)
+            rpcArgs.iconVariant = iconVariant;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withIconName', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        const iconVariant = options?.iconVariant;
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withIconNameInternal(iconName, iconVariant), this._client);
+    }
+    /** @internal */
+    async _excludeFromMcpInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromMcp', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._excludeFromMcpInternal(), this._client);
+    }
+    /** @internal */
+    async _withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new PipelineStepContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, stepName, callback: callbackId };
+        if (dependsOn !== undefined)
+            rpcArgs.dependsOn = dependsOn;
+        if (requiredBy !== undefined)
+            rpcArgs.requiredBy = requiredBy;
+        if (tags !== undefined)
+            rpcArgs.tags = tags;
+        if (description !== undefined)
+            rpcArgs.description = description;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineStepFactory', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        const dependsOn = options?.dependsOn;
+        const requiredBy = options?.requiredBy;
+        const tags = options?.tags;
+        const description = options?.description;
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description), this._client);
+    }
+    /** @internal */
+    async _withPipelineConfigurationInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new PipelineConfigurationContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineConfiguration', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withPipelineConfigurationInternal(callback), this._client);
+    }
+    /** Gets the resource name */
+    async getResourceName() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/getResourceName', rpcArgs);
+    }
+    /** @internal */
+    async _onBeforeResourceStartedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new BeforeResourceStartedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onBeforeResourceStarted', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._onBeforeResourceStartedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceStoppedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceStoppedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceStopped', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._onResourceStoppedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onConnectionStringAvailableInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ConnectionStringAvailableEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onConnectionStringAvailable', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._onConnectionStringAvailableInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onInitializeResourceInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new InitializeResourceEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onInitializeResource', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._onInitializeResourceInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceReadyInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceReadyEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceReady', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._onResourceReadyInternal(callback), this._client);
+    }
+    /** Creates an execution configuration builder */
+    async createExecutionConfiguration() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/createExecutionConfiguration', rpcArgs);
+    }
+    /** @internal */
+    async _withStorageRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Storage/withStorageRoleAssignments', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withAzureContainerRegistryInternal(registryBuilder) {
+        registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
+        const rpcArgs = { builder: this._handle, registryBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryAzureContainerRegistry', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withAzureContainerRegistryInternal(registryBuilder), this._client);
+    }
+    /** @internal */
+    async _getAzureContainerRegistryInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/getAzureContainerRegistry', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._getAzureContainerRegistryInternal(), this._client);
+    }
+    /** @internal */
+    async _withContainerRegistryRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryRoleAssignments', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _addContainerInternal(name, partitionKeyPath, containerName) {
+        const rpcArgs = { builder: this._handle, name, partitionKeyPath };
+        if (containerName !== undefined)
+            rpcArgs.containerName = containerName;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.CosmosDB/addContainer', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Adds an Azure Cosmos DB container resource */
+    addContainer(name, partitionKeyPath, options) {
+        const containerName = options?.containerName;
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._addContainerInternal(name, partitionKeyPath, containerName), this._client);
+    }
+    /** @internal */
+    async _addContainerWithPartitionKeyPathsInternal(name, partitionKeyPaths, containerName) {
+        const rpcArgs = { builder: this._handle, name, partitionKeyPaths };
+        if (containerName !== undefined)
+            rpcArgs.containerName = containerName;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.CosmosDB/addContainerWithPartitionKeyPaths', rpcArgs);
+        return new AzureCosmosDBContainerResourceImpl(result, this._client);
+    }
+    /** Adds an Azure Cosmos DB container resource with hierarchical partition keys */
+    addContainerWithPartitionKeyPaths(name, partitionKeyPaths, options) {
+        const containerName = options?.containerName;
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._addContainerWithPartitionKeyPathsInternal(name, partitionKeyPaths, containerName), this._client);
+    }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
+}
+/**
+ * Thenable wrapper for AzureCosmosDBDatabaseResource that enables fluent chaining.
+ * @example
+ * await builder.addSomething().withX().withY();
+ */
+class AzureCosmosDBDatabaseResourcePromiseImpl {
+    _promise;
+    _client;
+    constructor(_promise, _client, track = true) {
+        this._promise = _promise;
+        this._client = _client;
+        if (track) {
+            _client.trackPromise(_promise);
+        }
+    }
+    then(onfulfilled, onrejected) {
+        return this._promise.then(onfulfilled, onrejected);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withDockerfileBaseImage(options)), this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withRequiredCommand(command, options)), this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withConnectionProperty(name, value)), this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withConnectionPropertyValue(name, value)), this._client);
+    }
+    /** Gets a connection property by key */
+    getConnectionProperty(key) {
+        return this._promise.then(obj => obj.getConnectionProperty(key));
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withUrlsCallback(callback)), this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withUrl(url, options)), this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withUrlExpression(url, options)), this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpoint(endpointName, callback)), this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.excludeFromManifest()), this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withExplicitStart()), this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withHealthCheck(key)), this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withCommand(name, displayName, executeCommand, options)), this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withRelationship(resourceBuilder, type)), this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withParentRelationship(parent)), this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withChildRelationship(child)), this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withIconName(iconName, options)), this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.excludeFromMcp()), this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withPipelineStepFactory(stepName, callback, options)), this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withPipelineConfiguration(callback)), this._client);
+    }
+    /** Gets the resource name */
+    getResourceName() {
+        return this._promise.then(obj => obj.getResourceName());
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.onBeforeResourceStarted(callback)), this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.onResourceStopped(callback)), this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.onConnectionStringAvailable(callback)), this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.onInitializeResource(callback)), this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.onResourceReady(callback)), this._client);
+    }
+    /** Creates an execution configuration builder */
+    createExecutionConfiguration() {
+        return this._promise.then(obj => obj.createExecutionConfiguration());
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.getAzureContainerRegistry()), this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Adds an Azure Cosmos DB container resource */
+    addContainer(name, partitionKeyPath, options) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.addContainer(name, partitionKeyPath, options)), this._client);
+    }
+    /** Adds an Azure Cosmos DB container resource with hierarchical partition keys */
+    addContainerWithPartitionKeyPaths(name, partitionKeyPaths, options) {
+        return new AzureCosmosDBContainerResourcePromiseImpl(this._promise.then(obj => obj.addContainerWithPartitionKeyPaths(name, partitionKeyPaths, options)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
+}
+// ============================================================================
+// AzureCosmosDBEmulatorResourceImpl
+// ============================================================================
+class AzureCosmosDBEmulatorResourceImpl extends base_js_1.ResourceBuilderBase {
+    constructor(handle, client) {
+        super(handle, client);
+    }
+    /** @internal */
+    async _withBindMountInternal(source, target, isReadOnly) {
+        const rpcArgs = { builder: this._handle, source, target };
+        if (isReadOnly !== undefined)
+            rpcArgs.isReadOnly = isReadOnly;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBindMount', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a bind mount */
+    withBindMount(source, target, options) {
+        const isReadOnly = options?.isReadOnly;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withBindMountInternal(source, target, isReadOnly), this._client);
+    }
+    /** @internal */
+    async _withEntrypointInternal(entrypoint) {
+        const rpcArgs = { builder: this._handle, entrypoint };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEntrypoint', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the container entrypoint */
+    withEntrypoint(entrypoint) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withEntrypointInternal(entrypoint), this._client);
+    }
+    /** @internal */
+    async _withImageTagInternal(tag) {
+        const rpcArgs = { builder: this._handle, tag };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withImageTag', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the container image tag */
+    withImageTag(tag) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withImageTagInternal(tag), this._client);
+    }
+    /** @internal */
+    async _withImageRegistryInternal(registry) {
+        const rpcArgs = { builder: this._handle, registry };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withImageRegistry', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the container image registry */
+    withImageRegistry(registry) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withImageRegistryInternal(registry), this._client);
+    }
+    /** @internal */
+    async _withImageInternal(image, tag) {
+        const rpcArgs = { builder: this._handle, image };
+        if (tag !== undefined)
+            rpcArgs.tag = tag;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withImage', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the container image */
+    withImage(image, options) {
+        const tag = options?.tag;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withImageInternal(image, tag), this._client);
+    }
+    /** @internal */
+    async _withImageSHA256Internal(sha256) {
+        const rpcArgs = { builder: this._handle, sha256 };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withImageSHA256', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the image SHA256 digest */
+    withImageSHA256(sha256) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withImageSHA256Internal(sha256), this._client);
+    }
+    /** @internal */
+    async _withContainerRuntimeArgsInternal(args) {
+        const rpcArgs = { builder: this._handle, args };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRuntimeArgs', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds runtime arguments for the container */
+    withContainerRuntimeArgs(args) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withContainerRuntimeArgsInternal(args), this._client);
+    }
+    /** @internal */
+    async _withLifetimeInternal(lifetime) {
+        const rpcArgs = { builder: this._handle, lifetime };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withLifetime', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the lifetime behavior of the container resource */
+    withLifetime(lifetime) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withLifetimeInternal(lifetime), this._client);
+    }
+    /** @internal */
+    async _withImagePullPolicyInternal(pullPolicy) {
+        const rpcArgs = { builder: this._handle, pullPolicy };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withImagePullPolicy', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the container image pull policy */
+    withImagePullPolicy(pullPolicy) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withImagePullPolicyInternal(pullPolicy), this._client);
+    }
+    /** @internal */
+    async _publishAsContainerInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/publishAsContainer', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures the resource to be published as a container */
+    publishAsContainer() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._publishAsContainerInternal(), this._client);
+    }
+    /** @internal */
+    async _withDockerfileInternal(contextPath, dockerfilePath, stage) {
+        const rpcArgs = { builder: this._handle, contextPath };
+        if (dockerfilePath !== undefined)
+            rpcArgs.dockerfilePath = dockerfilePath;
+        if (stage !== undefined)
+            rpcArgs.stage = stage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfile', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures the resource to use a Dockerfile */
+    withDockerfile(contextPath, options) {
+        const dockerfilePath = options?.dockerfilePath;
+        const stage = options?.stage;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withDockerfileInternal(contextPath, dockerfilePath, stage), this._client);
+    }
+    /** @internal */
+    async _withContainerNameInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerName', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the container name */
+    withContainerName(name) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withContainerNameInternal(name), this._client);
+    }
+    /** @internal */
+    async _withBuildArgInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuildArg', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a build argument from a string value or parameter resource */
+    withBuildArg(name, value) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withBuildArgInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withBuildSecretInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withParameterBuildSecret', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a build secret from a parameter resource */
+    withBuildSecret(name, value) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withBuildSecretInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withContainerCertificatePathsInternal(customCertificatesDestination, defaultCertificateBundlePaths, defaultCertificateDirectoryPaths) {
+        const rpcArgs = { builder: this._handle };
+        if (customCertificatesDestination !== undefined)
+            rpcArgs.customCertificatesDestination = customCertificatesDestination;
+        if (defaultCertificateBundlePaths !== undefined)
+            rpcArgs.defaultCertificateBundlePaths = defaultCertificateBundlePaths;
+        if (defaultCertificateDirectoryPaths !== undefined)
+            rpcArgs.defaultCertificateDirectoryPaths = defaultCertificateDirectoryPaths;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerCertificatePaths', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Overrides container certificate bundle and directory paths used for trust configuration */
+    withContainerCertificatePaths(options) {
+        const customCertificatesDestination = options?.customCertificatesDestination;
+        const defaultCertificateBundlePaths = options?.defaultCertificateBundlePaths;
+        const defaultCertificateDirectoryPaths = options?.defaultCertificateDirectoryPaths;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withContainerCertificatePathsInternal(customCertificatesDestination, defaultCertificateBundlePaths, defaultCertificateDirectoryPaths), this._client);
+    }
+    /** @internal */
+    async _withEndpointProxySupportInternal(proxyEnabled) {
+        const rpcArgs = { builder: this._handle, proxyEnabled };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEndpointProxySupport', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures endpoint proxy support */
+    withEndpointProxySupport(proxyEnabled) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withEndpointProxySupportInternal(proxyEnabled), this._client);
+    }
+    /** @internal */
+    async _withDockerfileBuilderInternal(contextPath, callback, stage) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new DockerfileBuilderCallbackContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, contextPath, callback: callbackId };
+        if (stage !== undefined)
+            rpcArgs.stage = stage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfileBuilder', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures the resource to use a programmatically generated Dockerfile */
+    withDockerfileBuilder(contextPath, callback, options) {
+        const stage = options?.stage;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withDockerfileBuilderInternal(contextPath, callback, stage), this._client);
+    }
+    /** @internal */
+    async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
+        const rpcArgs = { builder: this._handle };
+        if (buildImage !== undefined)
+            rpcArgs.buildImage = buildImage;
+        if (runtimeImage !== undefined)
+            rpcArgs.runtimeImage = runtimeImage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfileBaseImage', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        const buildImage = options?.buildImage;
+        const runtimeImage = options?.runtimeImage;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withDockerfileBaseImageInternal(buildImage, runtimeImage), this._client);
+    }
+    /** @internal */
+    async _withContainerNetworkAliasInternal(alias) {
+        const rpcArgs = { builder: this._handle, alias };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerNetworkAlias', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a network alias for the container */
+    withContainerNetworkAlias(alias) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withContainerNetworkAliasInternal(alias), this._client);
+    }
+    /** @internal */
+    async _withMcpServerInternal(path, endpointName) {
+        const rpcArgs = { builder: this._handle };
+        if (path !== undefined)
+            rpcArgs.path = path;
+        if (endpointName !== undefined)
+            rpcArgs.endpointName = endpointName;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withMcpServer', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures an MCP server endpoint on the resource */
+    withMcpServer(options) {
+        const path = options?.path;
+        const endpointName = options?.endpointName;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withMcpServerInternal(path, endpointName), this._client);
+    }
+    /** @internal */
+    async _withOtlpExporterInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withOtlpExporter', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures OTLP telemetry export */
+    withOtlpExporter() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withOtlpExporterInternal(), this._client);
+    }
+    /** @internal */
+    async _withOtlpExporterProtocolInternal(protocol) {
+        const rpcArgs = { builder: this._handle, protocol };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withOtlpExporterProtocol', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures OTLP telemetry export with specific protocol */
+    withOtlpExporterProtocol(protocol) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withOtlpExporterProtocolInternal(protocol), this._client);
+    }
+    /** @internal */
+    async _publishAsConnectionStringInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/publishAsConnectionString', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Publishes the resource as a connection string */
+    publishAsConnectionString() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._publishAsConnectionStringInternal(), this._client);
+    }
+    /** @internal */
+    async _withRequiredCommandInternal(command, helpLink) {
+        const rpcArgs = { builder: this._handle, command };
+        if (helpLink !== undefined)
+            rpcArgs.helpLink = helpLink;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRequiredCommand', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        const helpLink = options?.helpLink;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withRequiredCommandInternal(command, helpLink), this._client);
+    }
+    /** @internal */
+    async _withEnvironmentInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEnvironment', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets an environment variable */
+    withEnvironment(name, value) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withEnvironmentInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withEnvironmentExpressionInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEnvironmentExpression', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /**
+     * Sets an environment variable from a reference expression
+     * @deprecated ATS compatibility shim. Use withEnvironment instead.
+     */
+    withEnvironmentExpression(name, value) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withEnvironmentExpressionInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withEnvironmentCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new EnvironmentCallbackContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEnvironmentCallback', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets environment variables via callback */
+    withEnvironmentCallback(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withEnvironmentCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withEnvironmentEndpointInternal(name, endpointReference) {
+        endpointReference = (0, transport_js_1.isPromiseLike)(endpointReference) ? await endpointReference : endpointReference;
+        const rpcArgs = { builder: this._handle, name, endpointReference };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEnvironmentEndpoint', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /**
+     * Sets an environment variable from an endpoint reference
+     * @deprecated ATS compatibility shim. Use withEnvironment instead.
+     */
+    withEnvironmentEndpoint(name, endpointReference) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withEnvironmentEndpointInternal(name, endpointReference), this._client);
+    }
+    /** @internal */
+    async _withEnvironmentParameterInternal(name, parameter) {
+        parameter = (0, transport_js_1.isPromiseLike)(parameter) ? await parameter : parameter;
+        const rpcArgs = { builder: this._handle, name, parameter };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEnvironmentParameter', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /**
+     * Sets an environment variable from a parameter resource
+     * @deprecated ATS compatibility shim. Use withEnvironment instead.
+     */
+    withEnvironmentParameter(name, parameter) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withEnvironmentParameterInternal(name, parameter), this._client);
+    }
+    /** @internal */
+    async _withEnvironmentConnectionStringInternal(envVarName, resource) {
+        resource = (0, transport_js_1.isPromiseLike)(resource) ? await resource : resource;
+        const rpcArgs = { builder: this._handle, envVarName, resource };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEnvironmentConnectionString', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /**
+     * Sets an environment variable from a connection string resource
+     * @deprecated ATS compatibility shim. Use withEnvironment instead.
+     */
+    withEnvironmentConnectionString(envVarName, resource) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withEnvironmentConnectionStringInternal(envVarName, resource), this._client);
+    }
+    /** @internal */
+    async _withArgsInternal(args) {
+        const rpcArgs = { builder: this._handle, args };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withArgs', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds arguments */
+    withArgs(args) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withArgsInternal(args), this._client);
+    }
+    /** @internal */
+    async _withArgsCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new CommandLineArgsCallbackContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withArgsCallback', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets command-line arguments via callback */
+    withArgsCallback(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withArgsCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withReferenceEnvironmentInternal(options) {
+        const rpcArgs = { builder: this._handle, options };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withReferenceEnvironment', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures which reference values are injected into environment variables */
+    withReferenceEnvironment(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withReferenceEnvironmentInternal(options), this._client);
+    }
+    /** @internal */
+    async _withReferenceInternal(source, connectionName, optional, name) {
+        source = (0, transport_js_1.isPromiseLike)(source) ? await source : source;
+        const rpcArgs = { builder: this._handle, source };
+        if (connectionName !== undefined)
+            rpcArgs.connectionName = connectionName;
+        if (optional !== undefined)
+            rpcArgs.optional = optional;
+        if (name !== undefined)
+            rpcArgs.name = name;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withReference', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a reference to another resource */
+    withReference(source, options) {
+        const connectionName = options?.connectionName;
+        const optional = options?.optional;
+        const name = options?.name;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withReferenceInternal(source, connectionName, optional, name), this._client);
+    }
+    /** @internal */
+    async _withReferenceUriInternal(name, uri) {
+        const rpcArgs = { builder: this._handle, name, uri };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withReferenceUri', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a reference to a URI */
+    withReferenceUri(name, uri) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withReferenceUriInternal(name, uri), this._client);
+    }
+    /** @internal */
+    async _withReferenceExternalServiceInternal(externalService) {
+        externalService = (0, transport_js_1.isPromiseLike)(externalService) ? await externalService : externalService;
+        const rpcArgs = { builder: this._handle, externalService };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withReferenceExternalService', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a reference to an external service */
+    withReferenceExternalService(externalService) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withReferenceExternalServiceInternal(externalService), this._client);
+    }
+    /** @internal */
+    async _withReferenceEndpointInternal(endpointReference) {
+        endpointReference = (0, transport_js_1.isPromiseLike)(endpointReference) ? await endpointReference : endpointReference;
+        const rpcArgs = { builder: this._handle, endpointReference };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withReferenceEndpoint', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a reference to an endpoint */
+    withReferenceEndpoint(endpointReference) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withReferenceEndpointInternal(endpointReference), this._client);
+    }
+    /** @internal */
+    async _withEndpointCallbackInternal(endpointName, callback, createIfNotExists) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new EndpointUpdateContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        if (createIfNotExists !== undefined)
+            rpcArgs.createIfNotExists = createIfNotExists;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEndpointCallback', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Updates a named endpoint via callback */
+    withEndpointCallback(endpointName, callback, options) {
+        const createIfNotExists = options?.createIfNotExists;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withEndpointCallbackInternal(endpointName, callback, createIfNotExists), this._client);
+    }
+    /** @internal */
+    async _withHttpEndpointCallbackInternal(callback, name, createIfNotExists) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new EndpointUpdateContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (createIfNotExists !== undefined)
+            rpcArgs.createIfNotExists = createIfNotExists;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpEndpointCallback', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Updates an HTTP endpoint via callback */
+    withHttpEndpointCallback(callback, options) {
+        const name = options?.name;
+        const createIfNotExists = options?.createIfNotExists;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withHttpEndpointCallbackInternal(callback, name, createIfNotExists), this._client);
+    }
+    /** @internal */
+    async _withHttpsEndpointCallbackInternal(callback, name, createIfNotExists) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new EndpointUpdateContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (createIfNotExists !== undefined)
+            rpcArgs.createIfNotExists = createIfNotExists;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpsEndpointCallback', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Updates an HTTPS endpoint via callback */
+    withHttpsEndpointCallback(callback, options) {
+        const name = options?.name;
+        const createIfNotExists = options?.createIfNotExists;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withHttpsEndpointCallbackInternal(callback, name, createIfNotExists), this._client);
+    }
+    /** @internal */
+    async _withEndpointInternal(port, targetPort, scheme, name, env, isProxied, isExternal, protocol) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        if (targetPort !== undefined)
+            rpcArgs.targetPort = targetPort;
+        if (scheme !== undefined)
+            rpcArgs.scheme = scheme;
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (env !== undefined)
+            rpcArgs.env = env;
+        if (isProxied !== undefined)
+            rpcArgs.isProxied = isProxied;
+        if (isExternal !== undefined)
+            rpcArgs.isExternal = isExternal;
+        if (protocol !== undefined)
+            rpcArgs.protocol = protocol;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEndpoint', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a network endpoint */
+    withEndpoint(options) {
+        const port = options?.port;
+        const targetPort = options?.targetPort;
+        const scheme = options?.scheme;
+        const name = options?.name;
+        const env = options?.env;
+        const isProxied = options?.isProxied;
+        const isExternal = options?.isExternal;
+        const protocol = options?.protocol;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withEndpointInternal(port, targetPort, scheme, name, env, isProxied, isExternal, protocol), this._client);
+    }
+    /** @internal */
+    async _withHttpEndpointInternal(port, targetPort, name, env, isProxied) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        if (targetPort !== undefined)
+            rpcArgs.targetPort = targetPort;
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (env !== undefined)
+            rpcArgs.env = env;
+        if (isProxied !== undefined)
+            rpcArgs.isProxied = isProxied;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpEndpoint', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP endpoint */
+    withHttpEndpoint(options) {
+        const port = options?.port;
+        const targetPort = options?.targetPort;
+        const name = options?.name;
+        const env = options?.env;
+        const isProxied = options?.isProxied;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withHttpEndpointInternal(port, targetPort, name, env, isProxied), this._client);
+    }
+    /** @internal */
+    async _withHttpsEndpointInternal(port, targetPort, name, env, isProxied) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        if (targetPort !== undefined)
+            rpcArgs.targetPort = targetPort;
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (env !== undefined)
+            rpcArgs.env = env;
+        if (isProxied !== undefined)
+            rpcArgs.isProxied = isProxied;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpsEndpoint', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds an HTTPS endpoint */
+    withHttpsEndpoint(options) {
+        const port = options?.port;
+        const targetPort = options?.targetPort;
+        const name = options?.name;
+        const env = options?.env;
+        const isProxied = options?.isProxied;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withHttpsEndpointInternal(port, targetPort, name, env, isProxied), this._client);
+    }
+    /** @internal */
+    async _withExternalHttpEndpointsInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExternalHttpEndpoints', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Makes HTTP endpoints externally accessible */
+    withExternalHttpEndpoints() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withExternalHttpEndpointsInternal(), this._client);
+    }
+    /** Gets an endpoint reference */
+    async getEndpoint(name) {
+        const rpcArgs = { builder: this._handle, name };
+        return await this._client.invokeCapability('Aspire.Hosting/getEndpoint', rpcArgs);
+    }
+    /** @internal */
+    async _asHttp2ServiceInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/asHttp2Service', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures resource for HTTP/2 */
+    asHttp2Service() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._asHttp2ServiceInternal(), this._client);
+    }
+    /** @internal */
+    async _withUrlsCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new ResourceUrlsCallbackContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlsCallback', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withUrlsCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withUrlInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrl', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        const displayText = options?.displayText;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withUrlInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlExpressionInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlExpression', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        const displayText = options?.displayText;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withUrlExpressionInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const obj = (0, transport_js_1.wrapIfHandle)(objData);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpoint', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withUrlForEndpointInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointFactoryInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new EndpointReferenceImpl(argHandle, this._client);
+            return await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpointFactory', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a URL for a specific endpoint via factory callback */
+    withUrlForEndpointFactory(endpointName, callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withUrlForEndpointFactoryInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _excludeFromManifestInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromManifest', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._excludeFromManifestInternal(), this._client);
+    }
+    /** @internal */
+    async _waitForInternal(dependency) {
+        dependency = (0, transport_js_1.isPromiseLike)(dependency) ? await dependency : dependency;
+        const rpcArgs = { builder: this._handle, dependency };
+        const result = await this._client.invokeCapability('Aspire.Hosting/waitForResource', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Waits for another resource to be ready */
+    waitFor(dependency) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._waitForInternal(dependency), this._client);
+    }
+    /** @internal */
+    async _waitForWithBehaviorInternal(dependency, waitBehavior) {
+        dependency = (0, transport_js_1.isPromiseLike)(dependency) ? await dependency : dependency;
+        const rpcArgs = { builder: this._handle, dependency, waitBehavior };
+        const result = await this._client.invokeCapability('Aspire.Hosting/waitForWithBehavior', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Waits for another resource with specific behavior */
+    waitForWithBehavior(dependency, waitBehavior) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._waitForWithBehaviorInternal(dependency, waitBehavior), this._client);
+    }
+    /** @internal */
+    async _waitForStartInternal(dependency) {
+        dependency = (0, transport_js_1.isPromiseLike)(dependency) ? await dependency : dependency;
+        const rpcArgs = { builder: this._handle, dependency };
+        const result = await this._client.invokeCapability('Aspire.Hosting/waitForResourceStart', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Waits for another resource to start */
+    waitForStart(dependency) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._waitForStartInternal(dependency), this._client);
+    }
+    /** @internal */
+    async _waitForStartWithBehaviorInternal(dependency, waitBehavior) {
+        dependency = (0, transport_js_1.isPromiseLike)(dependency) ? await dependency : dependency;
+        const rpcArgs = { builder: this._handle, dependency, waitBehavior };
+        const result = await this._client.invokeCapability('Aspire.Hosting/waitForStartWithBehavior', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Waits for another resource to start with specific behavior */
+    waitForStartWithBehavior(dependency, waitBehavior) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._waitForStartWithBehaviorInternal(dependency, waitBehavior), this._client);
+    }
+    /** @internal */
+    async _withExplicitStartInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExplicitStart', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withExplicitStartInternal(), this._client);
+    }
+    /** @internal */
+    async _waitForCompletionInternal(dependency, exitCode) {
+        dependency = (0, transport_js_1.isPromiseLike)(dependency) ? await dependency : dependency;
+        const rpcArgs = { builder: this._handle, dependency };
+        if (exitCode !== undefined)
+            rpcArgs.exitCode = exitCode;
+        const result = await this._client.invokeCapability('Aspire.Hosting/waitForResourceCompletion', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Waits for resource completion */
+    waitForCompletion(dependency, options) {
+        const exitCode = options?.exitCode;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._waitForCompletionInternal(dependency, exitCode), this._client);
+    }
+    /** @internal */
+    async _withHealthCheckInternal(key) {
+        const rpcArgs = { builder: this._handle, key };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHealthCheck', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withHealthCheckInternal(key), this._client);
+    }
+    /** @internal */
+    async _withHttpHealthCheckInternal(path, statusCode, endpointName) {
+        const rpcArgs = { builder: this._handle };
+        if (path !== undefined)
+            rpcArgs.path = path;
+        if (statusCode !== undefined)
+            rpcArgs.statusCode = statusCode;
+        if (endpointName !== undefined)
+            rpcArgs.endpointName = endpointName;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpHealthCheck', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP health check */
+    withHttpHealthCheck(options) {
+        const path = options?.path;
+        const statusCode = options?.statusCode;
+        const endpointName = options?.endpointName;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withHttpHealthCheckInternal(path, statusCode, endpointName), this._client);
+    }
+    /** @internal */
+    async _withCommandInternal(name, displayName, executeCommand, commandOptions) {
+        const executeCommandId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ExecuteCommandContextImpl(argHandle, this._client);
+            return await executeCommand(arg);
+        });
+        const rpcArgs = { builder: this._handle, name, displayName, executeCommand: executeCommandId };
+        if (commandOptions !== undefined)
+            rpcArgs.commandOptions = commandOptions;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withCommand', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        const commandOptions = options?.commandOptions;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withCommandInternal(name, displayName, executeCommand, commandOptions), this._client);
+    }
+    /** @internal */
+    async _withHttpCommandInternal(path, displayName, options) {
+        const rpcArgs = { builder: this._handle, path, displayName };
+        if (options !== undefined)
+            rpcArgs.options = options;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpCommand', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP resource command */
+    withHttpCommand(path, displayName, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withHttpCommandInternal(path, displayName, options), this._client);
+    }
+    /** @internal */
+    async _withDeveloperCertificateTrustInternal(trust) {
+        const rpcArgs = { builder: this._handle, trust };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDeveloperCertificateTrust', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures developer certificate trust */
+    withDeveloperCertificateTrust(trust) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withDeveloperCertificateTrustInternal(trust), this._client);
+    }
+    /** @internal */
+    async _withCertificateTrustScopeInternal(scope) {
+        const rpcArgs = { builder: this._handle, scope };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withCertificateTrustScope', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the certificate trust scope */
+    withCertificateTrustScope(scope) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withCertificateTrustScopeInternal(scope), this._client);
+    }
+    /** @internal */
+    async _withHttpsDeveloperCertificateInternal(password) {
+        password = (0, transport_js_1.isPromiseLike)(password) ? await password : password;
+        const rpcArgs = { builder: this._handle };
+        if (password !== undefined)
+            rpcArgs.password = password;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withParameterHttpsDeveloperCertificate', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures HTTPS with a developer certificate */
+    withHttpsDeveloperCertificate(options) {
+        let password = options?.password;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withHttpsDeveloperCertificateInternal(password), this._client);
+    }
+    /** @internal */
+    async _withoutHttpsCertificateInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withoutHttpsCertificate', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Removes HTTPS certificate configuration */
+    withoutHttpsCertificate() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withoutHttpsCertificateInternal(), this._client);
+    }
+    /** @internal */
+    async _withRelationshipInternal(resourceBuilder, type) {
+        resourceBuilder = (0, transport_js_1.isPromiseLike)(resourceBuilder) ? await resourceBuilder : resourceBuilder;
+        const rpcArgs = { builder: this._handle, resourceBuilder, type };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderRelationship', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withRelationshipInternal(resourceBuilder, type), this._client);
+    }
+    /** @internal */
+    async _withParentRelationshipInternal(parent) {
+        parent = (0, transport_js_1.isPromiseLike)(parent) ? await parent : parent;
+        const rpcArgs = { builder: this._handle, parent };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderParentRelationship', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withParentRelationshipInternal(parent), this._client);
+    }
+    /** @internal */
+    async _withChildRelationshipInternal(child) {
+        child = (0, transport_js_1.isPromiseLike)(child) ? await child : child;
+        const rpcArgs = { builder: this._handle, child };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderChildRelationship', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withChildRelationshipInternal(child), this._client);
+    }
+    /** @internal */
+    async _withIconNameInternal(iconName, iconVariant) {
+        const rpcArgs = { builder: this._handle, iconName };
+        if (iconVariant !== undefined)
+            rpcArgs.iconVariant = iconVariant;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withIconName', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        const iconVariant = options?.iconVariant;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withIconNameInternal(iconName, iconVariant), this._client);
+    }
+    /** @internal */
+    async _withHttpProbeInternal(probeType, path, initialDelaySeconds, periodSeconds, timeoutSeconds, failureThreshold, successThreshold, endpointName) {
+        const rpcArgs = { builder: this._handle, probeType };
+        if (path !== undefined)
+            rpcArgs.path = path;
+        if (initialDelaySeconds !== undefined)
+            rpcArgs.initialDelaySeconds = initialDelaySeconds;
+        if (periodSeconds !== undefined)
+            rpcArgs.periodSeconds = periodSeconds;
+        if (timeoutSeconds !== undefined)
+            rpcArgs.timeoutSeconds = timeoutSeconds;
+        if (failureThreshold !== undefined)
+            rpcArgs.failureThreshold = failureThreshold;
+        if (successThreshold !== undefined)
+            rpcArgs.successThreshold = successThreshold;
+        if (endpointName !== undefined)
+            rpcArgs.endpointName = endpointName;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpProbe', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP health probe to the resource */
+    withHttpProbe(probeType, options) {
+        const path = options?.path;
+        const initialDelaySeconds = options?.initialDelaySeconds;
+        const periodSeconds = options?.periodSeconds;
+        const timeoutSeconds = options?.timeoutSeconds;
+        const failureThreshold = options?.failureThreshold;
+        const successThreshold = options?.successThreshold;
+        const endpointName = options?.endpointName;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withHttpProbeInternal(probeType, path, initialDelaySeconds, periodSeconds, timeoutSeconds, failureThreshold, successThreshold, endpointName), this._client);
+    }
+    /** @internal */
+    async _excludeFromMcpInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromMcp', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._excludeFromMcpInternal(), this._client);
+    }
+    /** @internal */
+    async _withImagePushOptionsInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ContainerImagePushOptionsCallbackContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withImagePushOptions', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets image push options via callback */
+    withImagePushOptions(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withImagePushOptionsInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withRemoteImageNameInternal(remoteImageName) {
+        const rpcArgs = { builder: this._handle, remoteImageName };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRemoteImageName', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the remote image name for publishing */
+    withRemoteImageName(remoteImageName) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withRemoteImageNameInternal(remoteImageName), this._client);
+    }
+    /** @internal */
+    async _withRemoteImageTagInternal(remoteImageTag) {
+        const rpcArgs = { builder: this._handle, remoteImageTag };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRemoteImageTag', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the remote image tag for publishing */
+    withRemoteImageTag(remoteImageTag) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withRemoteImageTagInternal(remoteImageTag), this._client);
+    }
+    /** @internal */
+    async _withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new PipelineStepContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, stepName, callback: callbackId };
+        if (dependsOn !== undefined)
+            rpcArgs.dependsOn = dependsOn;
+        if (requiredBy !== undefined)
+            rpcArgs.requiredBy = requiredBy;
+        if (tags !== undefined)
+            rpcArgs.tags = tags;
+        if (description !== undefined)
+            rpcArgs.description = description;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineStepFactory', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        const dependsOn = options?.dependsOn;
+        const requiredBy = options?.requiredBy;
+        const tags = options?.tags;
+        const description = options?.description;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description), this._client);
+    }
+    /** @internal */
+    async _withPipelineConfigurationInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new PipelineConfigurationContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineConfiguration', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withPipelineConfigurationInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withVolumeInternal(target, name, isReadOnly) {
+        const rpcArgs = { resource: this._handle, target };
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (isReadOnly !== undefined)
+            rpcArgs.isReadOnly = isReadOnly;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withVolume', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a volume */
+    withVolume(target, options) {
+        const name = options?.name;
+        const isReadOnly = options?.isReadOnly;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withVolumeInternal(target, name, isReadOnly), this._client);
+    }
+    /** Gets the resource name */
+    async getResourceName() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/getResourceName', rpcArgs);
+    }
+    /** @internal */
+    async _onBeforeResourceStartedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new BeforeResourceStartedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onBeforeResourceStarted', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._onBeforeResourceStartedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceStoppedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceStoppedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceStopped', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._onResourceStoppedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onInitializeResourceInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new InitializeResourceEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onInitializeResource', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._onInitializeResourceInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceEndpointsAllocatedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceEndpointsAllocatedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceEndpointsAllocated', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceEndpointsAllocated event */
+    onResourceEndpointsAllocated(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._onResourceEndpointsAllocatedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceReadyInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceReadyEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceReady', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._onResourceReadyInternal(callback), this._client);
+    }
+    /** Creates an execution configuration builder */
+    async createExecutionConfiguration() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/createExecutionConfiguration', rpcArgs);
+    }
+    /** @internal */
+    async _publishAsDockerComposeServiceInternal(configure) {
+        const configureId = (0, transport_js_1.registerCallback)(async (arg1Data, arg2Data) => {
+            const arg1Handle = (0, transport_js_1.wrapIfHandle)(arg1Data);
+            const arg1 = new DockerComposeServiceResourceImpl(arg1Handle, this._client);
+            const arg2Handle = (0, transport_js_1.wrapIfHandle)(arg2Data);
+            const arg2 = new ServiceImpl(arg2Handle, this._client);
+            await configure(arg1, arg2);
+        });
+        const rpcArgs = { builder: this._handle, configure: configureId };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Docker/publishAsDockerComposeService', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Publishes the resource as a Docker Compose service with custom service configuration */
+    publishAsDockerComposeService(configure) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._publishAsDockerComposeServiceInternal(configure), this._client);
+    }
+    /** @internal */
+    async _publishAsAzureContainerAppInternal(configure) {
+        const configureId = (0, transport_js_1.registerCallback)(async (arg1Data, arg2Data) => {
+            const arg1Handle = (0, transport_js_1.wrapIfHandle)(arg1Data);
+            const arg1 = new AzureResourceInfrastructureImpl(arg1Handle, this._client);
+            const arg2Handle = (0, transport_js_1.wrapIfHandle)(arg2Data);
+            const arg2 = new ContainerAppImpl(arg2Handle, this._client);
+            await configure(arg1, arg2);
+        });
+        const rpcArgs = { container: this._handle, configure: configureId };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.AppContainers/publishContainerAsAzureContainerApp', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures the container resource to be published as an Azure Container App */
+    publishAsAzureContainerApp(configure) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._publishAsAzureContainerAppInternal(configure), this._client);
+    }
+    /** @internal */
+    async _publishAsConfiguredAzureContainerAppJobInternal(configure) {
+        const configureId = (0, transport_js_1.registerCallback)(async (arg1Data, arg2Data) => {
+            const arg1Handle = (0, transport_js_1.wrapIfHandle)(arg1Data);
+            const arg1 = new AzureResourceInfrastructureImpl(arg1Handle, this._client);
+            const arg2 = (0, transport_js_1.wrapIfHandle)(arg2Data);
+            await configure(arg1, arg2);
+        });
+        const rpcArgs = { resource: this._handle, configure: configureId };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.AppContainers/publishAsConfiguredAzureContainerAppJob', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures the compute resource as an Azure Container App Job with custom configuration */
+    publishAsConfiguredAzureContainerAppJob(configure) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._publishAsConfiguredAzureContainerAppJobInternal(configure), this._client);
+    }
+    /** @internal */
+    async _publishAsAzureContainerAppJobInternal() {
+        const rpcArgs = { resource: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.AppContainers/publishAsAzureContainerAppJob', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures the compute resource as a manually triggered Azure Container App Job */
+    publishAsAzureContainerAppJob() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._publishAsAzureContainerAppJobInternal(), this._client);
+    }
+    /** @internal */
+    async _publishAsConfiguredScheduledAzureContainerAppJobInternal(cronExpression, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (arg1Data, arg2Data) => {
+            const arg1Handle = (0, transport_js_1.wrapIfHandle)(arg1Data);
+            const arg1 = new AzureResourceInfrastructureImpl(arg1Handle, this._client);
+            const arg2 = (0, transport_js_1.wrapIfHandle)(arg2Data);
+            await configure(arg1, arg2);
+        }) : undefined;
+        const rpcArgs = { resource: this._handle, cronExpression };
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.AppContainers/publishAsConfiguredScheduledAzureContainerAppJob', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures the compute resource as a scheduled Azure Container App Job with custom configuration */
+    publishAsConfiguredScheduledAzureContainerAppJob(cronExpression, options) {
+        const configure = options?.configure;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._publishAsConfiguredScheduledAzureContainerAppJobInternal(cronExpression, configure), this._client);
+    }
+    /** @internal */
+    async _publishAsScheduledAzureContainerAppJobInternal(cronExpression) {
+        const rpcArgs = { resource: this._handle, cronExpression };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.AppContainers/publishAsScheduledAzureContainerAppJob', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures the compute resource as a scheduled Azure Container App Job */
+    publishAsScheduledAzureContainerAppJob(cronExpression) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._publishAsScheduledAzureContainerAppJobInternal(cronExpression), this._client);
+    }
+    /** @internal */
+    async _withStorageRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Storage/withStorageRoleAssignments', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** @internal */
+    async _withEnvironmentFromOutputInternal(name, bicepOutputReference) {
+        bicepOutputReference = (0, transport_js_1.isPromiseLike)(bicepOutputReference) ? await bicepOutputReference : bicepOutputReference;
+        const rpcArgs = { builder: this._handle, name, bicepOutputReference };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withEnvironmentFromOutput', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /**
+     * Sets an environment variable from a Bicep output reference
+     * @deprecated ATS compatibility shim. Use withEnvironment instead.
+     */
+    withEnvironmentFromOutput(name, bicepOutputReference) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withEnvironmentFromOutputInternal(name, bicepOutputReference), this._client);
+    }
+    /** @internal */
+    async _withEnvironmentFromKeyVaultSecretInternal(name, secretReference) {
+        secretReference = (0, transport_js_1.isPromiseLike)(secretReference) ? await secretReference : secretReference;
+        const rpcArgs = { builder: this._handle, name, secretReference };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withEnvironmentFromKeyVaultSecret', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /**
+     * Sets an environment variable from an Azure Key Vault secret reference
+     * @deprecated ATS compatibility shim. Use withEnvironment instead.
+     */
+    withEnvironmentFromKeyVaultSecret(name, secretReference) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withEnvironmentFromKeyVaultSecretInternal(name, secretReference), this._client);
+    }
+    /** @internal */
+    async _withAzureUserAssignedIdentityInternal(identityResourceBuilder) {
+        identityResourceBuilder = (0, transport_js_1.isPromiseLike)(identityResourceBuilder) ? await identityResourceBuilder : identityResourceBuilder;
+        const rpcArgs = { builder: this._handle, identityResourceBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withUserAssignedIdentityAzureUserAssignedIdentity', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Associates an Azure user-assigned identity with a compute resource */
+    withAzureUserAssignedIdentity(identityResourceBuilder) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withAzureUserAssignedIdentityInternal(identityResourceBuilder), this._client);
+    }
+    /** @internal */
+    async _withAzureContainerRegistryInternal(registryBuilder) {
+        registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
+        const rpcArgs = { builder: this._handle, registryBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryAzureContainerRegistry', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withAzureContainerRegistryInternal(registryBuilder), this._client);
+    }
+    /** @internal */
+    async _getAzureContainerRegistryInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/getAzureContainerRegistry', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._getAzureContainerRegistryInternal(), this._client);
+    }
+    /** @internal */
+    async _withContainerRegistryRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryRoleAssignments', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withDataVolumeInternal(name) {
+        const rpcArgs = { builder: this._handle };
+        if (name !== undefined)
+            rpcArgs.name = name;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.CosmosDB/withDataVolume', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Adds a named volume for the data folder to an Azure Cosmos DB emulator resource */
+    withDataVolume(options) {
+        const name = options?.name;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withDataVolumeInternal(name), this._client);
+    }
+    /** @internal */
+    async _withGatewayPortInternal(port) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.CosmosDB/withGatewayPort', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the host port for the Cosmos DB emulator gateway endpoint */
+    withGatewayPort(options) {
+        const port = options?.port;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withGatewayPortInternal(port), this._client);
+    }
+    /** @internal */
+    async _withPartitionCountInternal(count) {
+        const rpcArgs = { builder: this._handle, count };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.CosmosDB/withPartitionCount', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Sets the partition count for the Azure Cosmos DB emulator */
+    withPartitionCount(count) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withPartitionCountInternal(count), this._client);
+    }
+    /** @internal */
+    async _withDataExplorerInternal(port) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.CosmosDB/withDataExplorer', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Exposes the Data Explorer endpoint for the preview emulator */
+    withDataExplorer(options) {
+        const port = options?.port;
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withDataExplorerInternal(port), this._client);
+    }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureCosmosDBEmulatorResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
+}
+/**
+ * Thenable wrapper for AzureCosmosDBEmulatorResource that enables fluent chaining.
+ * @example
+ * await builder.addSomething().withX().withY();
+ */
+class AzureCosmosDBEmulatorResourcePromiseImpl {
+    _promise;
+    _client;
+    constructor(_promise, _client, track = true) {
+        this._promise = _promise;
+        this._client = _client;
+        if (track) {
+            _client.trackPromise(_promise);
+        }
+    }
+    then(onfulfilled, onrejected) {
+        return this._promise.then(onfulfilled, onrejected);
+    }
+    /** Adds a bind mount */
+    withBindMount(source, target, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withBindMount(source, target, options)), this._client);
+    }
+    /** Sets the container entrypoint */
+    withEntrypoint(entrypoint) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withEntrypoint(entrypoint)), this._client);
+    }
+    /** Sets the container image tag */
+    withImageTag(tag) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withImageTag(tag)), this._client);
+    }
+    /** Sets the container image registry */
+    withImageRegistry(registry) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withImageRegistry(registry)), this._client);
+    }
+    /** Sets the container image */
+    withImage(image, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withImage(image, options)), this._client);
+    }
+    /** Sets the image SHA256 digest */
+    withImageSHA256(sha256) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withImageSHA256(sha256)), this._client);
+    }
+    /** Adds runtime arguments for the container */
+    withContainerRuntimeArgs(args) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withContainerRuntimeArgs(args)), this._client);
+    }
+    /** Sets the lifetime behavior of the container resource */
+    withLifetime(lifetime) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withLifetime(lifetime)), this._client);
+    }
+    /** Sets the container image pull policy */
+    withImagePullPolicy(pullPolicy) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withImagePullPolicy(pullPolicy)), this._client);
+    }
+    /** Configures the resource to be published as a container */
+    publishAsContainer() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.publishAsContainer()), this._client);
+    }
+    /** Configures the resource to use a Dockerfile */
+    withDockerfile(contextPath, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withDockerfile(contextPath, options)), this._client);
+    }
+    /** Sets the container name */
+    withContainerName(name) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withContainerName(name)), this._client);
+    }
+    /** Adds a build argument from a string value or parameter resource */
+    withBuildArg(name, value) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withBuildArg(name, value)), this._client);
+    }
+    /** Adds a build secret from a parameter resource */
+    withBuildSecret(name, value) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withBuildSecret(name, value)), this._client);
+    }
+    /** Overrides container certificate bundle and directory paths used for trust configuration */
+    withContainerCertificatePaths(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withContainerCertificatePaths(options)), this._client);
+    }
+    /** Configures endpoint proxy support */
+    withEndpointProxySupport(proxyEnabled) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withEndpointProxySupport(proxyEnabled)), this._client);
+    }
+    /** Configures the resource to use a programmatically generated Dockerfile */
+    withDockerfileBuilder(contextPath, callback, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withDockerfileBuilder(contextPath, callback, options)), this._client);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withDockerfileBaseImage(options)), this._client);
+    }
+    /** Adds a network alias for the container */
+    withContainerNetworkAlias(alias) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withContainerNetworkAlias(alias)), this._client);
+    }
+    /** Configures an MCP server endpoint on the resource */
+    withMcpServer(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withMcpServer(options)), this._client);
+    }
+    /** Configures OTLP telemetry export */
+    withOtlpExporter() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withOtlpExporter()), this._client);
+    }
+    /** Configures OTLP telemetry export with specific protocol */
+    withOtlpExporterProtocol(protocol) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withOtlpExporterProtocol(protocol)), this._client);
+    }
+    /** Publishes the resource as a connection string */
+    publishAsConnectionString() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.publishAsConnectionString()), this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withRequiredCommand(command, options)), this._client);
+    }
+    /** Sets an environment variable */
+    withEnvironment(name, value) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withEnvironment(name, value)), this._client);
+    }
+    /**
+     * Sets an environment variable from a reference expression
+     * @deprecated ATS compatibility shim. Use withEnvironment instead.
+     */
+    withEnvironmentExpression(name, value) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withEnvironmentExpression(name, value)), this._client);
+    }
+    /** Sets environment variables via callback */
+    withEnvironmentCallback(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withEnvironmentCallback(callback)), this._client);
+    }
+    /**
+     * Sets an environment variable from an endpoint reference
+     * @deprecated ATS compatibility shim. Use withEnvironment instead.
+     */
+    withEnvironmentEndpoint(name, endpointReference) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withEnvironmentEndpoint(name, endpointReference)), this._client);
+    }
+    /**
+     * Sets an environment variable from a parameter resource
+     * @deprecated ATS compatibility shim. Use withEnvironment instead.
+     */
+    withEnvironmentParameter(name, parameter) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withEnvironmentParameter(name, parameter)), this._client);
+    }
+    /**
+     * Sets an environment variable from a connection string resource
+     * @deprecated ATS compatibility shim. Use withEnvironment instead.
+     */
+    withEnvironmentConnectionString(envVarName, resource) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withEnvironmentConnectionString(envVarName, resource)), this._client);
+    }
+    /** Adds arguments */
+    withArgs(args) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withArgs(args)), this._client);
+    }
+    /** Sets command-line arguments via callback */
+    withArgsCallback(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withArgsCallback(callback)), this._client);
+    }
+    /** Configures which reference values are injected into environment variables */
+    withReferenceEnvironment(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withReferenceEnvironment(options)), this._client);
+    }
+    /** Adds a reference to another resource */
+    withReference(source, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withReference(source, options)), this._client);
+    }
+    /** Adds a reference to a URI */
+    withReferenceUri(name, uri) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withReferenceUri(name, uri)), this._client);
+    }
+    /** Adds a reference to an external service */
+    withReferenceExternalService(externalService) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withReferenceExternalService(externalService)), this._client);
+    }
+    /** Adds a reference to an endpoint */
+    withReferenceEndpoint(endpointReference) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withReferenceEndpoint(endpointReference)), this._client);
+    }
+    /** Updates a named endpoint via callback */
+    withEndpointCallback(endpointName, callback, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withEndpointCallback(endpointName, callback, options)), this._client);
+    }
+    /** Updates an HTTP endpoint via callback */
+    withHttpEndpointCallback(callback, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withHttpEndpointCallback(callback, options)), this._client);
+    }
+    /** Updates an HTTPS endpoint via callback */
+    withHttpsEndpointCallback(callback, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withHttpsEndpointCallback(callback, options)), this._client);
+    }
+    /** Adds a network endpoint */
+    withEndpoint(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withEndpoint(options)), this._client);
+    }
+    /** Adds an HTTP endpoint */
+    withHttpEndpoint(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withHttpEndpoint(options)), this._client);
+    }
+    /** Adds an HTTPS endpoint */
+    withHttpsEndpoint(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withHttpsEndpoint(options)), this._client);
+    }
+    /** Makes HTTP endpoints externally accessible */
+    withExternalHttpEndpoints() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withExternalHttpEndpoints()), this._client);
+    }
+    /** Gets an endpoint reference */
+    getEndpoint(name) {
+        return this._promise.then(obj => obj.getEndpoint(name));
+    }
+    /** Configures resource for HTTP/2 */
+    asHttp2Service() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.asHttp2Service()), this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withUrlsCallback(callback)), this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withUrl(url, options)), this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withUrlExpression(url, options)), this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpoint(endpointName, callback)), this._client);
+    }
+    /** Adds a URL for a specific endpoint via factory callback */
+    withUrlForEndpointFactory(endpointName, callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpointFactory(endpointName, callback)), this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.excludeFromManifest()), this._client);
+    }
+    /** Waits for another resource to be ready */
+    waitFor(dependency) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.waitFor(dependency)), this._client);
+    }
+    /** Waits for another resource with specific behavior */
+    waitForWithBehavior(dependency, waitBehavior) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.waitForWithBehavior(dependency, waitBehavior)), this._client);
+    }
+    /** Waits for another resource to start */
+    waitForStart(dependency) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.waitForStart(dependency)), this._client);
+    }
+    /** Waits for another resource to start with specific behavior */
+    waitForStartWithBehavior(dependency, waitBehavior) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.waitForStartWithBehavior(dependency, waitBehavior)), this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withExplicitStart()), this._client);
+    }
+    /** Waits for resource completion */
+    waitForCompletion(dependency, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.waitForCompletion(dependency, options)), this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withHealthCheck(key)), this._client);
+    }
+    /** Adds an HTTP health check */
+    withHttpHealthCheck(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withHttpHealthCheck(options)), this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withCommand(name, displayName, executeCommand, options)), this._client);
+    }
+    /** Adds an HTTP resource command */
+    withHttpCommand(path, displayName, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withHttpCommand(path, displayName, options)), this._client);
+    }
+    /** Configures developer certificate trust */
+    withDeveloperCertificateTrust(trust) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withDeveloperCertificateTrust(trust)), this._client);
+    }
+    /** Sets the certificate trust scope */
+    withCertificateTrustScope(scope) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withCertificateTrustScope(scope)), this._client);
+    }
+    /** Configures HTTPS with a developer certificate */
+    withHttpsDeveloperCertificate(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withHttpsDeveloperCertificate(options)), this._client);
+    }
+    /** Removes HTTPS certificate configuration */
+    withoutHttpsCertificate() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withoutHttpsCertificate()), this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withRelationship(resourceBuilder, type)), this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withParentRelationship(parent)), this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withChildRelationship(child)), this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withIconName(iconName, options)), this._client);
+    }
+    /** Adds an HTTP health probe to the resource */
+    withHttpProbe(probeType, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withHttpProbe(probeType, options)), this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.excludeFromMcp()), this._client);
+    }
+    /** Sets image push options via callback */
+    withImagePushOptions(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withImagePushOptions(callback)), this._client);
+    }
+    /** Sets the remote image name for publishing */
+    withRemoteImageName(remoteImageName) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withRemoteImageName(remoteImageName)), this._client);
+    }
+    /** Sets the remote image tag for publishing */
+    withRemoteImageTag(remoteImageTag) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withRemoteImageTag(remoteImageTag)), this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withPipelineStepFactory(stepName, callback, options)), this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withPipelineConfiguration(callback)), this._client);
+    }
+    /** Adds a volume */
+    withVolume(target, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withVolume(target, options)), this._client);
+    }
+    /** Gets the resource name */
+    getResourceName() {
+        return this._promise.then(obj => obj.getResourceName());
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.onBeforeResourceStarted(callback)), this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.onResourceStopped(callback)), this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.onInitializeResource(callback)), this._client);
+    }
+    /** Subscribes to the ResourceEndpointsAllocated event */
+    onResourceEndpointsAllocated(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.onResourceEndpointsAllocated(callback)), this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.onResourceReady(callback)), this._client);
+    }
+    /** Creates an execution configuration builder */
+    createExecutionConfiguration() {
+        return this._promise.then(obj => obj.createExecutionConfiguration());
+    }
+    /** Publishes the resource as a Docker Compose service with custom service configuration */
+    publishAsDockerComposeService(configure) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.publishAsDockerComposeService(configure)), this._client);
+    }
+    /** Configures the container resource to be published as an Azure Container App */
+    publishAsAzureContainerApp(configure) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.publishAsAzureContainerApp(configure)), this._client);
+    }
+    /** Configures the compute resource as an Azure Container App Job with custom configuration */
+    publishAsConfiguredAzureContainerAppJob(configure) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.publishAsConfiguredAzureContainerAppJob(configure)), this._client);
+    }
+    /** Configures the compute resource as a manually triggered Azure Container App Job */
+    publishAsAzureContainerAppJob() {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.publishAsAzureContainerAppJob()), this._client);
+    }
+    /** Configures the compute resource as a scheduled Azure Container App Job with custom configuration */
+    publishAsConfiguredScheduledAzureContainerAppJob(cronExpression, options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.publishAsConfiguredScheduledAzureContainerAppJob(cronExpression, options)), this._client);
+    }
+    /** Configures the compute resource as a scheduled Azure Container App Job */
+    publishAsScheduledAzureContainerAppJob(cronExpression) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.publishAsScheduledAzureContainerAppJob(cronExpression)), this._client);
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
+    /**
+     * Sets an environment variable from a Bicep output reference
+     * @deprecated ATS compatibility shim. Use withEnvironment instead.
+     */
+    withEnvironmentFromOutput(name, bicepOutputReference) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withEnvironmentFromOutput(name, bicepOutputReference)), this._client);
+    }
+    /**
+     * Sets an environment variable from an Azure Key Vault secret reference
+     * @deprecated ATS compatibility shim. Use withEnvironment instead.
+     */
+    withEnvironmentFromKeyVaultSecret(name, secretReference) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withEnvironmentFromKeyVaultSecret(name, secretReference)), this._client);
+    }
+    /** Associates an Azure user-assigned identity with a compute resource */
+    withAzureUserAssignedIdentity(identityResourceBuilder) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withAzureUserAssignedIdentity(identityResourceBuilder)), this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.getAzureContainerRegistry()), this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Adds a named volume for the data folder to an Azure Cosmos DB emulator resource */
+    withDataVolume(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withDataVolume(options)), this._client);
+    }
+    /** Sets the host port for the Cosmos DB emulator gateway endpoint */
+    withGatewayPort(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withGatewayPort(options)), this._client);
+    }
+    /** Sets the partition count for the Azure Cosmos DB emulator */
+    withPartitionCount(count) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withPartitionCount(count)), this._client);
+    }
+    /** Exposes the Data Explorer endpoint for the preview emulator */
+    withDataExplorer(options) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withDataExplorer(options)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureCosmosDBEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
+}
+// ============================================================================
+// AzureCosmosDBResourceImpl
+// ============================================================================
+class AzureCosmosDBResourceImpl extends base_js_1.ResourceBuilderBase {
+    constructor(handle, client) {
+        super(handle, client);
+    }
+    /** @internal */
+    async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
+        const rpcArgs = { builder: this._handle };
+        if (buildImage !== undefined)
+            rpcArgs.buildImage = buildImage;
+        if (runtimeImage !== undefined)
+            rpcArgs.runtimeImage = runtimeImage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfileBaseImage', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        const buildImage = options?.buildImage;
+        const runtimeImage = options?.runtimeImage;
+        return new AzureCosmosDBResourcePromiseImpl(this._withDockerfileBaseImageInternal(buildImage, runtimeImage), this._client);
+    }
+    /** @internal */
+    async _withMcpServerInternal(path, endpointName) {
+        const rpcArgs = { builder: this._handle };
+        if (path !== undefined)
+            rpcArgs.path = path;
+        if (endpointName !== undefined)
+            rpcArgs.endpointName = endpointName;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withMcpServer', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Configures an MCP server endpoint on the resource */
+    withMcpServer(options) {
+        const path = options?.path;
+        const endpointName = options?.endpointName;
+        return new AzureCosmosDBResourcePromiseImpl(this._withMcpServerInternal(path, endpointName), this._client);
+    }
+    /** @internal */
+    async _withRequiredCommandInternal(command, helpLink) {
+        const rpcArgs = { builder: this._handle, command };
+        if (helpLink !== undefined)
+            rpcArgs.helpLink = helpLink;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRequiredCommand', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        const helpLink = options?.helpLink;
+        return new AzureCosmosDBResourcePromiseImpl(this._withRequiredCommandInternal(command, helpLink), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionProperty', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withConnectionPropertyInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionPropertyValue', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withConnectionPropertyValueInternal(name, value), this._client);
+    }
+    /** Gets a connection property by key */
+    async getConnectionProperty(key) {
+        const rpcArgs = { resource: this._handle, key };
+        return await this._client.invokeCapability('Aspire.Hosting/getConnectionProperty', rpcArgs);
+    }
+    /** @internal */
+    async _withEndpointCallbackInternal(endpointName, callback, createIfNotExists) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new EndpointUpdateContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        if (createIfNotExists !== undefined)
+            rpcArgs.createIfNotExists = createIfNotExists;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEndpointCallback', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Updates a named endpoint via callback */
+    withEndpointCallback(endpointName, callback, options) {
+        const createIfNotExists = options?.createIfNotExists;
+        return new AzureCosmosDBResourcePromiseImpl(this._withEndpointCallbackInternal(endpointName, callback, createIfNotExists), this._client);
+    }
+    /** @internal */
+    async _withHttpEndpointCallbackInternal(callback, name, createIfNotExists) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new EndpointUpdateContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (createIfNotExists !== undefined)
+            rpcArgs.createIfNotExists = createIfNotExists;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpEndpointCallback', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Updates an HTTP endpoint via callback */
+    withHttpEndpointCallback(callback, options) {
+        const name = options?.name;
+        const createIfNotExists = options?.createIfNotExists;
+        return new AzureCosmosDBResourcePromiseImpl(this._withHttpEndpointCallbackInternal(callback, name, createIfNotExists), this._client);
+    }
+    /** @internal */
+    async _withHttpsEndpointCallbackInternal(callback, name, createIfNotExists) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new EndpointUpdateContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (createIfNotExists !== undefined)
+            rpcArgs.createIfNotExists = createIfNotExists;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpsEndpointCallback', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Updates an HTTPS endpoint via callback */
+    withHttpsEndpointCallback(callback, options) {
+        const name = options?.name;
+        const createIfNotExists = options?.createIfNotExists;
+        return new AzureCosmosDBResourcePromiseImpl(this._withHttpsEndpointCallbackInternal(callback, name, createIfNotExists), this._client);
+    }
+    /** @internal */
+    async _withEndpointInternal(port, targetPort, scheme, name, env, isProxied, isExternal, protocol) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        if (targetPort !== undefined)
+            rpcArgs.targetPort = targetPort;
+        if (scheme !== undefined)
+            rpcArgs.scheme = scheme;
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (env !== undefined)
+            rpcArgs.env = env;
+        if (isProxied !== undefined)
+            rpcArgs.isProxied = isProxied;
+        if (isExternal !== undefined)
+            rpcArgs.isExternal = isExternal;
+        if (protocol !== undefined)
+            rpcArgs.protocol = protocol;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEndpoint', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a network endpoint */
+    withEndpoint(options) {
+        const port = options?.port;
+        const targetPort = options?.targetPort;
+        const scheme = options?.scheme;
+        const name = options?.name;
+        const env = options?.env;
+        const isProxied = options?.isProxied;
+        const isExternal = options?.isExternal;
+        const protocol = options?.protocol;
+        return new AzureCosmosDBResourcePromiseImpl(this._withEndpointInternal(port, targetPort, scheme, name, env, isProxied, isExternal, protocol), this._client);
+    }
+    /** @internal */
+    async _withHttpEndpointInternal(port, targetPort, name, env, isProxied) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        if (targetPort !== undefined)
+            rpcArgs.targetPort = targetPort;
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (env !== undefined)
+            rpcArgs.env = env;
+        if (isProxied !== undefined)
+            rpcArgs.isProxied = isProxied;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpEndpoint', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP endpoint */
+    withHttpEndpoint(options) {
+        const port = options?.port;
+        const targetPort = options?.targetPort;
+        const name = options?.name;
+        const env = options?.env;
+        const isProxied = options?.isProxied;
+        return new AzureCosmosDBResourcePromiseImpl(this._withHttpEndpointInternal(port, targetPort, name, env, isProxied), this._client);
+    }
+    /** @internal */
+    async _withHttpsEndpointInternal(port, targetPort, name, env, isProxied) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        if (targetPort !== undefined)
+            rpcArgs.targetPort = targetPort;
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (env !== undefined)
+            rpcArgs.env = env;
+        if (isProxied !== undefined)
+            rpcArgs.isProxied = isProxied;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpsEndpoint', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds an HTTPS endpoint */
+    withHttpsEndpoint(options) {
+        const port = options?.port;
+        const targetPort = options?.targetPort;
+        const name = options?.name;
+        const env = options?.env;
+        const isProxied = options?.isProxied;
+        return new AzureCosmosDBResourcePromiseImpl(this._withHttpsEndpointInternal(port, targetPort, name, env, isProxied), this._client);
+    }
+    /** @internal */
+    async _withExternalHttpEndpointsInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExternalHttpEndpoints', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Makes HTTP endpoints externally accessible */
+    withExternalHttpEndpoints() {
+        return new AzureCosmosDBResourcePromiseImpl(this._withExternalHttpEndpointsInternal(), this._client);
+    }
+    /** Gets an endpoint reference */
+    async getEndpoint(name) {
+        const rpcArgs = { builder: this._handle, name };
+        return await this._client.invokeCapability('Aspire.Hosting/getEndpoint', rpcArgs);
+    }
+    /** @internal */
+    async _asHttp2ServiceInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/asHttp2Service', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Configures resource for HTTP/2 */
+    asHttp2Service() {
+        return new AzureCosmosDBResourcePromiseImpl(this._asHttp2ServiceInternal(), this._client);
+    }
+    /** @internal */
+    async _withUrlsCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new ResourceUrlsCallbackContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlsCallback', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withUrlsCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withUrlInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrl', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        const displayText = options?.displayText;
+        return new AzureCosmosDBResourcePromiseImpl(this._withUrlInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlExpressionInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlExpression', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        const displayText = options?.displayText;
+        return new AzureCosmosDBResourcePromiseImpl(this._withUrlExpressionInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const obj = (0, transport_js_1.wrapIfHandle)(objData);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpoint', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withUrlForEndpointInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointFactoryInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new EndpointReferenceImpl(argHandle, this._client);
+            return await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpointFactory', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a URL for a specific endpoint via factory callback */
+    withUrlForEndpointFactory(endpointName, callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withUrlForEndpointFactoryInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _excludeFromManifestInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromManifest', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureCosmosDBResourcePromiseImpl(this._excludeFromManifestInternal(), this._client);
+    }
+    /** @internal */
+    async _withExplicitStartInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExplicitStart', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureCosmosDBResourcePromiseImpl(this._withExplicitStartInternal(), this._client);
+    }
+    /** @internal */
+    async _withHealthCheckInternal(key) {
+        const rpcArgs = { builder: this._handle, key };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHealthCheck', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withHealthCheckInternal(key), this._client);
+    }
+    /** @internal */
+    async _withHttpHealthCheckInternal(path, statusCode, endpointName) {
+        const rpcArgs = { builder: this._handle };
+        if (path !== undefined)
+            rpcArgs.path = path;
+        if (statusCode !== undefined)
+            rpcArgs.statusCode = statusCode;
+        if (endpointName !== undefined)
+            rpcArgs.endpointName = endpointName;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpHealthCheck', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP health check */
+    withHttpHealthCheck(options) {
+        const path = options?.path;
+        const statusCode = options?.statusCode;
+        const endpointName = options?.endpointName;
+        return new AzureCosmosDBResourcePromiseImpl(this._withHttpHealthCheckInternal(path, statusCode, endpointName), this._client);
+    }
+    /** @internal */
+    async _withCommandInternal(name, displayName, executeCommand, commandOptions) {
+        const executeCommandId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ExecuteCommandContextImpl(argHandle, this._client);
+            return await executeCommand(arg);
+        });
+        const rpcArgs = { builder: this._handle, name, displayName, executeCommand: executeCommandId };
+        if (commandOptions !== undefined)
+            rpcArgs.commandOptions = commandOptions;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withCommand', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        const commandOptions = options?.commandOptions;
+        return new AzureCosmosDBResourcePromiseImpl(this._withCommandInternal(name, displayName, executeCommand, commandOptions), this._client);
+    }
+    /** @internal */
+    async _withHttpCommandInternal(path, displayName, options) {
+        const rpcArgs = { builder: this._handle, path, displayName };
+        if (options !== undefined)
+            rpcArgs.options = options;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpCommand', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP resource command */
+    withHttpCommand(path, displayName, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withHttpCommandInternal(path, displayName, options), this._client);
+    }
+    /** @internal */
+    async _withRelationshipInternal(resourceBuilder, type) {
+        resourceBuilder = (0, transport_js_1.isPromiseLike)(resourceBuilder) ? await resourceBuilder : resourceBuilder;
+        const rpcArgs = { builder: this._handle, resourceBuilder, type };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderRelationship', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withRelationshipInternal(resourceBuilder, type), this._client);
+    }
+    /** @internal */
+    async _withParentRelationshipInternal(parent) {
+        parent = (0, transport_js_1.isPromiseLike)(parent) ? await parent : parent;
+        const rpcArgs = { builder: this._handle, parent };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderParentRelationship', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withParentRelationshipInternal(parent), this._client);
+    }
+    /** @internal */
+    async _withChildRelationshipInternal(child) {
+        child = (0, transport_js_1.isPromiseLike)(child) ? await child : child;
+        const rpcArgs = { builder: this._handle, child };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderChildRelationship', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withChildRelationshipInternal(child), this._client);
+    }
+    /** @internal */
+    async _withIconNameInternal(iconName, iconVariant) {
+        const rpcArgs = { builder: this._handle, iconName };
+        if (iconVariant !== undefined)
+            rpcArgs.iconVariant = iconVariant;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withIconName', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        const iconVariant = options?.iconVariant;
+        return new AzureCosmosDBResourcePromiseImpl(this._withIconNameInternal(iconName, iconVariant), this._client);
+    }
+    /** @internal */
+    async _withHttpProbeInternal(probeType, path, initialDelaySeconds, periodSeconds, timeoutSeconds, failureThreshold, successThreshold, endpointName) {
+        const rpcArgs = { builder: this._handle, probeType };
+        if (path !== undefined)
+            rpcArgs.path = path;
+        if (initialDelaySeconds !== undefined)
+            rpcArgs.initialDelaySeconds = initialDelaySeconds;
+        if (periodSeconds !== undefined)
+            rpcArgs.periodSeconds = periodSeconds;
+        if (timeoutSeconds !== undefined)
+            rpcArgs.timeoutSeconds = timeoutSeconds;
+        if (failureThreshold !== undefined)
+            rpcArgs.failureThreshold = failureThreshold;
+        if (successThreshold !== undefined)
+            rpcArgs.successThreshold = successThreshold;
+        if (endpointName !== undefined)
+            rpcArgs.endpointName = endpointName;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpProbe', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP health probe to the resource */
+    withHttpProbe(probeType, options) {
+        const path = options?.path;
+        const initialDelaySeconds = options?.initialDelaySeconds;
+        const periodSeconds = options?.periodSeconds;
+        const timeoutSeconds = options?.timeoutSeconds;
+        const failureThreshold = options?.failureThreshold;
+        const successThreshold = options?.successThreshold;
+        const endpointName = options?.endpointName;
+        return new AzureCosmosDBResourcePromiseImpl(this._withHttpProbeInternal(probeType, path, initialDelaySeconds, periodSeconds, timeoutSeconds, failureThreshold, successThreshold, endpointName), this._client);
+    }
+    /** @internal */
+    async _excludeFromMcpInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromMcp', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureCosmosDBResourcePromiseImpl(this._excludeFromMcpInternal(), this._client);
+    }
+    /** @internal */
+    async _withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new PipelineStepContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, stepName, callback: callbackId };
+        if (dependsOn !== undefined)
+            rpcArgs.dependsOn = dependsOn;
+        if (requiredBy !== undefined)
+            rpcArgs.requiredBy = requiredBy;
+        if (tags !== undefined)
+            rpcArgs.tags = tags;
+        if (description !== undefined)
+            rpcArgs.description = description;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineStepFactory', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        const dependsOn = options?.dependsOn;
+        const requiredBy = options?.requiredBy;
+        const tags = options?.tags;
+        const description = options?.description;
+        return new AzureCosmosDBResourcePromiseImpl(this._withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description), this._client);
+    }
+    /** @internal */
+    async _withPipelineConfigurationInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new PipelineConfigurationContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineConfiguration', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withPipelineConfigurationInternal(callback), this._client);
+    }
+    /** Gets the resource name */
+    async getResourceName() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/getResourceName', rpcArgs);
+    }
+    /** @internal */
+    async _onBeforeResourceStartedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new BeforeResourceStartedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onBeforeResourceStarted', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._onBeforeResourceStartedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceStoppedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceStoppedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceStopped', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._onResourceStoppedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onConnectionStringAvailableInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ConnectionStringAvailableEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onConnectionStringAvailable', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._onConnectionStringAvailableInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onInitializeResourceInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new InitializeResourceEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onInitializeResource', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._onInitializeResourceInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceEndpointsAllocatedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceEndpointsAllocatedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceEndpointsAllocated', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceEndpointsAllocated event */
+    onResourceEndpointsAllocated(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._onResourceEndpointsAllocatedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceReadyInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceReadyEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceReady', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._onResourceReadyInternal(callback), this._client);
+    }
+    /** Creates an execution configuration builder */
+    async createExecutionConfiguration() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/createExecutionConfiguration', rpcArgs);
+    }
+    /** @internal */
+    async _withStorageRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Storage/withStorageRoleAssignments', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new AzureCosmosDBResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    async getOutput(name) {
+        const rpcArgs = { builder: this._handle, name };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getOutput', rpcArgs);
+    }
+    /** @internal */
+    async _withParameterInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameter', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withParameterInternal(name), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValue', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withParameterStringValueInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValuesInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValues', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withParameterStringValuesInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromParameterInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromParameter', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withParameterFromParameterInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromConnectionStringInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromConnectionString', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withParameterFromConnectionStringInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromOutputInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromOutput', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withParameterFromOutputInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromReferenceExpressionInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromReferenceExpression', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withParameterFromReferenceExpressionInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromEndpointInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromEndpoint', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withParameterFromEndpointInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _configureInfrastructureInternal(configure) {
+        const configureId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new AzureResourceInfrastructureImpl(objHandle, this._client);
+            await configure(obj);
+        });
+        const rpcArgs = { builder: this._handle, configure: configureId };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/configureInfrastructure', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new AzureCosmosDBResourcePromiseImpl(this._configureInfrastructureInternal(configure), this._client);
+    }
+    /** @internal */
+    async _publishAsConnectionStringInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsConnectionString', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new AzureCosmosDBResourcePromiseImpl(this._publishAsConnectionStringInternal(), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    async getBicepIdentifier() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getBicepIdentifier', rpcArgs);
+    }
+    /** @internal */
+    async _clearDefaultRoleAssignmentsInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/clearDefaultRoleAssignments', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new AzureCosmosDBResourcePromiseImpl(this._clearDefaultRoleAssignmentsInternal(), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    async isExisting() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/isExisting', rpcArgs);
+    }
+    /** @internal */
+    async _runAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/runAsExisting', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureCosmosDBResourcePromiseImpl(this._runAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _publishAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsExisting', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureCosmosDBResourcePromiseImpl(this._publishAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _asExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/asExisting', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureCosmosDBResourcePromiseImpl(this._asExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _withAzureContainerRegistryInternal(registryBuilder) {
+        registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
+        const rpcArgs = { builder: this._handle, registryBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryAzureContainerRegistry', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withAzureContainerRegistryInternal(registryBuilder), this._client);
+    }
+    /** @internal */
+    async _getAzureContainerRegistryInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/getAzureContainerRegistry', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._getAzureContainerRegistryInternal(), this._client);
+    }
+    /** @internal */
+    async _withContainerRegistryRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryRoleAssignments', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _runAsEmulatorInternal(configureContainer) {
+        const configureContainerId = configureContainer ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new AzureCosmosDBEmulatorResourceImpl(objHandle, this._client);
+            await configureContainer(obj);
+        }) : undefined;
+        const rpcArgs = { builder: this._handle };
+        if (configureContainer !== undefined)
+            rpcArgs.configureContainer = configureContainerId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.CosmosDB/runAsEmulator', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Configures the Azure Cosmos DB resource to run using the local emulator */
+    runAsEmulator(options) {
+        const configureContainer = options?.configureContainer;
+        return new AzureCosmosDBResourcePromiseImpl(this._runAsEmulatorInternal(configureContainer), this._client);
+    }
+    /** @internal */
+    async _runAsPreviewEmulatorInternal(configureContainer) {
+        const configureContainerId = configureContainer ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new AzureCosmosDBEmulatorResourceImpl(objHandle, this._client);
+            await configureContainer(obj);
+        }) : undefined;
+        const rpcArgs = { builder: this._handle };
+        if (configureContainer !== undefined)
+            rpcArgs.configureContainer = configureContainerId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.CosmosDB/runAsPreviewEmulator', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Configures the Azure Cosmos DB resource to run using the preview emulator */
+    runAsPreviewEmulator(options) {
+        const configureContainer = options?.configureContainer;
+        return new AzureCosmosDBResourcePromiseImpl(this._runAsPreviewEmulatorInternal(configureContainer), this._client);
+    }
+    /** @internal */
+    async _addCosmosDatabaseInternal(name, databaseName) {
+        const rpcArgs = { builder: this._handle, name };
+        if (databaseName !== undefined)
+            rpcArgs.databaseName = databaseName;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.CosmosDB/addCosmosDatabase', rpcArgs);
+        return new AzureCosmosDBDatabaseResourceImpl(result, this._client);
+    }
+    /** Adds an Azure Cosmos DB database resource */
+    addCosmosDatabase(name, options) {
+        const databaseName = options?.databaseName;
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._addCosmosDatabaseInternal(name, databaseName), this._client);
+    }
+    /** @internal */
+    async _withDefaultAzureSkuInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.CosmosDB/withDefaultAzureSku', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Configures Azure Cosmos DB to use the default Azure SKU */
+    withDefaultAzureSku() {
+        return new AzureCosmosDBResourcePromiseImpl(this._withDefaultAzureSkuInternal(), this._client);
+    }
+    /** @internal */
+    async _withAccessKeyAuthenticationInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.CosmosDB/withAccessKeyAuthentication', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Configures Azure Cosmos DB to use access key authentication */
+    withAccessKeyAuthentication() {
+        return new AzureCosmosDBResourcePromiseImpl(this._withAccessKeyAuthenticationInternal(), this._client);
+    }
+    /** @internal */
+    async _withAccessKeyAuthenticationWithKeyVaultInternal(keyVaultBuilder) {
+        keyVaultBuilder = (0, transport_js_1.isPromiseLike)(keyVaultBuilder) ? await keyVaultBuilder : keyVaultBuilder;
+        const rpcArgs = { builder: this._handle, keyVaultBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.CosmosDB/withAccessKeyAuthenticationWithKeyVault', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Configures Azure Cosmos DB access key authentication using a specified Azure Key Vault resource */
+    withAccessKeyAuthenticationWithKeyVault(keyVaultBuilder) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withAccessKeyAuthenticationWithKeyVaultInternal(keyVaultBuilder), this._client);
+    }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureCosmosDBResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureCosmosDBResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
+}
+/**
+ * Thenable wrapper for AzureCosmosDBResource that enables fluent chaining.
+ * @example
+ * await builder.addSomething().withX().withY();
+ */
+class AzureCosmosDBResourcePromiseImpl {
+    _promise;
+    _client;
+    constructor(_promise, _client, track = true) {
+        this._promise = _promise;
+        this._client = _client;
+        if (track) {
+            _client.trackPromise(_promise);
+        }
+    }
+    then(onfulfilled, onrejected) {
+        return this._promise.then(onfulfilled, onrejected);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withDockerfileBaseImage(options)), this._client);
+    }
+    /** Configures an MCP server endpoint on the resource */
+    withMcpServer(options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withMcpServer(options)), this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withRequiredCommand(command, options)), this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withConnectionProperty(name, value)), this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withConnectionPropertyValue(name, value)), this._client);
+    }
+    /** Gets a connection property by key */
+    getConnectionProperty(key) {
+        return this._promise.then(obj => obj.getConnectionProperty(key));
+    }
+    /** Updates a named endpoint via callback */
+    withEndpointCallback(endpointName, callback, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withEndpointCallback(endpointName, callback, options)), this._client);
+    }
+    /** Updates an HTTP endpoint via callback */
+    withHttpEndpointCallback(callback, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withHttpEndpointCallback(callback, options)), this._client);
+    }
+    /** Updates an HTTPS endpoint via callback */
+    withHttpsEndpointCallback(callback, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withHttpsEndpointCallback(callback, options)), this._client);
+    }
+    /** Adds a network endpoint */
+    withEndpoint(options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withEndpoint(options)), this._client);
+    }
+    /** Adds an HTTP endpoint */
+    withHttpEndpoint(options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withHttpEndpoint(options)), this._client);
+    }
+    /** Adds an HTTPS endpoint */
+    withHttpsEndpoint(options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withHttpsEndpoint(options)), this._client);
+    }
+    /** Makes HTTP endpoints externally accessible */
+    withExternalHttpEndpoints() {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withExternalHttpEndpoints()), this._client);
+    }
+    /** Gets an endpoint reference */
+    getEndpoint(name) {
+        return this._promise.then(obj => obj.getEndpoint(name));
+    }
+    /** Configures resource for HTTP/2 */
+    asHttp2Service() {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.asHttp2Service()), this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withUrlsCallback(callback)), this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withUrl(url, options)), this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withUrlExpression(url, options)), this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpoint(endpointName, callback)), this._client);
+    }
+    /** Adds a URL for a specific endpoint via factory callback */
+    withUrlForEndpointFactory(endpointName, callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpointFactory(endpointName, callback)), this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.excludeFromManifest()), this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withExplicitStart()), this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withHealthCheck(key)), this._client);
+    }
+    /** Adds an HTTP health check */
+    withHttpHealthCheck(options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withHttpHealthCheck(options)), this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withCommand(name, displayName, executeCommand, options)), this._client);
+    }
+    /** Adds an HTTP resource command */
+    withHttpCommand(path, displayName, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withHttpCommand(path, displayName, options)), this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withRelationship(resourceBuilder, type)), this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withParentRelationship(parent)), this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withChildRelationship(child)), this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withIconName(iconName, options)), this._client);
+    }
+    /** Adds an HTTP health probe to the resource */
+    withHttpProbe(probeType, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withHttpProbe(probeType, options)), this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.excludeFromMcp()), this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withPipelineStepFactory(stepName, callback, options)), this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withPipelineConfiguration(callback)), this._client);
+    }
+    /** Gets the resource name */
+    getResourceName() {
+        return this._promise.then(obj => obj.getResourceName());
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.onBeforeResourceStarted(callback)), this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.onResourceStopped(callback)), this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.onConnectionStringAvailable(callback)), this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.onInitializeResource(callback)), this._client);
+    }
+    /** Subscribes to the ResourceEndpointsAllocated event */
+    onResourceEndpointsAllocated(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.onResourceEndpointsAllocated(callback)), this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.onResourceReady(callback)), this._client);
+    }
+    /** Creates an execution configuration builder */
+    createExecutionConfiguration() {
+        return this._promise.then(obj => obj.createExecutionConfiguration());
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    getOutput(name) {
+        return this._promise.then(obj => obj.getOutput(name));
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withParameter(name)), this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValue(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValues(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromParameter(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromConnectionString(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromOutput(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromReferenceExpression(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromEndpoint(name, value)), this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.configureInfrastructure(configure)), this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.publishAsConnectionString()), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    getBicepIdentifier() {
+        return this._promise.then(obj => obj.getBicepIdentifier());
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.clearDefaultRoleAssignments()), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    isExisting() {
+        return this._promise.then(obj => obj.isExisting());
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.runAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.publishAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.asExisting(name, options)), this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.getAzureContainerRegistry()), this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Configures the Azure Cosmos DB resource to run using the local emulator */
+    runAsEmulator(options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.runAsEmulator(options)), this._client);
+    }
+    /** Configures the Azure Cosmos DB resource to run using the preview emulator */
+    runAsPreviewEmulator(options) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.runAsPreviewEmulator(options)), this._client);
+    }
+    /** Adds an Azure Cosmos DB database resource */
+    addCosmosDatabase(name, options) {
+        return new AzureCosmosDBDatabaseResourcePromiseImpl(this._promise.then(obj => obj.addCosmosDatabase(name, options)), this._client);
+    }
+    /** Configures Azure Cosmos DB to use the default Azure SKU */
+    withDefaultAzureSku() {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withDefaultAzureSku()), this._client);
+    }
+    /** Configures Azure Cosmos DB to use access key authentication */
+    withAccessKeyAuthentication() {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withAccessKeyAuthentication()), this._client);
+    }
+    /** Configures Azure Cosmos DB access key authentication using a specified Azure Key Vault resource */
+    withAccessKeyAuthenticationWithKeyVault(keyVaultBuilder) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withAccessKeyAuthenticationWithKeyVault(keyVaultBuilder)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureCosmosDBResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureDataLakeStorageFileSystemResourceImpl
@@ -8205,17 +15482,6 @@ class AzureContainerRegistryResourcePromiseImpl {
 class AzureDataLakeStorageFileSystemResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureDataLakeStorageFileSystemResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureDataLakeStorageFileSystemResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -8569,6 +15835,17 @@ class AzureDataLakeStorageFileSystemResourceImpl extends base_js_1.ResourceBuild
         return new AzureDataLakeStorageFileSystemResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureDataLakeStorageFileSystemResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureDataLakeStorageFileSystemResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -8600,6 +15877,28 @@ class AzureDataLakeStorageFileSystemResourceImpl extends base_js_1.ResourceBuild
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureDataLakeStorageFileSystemResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureDataLakeStorageFileSystemResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureDataLakeStorageFileSystemResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureDataLakeStorageFileSystemResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureDataLakeStorageFileSystemResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureDataLakeStorageFileSystemResource that enables fluent chaining.
@@ -8618,10 +15917,6 @@ class AzureDataLakeStorageFileSystemResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureDataLakeStorageFileSystemResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -8735,6 +16030,10 @@ class AzureDataLakeStorageFileSystemResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureDataLakeStorageFileSystemResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureDataLakeStorageFileSystemResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new AzureDataLakeStorageFileSystemResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -8747,6 +16046,14 @@ class AzureDataLakeStorageFileSystemResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureDataLakeStorageFileSystemResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureDataLakeStorageFileSystemResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureDataLakeStorageFileSystemResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureDataLakeStorageResourceImpl
@@ -8754,17 +16061,6 @@ class AzureDataLakeStorageFileSystemResourcePromiseImpl {
 class AzureDataLakeStorageResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureDataLakeStorageResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureDataLakeStorageResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -9118,6 +16414,17 @@ class AzureDataLakeStorageResourceImpl extends base_js_1.ResourceBuilderBase {
         return new AzureDataLakeStorageResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureDataLakeStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureDataLakeStorageResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -9149,6 +16456,28 @@ class AzureDataLakeStorageResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureDataLakeStorageResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureDataLakeStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureDataLakeStorageResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureDataLakeStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureDataLakeStorageResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureDataLakeStorageResource that enables fluent chaining.
@@ -9167,10 +16496,6 @@ class AzureDataLakeStorageResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureDataLakeStorageResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -9284,6 +16609,10 @@ class AzureDataLakeStorageResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureDataLakeStorageResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureDataLakeStorageResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new AzureDataLakeStorageResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -9296,6 +16625,14 @@ class AzureDataLakeStorageResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureDataLakeStorageResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureDataLakeStorageResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureDataLakeStorageResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureEnvironmentResourceImpl
@@ -9303,17 +16640,6 @@ class AzureDataLakeStorageResourcePromiseImpl {
 class AzureEnvironmentResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureEnvironmentResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureEnvironmentResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -9627,6 +16953,17 @@ class AzureEnvironmentResourceImpl extends base_js_1.ResourceBuilderBase {
         return new AzureEnvironmentResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureEnvironmentResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureEnvironmentResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withLocationInternal(location) {
         location = (0, transport_js_1.isPromiseLike)(location) ? await location : location;
         const rpcArgs = { builder: this._handle, location };
@@ -9680,6 +17017,28 @@ class AzureEnvironmentResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureEnvironmentResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureEnvironmentResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureEnvironmentResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureEnvironmentResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureEnvironmentResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureEnvironmentResource that enables fluent chaining.
@@ -9698,10 +17057,6 @@ class AzureEnvironmentResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -9799,6 +17154,10 @@ class AzureEnvironmentResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Sets the Azure location for the shared Azure environment resource */
     withLocation(location) {
         return new AzureEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withLocation(location)), this._client);
@@ -9819,6 +17178,1793 @@ class AzureEnvironmentResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
+}
+// ============================================================================
+// AzureKeyVaultResourceImpl
+// ============================================================================
+class AzureKeyVaultResourceImpl extends base_js_1.ResourceBuilderBase {
+    constructor(handle, client) {
+        super(handle, client);
+    }
+    /** @internal */
+    async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
+        const rpcArgs = { builder: this._handle };
+        if (buildImage !== undefined)
+            rpcArgs.buildImage = buildImage;
+        if (runtimeImage !== undefined)
+            rpcArgs.runtimeImage = runtimeImage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfileBaseImage', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        const buildImage = options?.buildImage;
+        const runtimeImage = options?.runtimeImage;
+        return new AzureKeyVaultResourcePromiseImpl(this._withDockerfileBaseImageInternal(buildImage, runtimeImage), this._client);
+    }
+    /** @internal */
+    async _withMcpServerInternal(path, endpointName) {
+        const rpcArgs = { builder: this._handle };
+        if (path !== undefined)
+            rpcArgs.path = path;
+        if (endpointName !== undefined)
+            rpcArgs.endpointName = endpointName;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withMcpServer', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Configures an MCP server endpoint on the resource */
+    withMcpServer(options) {
+        const path = options?.path;
+        const endpointName = options?.endpointName;
+        return new AzureKeyVaultResourcePromiseImpl(this._withMcpServerInternal(path, endpointName), this._client);
+    }
+    /** @internal */
+    async _withRequiredCommandInternal(command, helpLink) {
+        const rpcArgs = { builder: this._handle, command };
+        if (helpLink !== undefined)
+            rpcArgs.helpLink = helpLink;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRequiredCommand', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        const helpLink = options?.helpLink;
+        return new AzureKeyVaultResourcePromiseImpl(this._withRequiredCommandInternal(command, helpLink), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionProperty', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withConnectionPropertyInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionPropertyValue', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withConnectionPropertyValueInternal(name, value), this._client);
+    }
+    /** Gets a connection property by key */
+    async getConnectionProperty(key) {
+        const rpcArgs = { resource: this._handle, key };
+        return await this._client.invokeCapability('Aspire.Hosting/getConnectionProperty', rpcArgs);
+    }
+    /** @internal */
+    async _withEndpointCallbackInternal(endpointName, callback, createIfNotExists) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new EndpointUpdateContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        if (createIfNotExists !== undefined)
+            rpcArgs.createIfNotExists = createIfNotExists;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEndpointCallback', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Updates a named endpoint via callback */
+    withEndpointCallback(endpointName, callback, options) {
+        const createIfNotExists = options?.createIfNotExists;
+        return new AzureKeyVaultResourcePromiseImpl(this._withEndpointCallbackInternal(endpointName, callback, createIfNotExists), this._client);
+    }
+    /** @internal */
+    async _withHttpEndpointCallbackInternal(callback, name, createIfNotExists) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new EndpointUpdateContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (createIfNotExists !== undefined)
+            rpcArgs.createIfNotExists = createIfNotExists;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpEndpointCallback', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Updates an HTTP endpoint via callback */
+    withHttpEndpointCallback(callback, options) {
+        const name = options?.name;
+        const createIfNotExists = options?.createIfNotExists;
+        return new AzureKeyVaultResourcePromiseImpl(this._withHttpEndpointCallbackInternal(callback, name, createIfNotExists), this._client);
+    }
+    /** @internal */
+    async _withHttpsEndpointCallbackInternal(callback, name, createIfNotExists) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new EndpointUpdateContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (createIfNotExists !== undefined)
+            rpcArgs.createIfNotExists = createIfNotExists;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpsEndpointCallback', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Updates an HTTPS endpoint via callback */
+    withHttpsEndpointCallback(callback, options) {
+        const name = options?.name;
+        const createIfNotExists = options?.createIfNotExists;
+        return new AzureKeyVaultResourcePromiseImpl(this._withHttpsEndpointCallbackInternal(callback, name, createIfNotExists), this._client);
+    }
+    /** @internal */
+    async _withEndpointInternal(port, targetPort, scheme, name, env, isProxied, isExternal, protocol) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        if (targetPort !== undefined)
+            rpcArgs.targetPort = targetPort;
+        if (scheme !== undefined)
+            rpcArgs.scheme = scheme;
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (env !== undefined)
+            rpcArgs.env = env;
+        if (isProxied !== undefined)
+            rpcArgs.isProxied = isProxied;
+        if (isExternal !== undefined)
+            rpcArgs.isExternal = isExternal;
+        if (protocol !== undefined)
+            rpcArgs.protocol = protocol;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEndpoint', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a network endpoint */
+    withEndpoint(options) {
+        const port = options?.port;
+        const targetPort = options?.targetPort;
+        const scheme = options?.scheme;
+        const name = options?.name;
+        const env = options?.env;
+        const isProxied = options?.isProxied;
+        const isExternal = options?.isExternal;
+        const protocol = options?.protocol;
+        return new AzureKeyVaultResourcePromiseImpl(this._withEndpointInternal(port, targetPort, scheme, name, env, isProxied, isExternal, protocol), this._client);
+    }
+    /** @internal */
+    async _withHttpEndpointInternal(port, targetPort, name, env, isProxied) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        if (targetPort !== undefined)
+            rpcArgs.targetPort = targetPort;
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (env !== undefined)
+            rpcArgs.env = env;
+        if (isProxied !== undefined)
+            rpcArgs.isProxied = isProxied;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpEndpoint', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP endpoint */
+    withHttpEndpoint(options) {
+        const port = options?.port;
+        const targetPort = options?.targetPort;
+        const name = options?.name;
+        const env = options?.env;
+        const isProxied = options?.isProxied;
+        return new AzureKeyVaultResourcePromiseImpl(this._withHttpEndpointInternal(port, targetPort, name, env, isProxied), this._client);
+    }
+    /** @internal */
+    async _withHttpsEndpointInternal(port, targetPort, name, env, isProxied) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        if (targetPort !== undefined)
+            rpcArgs.targetPort = targetPort;
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (env !== undefined)
+            rpcArgs.env = env;
+        if (isProxied !== undefined)
+            rpcArgs.isProxied = isProxied;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpsEndpoint', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds an HTTPS endpoint */
+    withHttpsEndpoint(options) {
+        const port = options?.port;
+        const targetPort = options?.targetPort;
+        const name = options?.name;
+        const env = options?.env;
+        const isProxied = options?.isProxied;
+        return new AzureKeyVaultResourcePromiseImpl(this._withHttpsEndpointInternal(port, targetPort, name, env, isProxied), this._client);
+    }
+    /** @internal */
+    async _withExternalHttpEndpointsInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExternalHttpEndpoints', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Makes HTTP endpoints externally accessible */
+    withExternalHttpEndpoints() {
+        return new AzureKeyVaultResourcePromiseImpl(this._withExternalHttpEndpointsInternal(), this._client);
+    }
+    /** Gets an endpoint reference */
+    async getEndpoint(name) {
+        const rpcArgs = { builder: this._handle, name };
+        return await this._client.invokeCapability('Aspire.Hosting/getEndpoint', rpcArgs);
+    }
+    /** @internal */
+    async _asHttp2ServiceInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/asHttp2Service', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Configures resource for HTTP/2 */
+    asHttp2Service() {
+        return new AzureKeyVaultResourcePromiseImpl(this._asHttp2ServiceInternal(), this._client);
+    }
+    /** @internal */
+    async _withUrlsCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new ResourceUrlsCallbackContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlsCallback', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withUrlsCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withUrlInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrl', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        const displayText = options?.displayText;
+        return new AzureKeyVaultResourcePromiseImpl(this._withUrlInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlExpressionInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlExpression', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        const displayText = options?.displayText;
+        return new AzureKeyVaultResourcePromiseImpl(this._withUrlExpressionInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const obj = (0, transport_js_1.wrapIfHandle)(objData);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpoint', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withUrlForEndpointInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointFactoryInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new EndpointReferenceImpl(argHandle, this._client);
+            return await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpointFactory', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a URL for a specific endpoint via factory callback */
+    withUrlForEndpointFactory(endpointName, callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withUrlForEndpointFactoryInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _excludeFromManifestInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromManifest', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureKeyVaultResourcePromiseImpl(this._excludeFromManifestInternal(), this._client);
+    }
+    /** @internal */
+    async _withExplicitStartInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExplicitStart', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureKeyVaultResourcePromiseImpl(this._withExplicitStartInternal(), this._client);
+    }
+    /** @internal */
+    async _withHealthCheckInternal(key) {
+        const rpcArgs = { builder: this._handle, key };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHealthCheck', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withHealthCheckInternal(key), this._client);
+    }
+    /** @internal */
+    async _withHttpHealthCheckInternal(path, statusCode, endpointName) {
+        const rpcArgs = { builder: this._handle };
+        if (path !== undefined)
+            rpcArgs.path = path;
+        if (statusCode !== undefined)
+            rpcArgs.statusCode = statusCode;
+        if (endpointName !== undefined)
+            rpcArgs.endpointName = endpointName;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpHealthCheck', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP health check */
+    withHttpHealthCheck(options) {
+        const path = options?.path;
+        const statusCode = options?.statusCode;
+        const endpointName = options?.endpointName;
+        return new AzureKeyVaultResourcePromiseImpl(this._withHttpHealthCheckInternal(path, statusCode, endpointName), this._client);
+    }
+    /** @internal */
+    async _withCommandInternal(name, displayName, executeCommand, commandOptions) {
+        const executeCommandId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ExecuteCommandContextImpl(argHandle, this._client);
+            return await executeCommand(arg);
+        });
+        const rpcArgs = { builder: this._handle, name, displayName, executeCommand: executeCommandId };
+        if (commandOptions !== undefined)
+            rpcArgs.commandOptions = commandOptions;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withCommand', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        const commandOptions = options?.commandOptions;
+        return new AzureKeyVaultResourcePromiseImpl(this._withCommandInternal(name, displayName, executeCommand, commandOptions), this._client);
+    }
+    /** @internal */
+    async _withHttpCommandInternal(path, displayName, options) {
+        const rpcArgs = { builder: this._handle, path, displayName };
+        if (options !== undefined)
+            rpcArgs.options = options;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpCommand', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP resource command */
+    withHttpCommand(path, displayName, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withHttpCommandInternal(path, displayName, options), this._client);
+    }
+    /** @internal */
+    async _withRelationshipInternal(resourceBuilder, type) {
+        resourceBuilder = (0, transport_js_1.isPromiseLike)(resourceBuilder) ? await resourceBuilder : resourceBuilder;
+        const rpcArgs = { builder: this._handle, resourceBuilder, type };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderRelationship', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withRelationshipInternal(resourceBuilder, type), this._client);
+    }
+    /** @internal */
+    async _withParentRelationshipInternal(parent) {
+        parent = (0, transport_js_1.isPromiseLike)(parent) ? await parent : parent;
+        const rpcArgs = { builder: this._handle, parent };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderParentRelationship', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withParentRelationshipInternal(parent), this._client);
+    }
+    /** @internal */
+    async _withChildRelationshipInternal(child) {
+        child = (0, transport_js_1.isPromiseLike)(child) ? await child : child;
+        const rpcArgs = { builder: this._handle, child };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderChildRelationship', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withChildRelationshipInternal(child), this._client);
+    }
+    /** @internal */
+    async _withIconNameInternal(iconName, iconVariant) {
+        const rpcArgs = { builder: this._handle, iconName };
+        if (iconVariant !== undefined)
+            rpcArgs.iconVariant = iconVariant;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withIconName', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        const iconVariant = options?.iconVariant;
+        return new AzureKeyVaultResourcePromiseImpl(this._withIconNameInternal(iconName, iconVariant), this._client);
+    }
+    /** @internal */
+    async _withHttpProbeInternal(probeType, path, initialDelaySeconds, periodSeconds, timeoutSeconds, failureThreshold, successThreshold, endpointName) {
+        const rpcArgs = { builder: this._handle, probeType };
+        if (path !== undefined)
+            rpcArgs.path = path;
+        if (initialDelaySeconds !== undefined)
+            rpcArgs.initialDelaySeconds = initialDelaySeconds;
+        if (periodSeconds !== undefined)
+            rpcArgs.periodSeconds = periodSeconds;
+        if (timeoutSeconds !== undefined)
+            rpcArgs.timeoutSeconds = timeoutSeconds;
+        if (failureThreshold !== undefined)
+            rpcArgs.failureThreshold = failureThreshold;
+        if (successThreshold !== undefined)
+            rpcArgs.successThreshold = successThreshold;
+        if (endpointName !== undefined)
+            rpcArgs.endpointName = endpointName;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpProbe', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP health probe to the resource */
+    withHttpProbe(probeType, options) {
+        const path = options?.path;
+        const initialDelaySeconds = options?.initialDelaySeconds;
+        const periodSeconds = options?.periodSeconds;
+        const timeoutSeconds = options?.timeoutSeconds;
+        const failureThreshold = options?.failureThreshold;
+        const successThreshold = options?.successThreshold;
+        const endpointName = options?.endpointName;
+        return new AzureKeyVaultResourcePromiseImpl(this._withHttpProbeInternal(probeType, path, initialDelaySeconds, periodSeconds, timeoutSeconds, failureThreshold, successThreshold, endpointName), this._client);
+    }
+    /** @internal */
+    async _excludeFromMcpInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromMcp', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureKeyVaultResourcePromiseImpl(this._excludeFromMcpInternal(), this._client);
+    }
+    /** @internal */
+    async _withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new PipelineStepContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, stepName, callback: callbackId };
+        if (dependsOn !== undefined)
+            rpcArgs.dependsOn = dependsOn;
+        if (requiredBy !== undefined)
+            rpcArgs.requiredBy = requiredBy;
+        if (tags !== undefined)
+            rpcArgs.tags = tags;
+        if (description !== undefined)
+            rpcArgs.description = description;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineStepFactory', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        const dependsOn = options?.dependsOn;
+        const requiredBy = options?.requiredBy;
+        const tags = options?.tags;
+        const description = options?.description;
+        return new AzureKeyVaultResourcePromiseImpl(this._withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description), this._client);
+    }
+    /** @internal */
+    async _withPipelineConfigurationInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new PipelineConfigurationContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineConfiguration', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withPipelineConfigurationInternal(callback), this._client);
+    }
+    /** Gets the resource name */
+    async getResourceName() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/getResourceName', rpcArgs);
+    }
+    /** @internal */
+    async _onBeforeResourceStartedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new BeforeResourceStartedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onBeforeResourceStarted', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._onBeforeResourceStartedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceStoppedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceStoppedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceStopped', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._onResourceStoppedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onConnectionStringAvailableInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ConnectionStringAvailableEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onConnectionStringAvailable', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._onConnectionStringAvailableInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onInitializeResourceInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new InitializeResourceEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onInitializeResource', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._onInitializeResourceInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceEndpointsAllocatedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceEndpointsAllocatedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceEndpointsAllocated', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceEndpointsAllocated event */
+    onResourceEndpointsAllocated(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._onResourceEndpointsAllocatedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceReadyInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceReadyEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceReady', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._onResourceReadyInternal(callback), this._client);
+    }
+    /** Creates an execution configuration builder */
+    async createExecutionConfiguration() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/createExecutionConfiguration', rpcArgs);
+    }
+    /** @internal */
+    async _withStorageRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Storage/withStorageRoleAssignments', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new AzureKeyVaultResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    async getOutput(name) {
+        const rpcArgs = { builder: this._handle, name };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getOutput', rpcArgs);
+    }
+    /** @internal */
+    async _withParameterInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameter', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withParameterInternal(name), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValue', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withParameterStringValueInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValuesInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValues', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withParameterStringValuesInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromParameterInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromParameter', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withParameterFromParameterInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromConnectionStringInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromConnectionString', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withParameterFromConnectionStringInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromOutputInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromOutput', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withParameterFromOutputInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromReferenceExpressionInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromReferenceExpression', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withParameterFromReferenceExpressionInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromEndpointInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromEndpoint', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withParameterFromEndpointInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _configureInfrastructureInternal(configure) {
+        const configureId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new AzureResourceInfrastructureImpl(objHandle, this._client);
+            await configure(obj);
+        });
+        const rpcArgs = { builder: this._handle, configure: configureId };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/configureInfrastructure', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new AzureKeyVaultResourcePromiseImpl(this._configureInfrastructureInternal(configure), this._client);
+    }
+    /** @internal */
+    async _publishAsConnectionStringInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsConnectionString', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new AzureKeyVaultResourcePromiseImpl(this._publishAsConnectionStringInternal(), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    async getBicepIdentifier() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getBicepIdentifier', rpcArgs);
+    }
+    /** @internal */
+    async _clearDefaultRoleAssignmentsInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/clearDefaultRoleAssignments', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new AzureKeyVaultResourcePromiseImpl(this._clearDefaultRoleAssignmentsInternal(), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    async isExisting() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/isExisting', rpcArgs);
+    }
+    /** @internal */
+    async _runAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/runAsExisting', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureKeyVaultResourcePromiseImpl(this._runAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _publishAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsExisting', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureKeyVaultResourcePromiseImpl(this._publishAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _asExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/asExisting', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureKeyVaultResourcePromiseImpl(this._asExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _withAzureContainerRegistryInternal(registryBuilder) {
+        registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
+        const rpcArgs = { builder: this._handle, registryBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryAzureContainerRegistry', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withAzureContainerRegistryInternal(registryBuilder), this._client);
+    }
+    /** @internal */
+    async _getAzureContainerRegistryInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/getAzureContainerRegistry', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._getAzureContainerRegistryInternal(), this._client);
+    }
+    /** @internal */
+    async _withContainerRegistryRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryRoleAssignments', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** Gets a secret reference from the Azure Key Vault */
+    async getSecret(secretName) {
+        const rpcArgs = { builder: this._handle, secretName };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/getSecret', rpcArgs);
+    }
+    /** @internal */
+    async _addSecretInternal(name, parameterResource) {
+        parameterResource = (0, transport_js_1.isPromiseLike)(parameterResource) ? await parameterResource : parameterResource;
+        const rpcArgs = { builder: this._handle, name, parameterResource };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/addSecret', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Adds a secret to the Azure Key Vault from a parameter resource */
+    addSecret(name, parameterResource) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._addSecretInternal(name, parameterResource), this._client);
+    }
+    /** @internal */
+    async _addSecretFromExpressionInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/addSecretFromExpression', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Adds a secret to the Azure Key Vault from a reference expression */
+    addSecretFromExpression(name, value) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._addSecretFromExpressionInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _addSecretWithNameInternal(name, secretName, parameterResource) {
+        parameterResource = (0, transport_js_1.isPromiseLike)(parameterResource) ? await parameterResource : parameterResource;
+        const rpcArgs = { builder: this._handle, name, secretName, parameterResource };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/addSecretWithName', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Adds a named secret to the Azure Key Vault from a parameter resource */
+    addSecretWithName(name, secretName, parameterResource) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._addSecretWithNameInternal(name, secretName, parameterResource), this._client);
+    }
+    /** @internal */
+    async _addSecretWithNameFromExpressionInternal(name, secretName, value) {
+        const rpcArgs = { builder: this._handle, name, secretName, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/addSecretWithNameFromExpression', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Adds a named secret to the Azure Key Vault from a reference expression */
+    addSecretWithNameFromExpression(name, secretName, value) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._addSecretWithNameFromExpressionInternal(name, secretName, value), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureKeyVaultResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureKeyVaultResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
+}
+/**
+ * Thenable wrapper for AzureKeyVaultResource that enables fluent chaining.
+ * @example
+ * await builder.addSomething().withX().withY();
+ */
+class AzureKeyVaultResourcePromiseImpl {
+    _promise;
+    _client;
+    constructor(_promise, _client, track = true) {
+        this._promise = _promise;
+        this._client = _client;
+        if (track) {
+            _client.trackPromise(_promise);
+        }
+    }
+    then(onfulfilled, onrejected) {
+        return this._promise.then(onfulfilled, onrejected);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withDockerfileBaseImage(options)), this._client);
+    }
+    /** Configures an MCP server endpoint on the resource */
+    withMcpServer(options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withMcpServer(options)), this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withRequiredCommand(command, options)), this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withConnectionProperty(name, value)), this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withConnectionPropertyValue(name, value)), this._client);
+    }
+    /** Gets a connection property by key */
+    getConnectionProperty(key) {
+        return this._promise.then(obj => obj.getConnectionProperty(key));
+    }
+    /** Updates a named endpoint via callback */
+    withEndpointCallback(endpointName, callback, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withEndpointCallback(endpointName, callback, options)), this._client);
+    }
+    /** Updates an HTTP endpoint via callback */
+    withHttpEndpointCallback(callback, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withHttpEndpointCallback(callback, options)), this._client);
+    }
+    /** Updates an HTTPS endpoint via callback */
+    withHttpsEndpointCallback(callback, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withHttpsEndpointCallback(callback, options)), this._client);
+    }
+    /** Adds a network endpoint */
+    withEndpoint(options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withEndpoint(options)), this._client);
+    }
+    /** Adds an HTTP endpoint */
+    withHttpEndpoint(options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withHttpEndpoint(options)), this._client);
+    }
+    /** Adds an HTTPS endpoint */
+    withHttpsEndpoint(options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withHttpsEndpoint(options)), this._client);
+    }
+    /** Makes HTTP endpoints externally accessible */
+    withExternalHttpEndpoints() {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withExternalHttpEndpoints()), this._client);
+    }
+    /** Gets an endpoint reference */
+    getEndpoint(name) {
+        return this._promise.then(obj => obj.getEndpoint(name));
+    }
+    /** Configures resource for HTTP/2 */
+    asHttp2Service() {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.asHttp2Service()), this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withUrlsCallback(callback)), this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withUrl(url, options)), this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withUrlExpression(url, options)), this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpoint(endpointName, callback)), this._client);
+    }
+    /** Adds a URL for a specific endpoint via factory callback */
+    withUrlForEndpointFactory(endpointName, callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpointFactory(endpointName, callback)), this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.excludeFromManifest()), this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withExplicitStart()), this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withHealthCheck(key)), this._client);
+    }
+    /** Adds an HTTP health check */
+    withHttpHealthCheck(options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withHttpHealthCheck(options)), this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withCommand(name, displayName, executeCommand, options)), this._client);
+    }
+    /** Adds an HTTP resource command */
+    withHttpCommand(path, displayName, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withHttpCommand(path, displayName, options)), this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withRelationship(resourceBuilder, type)), this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withParentRelationship(parent)), this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withChildRelationship(child)), this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withIconName(iconName, options)), this._client);
+    }
+    /** Adds an HTTP health probe to the resource */
+    withHttpProbe(probeType, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withHttpProbe(probeType, options)), this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.excludeFromMcp()), this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withPipelineStepFactory(stepName, callback, options)), this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withPipelineConfiguration(callback)), this._client);
+    }
+    /** Gets the resource name */
+    getResourceName() {
+        return this._promise.then(obj => obj.getResourceName());
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.onBeforeResourceStarted(callback)), this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.onResourceStopped(callback)), this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.onConnectionStringAvailable(callback)), this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.onInitializeResource(callback)), this._client);
+    }
+    /** Subscribes to the ResourceEndpointsAllocated event */
+    onResourceEndpointsAllocated(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.onResourceEndpointsAllocated(callback)), this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.onResourceReady(callback)), this._client);
+    }
+    /** Creates an execution configuration builder */
+    createExecutionConfiguration() {
+        return this._promise.then(obj => obj.createExecutionConfiguration());
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    getOutput(name) {
+        return this._promise.then(obj => obj.getOutput(name));
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withParameter(name)), this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValue(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValues(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromParameter(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromConnectionString(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromOutput(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromReferenceExpression(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromEndpoint(name, value)), this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.configureInfrastructure(configure)), this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.publishAsConnectionString()), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    getBicepIdentifier() {
+        return this._promise.then(obj => obj.getBicepIdentifier());
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.clearDefaultRoleAssignments()), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    isExisting() {
+        return this._promise.then(obj => obj.isExisting());
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.runAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.publishAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.asExisting(name, options)), this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.getAzureContainerRegistry()), this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Gets a secret reference from the Azure Key Vault */
+    getSecret(secretName) {
+        return this._promise.then(obj => obj.getSecret(secretName));
+    }
+    /** Adds a secret to the Azure Key Vault from a parameter resource */
+    addSecret(name, parameterResource) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.addSecret(name, parameterResource)), this._client);
+    }
+    /** Adds a secret to the Azure Key Vault from a reference expression */
+    addSecretFromExpression(name, value) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.addSecretFromExpression(name, value)), this._client);
+    }
+    /** Adds a named secret to the Azure Key Vault from a parameter resource */
+    addSecretWithName(name, secretName, parameterResource) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.addSecretWithName(name, secretName, parameterResource)), this._client);
+    }
+    /** Adds a named secret to the Azure Key Vault from a reference expression */
+    addSecretWithNameFromExpression(name, secretName, value) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.addSecretWithNameFromExpression(name, secretName, value)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureKeyVaultResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
+}
+// ============================================================================
+// AzureKeyVaultSecretResourceImpl
+// ============================================================================
+class AzureKeyVaultSecretResourceImpl extends base_js_1.ResourceBuilderBase {
+    constructor(handle, client) {
+        super(handle, client);
+    }
+    /** @internal */
+    async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
+        const rpcArgs = { builder: this._handle };
+        if (buildImage !== undefined)
+            rpcArgs.buildImage = buildImage;
+        if (runtimeImage !== undefined)
+            rpcArgs.runtimeImage = runtimeImage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfileBaseImage', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        const buildImage = options?.buildImage;
+        const runtimeImage = options?.runtimeImage;
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withDockerfileBaseImageInternal(buildImage, runtimeImage), this._client);
+    }
+    /** @internal */
+    async _withRequiredCommandInternal(command, helpLink) {
+        const rpcArgs = { builder: this._handle, command };
+        if (helpLink !== undefined)
+            rpcArgs.helpLink = helpLink;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRequiredCommand', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        const helpLink = options?.helpLink;
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withRequiredCommandInternal(command, helpLink), this._client);
+    }
+    /** @internal */
+    async _withUrlsCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new ResourceUrlsCallbackContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlsCallback', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withUrlsCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withUrlInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrl', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        const displayText = options?.displayText;
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withUrlInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlExpressionInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlExpression', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        const displayText = options?.displayText;
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withUrlExpressionInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const obj = (0, transport_js_1.wrapIfHandle)(objData);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpoint', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withUrlForEndpointInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _excludeFromManifestInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromManifest', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._excludeFromManifestInternal(), this._client);
+    }
+    /** @internal */
+    async _withExplicitStartInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExplicitStart', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withExplicitStartInternal(), this._client);
+    }
+    /** @internal */
+    async _withHealthCheckInternal(key) {
+        const rpcArgs = { builder: this._handle, key };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHealthCheck', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withHealthCheckInternal(key), this._client);
+    }
+    /** @internal */
+    async _withCommandInternal(name, displayName, executeCommand, commandOptions) {
+        const executeCommandId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ExecuteCommandContextImpl(argHandle, this._client);
+            return await executeCommand(arg);
+        });
+        const rpcArgs = { builder: this._handle, name, displayName, executeCommand: executeCommandId };
+        if (commandOptions !== undefined)
+            rpcArgs.commandOptions = commandOptions;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withCommand', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        const commandOptions = options?.commandOptions;
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withCommandInternal(name, displayName, executeCommand, commandOptions), this._client);
+    }
+    /** @internal */
+    async _withRelationshipInternal(resourceBuilder, type) {
+        resourceBuilder = (0, transport_js_1.isPromiseLike)(resourceBuilder) ? await resourceBuilder : resourceBuilder;
+        const rpcArgs = { builder: this._handle, resourceBuilder, type };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderRelationship', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withRelationshipInternal(resourceBuilder, type), this._client);
+    }
+    /** @internal */
+    async _withParentRelationshipInternal(parent) {
+        parent = (0, transport_js_1.isPromiseLike)(parent) ? await parent : parent;
+        const rpcArgs = { builder: this._handle, parent };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderParentRelationship', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withParentRelationshipInternal(parent), this._client);
+    }
+    /** @internal */
+    async _withChildRelationshipInternal(child) {
+        child = (0, transport_js_1.isPromiseLike)(child) ? await child : child;
+        const rpcArgs = { builder: this._handle, child };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderChildRelationship', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withChildRelationshipInternal(child), this._client);
+    }
+    /** @internal */
+    async _withIconNameInternal(iconName, iconVariant) {
+        const rpcArgs = { builder: this._handle, iconName };
+        if (iconVariant !== undefined)
+            rpcArgs.iconVariant = iconVariant;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withIconName', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        const iconVariant = options?.iconVariant;
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withIconNameInternal(iconName, iconVariant), this._client);
+    }
+    /** @internal */
+    async _excludeFromMcpInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromMcp', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._excludeFromMcpInternal(), this._client);
+    }
+    /** @internal */
+    async _withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new PipelineStepContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, stepName, callback: callbackId };
+        if (dependsOn !== undefined)
+            rpcArgs.dependsOn = dependsOn;
+        if (requiredBy !== undefined)
+            rpcArgs.requiredBy = requiredBy;
+        if (tags !== undefined)
+            rpcArgs.tags = tags;
+        if (description !== undefined)
+            rpcArgs.description = description;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineStepFactory', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        const dependsOn = options?.dependsOn;
+        const requiredBy = options?.requiredBy;
+        const tags = options?.tags;
+        const description = options?.description;
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description), this._client);
+    }
+    /** @internal */
+    async _withPipelineConfigurationInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new PipelineConfigurationContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineConfiguration', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withPipelineConfigurationInternal(callback), this._client);
+    }
+    /** Gets the resource name */
+    async getResourceName() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/getResourceName', rpcArgs);
+    }
+    /** @internal */
+    async _onBeforeResourceStartedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new BeforeResourceStartedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onBeforeResourceStarted', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._onBeforeResourceStartedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceStoppedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceStoppedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceStopped', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._onResourceStoppedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onInitializeResourceInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new InitializeResourceEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onInitializeResource', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._onInitializeResourceInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceReadyInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceReadyEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceReady', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._onResourceReadyInternal(callback), this._client);
+    }
+    /** Creates an execution configuration builder */
+    async createExecutionConfiguration() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/createExecutionConfiguration', rpcArgs);
+    }
+    /** @internal */
+    async _withStorageRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Storage/withStorageRoleAssignments', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withAzureContainerRegistryInternal(registryBuilder) {
+        registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
+        const rpcArgs = { builder: this._handle, registryBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryAzureContainerRegistry', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withAzureContainerRegistryInternal(registryBuilder), this._client);
+    }
+    /** @internal */
+    async _getAzureContainerRegistryInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/getAzureContainerRegistry', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._getAzureContainerRegistryInternal(), this._client);
+    }
+    /** @internal */
+    async _withContainerRegistryRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryRoleAssignments', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureKeyVaultSecretResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
+}
+/**
+ * Thenable wrapper for AzureKeyVaultSecretResource that enables fluent chaining.
+ * @example
+ * await builder.addSomething().withX().withY();
+ */
+class AzureKeyVaultSecretResourcePromiseImpl {
+    _promise;
+    _client;
+    constructor(_promise, _client, track = true) {
+        this._promise = _promise;
+        this._client = _client;
+        if (track) {
+            _client.trackPromise(_promise);
+        }
+    }
+    then(onfulfilled, onrejected) {
+        return this._promise.then(onfulfilled, onrejected);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withDockerfileBaseImage(options)), this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withRequiredCommand(command, options)), this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withUrlsCallback(callback)), this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withUrl(url, options)), this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withUrlExpression(url, options)), this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpoint(endpointName, callback)), this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.excludeFromManifest()), this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withExplicitStart()), this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withHealthCheck(key)), this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withCommand(name, displayName, executeCommand, options)), this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withRelationship(resourceBuilder, type)), this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withParentRelationship(parent)), this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withChildRelationship(child)), this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withIconName(iconName, options)), this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.excludeFromMcp()), this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withPipelineStepFactory(stepName, callback, options)), this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withPipelineConfiguration(callback)), this._client);
+    }
+    /** Gets the resource name */
+    getResourceName() {
+        return this._promise.then(obj => obj.getResourceName());
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.onBeforeResourceStarted(callback)), this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.onResourceStopped(callback)), this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.onInitializeResource(callback)), this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.onResourceReady(callback)), this._client);
+    }
+    /** Creates an execution configuration builder */
+    createExecutionConfiguration() {
+        return this._promise.then(obj => obj.createExecutionConfiguration());
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.getAzureContainerRegistry()), this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureKeyVaultSecretResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureLogAnalyticsWorkspaceResourceImpl
@@ -9826,17 +18972,6 @@ class AzureEnvironmentResourcePromiseImpl {
 class AzureLogAnalyticsWorkspaceResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureLogAnalyticsWorkspaceResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -10149,6 +19284,17 @@ class AzureLogAnalyticsWorkspaceResourceImpl extends base_js_1.ResourceBuilderBa
     withStorageRoleAssignments(target, roles) {
         return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureLogAnalyticsWorkspaceResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     async getOutput(name) {
         const rpcArgs = { builder: this._handle, name };
@@ -10360,6 +19506,28 @@ class AzureLogAnalyticsWorkspaceResourceImpl extends base_js_1.ResourceBuilderBa
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureLogAnalyticsWorkspaceResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureLogAnalyticsWorkspaceResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureLogAnalyticsWorkspaceResource that enables fluent chaining.
@@ -10378,10 +19546,6 @@ class AzureLogAnalyticsWorkspaceResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -10479,6 +19643,10 @@ class AzureLogAnalyticsWorkspaceResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     getOutput(name) {
         return this._promise.then(obj => obj.getOutput(name));
@@ -10559,6 +19727,14 @@ class AzureLogAnalyticsWorkspaceResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureLogAnalyticsWorkspaceResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureProvisioningResourceImpl
@@ -10566,17 +19742,6 @@ class AzureLogAnalyticsWorkspaceResourcePromiseImpl {
 class AzureProvisioningResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureProvisioningResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureProvisioningResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -10889,6 +20054,17 @@ class AzureProvisioningResourceImpl extends base_js_1.ResourceBuilderBase {
     withStorageRoleAssignments(target, roles) {
         return new AzureProvisioningResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureProvisioningResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureProvisioningResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     async getOutput(name) {
         const rpcArgs = { builder: this._handle, name };
@@ -11100,6 +20276,28 @@ class AzureProvisioningResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureProvisioningResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureProvisioningResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureProvisioningResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureProvisioningResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureProvisioningResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureProvisioningResource that enables fluent chaining.
@@ -11118,10 +20316,6 @@ class AzureProvisioningResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureProvisioningResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -11219,6 +20413,10 @@ class AzureProvisioningResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureProvisioningResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureProvisioningResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     getOutput(name) {
         return this._promise.then(obj => obj.getOutput(name));
@@ -11299,6 +20497,14 @@ class AzureProvisioningResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureProvisioningResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureProvisioningResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureProvisioningResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureQueueStorageQueueResourceImpl
@@ -11306,17 +20512,6 @@ class AzureProvisioningResourcePromiseImpl {
 class AzureQueueStorageQueueResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureQueueStorageQueueResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureQueueStorageQueueResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -11670,6 +20865,17 @@ class AzureQueueStorageQueueResourceImpl extends base_js_1.ResourceBuilderBase {
         return new AzureQueueStorageQueueResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureQueueStorageQueueResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureQueueStorageQueueResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -11701,6 +20907,28 @@ class AzureQueueStorageQueueResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureQueueStorageQueueResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureQueueStorageQueueResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureQueueStorageQueueResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureQueueStorageQueueResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureQueueStorageQueueResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureQueueStorageQueueResource that enables fluent chaining.
@@ -11719,10 +20947,6 @@ class AzureQueueStorageQueueResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureQueueStorageQueueResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -11836,6 +21060,10 @@ class AzureQueueStorageQueueResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureQueueStorageQueueResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureQueueStorageQueueResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new AzureQueueStorageQueueResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -11848,6 +21076,14 @@ class AzureQueueStorageQueueResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureQueueStorageQueueResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureQueueStorageQueueResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureQueueStorageQueueResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureQueueStorageResourceImpl
@@ -11855,17 +21091,6 @@ class AzureQueueStorageQueueResourcePromiseImpl {
 class AzureQueueStorageResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureQueueStorageResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureQueueStorageResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -12219,6 +21444,17 @@ class AzureQueueStorageResourceImpl extends base_js_1.ResourceBuilderBase {
         return new AzureQueueStorageResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureQueueStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureQueueStorageResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -12250,6 +21486,28 @@ class AzureQueueStorageResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureQueueStorageResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureQueueStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureQueueStorageResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureQueueStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureQueueStorageResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureQueueStorageResource that enables fluent chaining.
@@ -12268,10 +21526,6 @@ class AzureQueueStorageResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureQueueStorageResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -12385,6 +21639,10 @@ class AzureQueueStorageResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureQueueStorageResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureQueueStorageResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new AzureQueueStorageResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -12397,6 +21655,840 @@ class AzureQueueStorageResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureQueueStorageResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureQueueStorageResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureQueueStorageResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
+}
+// ============================================================================
+// AzureSearchResourceImpl
+// ============================================================================
+class AzureSearchResourceImpl extends base_js_1.ResourceBuilderBase {
+    constructor(handle, client) {
+        super(handle, client);
+    }
+    /** @internal */
+    async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
+        const rpcArgs = { builder: this._handle };
+        if (buildImage !== undefined)
+            rpcArgs.buildImage = buildImage;
+        if (runtimeImage !== undefined)
+            rpcArgs.runtimeImage = runtimeImage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfileBaseImage', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        const buildImage = options?.buildImage;
+        const runtimeImage = options?.runtimeImage;
+        return new AzureSearchResourcePromiseImpl(this._withDockerfileBaseImageInternal(buildImage, runtimeImage), this._client);
+    }
+    /** @internal */
+    async _withRequiredCommandInternal(command, helpLink) {
+        const rpcArgs = { builder: this._handle, command };
+        if (helpLink !== undefined)
+            rpcArgs.helpLink = helpLink;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRequiredCommand', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        const helpLink = options?.helpLink;
+        return new AzureSearchResourcePromiseImpl(this._withRequiredCommandInternal(command, helpLink), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionProperty', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._withConnectionPropertyInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionPropertyValue', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._withConnectionPropertyValueInternal(name, value), this._client);
+    }
+    /** Gets a connection property by key */
+    async getConnectionProperty(key) {
+        const rpcArgs = { resource: this._handle, key };
+        return await this._client.invokeCapability('Aspire.Hosting/getConnectionProperty', rpcArgs);
+    }
+    /** @internal */
+    async _withUrlsCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new ResourceUrlsCallbackContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlsCallback', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureSearchResourcePromiseImpl(this._withUrlsCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withUrlInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrl', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        const displayText = options?.displayText;
+        return new AzureSearchResourcePromiseImpl(this._withUrlInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlExpressionInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlExpression', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        const displayText = options?.displayText;
+        return new AzureSearchResourcePromiseImpl(this._withUrlExpressionInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const obj = (0, transport_js_1.wrapIfHandle)(objData);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpoint', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureSearchResourcePromiseImpl(this._withUrlForEndpointInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _excludeFromManifestInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromManifest', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureSearchResourcePromiseImpl(this._excludeFromManifestInternal(), this._client);
+    }
+    /** @internal */
+    async _withExplicitStartInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExplicitStart', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureSearchResourcePromiseImpl(this._withExplicitStartInternal(), this._client);
+    }
+    /** @internal */
+    async _withHealthCheckInternal(key) {
+        const rpcArgs = { builder: this._handle, key };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHealthCheck', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureSearchResourcePromiseImpl(this._withHealthCheckInternal(key), this._client);
+    }
+    /** @internal */
+    async _withCommandInternal(name, displayName, executeCommand, commandOptions) {
+        const executeCommandId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ExecuteCommandContextImpl(argHandle, this._client);
+            return await executeCommand(arg);
+        });
+        const rpcArgs = { builder: this._handle, name, displayName, executeCommand: executeCommandId };
+        if (commandOptions !== undefined)
+            rpcArgs.commandOptions = commandOptions;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withCommand', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        const commandOptions = options?.commandOptions;
+        return new AzureSearchResourcePromiseImpl(this._withCommandInternal(name, displayName, executeCommand, commandOptions), this._client);
+    }
+    /** @internal */
+    async _withRelationshipInternal(resourceBuilder, type) {
+        resourceBuilder = (0, transport_js_1.isPromiseLike)(resourceBuilder) ? await resourceBuilder : resourceBuilder;
+        const rpcArgs = { builder: this._handle, resourceBuilder, type };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderRelationship', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureSearchResourcePromiseImpl(this._withRelationshipInternal(resourceBuilder, type), this._client);
+    }
+    /** @internal */
+    async _withParentRelationshipInternal(parent) {
+        parent = (0, transport_js_1.isPromiseLike)(parent) ? await parent : parent;
+        const rpcArgs = { builder: this._handle, parent };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderParentRelationship', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureSearchResourcePromiseImpl(this._withParentRelationshipInternal(parent), this._client);
+    }
+    /** @internal */
+    async _withChildRelationshipInternal(child) {
+        child = (0, transport_js_1.isPromiseLike)(child) ? await child : child;
+        const rpcArgs = { builder: this._handle, child };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderChildRelationship', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureSearchResourcePromiseImpl(this._withChildRelationshipInternal(child), this._client);
+    }
+    /** @internal */
+    async _withIconNameInternal(iconName, iconVariant) {
+        const rpcArgs = { builder: this._handle, iconName };
+        if (iconVariant !== undefined)
+            rpcArgs.iconVariant = iconVariant;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withIconName', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        const iconVariant = options?.iconVariant;
+        return new AzureSearchResourcePromiseImpl(this._withIconNameInternal(iconName, iconVariant), this._client);
+    }
+    /** @internal */
+    async _excludeFromMcpInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromMcp', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureSearchResourcePromiseImpl(this._excludeFromMcpInternal(), this._client);
+    }
+    /** @internal */
+    async _withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new PipelineStepContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, stepName, callback: callbackId };
+        if (dependsOn !== undefined)
+            rpcArgs.dependsOn = dependsOn;
+        if (requiredBy !== undefined)
+            rpcArgs.requiredBy = requiredBy;
+        if (tags !== undefined)
+            rpcArgs.tags = tags;
+        if (description !== undefined)
+            rpcArgs.description = description;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineStepFactory', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        const dependsOn = options?.dependsOn;
+        const requiredBy = options?.requiredBy;
+        const tags = options?.tags;
+        const description = options?.description;
+        return new AzureSearchResourcePromiseImpl(this._withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description), this._client);
+    }
+    /** @internal */
+    async _withPipelineConfigurationInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new PipelineConfigurationContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineConfiguration', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureSearchResourcePromiseImpl(this._withPipelineConfigurationInternal(callback), this._client);
+    }
+    /** Gets the resource name */
+    async getResourceName() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/getResourceName', rpcArgs);
+    }
+    /** @internal */
+    async _onBeforeResourceStartedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new BeforeResourceStartedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onBeforeResourceStarted', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureSearchResourcePromiseImpl(this._onBeforeResourceStartedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceStoppedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceStoppedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceStopped', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureSearchResourcePromiseImpl(this._onResourceStoppedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onConnectionStringAvailableInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ConnectionStringAvailableEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onConnectionStringAvailable', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureSearchResourcePromiseImpl(this._onConnectionStringAvailableInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onInitializeResourceInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new InitializeResourceEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onInitializeResource', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureSearchResourcePromiseImpl(this._onInitializeResourceInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceReadyInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceReadyEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceReady', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureSearchResourcePromiseImpl(this._onResourceReadyInternal(callback), this._client);
+    }
+    /** Creates an execution configuration builder */
+    async createExecutionConfiguration() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/createExecutionConfiguration', rpcArgs);
+    }
+    /** @internal */
+    async _withStorageRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Storage/withStorageRoleAssignments', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureSearchResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureSearchResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    async getOutput(name) {
+        const rpcArgs = { builder: this._handle, name };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getOutput', rpcArgs);
+    }
+    /** @internal */
+    async _withParameterInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameter', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new AzureSearchResourcePromiseImpl(this._withParameterInternal(name), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValue', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._withParameterStringValueInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValuesInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValues', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._withParameterStringValuesInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromParameterInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromParameter', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._withParameterFromParameterInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromConnectionStringInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromConnectionString', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._withParameterFromConnectionStringInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromOutputInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromOutput', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._withParameterFromOutputInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromReferenceExpressionInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromReferenceExpression', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._withParameterFromReferenceExpressionInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromEndpointInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromEndpoint', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._withParameterFromEndpointInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _configureInfrastructureInternal(configure) {
+        const configureId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new AzureResourceInfrastructureImpl(objHandle, this._client);
+            await configure(obj);
+        });
+        const rpcArgs = { builder: this._handle, configure: configureId };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/configureInfrastructure', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new AzureSearchResourcePromiseImpl(this._configureInfrastructureInternal(configure), this._client);
+    }
+    /** @internal */
+    async _publishAsConnectionStringInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsConnectionString', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new AzureSearchResourcePromiseImpl(this._publishAsConnectionStringInternal(), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    async getBicepIdentifier() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getBicepIdentifier', rpcArgs);
+    }
+    /** @internal */
+    async _clearDefaultRoleAssignmentsInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/clearDefaultRoleAssignments', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new AzureSearchResourcePromiseImpl(this._clearDefaultRoleAssignmentsInternal(), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    async isExisting() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/isExisting', rpcArgs);
+    }
+    /** @internal */
+    async _runAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/runAsExisting', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureSearchResourcePromiseImpl(this._runAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _publishAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsExisting', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureSearchResourcePromiseImpl(this._publishAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _asExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/asExisting', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new AzureSearchResourcePromiseImpl(this._asExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _withAzureContainerRegistryInternal(registryBuilder) {
+        registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
+        const rpcArgs = { builder: this._handle, registryBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryAzureContainerRegistry', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureSearchResourcePromiseImpl(this._withAzureContainerRegistryInternal(registryBuilder), this._client);
+    }
+    /** @internal */
+    async _getAzureContainerRegistryInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/getAzureContainerRegistry', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._getAzureContainerRegistryInternal(), this._client);
+    }
+    /** @internal */
+    async _withContainerRegistryRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryRoleAssignments', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureSearchResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureSearchResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureSearchResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureSearchResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
+}
+/**
+ * Thenable wrapper for AzureSearchResource that enables fluent chaining.
+ * @example
+ * await builder.addSomething().withX().withY();
+ */
+class AzureSearchResourcePromiseImpl {
+    _promise;
+    _client;
+    constructor(_promise, _client, track = true) {
+        this._promise = _promise;
+        this._client = _client;
+        if (track) {
+            _client.trackPromise(_promise);
+        }
+    }
+    then(onfulfilled, onrejected) {
+        return this._promise.then(onfulfilled, onrejected);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withDockerfileBaseImage(options)), this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withRequiredCommand(command, options)), this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withConnectionProperty(name, value)), this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withConnectionPropertyValue(name, value)), this._client);
+    }
+    /** Gets a connection property by key */
+    getConnectionProperty(key) {
+        return this._promise.then(obj => obj.getConnectionProperty(key));
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withUrlsCallback(callback)), this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withUrl(url, options)), this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withUrlExpression(url, options)), this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpoint(endpointName, callback)), this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.excludeFromManifest()), this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withExplicitStart()), this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withHealthCheck(key)), this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withCommand(name, displayName, executeCommand, options)), this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withRelationship(resourceBuilder, type)), this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withParentRelationship(parent)), this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withChildRelationship(child)), this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withIconName(iconName, options)), this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.excludeFromMcp()), this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withPipelineStepFactory(stepName, callback, options)), this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withPipelineConfiguration(callback)), this._client);
+    }
+    /** Gets the resource name */
+    getResourceName() {
+        return this._promise.then(obj => obj.getResourceName());
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.onBeforeResourceStarted(callback)), this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.onResourceStopped(callback)), this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.onConnectionStringAvailable(callback)), this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.onInitializeResource(callback)), this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.onResourceReady(callback)), this._client);
+    }
+    /** Creates an execution configuration builder */
+    createExecutionConfiguration() {
+        return this._promise.then(obj => obj.createExecutionConfiguration());
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    getOutput(name) {
+        return this._promise.then(obj => obj.getOutput(name));
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withParameter(name)), this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValue(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValues(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromParameter(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromConnectionString(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromOutput(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromReferenceExpression(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromEndpoint(name, value)), this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.configureInfrastructure(configure)), this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.publishAsConnectionString()), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    getBicepIdentifier() {
+        return this._promise.then(obj => obj.getBicepIdentifier());
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.clearDefaultRoleAssignments()), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    isExisting() {
+        return this._promise.then(obj => obj.isExisting());
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.runAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.publishAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.asExisting(name, options)), this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.getAzureContainerRegistry()), this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureSearchResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureStorageEmulatorResourceImpl
@@ -12404,17 +22496,6 @@ class AzureQueueStorageResourcePromiseImpl {
 class AzureStorageEmulatorResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureStorageEmulatorResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureStorageEmulatorResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withBindMountInternal(source, target, isReadOnly) {
@@ -13731,6 +23812,39 @@ class AzureStorageEmulatorResourceImpl extends base_js_1.ResourceBuilderBase {
         return new AzureStorageEmulatorResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureStorageEmulatorResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureStorageEmulatorResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new AzureStorageEmulatorResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new AzureStorageEmulatorResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** @internal */
     async _withEnvironmentFromOutputInternal(name, bicepOutputReference) {
         bicepOutputReference = (0, transport_js_1.isPromiseLike)(bicepOutputReference) ? await bicepOutputReference : bicepOutputReference;
         const rpcArgs = { builder: this._handle, name, bicepOutputReference };
@@ -13801,6 +23915,28 @@ class AzureStorageEmulatorResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureStorageEmulatorResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureStorageEmulatorResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureStorageEmulatorResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureStorageEmulatorResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureStorageEmulatorResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureStorageEmulatorResource that enables fluent chaining.
@@ -13819,10 +23955,6 @@ class AzureStorageEmulatorResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureStorageEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Adds a bind mount */
     withBindMount(source, target, options) {
@@ -14228,6 +24360,14 @@ class AzureStorageEmulatorResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureStorageEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureStorageEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new AzureStorageEmulatorResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
     /**
      * Sets an environment variable from a Bicep output reference
      * @deprecated ATS compatibility shim. Use withEnvironment instead.
@@ -14258,6 +24398,14 @@ class AzureStorageEmulatorResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureStorageEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureStorageEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureStorageEmulatorResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureStorageResourceImpl
@@ -14265,17 +24413,6 @@ class AzureStorageEmulatorResourcePromiseImpl {
 class AzureStorageResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureStorageResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureStorageResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -14962,6 +25099,39 @@ class AzureStorageResourceImpl extends base_js_1.ResourceBuilderBase {
     withStorageRoleAssignments(target, roles) {
         return new AzureStorageResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureStorageResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new AzureStorageResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new AzureStorageResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     async getOutput(name) {
         const rpcArgs = { builder: this._handle, name };
@@ -15173,6 +25343,28 @@ class AzureStorageResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureStorageResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureStorageResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureStorageResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureStorageResource that enables fluent chaining.
@@ -15191,10 +25383,6 @@ class AzureStorageResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureStorageResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -15384,6 +25572,14 @@ class AzureStorageResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureStorageResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureStorageResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new AzureStorageResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     getOutput(name) {
         return this._promise.then(obj => obj.getOutput(name));
@@ -15464,6 +25660,14 @@ class AzureStorageResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureStorageResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureStorageResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureStorageResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureTableStorageResourceImpl
@@ -15471,17 +25675,6 @@ class AzureStorageResourcePromiseImpl {
 class AzureTableStorageResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureTableStorageResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureTableStorageResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -15835,6 +26028,17 @@ class AzureTableStorageResourceImpl extends base_js_1.ResourceBuilderBase {
         return new AzureTableStorageResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureTableStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureTableStorageResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -15866,6 +26070,28 @@ class AzureTableStorageResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureTableStorageResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureTableStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureTableStorageResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureTableStorageResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureTableStorageResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureTableStorageResource that enables fluent chaining.
@@ -15884,10 +26110,6 @@ class AzureTableStorageResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureTableStorageResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -16001,6 +26223,10 @@ class AzureTableStorageResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureTableStorageResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureTableStorageResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new AzureTableStorageResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -16013,6 +26239,14 @@ class AzureTableStorageResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureTableStorageResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureTableStorageResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureTableStorageResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // AzureUserAssignedIdentityResourceImpl
@@ -16020,17 +26254,6 @@ class AzureTableStorageResourcePromiseImpl {
 class AzureUserAssignedIdentityResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new AzureUserAssignedIdentityResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureUserAssignedIdentityResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -16343,6 +26566,17 @@ class AzureUserAssignedIdentityResourceImpl extends base_js_1.ResourceBuilderBas
     withStorageRoleAssignments(target, roles) {
         return new AzureUserAssignedIdentityResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new AzureUserAssignedIdentityResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureUserAssignedIdentityResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     async getOutput(name) {
         const rpcArgs = { builder: this._handle, name };
@@ -16554,6 +26788,28 @@ class AzureUserAssignedIdentityResourceImpl extends base_js_1.ResourceBuilderBas
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureUserAssignedIdentityResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new AzureUserAssignedIdentityResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureUserAssignedIdentityResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new AzureUserAssignedIdentityResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureUserAssignedIdentityResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for AzureUserAssignedIdentityResource that enables fluent chaining.
@@ -16572,10 +26828,6 @@ class AzureUserAssignedIdentityResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new AzureUserAssignedIdentityResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -16673,6 +26925,10 @@ class AzureUserAssignedIdentityResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new AzureUserAssignedIdentityResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new AzureUserAssignedIdentityResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Gets an output reference from an Azure Bicep template resource */
     getOutput(name) {
         return this._promise.then(obj => obj.getOutput(name));
@@ -16753,6 +27009,14 @@ class AzureUserAssignedIdentityResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new AzureUserAssignedIdentityResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new AzureUserAssignedIdentityResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new AzureUserAssignedIdentityResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // ConnectionStringResourceImpl
@@ -16760,17 +27024,6 @@ class AzureUserAssignedIdentityResourcePromiseImpl {
 class ConnectionStringResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new ConnectionStringResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ConnectionStringResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -17182,6 +27435,17 @@ class ConnectionStringResourceImpl extends base_js_1.ResourceBuilderBase {
         return new ConnectionStringResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new ConnectionStringResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ConnectionStringResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -17213,6 +27477,28 @@ class ConnectionStringResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ConnectionStringResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new ConnectionStringResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ConnectionStringResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new ConnectionStringResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ConnectionStringResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for ConnectionStringResource that enables fluent chaining.
@@ -17231,10 +27517,6 @@ class ConnectionStringResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ConnectionStringResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -17368,6 +27650,10 @@ class ConnectionStringResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new ConnectionStringResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ConnectionStringResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new ConnectionStringResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -17380,6 +27666,14 @@ class ConnectionStringResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ConnectionStringResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ConnectionStringResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ConnectionStringResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // ContainerRegistryResourceImpl
@@ -17387,17 +27681,6 @@ class ConnectionStringResourcePromiseImpl {
 class ContainerRegistryResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new ContainerRegistryResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ContainerRegistryResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -17711,6 +27994,17 @@ class ContainerRegistryResourceImpl extends base_js_1.ResourceBuilderBase {
         return new ContainerRegistryResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new ContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ContainerRegistryResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -17742,6 +28036,28 @@ class ContainerRegistryResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ContainerRegistryResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new ContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ContainerRegistryResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new ContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ContainerRegistryResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for ContainerRegistryResource that enables fluent chaining.
@@ -17760,10 +28076,6 @@ class ContainerRegistryResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -17861,6 +28173,10 @@ class ContainerRegistryResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new ContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new ContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -17873,6 +28189,14 @@ class ContainerRegistryResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // ContainerResourceImpl
@@ -17880,17 +28204,6 @@ class ContainerRegistryResourcePromiseImpl {
 class ContainerResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new ContainerResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ContainerResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withBindMountInternal(source, target, isReadOnly) {
@@ -19132,6 +29445,39 @@ class ContainerResourceImpl extends base_js_1.ResourceBuilderBase {
         return new ContainerResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new ContainerResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ContainerResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new ContainerResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new ContainerResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** @internal */
     async _withEnvironmentFromOutputInternal(name, bicepOutputReference) {
         bicepOutputReference = (0, transport_js_1.isPromiseLike)(bicepOutputReference) ? await bicepOutputReference : bicepOutputReference;
         const rpcArgs = { builder: this._handle, name, bicepOutputReference };
@@ -19202,6 +29548,28 @@ class ContainerResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ContainerResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new ContainerResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ContainerResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new ContainerResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ContainerResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for ContainerResource that enables fluent chaining.
@@ -19220,10 +29588,6 @@ class ContainerResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ContainerResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Adds a bind mount */
     withBindMount(source, target, options) {
@@ -19605,6 +29969,14 @@ class ContainerResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new ContainerResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ContainerResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new ContainerResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
     /**
      * Sets an environment variable from a Bicep output reference
      * @deprecated ATS compatibility shim. Use withEnvironment instead.
@@ -19635,6 +30007,14 @@ class ContainerResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ContainerResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ContainerResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ContainerResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // CSharpAppResourceImpl
@@ -19642,17 +30022,6 @@ class ContainerResourcePromiseImpl {
 class CSharpAppResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new CSharpAppResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new CSharpAppResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -20706,6 +31075,39 @@ class CSharpAppResourceImpl extends base_js_1.ResourceBuilderBase {
         return new CSharpAppResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new CSharpAppResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new CSharpAppResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new CSharpAppResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new CSharpAppResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** @internal */
     async _withEnvironmentFromOutputInternal(name, bicepOutputReference) {
         bicepOutputReference = (0, transport_js_1.isPromiseLike)(bicepOutputReference) ? await bicepOutputReference : bicepOutputReference;
         const rpcArgs = { builder: this._handle, name, bicepOutputReference };
@@ -20776,6 +31178,28 @@ class CSharpAppResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new CSharpAppResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new CSharpAppResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new CSharpAppResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new CSharpAppResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new CSharpAppResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for CSharpAppResource that enables fluent chaining.
@@ -20794,10 +31218,6 @@ class CSharpAppResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new CSharpAppResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -21115,6 +31535,14 @@ class CSharpAppResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new CSharpAppResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new CSharpAppResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new CSharpAppResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
     /**
      * Sets an environment variable from a Bicep output reference
      * @deprecated ATS compatibility shim. Use withEnvironment instead.
@@ -21144,6 +31572,14 @@ class CSharpAppResourcePromiseImpl {
     /** Assigns Azure Container Registry roles to a resource. */
     withContainerRegistryRoleAssignments(target, roles) {
         return new CSharpAppResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new CSharpAppResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new CSharpAppResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
     }
 }
 // ============================================================================
@@ -21191,17 +31627,6 @@ class DockerComposeAspireDashboardResourceImpl extends base_js_1.ResourceBuilder
             return await this._client.invokeCapability('Aspire.Hosting.Docker/DockerComposeAspireDashboardResource.name', { context: this._handle });
         },
     };
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new DockerComposeAspireDashboardResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new DockerComposeAspireDashboardResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
-    }
     /** @internal */
     async _withBindMountInternal(source, target, isReadOnly) {
         const rpcArgs = { builder: this._handle, source, target };
@@ -22468,6 +32893,39 @@ class DockerComposeAspireDashboardResourceImpl extends base_js_1.ResourceBuilder
         return new DockerComposeAspireDashboardResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new DockerComposeAspireDashboardResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new DockerComposeAspireDashboardResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new DockerComposeAspireDashboardResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new DockerComposeAspireDashboardResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** @internal */
     async _withEnvironmentFromOutputInternal(name, bicepOutputReference) {
         bicepOutputReference = (0, transport_js_1.isPromiseLike)(bicepOutputReference) ? await bicepOutputReference : bicepOutputReference;
         const rpcArgs = { builder: this._handle, name, bicepOutputReference };
@@ -22538,6 +32996,28 @@ class DockerComposeAspireDashboardResourceImpl extends base_js_1.ResourceBuilder
     withContainerRegistryRoleAssignments(target, roles) {
         return new DockerComposeAspireDashboardResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new DockerComposeAspireDashboardResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new DockerComposeAspireDashboardResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new DockerComposeAspireDashboardResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new DockerComposeAspireDashboardResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for DockerComposeAspireDashboardResource that enables fluent chaining.
@@ -22556,10 +33036,6 @@ class DockerComposeAspireDashboardResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new DockerComposeAspireDashboardResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Adds a bind mount */
     withBindMount(source, target, options) {
@@ -22949,6 +33425,14 @@ class DockerComposeAspireDashboardResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new DockerComposeAspireDashboardResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new DockerComposeAspireDashboardResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new DockerComposeAspireDashboardResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
     /**
      * Sets an environment variable from a Bicep output reference
      * @deprecated ATS compatibility shim. Use withEnvironment instead.
@@ -22978,6 +33462,14 @@ class DockerComposeAspireDashboardResourcePromiseImpl {
     /** Assigns Azure Container Registry roles to a resource. */
     withContainerRegistryRoleAssignments(target, roles) {
         return new DockerComposeAspireDashboardResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new DockerComposeAspireDashboardResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new DockerComposeAspireDashboardResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
     }
 }
 // ============================================================================
@@ -23011,17 +33503,6 @@ class DockerComposeEnvironmentResourceImpl extends base_js_1.ResourceBuilderBase
             return await this._client.invokeCapability('Aspire.Hosting.Docker/DockerComposeEnvironmentResource.name', { context: this._handle });
         },
     };
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new DockerComposeEnvironmentResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new DockerComposeEnvironmentResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
-    }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
         const rpcArgs = { builder: this._handle };
@@ -23392,6 +33873,17 @@ class DockerComposeEnvironmentResourceImpl extends base_js_1.ResourceBuilderBase
         return new DockerComposeEnvironmentResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new DockerComposeEnvironmentResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new DockerComposeEnvironmentResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -23423,6 +33915,28 @@ class DockerComposeEnvironmentResourceImpl extends base_js_1.ResourceBuilderBase
     withContainerRegistryRoleAssignments(target, roles) {
         return new DockerComposeEnvironmentResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new DockerComposeEnvironmentResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new DockerComposeEnvironmentResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new DockerComposeEnvironmentResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new DockerComposeEnvironmentResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for DockerComposeEnvironmentResource that enables fluent chaining.
@@ -23441,10 +33955,6 @@ class DockerComposeEnvironmentResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new DockerComposeEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -23558,6 +34068,10 @@ class DockerComposeEnvironmentResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new DockerComposeEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new DockerComposeEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new DockerComposeEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -23569,6 +34083,14 @@ class DockerComposeEnvironmentResourcePromiseImpl {
     /** Assigns Azure Container Registry roles to a resource. */
     withContainerRegistryRoleAssignments(target, roles) {
         return new DockerComposeEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new DockerComposeEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new DockerComposeEnvironmentResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
     }
 }
 // ============================================================================
@@ -23591,17 +34113,6 @@ class DockerComposeServiceResourceImpl extends base_js_1.ResourceBuilderBase {
             return await this._client.invokeCapability('Aspire.Hosting.Docker/DockerComposeServiceResource.name', { context: this._handle });
         },
     };
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new DockerComposeServiceResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new DockerComposeServiceResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
-    }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
         const rpcArgs = { builder: this._handle };
@@ -23914,6 +34425,17 @@ class DockerComposeServiceResourceImpl extends base_js_1.ResourceBuilderBase {
         return new DockerComposeServiceResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new DockerComposeServiceResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new DockerComposeServiceResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -23945,6 +34467,28 @@ class DockerComposeServiceResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new DockerComposeServiceResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new DockerComposeServiceResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new DockerComposeServiceResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new DockerComposeServiceResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new DockerComposeServiceResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for DockerComposeServiceResource that enables fluent chaining.
@@ -23963,10 +34507,6 @@ class DockerComposeServiceResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new DockerComposeServiceResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -24064,6 +34604,10 @@ class DockerComposeServiceResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new DockerComposeServiceResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new DockerComposeServiceResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new DockerComposeServiceResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -24076,6 +34620,14 @@ class DockerComposeServiceResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new DockerComposeServiceResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new DockerComposeServiceResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new DockerComposeServiceResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // DotnetToolResourceImpl
@@ -24083,17 +34635,6 @@ class DockerComposeServiceResourcePromiseImpl {
 class DotnetToolResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new DotnetToolResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new DotnetToolResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -25203,6 +35744,39 @@ class DotnetToolResourceImpl extends base_js_1.ResourceBuilderBase {
         return new DotnetToolResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new DotnetToolResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new DotnetToolResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new DotnetToolResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new DotnetToolResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** @internal */
     async _withEnvironmentFromOutputInternal(name, bicepOutputReference) {
         bicepOutputReference = (0, transport_js_1.isPromiseLike)(bicepOutputReference) ? await bicepOutputReference : bicepOutputReference;
         const rpcArgs = { builder: this._handle, name, bicepOutputReference };
@@ -25273,6 +35847,28 @@ class DotnetToolResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new DotnetToolResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new DotnetToolResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new DotnetToolResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new DotnetToolResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new DotnetToolResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for DotnetToolResource that enables fluent chaining.
@@ -25291,10 +35887,6 @@ class DotnetToolResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new DotnetToolResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -25636,6 +36228,14 @@ class DotnetToolResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new DotnetToolResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new DotnetToolResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new DotnetToolResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
     /**
      * Sets an environment variable from a Bicep output reference
      * @deprecated ATS compatibility shim. Use withEnvironment instead.
@@ -25666,6 +36266,14 @@ class DotnetToolResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new DotnetToolResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new DotnetToolResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new DotnetToolResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // ExecutableResourceImpl
@@ -25673,17 +36281,6 @@ class DotnetToolResourcePromiseImpl {
 class ExecutableResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new ExecutableResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ExecutableResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -26733,6 +37330,39 @@ class ExecutableResourceImpl extends base_js_1.ResourceBuilderBase {
         return new ExecutableResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new ExecutableResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ExecutableResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new ExecutableResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new ExecutableResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** @internal */
     async _withEnvironmentFromOutputInternal(name, bicepOutputReference) {
         bicepOutputReference = (0, transport_js_1.isPromiseLike)(bicepOutputReference) ? await bicepOutputReference : bicepOutputReference;
         const rpcArgs = { builder: this._handle, name, bicepOutputReference };
@@ -26803,6 +37433,28 @@ class ExecutableResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ExecutableResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new ExecutableResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ExecutableResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new ExecutableResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ExecutableResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for ExecutableResource that enables fluent chaining.
@@ -26821,10 +37473,6 @@ class ExecutableResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ExecutableResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -27142,6 +37790,14 @@ class ExecutableResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new ExecutableResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ExecutableResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new ExecutableResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
     /**
      * Sets an environment variable from a Bicep output reference
      * @deprecated ATS compatibility shim. Use withEnvironment instead.
@@ -27172,6 +37828,14 @@ class ExecutableResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ExecutableResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ExecutableResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ExecutableResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // ExternalServiceResourceImpl
@@ -27179,17 +37843,6 @@ class ExecutableResourcePromiseImpl {
 class ExternalServiceResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new ExternalServiceResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ExternalServiceResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -27519,6 +38172,17 @@ class ExternalServiceResourceImpl extends base_js_1.ResourceBuilderBase {
         return new ExternalServiceResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new ExternalServiceResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ExternalServiceResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -27550,6 +38214,28 @@ class ExternalServiceResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ExternalServiceResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new ExternalServiceResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ExternalServiceResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new ExternalServiceResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ExternalServiceResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for ExternalServiceResource that enables fluent chaining.
@@ -27568,10 +38254,6 @@ class ExternalServiceResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ExternalServiceResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -27673,6 +38355,10 @@ class ExternalServiceResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new ExternalServiceResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ExternalServiceResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new ExternalServiceResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -27684,6 +38370,1934 @@ class ExternalServiceResourcePromiseImpl {
     /** Assigns Azure Container Registry roles to a resource. */
     withContainerRegistryRoleAssignments(target, roles) {
         return new ExternalServiceResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ExternalServiceResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ExternalServiceResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
+}
+// ============================================================================
+// FoundryDeploymentResourceImpl
+// ============================================================================
+class FoundryDeploymentResourceImpl extends base_js_1.ResourceBuilderBase {
+    constructor(handle, client) {
+        super(handle, client);
+    }
+    /** Gets the DeploymentName property */
+    deploymentName = {
+        get: async () => {
+            return await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.deploymentName', { context: this._handle });
+        },
+        set: async (value) => {
+            await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.setDeploymentName', { context: this._handle, value });
+        }
+    };
+    /** Gets the ModelName property */
+    modelName = {
+        get: async () => {
+            return await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.modelName', { context: this._handle });
+        },
+        set: async (value) => {
+            await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.setModelName', { context: this._handle, value });
+        }
+    };
+    /** Gets the ModelVersion property */
+    modelVersion = {
+        get: async () => {
+            return await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.modelVersion', { context: this._handle });
+        },
+        set: async (value) => {
+            await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.setModelVersion', { context: this._handle, value });
+        }
+    };
+    /** Gets the Format property */
+    format = {
+        get: async () => {
+            return await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.format', { context: this._handle });
+        },
+        set: async (value) => {
+            await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.setFormat', { context: this._handle, value });
+        }
+    };
+    /** Gets the SkuName property */
+    skuName = {
+        get: async () => {
+            return await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.skuName', { context: this._handle });
+        },
+        set: async (value) => {
+            await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.setSkuName', { context: this._handle, value });
+        }
+    };
+    /** Gets the SkuCapacity property */
+    skuCapacity = {
+        get: async () => {
+            return await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.skuCapacity', { context: this._handle });
+        },
+        set: async (value) => {
+            await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.setSkuCapacity', { context: this._handle, value });
+        }
+    };
+    /** Gets the Parent property */
+    parent = {
+        get: async () => {
+            const handle = await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.parent', { context: this._handle });
+            return new FoundryResourceImpl(handle, this._client);
+        },
+        set: async (value) => {
+            value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+            await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.setParent', { context: this._handle, value });
+        }
+    };
+    /** Gets the ConnectionStringExpression property */
+    connectionStringExpression = {
+        get: async () => {
+            return await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.connectionStringExpression', { context: this._handle });
+        },
+    };
+    /** Gets the Name property */
+    name = {
+        get: async () => {
+            return await this._client.invokeCapability('Aspire.Hosting.Foundry/FoundryDeploymentResource.name', { context: this._handle });
+        },
+    };
+    /** @internal */
+    async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
+        const rpcArgs = { builder: this._handle };
+        if (buildImage !== undefined)
+            rpcArgs.buildImage = buildImage;
+        if (runtimeImage !== undefined)
+            rpcArgs.runtimeImage = runtimeImage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfileBaseImage', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        const buildImage = options?.buildImage;
+        const runtimeImage = options?.runtimeImage;
+        return new FoundryDeploymentResourcePromiseImpl(this._withDockerfileBaseImageInternal(buildImage, runtimeImage), this._client);
+    }
+    /** @internal */
+    async _withRequiredCommandInternal(command, helpLink) {
+        const rpcArgs = { builder: this._handle, command };
+        if (helpLink !== undefined)
+            rpcArgs.helpLink = helpLink;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRequiredCommand', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        const helpLink = options?.helpLink;
+        return new FoundryDeploymentResourcePromiseImpl(this._withRequiredCommandInternal(command, helpLink), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionProperty', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withConnectionPropertyInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionPropertyValue', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withConnectionPropertyValueInternal(name, value), this._client);
+    }
+    /** Gets a connection property by key */
+    async getConnectionProperty(key) {
+        const rpcArgs = { resource: this._handle, key };
+        return await this._client.invokeCapability('Aspire.Hosting/getConnectionProperty', rpcArgs);
+    }
+    /** @internal */
+    async _withUrlsCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new ResourceUrlsCallbackContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlsCallback', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withUrlsCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withUrlInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrl', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        const displayText = options?.displayText;
+        return new FoundryDeploymentResourcePromiseImpl(this._withUrlInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlExpressionInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlExpression', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        const displayText = options?.displayText;
+        return new FoundryDeploymentResourcePromiseImpl(this._withUrlExpressionInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const obj = (0, transport_js_1.wrapIfHandle)(objData);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpoint', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withUrlForEndpointInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _excludeFromManifestInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromManifest', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new FoundryDeploymentResourcePromiseImpl(this._excludeFromManifestInternal(), this._client);
+    }
+    /** @internal */
+    async _withExplicitStartInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExplicitStart', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new FoundryDeploymentResourcePromiseImpl(this._withExplicitStartInternal(), this._client);
+    }
+    /** @internal */
+    async _withHealthCheckInternal(key) {
+        const rpcArgs = { builder: this._handle, key };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHealthCheck', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withHealthCheckInternal(key), this._client);
+    }
+    /** @internal */
+    async _withCommandInternal(name, displayName, executeCommand, commandOptions) {
+        const executeCommandId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ExecuteCommandContextImpl(argHandle, this._client);
+            return await executeCommand(arg);
+        });
+        const rpcArgs = { builder: this._handle, name, displayName, executeCommand: executeCommandId };
+        if (commandOptions !== undefined)
+            rpcArgs.commandOptions = commandOptions;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withCommand', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        const commandOptions = options?.commandOptions;
+        return new FoundryDeploymentResourcePromiseImpl(this._withCommandInternal(name, displayName, executeCommand, commandOptions), this._client);
+    }
+    /** @internal */
+    async _withRelationshipInternal(resourceBuilder, type) {
+        resourceBuilder = (0, transport_js_1.isPromiseLike)(resourceBuilder) ? await resourceBuilder : resourceBuilder;
+        const rpcArgs = { builder: this._handle, resourceBuilder, type };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderRelationship', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withRelationshipInternal(resourceBuilder, type), this._client);
+    }
+    /** @internal */
+    async _withParentRelationshipInternal(parent) {
+        parent = (0, transport_js_1.isPromiseLike)(parent) ? await parent : parent;
+        const rpcArgs = { builder: this._handle, parent };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderParentRelationship', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withParentRelationshipInternal(parent), this._client);
+    }
+    /** @internal */
+    async _withChildRelationshipInternal(child) {
+        child = (0, transport_js_1.isPromiseLike)(child) ? await child : child;
+        const rpcArgs = { builder: this._handle, child };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderChildRelationship', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withChildRelationshipInternal(child), this._client);
+    }
+    /** @internal */
+    async _withIconNameInternal(iconName, iconVariant) {
+        const rpcArgs = { builder: this._handle, iconName };
+        if (iconVariant !== undefined)
+            rpcArgs.iconVariant = iconVariant;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withIconName', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        const iconVariant = options?.iconVariant;
+        return new FoundryDeploymentResourcePromiseImpl(this._withIconNameInternal(iconName, iconVariant), this._client);
+    }
+    /** @internal */
+    async _excludeFromMcpInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromMcp', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new FoundryDeploymentResourcePromiseImpl(this._excludeFromMcpInternal(), this._client);
+    }
+    /** @internal */
+    async _withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new PipelineStepContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, stepName, callback: callbackId };
+        if (dependsOn !== undefined)
+            rpcArgs.dependsOn = dependsOn;
+        if (requiredBy !== undefined)
+            rpcArgs.requiredBy = requiredBy;
+        if (tags !== undefined)
+            rpcArgs.tags = tags;
+        if (description !== undefined)
+            rpcArgs.description = description;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineStepFactory', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        const dependsOn = options?.dependsOn;
+        const requiredBy = options?.requiredBy;
+        const tags = options?.tags;
+        const description = options?.description;
+        return new FoundryDeploymentResourcePromiseImpl(this._withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description), this._client);
+    }
+    /** @internal */
+    async _withPipelineConfigurationInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new PipelineConfigurationContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineConfiguration', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withPipelineConfigurationInternal(callback), this._client);
+    }
+    /** Gets the resource name */
+    async getResourceName() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/getResourceName', rpcArgs);
+    }
+    /** @internal */
+    async _onBeforeResourceStartedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new BeforeResourceStartedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onBeforeResourceStarted', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._onBeforeResourceStartedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceStoppedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceStoppedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceStopped', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._onResourceStoppedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onConnectionStringAvailableInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ConnectionStringAvailableEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onConnectionStringAvailable', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._onConnectionStringAvailableInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onInitializeResourceInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new InitializeResourceEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onInitializeResource', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._onInitializeResourceInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceReadyInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceReadyEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceReady', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._onResourceReadyInternal(callback), this._client);
+    }
+    /** Creates an execution configuration builder */
+    async createExecutionConfiguration() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/createExecutionConfiguration', rpcArgs);
+    }
+    /** @internal */
+    async _withStorageRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Storage/withStorageRoleAssignments', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withPropertiesInternal(configure) {
+        const configureId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new FoundryDeploymentResourceImpl(objHandle, this._client);
+            await configure(obj);
+        });
+        const rpcArgs = { builder: this._handle, configure: configureId };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryDeploymentProperties', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Configures properties of a Microsoft Foundry deployment resource. */
+    withProperties(configure) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withPropertiesInternal(configure), this._client);
+    }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withAzureContainerRegistryInternal(registryBuilder) {
+        registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
+        const rpcArgs = { builder: this._handle, registryBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryAzureContainerRegistry', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withAzureContainerRegistryInternal(registryBuilder), this._client);
+    }
+    /** @internal */
+    async _getAzureContainerRegistryInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/getAzureContainerRegistry', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._getAzureContainerRegistryInternal(), this._client);
+    }
+    /** @internal */
+    async _withContainerRegistryRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryRoleAssignments', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new FoundryDeploymentResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
+}
+/**
+ * Thenable wrapper for FoundryDeploymentResource that enables fluent chaining.
+ * @example
+ * await builder.addSomething().withX().withY();
+ */
+class FoundryDeploymentResourcePromiseImpl {
+    _promise;
+    _client;
+    constructor(_promise, _client, track = true) {
+        this._promise = _promise;
+        this._client = _client;
+        if (track) {
+            _client.trackPromise(_promise);
+        }
+    }
+    then(onfulfilled, onrejected) {
+        return this._promise.then(onfulfilled, onrejected);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withDockerfileBaseImage(options)), this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withRequiredCommand(command, options)), this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withConnectionProperty(name, value)), this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withConnectionPropertyValue(name, value)), this._client);
+    }
+    /** Gets a connection property by key */
+    getConnectionProperty(key) {
+        return this._promise.then(obj => obj.getConnectionProperty(key));
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withUrlsCallback(callback)), this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withUrl(url, options)), this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withUrlExpression(url, options)), this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpoint(endpointName, callback)), this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.excludeFromManifest()), this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withExplicitStart()), this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withHealthCheck(key)), this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withCommand(name, displayName, executeCommand, options)), this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withRelationship(resourceBuilder, type)), this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withParentRelationship(parent)), this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withChildRelationship(child)), this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withIconName(iconName, options)), this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.excludeFromMcp()), this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withPipelineStepFactory(stepName, callback, options)), this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withPipelineConfiguration(callback)), this._client);
+    }
+    /** Gets the resource name */
+    getResourceName() {
+        return this._promise.then(obj => obj.getResourceName());
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.onBeforeResourceStarted(callback)), this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.onResourceStopped(callback)), this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.onConnectionStringAvailable(callback)), this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.onInitializeResource(callback)), this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.onResourceReady(callback)), this._client);
+    }
+    /** Creates an execution configuration builder */
+    createExecutionConfiguration() {
+        return this._promise.then(obj => obj.createExecutionConfiguration());
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
+    }
+    /** Configures properties of a Microsoft Foundry deployment resource. */
+    withProperties(configure) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withProperties(configure)), this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.getAzureContainerRegistry()), this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
+}
+// ============================================================================
+// FoundryResourceImpl
+// ============================================================================
+class FoundryResourceImpl extends base_js_1.ResourceBuilderBase {
+    constructor(handle, client) {
+        super(handle, client);
+    }
+    /** @internal */
+    async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
+        const rpcArgs = { builder: this._handle };
+        if (buildImage !== undefined)
+            rpcArgs.buildImage = buildImage;
+        if (runtimeImage !== undefined)
+            rpcArgs.runtimeImage = runtimeImage;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withDockerfileBaseImage', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        const buildImage = options?.buildImage;
+        const runtimeImage = options?.runtimeImage;
+        return new FoundryResourcePromiseImpl(this._withDockerfileBaseImageInternal(buildImage, runtimeImage), this._client);
+    }
+    /** @internal */
+    async _withMcpServerInternal(path, endpointName) {
+        const rpcArgs = { builder: this._handle };
+        if (path !== undefined)
+            rpcArgs.path = path;
+        if (endpointName !== undefined)
+            rpcArgs.endpointName = endpointName;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withMcpServer', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Configures an MCP server endpoint on the resource */
+    withMcpServer(options) {
+        const path = options?.path;
+        const endpointName = options?.endpointName;
+        return new FoundryResourcePromiseImpl(this._withMcpServerInternal(path, endpointName), this._client);
+    }
+    /** @internal */
+    async _withRequiredCommandInternal(command, helpLink) {
+        const rpcArgs = { builder: this._handle, command };
+        if (helpLink !== undefined)
+            rpcArgs.helpLink = helpLink;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withRequiredCommand', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        const helpLink = options?.helpLink;
+        return new FoundryResourcePromiseImpl(this._withRequiredCommandInternal(command, helpLink), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionProperty', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new FoundryResourcePromiseImpl(this._withConnectionPropertyInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withConnectionPropertyValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withConnectionPropertyValue', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new FoundryResourcePromiseImpl(this._withConnectionPropertyValueInternal(name, value), this._client);
+    }
+    /** Gets a connection property by key */
+    async getConnectionProperty(key) {
+        const rpcArgs = { resource: this._handle, key };
+        return await this._client.invokeCapability('Aspire.Hosting/getConnectionProperty', rpcArgs);
+    }
+    /** @internal */
+    async _withEndpointCallbackInternal(endpointName, callback, createIfNotExists) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new EndpointUpdateContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        if (createIfNotExists !== undefined)
+            rpcArgs.createIfNotExists = createIfNotExists;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEndpointCallback', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Updates a named endpoint via callback */
+    withEndpointCallback(endpointName, callback, options) {
+        const createIfNotExists = options?.createIfNotExists;
+        return new FoundryResourcePromiseImpl(this._withEndpointCallbackInternal(endpointName, callback, createIfNotExists), this._client);
+    }
+    /** @internal */
+    async _withHttpEndpointCallbackInternal(callback, name, createIfNotExists) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new EndpointUpdateContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (createIfNotExists !== undefined)
+            rpcArgs.createIfNotExists = createIfNotExists;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpEndpointCallback', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Updates an HTTP endpoint via callback */
+    withHttpEndpointCallback(callback, options) {
+        const name = options?.name;
+        const createIfNotExists = options?.createIfNotExists;
+        return new FoundryResourcePromiseImpl(this._withHttpEndpointCallbackInternal(callback, name, createIfNotExists), this._client);
+    }
+    /** @internal */
+    async _withHttpsEndpointCallbackInternal(callback, name, createIfNotExists) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new EndpointUpdateContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (createIfNotExists !== undefined)
+            rpcArgs.createIfNotExists = createIfNotExists;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpsEndpointCallback', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Updates an HTTPS endpoint via callback */
+    withHttpsEndpointCallback(callback, options) {
+        const name = options?.name;
+        const createIfNotExists = options?.createIfNotExists;
+        return new FoundryResourcePromiseImpl(this._withHttpsEndpointCallbackInternal(callback, name, createIfNotExists), this._client);
+    }
+    /** @internal */
+    async _withEndpointInternal(port, targetPort, scheme, name, env, isProxied, isExternal, protocol) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        if (targetPort !== undefined)
+            rpcArgs.targetPort = targetPort;
+        if (scheme !== undefined)
+            rpcArgs.scheme = scheme;
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (env !== undefined)
+            rpcArgs.env = env;
+        if (isProxied !== undefined)
+            rpcArgs.isProxied = isProxied;
+        if (isExternal !== undefined)
+            rpcArgs.isExternal = isExternal;
+        if (protocol !== undefined)
+            rpcArgs.protocol = protocol;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withEndpoint', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a network endpoint */
+    withEndpoint(options) {
+        const port = options?.port;
+        const targetPort = options?.targetPort;
+        const scheme = options?.scheme;
+        const name = options?.name;
+        const env = options?.env;
+        const isProxied = options?.isProxied;
+        const isExternal = options?.isExternal;
+        const protocol = options?.protocol;
+        return new FoundryResourcePromiseImpl(this._withEndpointInternal(port, targetPort, scheme, name, env, isProxied, isExternal, protocol), this._client);
+    }
+    /** @internal */
+    async _withHttpEndpointInternal(port, targetPort, name, env, isProxied) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        if (targetPort !== undefined)
+            rpcArgs.targetPort = targetPort;
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (env !== undefined)
+            rpcArgs.env = env;
+        if (isProxied !== undefined)
+            rpcArgs.isProxied = isProxied;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpEndpoint', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP endpoint */
+    withHttpEndpoint(options) {
+        const port = options?.port;
+        const targetPort = options?.targetPort;
+        const name = options?.name;
+        const env = options?.env;
+        const isProxied = options?.isProxied;
+        return new FoundryResourcePromiseImpl(this._withHttpEndpointInternal(port, targetPort, name, env, isProxied), this._client);
+    }
+    /** @internal */
+    async _withHttpsEndpointInternal(port, targetPort, name, env, isProxied) {
+        const rpcArgs = { builder: this._handle };
+        if (port !== undefined)
+            rpcArgs.port = port;
+        if (targetPort !== undefined)
+            rpcArgs.targetPort = targetPort;
+        if (name !== undefined)
+            rpcArgs.name = name;
+        if (env !== undefined)
+            rpcArgs.env = env;
+        if (isProxied !== undefined)
+            rpcArgs.isProxied = isProxied;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpsEndpoint', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds an HTTPS endpoint */
+    withHttpsEndpoint(options) {
+        const port = options?.port;
+        const targetPort = options?.targetPort;
+        const name = options?.name;
+        const env = options?.env;
+        const isProxied = options?.isProxied;
+        return new FoundryResourcePromiseImpl(this._withHttpsEndpointInternal(port, targetPort, name, env, isProxied), this._client);
+    }
+    /** @internal */
+    async _withExternalHttpEndpointsInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExternalHttpEndpoints', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Makes HTTP endpoints externally accessible */
+    withExternalHttpEndpoints() {
+        return new FoundryResourcePromiseImpl(this._withExternalHttpEndpointsInternal(), this._client);
+    }
+    /** Gets an endpoint reference */
+    async getEndpoint(name) {
+        const rpcArgs = { builder: this._handle, name };
+        return await this._client.invokeCapability('Aspire.Hosting/getEndpoint', rpcArgs);
+    }
+    /** @internal */
+    async _asHttp2ServiceInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/asHttp2Service', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Configures resource for HTTP/2 */
+    asHttp2Service() {
+        return new FoundryResourcePromiseImpl(this._asHttp2ServiceInternal(), this._client);
+    }
+    /** @internal */
+    async _withUrlsCallbackInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new ResourceUrlsCallbackContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlsCallback', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new FoundryResourcePromiseImpl(this._withUrlsCallbackInternal(callback), this._client);
+    }
+    /** @internal */
+    async _withUrlInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrl', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        const displayText = options?.displayText;
+        return new FoundryResourcePromiseImpl(this._withUrlInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlExpressionInternal(url, displayText) {
+        const rpcArgs = { builder: this._handle, url };
+        if (displayText !== undefined)
+            rpcArgs.displayText = displayText;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlExpression', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        const displayText = options?.displayText;
+        return new FoundryResourcePromiseImpl(this._withUrlExpressionInternal(url, displayText), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const obj = (0, transport_js_1.wrapIfHandle)(objData);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpoint', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new FoundryResourcePromiseImpl(this._withUrlForEndpointInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _withUrlForEndpointFactoryInternal(endpointName, callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new EndpointReferenceImpl(argHandle, this._client);
+            return await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, endpointName, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withUrlForEndpointFactory', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a URL for a specific endpoint via factory callback */
+    withUrlForEndpointFactory(endpointName, callback) {
+        return new FoundryResourcePromiseImpl(this._withUrlForEndpointFactoryInternal(endpointName, callback), this._client);
+    }
+    /** @internal */
+    async _excludeFromManifestInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromManifest', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new FoundryResourcePromiseImpl(this._excludeFromManifestInternal(), this._client);
+    }
+    /** @internal */
+    async _withExplicitStartInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withExplicitStart', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new FoundryResourcePromiseImpl(this._withExplicitStartInternal(), this._client);
+    }
+    /** @internal */
+    async _withHealthCheckInternal(key) {
+        const rpcArgs = { builder: this._handle, key };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHealthCheck', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new FoundryResourcePromiseImpl(this._withHealthCheckInternal(key), this._client);
+    }
+    /** @internal */
+    async _withHttpHealthCheckInternal(path, statusCode, endpointName) {
+        const rpcArgs = { builder: this._handle };
+        if (path !== undefined)
+            rpcArgs.path = path;
+        if (statusCode !== undefined)
+            rpcArgs.statusCode = statusCode;
+        if (endpointName !== undefined)
+            rpcArgs.endpointName = endpointName;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpHealthCheck', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP health check */
+    withHttpHealthCheck(options) {
+        const path = options?.path;
+        const statusCode = options?.statusCode;
+        const endpointName = options?.endpointName;
+        return new FoundryResourcePromiseImpl(this._withHttpHealthCheckInternal(path, statusCode, endpointName), this._client);
+    }
+    /** @internal */
+    async _withCommandInternal(name, displayName, executeCommand, commandOptions) {
+        const executeCommandId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ExecuteCommandContextImpl(argHandle, this._client);
+            return await executeCommand(arg);
+        });
+        const rpcArgs = { builder: this._handle, name, displayName, executeCommand: executeCommandId };
+        if (commandOptions !== undefined)
+            rpcArgs.commandOptions = commandOptions;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withCommand', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        const commandOptions = options?.commandOptions;
+        return new FoundryResourcePromiseImpl(this._withCommandInternal(name, displayName, executeCommand, commandOptions), this._client);
+    }
+    /** @internal */
+    async _withHttpCommandInternal(path, displayName, options) {
+        const rpcArgs = { builder: this._handle, path, displayName };
+        if (options !== undefined)
+            rpcArgs.options = options;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpCommand', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP resource command */
+    withHttpCommand(path, displayName, options) {
+        return new FoundryResourcePromiseImpl(this._withHttpCommandInternal(path, displayName, options), this._client);
+    }
+    /** @internal */
+    async _withRelationshipInternal(resourceBuilder, type) {
+        resourceBuilder = (0, transport_js_1.isPromiseLike)(resourceBuilder) ? await resourceBuilder : resourceBuilder;
+        const rpcArgs = { builder: this._handle, resourceBuilder, type };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderRelationship', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new FoundryResourcePromiseImpl(this._withRelationshipInternal(resourceBuilder, type), this._client);
+    }
+    /** @internal */
+    async _withParentRelationshipInternal(parent) {
+        parent = (0, transport_js_1.isPromiseLike)(parent) ? await parent : parent;
+        const rpcArgs = { builder: this._handle, parent };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderParentRelationship', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new FoundryResourcePromiseImpl(this._withParentRelationshipInternal(parent), this._client);
+    }
+    /** @internal */
+    async _withChildRelationshipInternal(child) {
+        child = (0, transport_js_1.isPromiseLike)(child) ? await child : child;
+        const rpcArgs = { builder: this._handle, child };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withBuilderChildRelationship', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new FoundryResourcePromiseImpl(this._withChildRelationshipInternal(child), this._client);
+    }
+    /** @internal */
+    async _withIconNameInternal(iconName, iconVariant) {
+        const rpcArgs = { builder: this._handle, iconName };
+        if (iconVariant !== undefined)
+            rpcArgs.iconVariant = iconVariant;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withIconName', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        const iconVariant = options?.iconVariant;
+        return new FoundryResourcePromiseImpl(this._withIconNameInternal(iconName, iconVariant), this._client);
+    }
+    /** @internal */
+    async _withHttpProbeInternal(probeType, path, initialDelaySeconds, periodSeconds, timeoutSeconds, failureThreshold, successThreshold, endpointName) {
+        const rpcArgs = { builder: this._handle, probeType };
+        if (path !== undefined)
+            rpcArgs.path = path;
+        if (initialDelaySeconds !== undefined)
+            rpcArgs.initialDelaySeconds = initialDelaySeconds;
+        if (periodSeconds !== undefined)
+            rpcArgs.periodSeconds = periodSeconds;
+        if (timeoutSeconds !== undefined)
+            rpcArgs.timeoutSeconds = timeoutSeconds;
+        if (failureThreshold !== undefined)
+            rpcArgs.failureThreshold = failureThreshold;
+        if (successThreshold !== undefined)
+            rpcArgs.successThreshold = successThreshold;
+        if (endpointName !== undefined)
+            rpcArgs.endpointName = endpointName;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withHttpProbe', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds an HTTP health probe to the resource */
+    withHttpProbe(probeType, options) {
+        const path = options?.path;
+        const initialDelaySeconds = options?.initialDelaySeconds;
+        const periodSeconds = options?.periodSeconds;
+        const timeoutSeconds = options?.timeoutSeconds;
+        const failureThreshold = options?.failureThreshold;
+        const successThreshold = options?.successThreshold;
+        const endpointName = options?.endpointName;
+        return new FoundryResourcePromiseImpl(this._withHttpProbeInternal(probeType, path, initialDelaySeconds, periodSeconds, timeoutSeconds, failureThreshold, successThreshold, endpointName), this._client);
+    }
+    /** @internal */
+    async _excludeFromMcpInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting/excludeFromMcp', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new FoundryResourcePromiseImpl(this._excludeFromMcpInternal(), this._client);
+    }
+    /** @internal */
+    async _withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new PipelineStepContextImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, stepName, callback: callbackId };
+        if (dependsOn !== undefined)
+            rpcArgs.dependsOn = dependsOn;
+        if (requiredBy !== undefined)
+            rpcArgs.requiredBy = requiredBy;
+        if (tags !== undefined)
+            rpcArgs.tags = tags;
+        if (description !== undefined)
+            rpcArgs.description = description;
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineStepFactory', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        const dependsOn = options?.dependsOn;
+        const requiredBy = options?.requiredBy;
+        const tags = options?.tags;
+        const description = options?.description;
+        return new FoundryResourcePromiseImpl(this._withPipelineStepFactoryInternal(stepName, callback, dependsOn, requiredBy, tags, description), this._client);
+    }
+    /** @internal */
+    async _withPipelineConfigurationInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new PipelineConfigurationContextImpl(objHandle, this._client);
+            await callback(obj);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/withPipelineConfiguration', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new FoundryResourcePromiseImpl(this._withPipelineConfigurationInternal(callback), this._client);
+    }
+    /** Gets the resource name */
+    async getResourceName() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/getResourceName', rpcArgs);
+    }
+    /** @internal */
+    async _onBeforeResourceStartedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new BeforeResourceStartedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onBeforeResourceStarted', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new FoundryResourcePromiseImpl(this._onBeforeResourceStartedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceStoppedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceStoppedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceStopped', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new FoundryResourcePromiseImpl(this._onResourceStoppedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onConnectionStringAvailableInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ConnectionStringAvailableEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onConnectionStringAvailable', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new FoundryResourcePromiseImpl(this._onConnectionStringAvailableInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onInitializeResourceInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new InitializeResourceEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onInitializeResource', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new FoundryResourcePromiseImpl(this._onInitializeResourceInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceEndpointsAllocatedInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceEndpointsAllocatedEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceEndpointsAllocated', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceEndpointsAllocated event */
+    onResourceEndpointsAllocated(callback) {
+        return new FoundryResourcePromiseImpl(this._onResourceEndpointsAllocatedInternal(callback), this._client);
+    }
+    /** @internal */
+    async _onResourceReadyInternal(callback) {
+        const callbackId = (0, transport_js_1.registerCallback)(async (argData) => {
+            const argHandle = (0, transport_js_1.wrapIfHandle)(argData);
+            const arg = new ResourceReadyEventImpl(argHandle, this._client);
+            await callback(arg);
+        });
+        const rpcArgs = { builder: this._handle, callback: callbackId };
+        const result = await this._client.invokeCapability('Aspire.Hosting/onResourceReady', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new FoundryResourcePromiseImpl(this._onResourceReadyInternal(callback), this._client);
+    }
+    /** Creates an execution configuration builder */
+    async createExecutionConfiguration() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting/createExecutionConfiguration', rpcArgs);
+    }
+    /** @internal */
+    async _withStorageRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Storage/withStorageRoleAssignments', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new FoundryResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _addDeploymentInternal(name, modelName, modelVersion, format) {
+        const rpcArgs = { builder: this._handle, name, modelName, modelVersion, format };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/addDeployment', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Adds a Microsoft Foundry deployment resource to a Microsoft Foundry resource. */
+    addDeployment(name, modelName, modelVersion, format) {
+        return new FoundryDeploymentResourcePromiseImpl(this._addDeploymentInternal(name, modelName, modelVersion, format), this._client);
+    }
+    /** @internal */
+    async _addDeploymentFromModelInternal(name, model) {
+        const rpcArgs = { builder: this._handle, name, model };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/addDeploymentFromModel', rpcArgs);
+        return new FoundryDeploymentResourceImpl(result, this._client);
+    }
+    /** Adds a Microsoft Foundry deployment resource by using a Microsoft Foundry model descriptor. */
+    addDeploymentFromModel(name, model) {
+        return new FoundryDeploymentResourcePromiseImpl(this._addDeploymentFromModelInternal(name, model), this._client);
+    }
+    /** @internal */
+    async _runAsFoundryLocalInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/runAsFoundryLocal', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Configures the Microsoft Foundry resource to run by using Foundry Local. */
+    runAsFoundryLocal() {
+        return new FoundryResourcePromiseImpl(this._runAsFoundryLocalInternal(), this._client);
+    }
+    /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new FoundryResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new FoundryResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** @internal */
+    async _addProjectInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/addProject', rpcArgs);
+        return new AzureCognitiveServicesProjectResourceImpl(result, this._client);
+    }
+    /** Adds a Microsoft Foundry project resource to a Microsoft Foundry resource. */
+    addProject(name) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._addProjectInternal(name), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    async getOutput(name) {
+        const rpcArgs = { builder: this._handle, name };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getOutput', rpcArgs);
+    }
+    /** @internal */
+    async _withParameterInternal(name) {
+        const rpcArgs = { builder: this._handle, name };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameter', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new FoundryResourcePromiseImpl(this._withParameterInternal(name), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValueInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValue', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new FoundryResourcePromiseImpl(this._withParameterStringValueInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterStringValuesInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterStringValues', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new FoundryResourcePromiseImpl(this._withParameterStringValuesInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromParameterInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromParameter', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new FoundryResourcePromiseImpl(this._withParameterFromParameterInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromConnectionStringInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromConnectionString', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new FoundryResourcePromiseImpl(this._withParameterFromConnectionStringInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromOutputInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromOutput', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new FoundryResourcePromiseImpl(this._withParameterFromOutputInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromReferenceExpressionInternal(name, value) {
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromReferenceExpression', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new FoundryResourcePromiseImpl(this._withParameterFromReferenceExpressionInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _withParameterFromEndpointInternal(name, value) {
+        value = (0, transport_js_1.isPromiseLike)(value) ? await value : value;
+        const rpcArgs = { builder: this._handle, name, value };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/withParameterFromEndpoint', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new FoundryResourcePromiseImpl(this._withParameterFromEndpointInternal(name, value), this._client);
+    }
+    /** @internal */
+    async _configureInfrastructureInternal(configure) {
+        const configureId = (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new AzureResourceInfrastructureImpl(objHandle, this._client);
+            await configure(obj);
+        });
+        const rpcArgs = { builder: this._handle, configure: configureId };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/configureInfrastructure', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new FoundryResourcePromiseImpl(this._configureInfrastructureInternal(configure), this._client);
+    }
+    /** @internal */
+    async _publishAsConnectionStringInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsConnectionString', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new FoundryResourcePromiseImpl(this._publishAsConnectionStringInternal(), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    async getBicepIdentifier() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/getBicepIdentifier', rpcArgs);
+    }
+    /** @internal */
+    async _clearDefaultRoleAssignmentsInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/clearDefaultRoleAssignments', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new FoundryResourcePromiseImpl(this._clearDefaultRoleAssignmentsInternal(), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    async isExisting() {
+        const rpcArgs = { resource: this._handle };
+        return await this._client.invokeCapability('Aspire.Hosting.Azure/isExisting', rpcArgs);
+    }
+    /** @internal */
+    async _runAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/runAsExisting', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new FoundryResourcePromiseImpl(this._runAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _publishAsExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/publishAsExisting', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new FoundryResourcePromiseImpl(this._publishAsExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _asExistingInternal(name, resourceGroup) {
+        name = (0, transport_js_1.isPromiseLike)(name) ? await name : name;
+        resourceGroup = (0, transport_js_1.isPromiseLike)(resourceGroup) ? await resourceGroup : resourceGroup;
+        const rpcArgs = { builder: this._handle, name };
+        if (resourceGroup !== undefined)
+            rpcArgs.resourceGroup = resourceGroup;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure/asExisting', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        let resourceGroup = options?.resourceGroup;
+        return new FoundryResourcePromiseImpl(this._asExistingInternal(name, resourceGroup), this._client);
+    }
+    /** @internal */
+    async _withAzureContainerRegistryInternal(registryBuilder) {
+        registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
+        const rpcArgs = { builder: this._handle, registryBuilder };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryAzureContainerRegistry', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new FoundryResourcePromiseImpl(this._withAzureContainerRegistryInternal(registryBuilder), this._client);
+    }
+    /** @internal */
+    async _getAzureContainerRegistryInternal() {
+        const rpcArgs = { builder: this._handle };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/getAzureContainerRegistry', rpcArgs);
+        return new AzureContainerRegistryResourceImpl(result, this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._getAzureContainerRegistryInternal(), this._client);
+    }
+    /** @internal */
+    async _withContainerRegistryRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.ContainerRegistry/withContainerRegistryRoleAssignments', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new FoundryResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new FoundryResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new FoundryResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new FoundryResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
+}
+/**
+ * Thenable wrapper for FoundryResource that enables fluent chaining.
+ * @example
+ * await builder.addSomething().withX().withY();
+ */
+class FoundryResourcePromiseImpl {
+    _promise;
+    _client;
+    constructor(_promise, _client, track = true) {
+        this._promise = _promise;
+        this._client = _client;
+        if (track) {
+            _client.trackPromise(_promise);
+        }
+    }
+    then(onfulfilled, onrejected) {
+        return this._promise.then(onfulfilled, onrejected);
+    }
+    /** Sets the base image for a Dockerfile build */
+    withDockerfileBaseImage(options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withDockerfileBaseImage(options)), this._client);
+    }
+    /** Configures an MCP server endpoint on the resource */
+    withMcpServer(options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withMcpServer(options)), this._client);
+    }
+    /** Adds a required command dependency */
+    withRequiredCommand(command, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withRequiredCommand(command, options)), this._client);
+    }
+    /** Adds a connection property with a string or reference expression value */
+    withConnectionProperty(name, value) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withConnectionProperty(name, value)), this._client);
+    }
+    /** Adds a connection property with a string value */
+    withConnectionPropertyValue(name, value) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withConnectionPropertyValue(name, value)), this._client);
+    }
+    /** Gets a connection property by key */
+    getConnectionProperty(key) {
+        return this._promise.then(obj => obj.getConnectionProperty(key));
+    }
+    /** Updates a named endpoint via callback */
+    withEndpointCallback(endpointName, callback, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withEndpointCallback(endpointName, callback, options)), this._client);
+    }
+    /** Updates an HTTP endpoint via callback */
+    withHttpEndpointCallback(callback, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withHttpEndpointCallback(callback, options)), this._client);
+    }
+    /** Updates an HTTPS endpoint via callback */
+    withHttpsEndpointCallback(callback, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withHttpsEndpointCallback(callback, options)), this._client);
+    }
+    /** Adds a network endpoint */
+    withEndpoint(options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withEndpoint(options)), this._client);
+    }
+    /** Adds an HTTP endpoint */
+    withHttpEndpoint(options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withHttpEndpoint(options)), this._client);
+    }
+    /** Adds an HTTPS endpoint */
+    withHttpsEndpoint(options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withHttpsEndpoint(options)), this._client);
+    }
+    /** Makes HTTP endpoints externally accessible */
+    withExternalHttpEndpoints() {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withExternalHttpEndpoints()), this._client);
+    }
+    /** Gets an endpoint reference */
+    getEndpoint(name) {
+        return this._promise.then(obj => obj.getEndpoint(name));
+    }
+    /** Configures resource for HTTP/2 */
+    asHttp2Service() {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.asHttp2Service()), this._client);
+    }
+    /** Customizes displayed URLs via callback */
+    withUrlsCallback(callback) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withUrlsCallback(callback)), this._client);
+    }
+    /** Adds or modifies displayed URLs */
+    withUrl(url, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withUrl(url, options)), this._client);
+    }
+    /** Adds a URL using a reference expression */
+    withUrlExpression(url, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withUrlExpression(url, options)), this._client);
+    }
+    /** Customizes the URL for a specific endpoint via callback */
+    withUrlForEndpoint(endpointName, callback) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpoint(endpointName, callback)), this._client);
+    }
+    /** Adds a URL for a specific endpoint via factory callback */
+    withUrlForEndpointFactory(endpointName, callback) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withUrlForEndpointFactory(endpointName, callback)), this._client);
+    }
+    /** Excludes the resource from the deployment manifest */
+    excludeFromManifest() {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.excludeFromManifest()), this._client);
+    }
+    /** Prevents resource from starting automatically */
+    withExplicitStart() {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withExplicitStart()), this._client);
+    }
+    /** Adds a health check by key */
+    withHealthCheck(key) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withHealthCheck(key)), this._client);
+    }
+    /** Adds an HTTP health check */
+    withHttpHealthCheck(options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withHttpHealthCheck(options)), this._client);
+    }
+    /** Adds a resource command */
+    withCommand(name, displayName, executeCommand, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withCommand(name, displayName, executeCommand, options)), this._client);
+    }
+    /** Adds an HTTP resource command */
+    withHttpCommand(path, displayName, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withHttpCommand(path, displayName, options)), this._client);
+    }
+    /** Adds a relationship to another resource */
+    withRelationship(resourceBuilder, type) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withRelationship(resourceBuilder, type)), this._client);
+    }
+    /** Sets the parent relationship */
+    withParentRelationship(parent) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withParentRelationship(parent)), this._client);
+    }
+    /** Sets a child relationship */
+    withChildRelationship(child) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withChildRelationship(child)), this._client);
+    }
+    /** Sets the icon for the resource */
+    withIconName(iconName, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withIconName(iconName, options)), this._client);
+    }
+    /** Adds an HTTP health probe to the resource */
+    withHttpProbe(probeType, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withHttpProbe(probeType, options)), this._client);
+    }
+    /** Excludes the resource from MCP server exposure */
+    excludeFromMcp() {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.excludeFromMcp()), this._client);
+    }
+    /** Adds a pipeline step to the resource */
+    withPipelineStepFactory(stepName, callback, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withPipelineStepFactory(stepName, callback, options)), this._client);
+    }
+    /** Configures pipeline step dependencies via a callback */
+    withPipelineConfiguration(callback) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withPipelineConfiguration(callback)), this._client);
+    }
+    /** Gets the resource name */
+    getResourceName() {
+        return this._promise.then(obj => obj.getResourceName());
+    }
+    /** Subscribes to the BeforeResourceStarted event */
+    onBeforeResourceStarted(callback) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.onBeforeResourceStarted(callback)), this._client);
+    }
+    /** Subscribes to the ResourceStopped event */
+    onResourceStopped(callback) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.onResourceStopped(callback)), this._client);
+    }
+    /** Subscribes to the ConnectionStringAvailable event */
+    onConnectionStringAvailable(callback) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.onConnectionStringAvailable(callback)), this._client);
+    }
+    /** Subscribes to the InitializeResource event */
+    onInitializeResource(callback) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.onInitializeResource(callback)), this._client);
+    }
+    /** Subscribes to the ResourceEndpointsAllocated event */
+    onResourceEndpointsAllocated(callback) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.onResourceEndpointsAllocated(callback)), this._client);
+    }
+    /** Subscribes to the ResourceReady event */
+    onResourceReady(callback) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.onResourceReady(callback)), this._client);
+    }
+    /** Creates an execution configuration builder */
+    createExecutionConfiguration() {
+        return this._promise.then(obj => obj.createExecutionConfiguration());
+    }
+    /** Assigns Azure Storage roles to a resource */
+    withStorageRoleAssignments(target, roles) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
+    }
+    /** Adds a Microsoft Foundry deployment resource to a Microsoft Foundry resource. */
+    addDeployment(name, modelName, modelVersion, format) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.addDeployment(name, modelName, modelVersion, format)), this._client);
+    }
+    /** Adds a Microsoft Foundry deployment resource by using a Microsoft Foundry model descriptor. */
+    addDeploymentFromModel(name, model) {
+        return new FoundryDeploymentResourcePromiseImpl(this._promise.then(obj => obj.addDeploymentFromModel(name, model)), this._client);
+    }
+    /** Configures the Microsoft Foundry resource to run by using Foundry Local. */
+    runAsFoundryLocal() {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.runAsFoundryLocal()), this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
+    /** Adds a Microsoft Foundry project resource to a Microsoft Foundry resource. */
+    addProject(name) {
+        return new AzureCognitiveServicesProjectResourcePromiseImpl(this._promise.then(obj => obj.addProject(name)), this._client);
+    }
+    /** Gets an output reference from an Azure Bicep template resource */
+    getOutput(name) {
+        return this._promise.then(obj => obj.getOutput(name));
+    }
+    /** Adds a Bicep parameter without a value */
+    withParameter(name) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withParameter(name)), this._client);
+    }
+    /** Adds a Bicep parameter with a string value */
+    withParameterStringValue(name, value) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValue(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter with a string list value */
+    withParameterStringValues(name, value) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withParameterStringValues(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a parameter resource builder */
+    withParameterFromParameter(name, value) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromParameter(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a connection string resource builder */
+    withParameterFromConnectionString(name, value) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromConnectionString(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from another Bicep output reference */
+    withParameterFromOutput(name, value) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromOutput(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from a reference expression */
+    withParameterFromReferenceExpression(name, value) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromReferenceExpression(name, value)), this._client);
+    }
+    /** Adds a Bicep parameter from an endpoint reference */
+    withParameterFromEndpoint(name, value) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withParameterFromEndpoint(name, value)), this._client);
+    }
+    /** Configures the Azure provisioning infrastructure callback */
+    configureInfrastructure(configure) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.configureInfrastructure(configure)), this._client);
+    }
+    /** Publishes an Azure resource to the manifest as a connection string */
+    publishAsConnectionString() {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.publishAsConnectionString()), this._client);
+    }
+    /** Gets the normalized Bicep identifier for an Azure resource */
+    getBicepIdentifier() {
+        return this._promise.then(obj => obj.getBicepIdentifier());
+    }
+    /** Clears the default Azure role assignments from a resource */
+    clearDefaultRoleAssignments() {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.clearDefaultRoleAssignments()), this._client);
+    }
+    /** Determines whether a resource is marked as existing */
+    isExisting() {
+        return this._promise.then(obj => obj.isExisting());
+    }
+    /** Marks an Azure resource as existing in run mode */
+    runAsExisting(name, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.runAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in publish mode */
+    publishAsExisting(name, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.publishAsExisting(name, options)), this._client);
+    }
+    /** Marks an Azure resource as existing in both run and publish modes */
+    asExisting(name, options) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.asExisting(name, options)), this._client);
+    }
+    /** Configures a compute environment resource to use an Azure Container Registry. */
+    withAzureContainerRegistry(registryBuilder) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
+    }
+    /** Gets the Azure Container Registry associated with a compute environment resource. */
+    getAzureContainerRegistry() {
+        return new AzureContainerRegistryResourcePromiseImpl(this._promise.then(obj => obj.getAzureContainerRegistry()), this._client);
+    }
+    /** Assigns Azure Container Registry roles to a resource. */
+    withContainerRegistryRoleAssignments(target, roles) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new FoundryResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
     }
 }
 // ============================================================================
@@ -27711,17 +40325,6 @@ class JavaScriptAppResourceImpl extends base_js_1.ResourceBuilderBase {
             return await this._client.invokeCapability('Aspire.Hosting.JavaScript/JavaScriptAppResource.name', { context: this._handle });
         },
     };
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new JavaScriptAppResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new JavaScriptAppResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
-    }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
         const rpcArgs = { builder: this._handle };
@@ -28951,6 +41554,39 @@ class JavaScriptAppResourceImpl extends base_js_1.ResourceBuilderBase {
         return new JavaScriptAppResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new JavaScriptAppResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new JavaScriptAppResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new JavaScriptAppResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new JavaScriptAppResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** @internal */
     async _withEnvironmentFromOutputInternal(name, bicepOutputReference) {
         bicepOutputReference = (0, transport_js_1.isPromiseLike)(bicepOutputReference) ? await bicepOutputReference : bicepOutputReference;
         const rpcArgs = { builder: this._handle, name, bicepOutputReference };
@@ -29021,6 +41657,28 @@ class JavaScriptAppResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new JavaScriptAppResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new JavaScriptAppResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new JavaScriptAppResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new JavaScriptAppResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new JavaScriptAppResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for JavaScriptAppResource that enables fluent chaining.
@@ -29039,10 +41697,6 @@ class JavaScriptAppResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new JavaScriptAppResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -29408,6 +42062,14 @@ class JavaScriptAppResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new JavaScriptAppResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new JavaScriptAppResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new JavaScriptAppResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
     /**
      * Sets an environment variable from a Bicep output reference
      * @deprecated ATS compatibility shim. Use withEnvironment instead.
@@ -29438,6 +42100,14 @@ class JavaScriptAppResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new JavaScriptAppResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new JavaScriptAppResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new JavaScriptAppResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // NextJsAppResourceImpl
@@ -29464,17 +42134,6 @@ class NextJsAppResourceImpl extends base_js_1.ResourceBuilderBase {
             return await this._client.invokeCapability('Aspire.Hosting.JavaScript/JavaScriptAppResource.name', { context: this._handle });
         },
     };
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new NextJsAppResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new NextJsAppResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
-    }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
         const rpcArgs = { builder: this._handle };
@@ -30714,6 +43373,39 @@ class NextJsAppResourceImpl extends base_js_1.ResourceBuilderBase {
         return new NextJsAppResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new NextJsAppResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new NextJsAppResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new NextJsAppResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new NextJsAppResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** @internal */
     async _withEnvironmentFromOutputInternal(name, bicepOutputReference) {
         bicepOutputReference = (0, transport_js_1.isPromiseLike)(bicepOutputReference) ? await bicepOutputReference : bicepOutputReference;
         const rpcArgs = { builder: this._handle, name, bicepOutputReference };
@@ -30784,6 +43476,28 @@ class NextJsAppResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new NextJsAppResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new NextJsAppResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new NextJsAppResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new NextJsAppResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new NextJsAppResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for NextJsAppResource that enables fluent chaining.
@@ -30802,10 +43516,6 @@ class NextJsAppResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new NextJsAppResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -31175,6 +43885,14 @@ class NextJsAppResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new NextJsAppResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new NextJsAppResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new NextJsAppResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
     /**
      * Sets an environment variable from a Bicep output reference
      * @deprecated ATS compatibility shim. Use withEnvironment instead.
@@ -31205,6 +43923,14 @@ class NextJsAppResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new NextJsAppResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new NextJsAppResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new NextJsAppResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // NodeAppResourceImpl
@@ -31231,17 +43957,6 @@ class NodeAppResourceImpl extends base_js_1.ResourceBuilderBase {
             return await this._client.invokeCapability('Aspire.Hosting.JavaScript/JavaScriptAppResource.name', { context: this._handle });
         },
     };
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new NodeAppResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new NodeAppResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
-    }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
         const rpcArgs = { builder: this._handle };
@@ -32482,6 +45197,39 @@ class NodeAppResourceImpl extends base_js_1.ResourceBuilderBase {
         return new NodeAppResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new NodeAppResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new NodeAppResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new NodeAppResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new NodeAppResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** @internal */
     async _withEnvironmentFromOutputInternal(name, bicepOutputReference) {
         bicepOutputReference = (0, transport_js_1.isPromiseLike)(bicepOutputReference) ? await bicepOutputReference : bicepOutputReference;
         const rpcArgs = { builder: this._handle, name, bicepOutputReference };
@@ -32552,6 +45300,28 @@ class NodeAppResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new NodeAppResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new NodeAppResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new NodeAppResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new NodeAppResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new NodeAppResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for NodeAppResource that enables fluent chaining.
@@ -32570,10 +45340,6 @@ class NodeAppResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new NodeAppResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -32943,6 +45709,14 @@ class NodeAppResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new NodeAppResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new NodeAppResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new NodeAppResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
     /**
      * Sets an environment variable from a Bicep output reference
      * @deprecated ATS compatibility shim. Use withEnvironment instead.
@@ -32973,6 +45747,14 @@ class NodeAppResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new NodeAppResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new NodeAppResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new NodeAppResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // ParameterResourceImpl
@@ -32980,17 +45762,6 @@ class NodeAppResourcePromiseImpl {
 class ParameterResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new ParameterResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ParameterResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -33317,6 +46088,17 @@ class ParameterResourceImpl extends base_js_1.ResourceBuilderBase {
         return new ParameterResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new ParameterResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ParameterResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -33348,6 +46130,28 @@ class ParameterResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ParameterResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new ParameterResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ParameterResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new ParameterResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ParameterResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for ParameterResource that enables fluent chaining.
@@ -33366,10 +46170,6 @@ class ParameterResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ParameterResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -33471,6 +46271,10 @@ class ParameterResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new ParameterResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ParameterResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new ParameterResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -33483,6 +46287,14 @@ class ParameterResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ParameterResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ParameterResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ParameterResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // ProjectResourceImpl
@@ -33490,17 +46302,6 @@ class ParameterResourcePromiseImpl {
 class ProjectResourceImpl extends base_js_1.ResourceBuilderBase {
     constructor(handle, client) {
         super(handle, client);
-    }
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new ProjectResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ProjectResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
     }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
@@ -34554,6 +47355,39 @@ class ProjectResourceImpl extends base_js_1.ResourceBuilderBase {
         return new ProjectResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new ProjectResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ProjectResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new ProjectResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new ProjectResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** @internal */
     async _withEnvironmentFromOutputInternal(name, bicepOutputReference) {
         bicepOutputReference = (0, transport_js_1.isPromiseLike)(bicepOutputReference) ? await bicepOutputReference : bicepOutputReference;
         const rpcArgs = { builder: this._handle, name, bicepOutputReference };
@@ -34624,6 +47458,28 @@ class ProjectResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ProjectResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new ProjectResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ProjectResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new ProjectResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ProjectResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for ProjectResource that enables fluent chaining.
@@ -34642,10 +47498,6 @@ class ProjectResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ProjectResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -34963,6 +47815,14 @@ class ProjectResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new ProjectResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ProjectResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new ProjectResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
     /**
      * Sets an environment variable from a Bicep output reference
      * @deprecated ATS compatibility shim. Use withEnvironment instead.
@@ -34993,6 +47853,14 @@ class ProjectResourcePromiseImpl {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ProjectResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ProjectResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ProjectResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
+    }
 }
 // ============================================================================
 // ViteAppResourceImpl
@@ -35019,17 +47887,6 @@ class ViteAppResourceImpl extends base_js_1.ResourceBuilderBase {
             return await this._client.invokeCapability('Aspire.Hosting.JavaScript/JavaScriptAppResource.name', { context: this._handle });
         },
     };
-    /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new ViteAppResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ViteAppResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
-    }
     /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
         const rpcArgs = { builder: this._handle };
@@ -36269,6 +49126,39 @@ class ViteAppResourceImpl extends base_js_1.ResourceBuilderBase {
         return new ViteAppResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new ViteAppResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ViteAppResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new ViteAppResourceImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new ViteAppResourcePromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
+    /** @internal */
     async _withEnvironmentFromOutputInternal(name, bicepOutputReference) {
         bicepOutputReference = (0, transport_js_1.isPromiseLike)(bicepOutputReference) ? await bicepOutputReference : bicepOutputReference;
         const rpcArgs = { builder: this._handle, name, bicepOutputReference };
@@ -36339,6 +49229,28 @@ class ViteAppResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ViteAppResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new ViteAppResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ViteAppResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new ViteAppResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ViteAppResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for ViteAppResource that enables fluent chaining.
@@ -36357,10 +49269,6 @@ class ViteAppResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ViteAppResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -36730,6 +49638,14 @@ class ViteAppResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new ViteAppResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ViteAppResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new ViteAppResourcePromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
+    }
     /**
      * Sets an environment variable from a Bicep output reference
      * @deprecated ATS compatibility shim. Use withEnvironment instead.
@@ -36759,6 +49675,14 @@ class ViteAppResourcePromiseImpl {
     /** Assigns Azure Container Registry roles to a resource. */
     withContainerRegistryRoleAssignments(target, roles) {
         return new ViteAppResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ViteAppResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ViteAppResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
     }
 }
 // ============================================================================
@@ -37122,17 +50046,6 @@ class ResourceImpl extends base_js_1.ResourceBuilderBase {
         super(handle, client);
     }
     /** @internal */
-    async _withContainerRegistryInternal(registry) {
-        registry = (0, transport_js_1.isPromiseLike)(registry) ? await registry : registry;
-        const rpcArgs = { builder: this._handle, registry };
-        const result = await this._client.invokeCapability('Aspire.Hosting/withContainerRegistry', rpcArgs);
-        return new ResourceImpl(result, this._client);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ResourcePromiseImpl(this._withContainerRegistryInternal(registry), this._client);
-    }
-    /** @internal */
     async _withDockerfileBaseImageInternal(buildImage, runtimeImage) {
         const rpcArgs = { builder: this._handle };
         if (buildImage !== undefined)
@@ -37444,6 +50357,17 @@ class ResourceImpl extends base_js_1.ResourceBuilderBase {
         return new ResourcePromiseImpl(this._withStorageRoleAssignmentsInternal(target, roles), this._client);
     }
     /** @internal */
+    async _withRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/withFoundryRoleAssignments', rpcArgs);
+        return new ResourceImpl(result, this._client);
+    }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ResourcePromiseImpl(this._withRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
     async _withAzureContainerRegistryInternal(registryBuilder) {
         registryBuilder = (0, transport_js_1.isPromiseLike)(registryBuilder) ? await registryBuilder : registryBuilder;
         const rpcArgs = { builder: this._handle, registryBuilder };
@@ -37475,6 +50399,28 @@ class ResourceImpl extends base_js_1.ResourceBuilderBase {
     withContainerRegistryRoleAssignments(target, roles) {
         return new ResourcePromiseImpl(this._withContainerRegistryRoleAssignmentsInternal(target, roles), this._client);
     }
+    /** @internal */
+    async _withKeyVaultRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.KeyVault/withKeyVaultRoleAssignments', rpcArgs);
+        return new ResourceImpl(result, this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ResourcePromiseImpl(this._withKeyVaultRoleAssignmentsInternal(target, roles), this._client);
+    }
+    /** @internal */
+    async _withSearchRoleAssignmentsInternal(target, roles) {
+        target = (0, transport_js_1.isPromiseLike)(target) ? await target : target;
+        const rpcArgs = { builder: this._handle, target, roles };
+        const result = await this._client.invokeCapability('Aspire.Hosting.Azure.Search/withSearchRoleAssignments', rpcArgs);
+        return new ResourceImpl(result, this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ResourcePromiseImpl(this._withSearchRoleAssignmentsInternal(target, roles), this._client);
+    }
 }
 /**
  * Thenable wrapper for Resource that enables fluent chaining.
@@ -37493,10 +50439,6 @@ class ResourcePromiseImpl {
     }
     then(onfulfilled, onrejected) {
         return this._promise.then(onfulfilled, onrejected);
-    }
-    /** Configures a resource to use a container registry */
-    withContainerRegistry(registry) {
-        return new ResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistry(registry)), this._client);
     }
     /** Sets the base image for a Dockerfile build */
     withDockerfileBaseImage(options) {
@@ -37594,6 +50536,10 @@ class ResourcePromiseImpl {
     withStorageRoleAssignments(target, roles) {
         return new ResourcePromiseImpl(this._promise.then(obj => obj.withStorageRoleAssignments(target, roles)), this._client);
     }
+    /** Assigns Microsoft Foundry roles to a resource */
+    withRoleAssignments(target, roles) {
+        return new ResourcePromiseImpl(this._promise.then(obj => obj.withRoleAssignments(target, roles)), this._client);
+    }
     /** Configures a compute environment resource to use an Azure Container Registry. */
     withAzureContainerRegistry(registryBuilder) {
         return new ResourcePromiseImpl(this._promise.then(obj => obj.withAzureContainerRegistry(registryBuilder)), this._client);
@@ -37605,6 +50551,14 @@ class ResourcePromiseImpl {
     /** Assigns Azure Container Registry roles to a resource. */
     withContainerRegistryRoleAssignments(target, roles) {
         return new ResourcePromiseImpl(this._promise.then(obj => obj.withContainerRegistryRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Key Vault roles to a resource */
+    withKeyVaultRoleAssignments(target, roles) {
+        return new ResourcePromiseImpl(this._promise.then(obj => obj.withKeyVaultRoleAssignments(target, roles)), this._client);
+    }
+    /** Assigns Azure AI Search roles to a resource */
+    withSearchRoleAssignments(target, roles) {
+        return new ResourcePromiseImpl(this._promise.then(obj => obj.withSearchRoleAssignments(target, roles)), this._client);
     }
 }
 // ============================================================================
@@ -38089,6 +51043,28 @@ class ResourceWithEndpointsImpl extends base_js_1.ResourceBuilderBase {
     onResourceEndpointsAllocated(callback) {
         return new ResourceWithEndpointsPromiseImpl(this._onResourceEndpointsAllocatedInternal(callback), this._client);
     }
+    /** @internal */
+    async _publishAsHostedAgentInternal(project, configure) {
+        const configureId = configure ? (0, transport_js_1.registerCallback)(async (objData) => {
+            const objHandle = (0, transport_js_1.wrapIfHandle)(objData);
+            const obj = new HostedAgentConfigurationImpl(objHandle, this._client);
+            await configure(obj);
+        }) : undefined;
+        project = (0, transport_js_1.isPromiseLike)(project) ? await project : project;
+        const rpcArgs = { builder: this._handle };
+        if (project !== undefined)
+            rpcArgs.project = project;
+        if (configure !== undefined)
+            rpcArgs.configure = configureId;
+        const result = await this._client.invokeCapability('Aspire.Hosting.Foundry/publishAsHostedAgentExecutable', rpcArgs);
+        return new ResourceWithEndpointsImpl(result, this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        let project = options?.project;
+        const configure = options?.configure;
+        return new ResourceWithEndpointsPromiseImpl(this._publishAsHostedAgentInternal(project, configure), this._client);
+    }
 }
 /**
  * Thenable wrapper for ResourceWithEndpoints that enables fluent chaining.
@@ -38167,6 +51143,10 @@ class ResourceWithEndpointsPromiseImpl {
     /** Subscribes to the ResourceEndpointsAllocated event */
     onResourceEndpointsAllocated(callback) {
         return new ResourceWithEndpointsPromiseImpl(this._promise.then(obj => obj.onResourceEndpointsAllocated(callback)), this._client);
+    }
+    /** Publishes an executable resource as a hosted agent in Microsoft Foundry. */
+    publishAsHostedAgent(options) {
+        return new ResourceWithEndpointsPromiseImpl(this._promise.then(obj => obj.publishAsHostedAgent(options)), this._client);
     }
 }
 // ============================================================================
@@ -38778,6 +51758,7 @@ process.on('uncaughtException', (error) => {
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting/Aspire.Hosting.ApplicationModel.EnvironmentCallbackContext', (handle, client) => new EnvironmentCallbackContextImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting/Aspire.Hosting.Ats.EventingSubscriberRegistrationContext', (handle, client) => new EventingSubscriberRegistrationContextImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting/Aspire.Hosting.ApplicationModel.ExecuteCommandContext', (handle, client) => new ExecuteCommandContextImpl(handle, client));
+(0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Foundry/Aspire.Hosting.Foundry.HostedAgentConfiguration', (handle, client) => new HostedAgentConfigurationImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting/Aspire.Hosting.ApplicationModel.InitializeResourceEvent', (handle, client) => new InitializeResourceEventImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting/Aspire.Hosting.Pipelines.PipelineConfigurationContext', (handle, client) => new PipelineConfigurationContextImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting/Aspire.Hosting.Pipelines.PipelineContext', (handle, client) => new PipelineContextImpl(handle, client));
@@ -38809,18 +51790,28 @@ process.on('uncaughtException', (error) => {
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting/Aspire.Hosting.Pipelines.IReportingTask', (handle, client) => new ReportingTaskImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('System.ComponentModel/System.IServiceProvider', (handle, client) => new ServiceProviderImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting/Aspire.Hosting.IUserSecretsManager', (handle, client) => new UserSecretsManagerImpl(handle, client));
+(0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.ApplicationInsights/Aspire.Hosting.Azure.AzureApplicationInsightsResource', (handle, client) => new AzureApplicationInsightsResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure/Aspire.Hosting.Azure.AzureBicepResource', (handle, client) => new AzureBicepResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.Storage/Aspire.Hosting.Azure.AzureBlobStorageContainerResource', (handle, client) => new AzureBlobStorageContainerResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.Storage/Aspire.Hosting.Azure.AzureBlobStorageResource', (handle, client) => new AzureBlobStorageResourceImpl(handle, client));
+(0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Foundry/Aspire.Hosting.Foundry.AzureCognitiveServicesProjectConnectionResource', (handle, client) => new AzureCognitiveServicesProjectConnectionResourceImpl(handle, client));
+(0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Foundry/Aspire.Hosting.Foundry.AzureCognitiveServicesProjectResource', (handle, client) => new AzureCognitiveServicesProjectResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.AppContainers/Aspire.Hosting.Azure.AppContainers.AzureContainerAppEnvironmentResource', (handle, client) => new AzureContainerAppEnvironmentResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.ContainerRegistry/Aspire.Hosting.Azure.AzureContainerRegistryResource', (handle, client) => new AzureContainerRegistryResourceImpl(handle, client));
+(0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.CosmosDB/Aspire.Hosting.Azure.AzureCosmosDBContainerResource', (handle, client) => new AzureCosmosDBContainerResourceImpl(handle, client));
+(0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.CosmosDB/Aspire.Hosting.Azure.AzureCosmosDBDatabaseResource', (handle, client) => new AzureCosmosDBDatabaseResourceImpl(handle, client));
+(0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.CosmosDB/Aspire.Hosting.Azure.AzureCosmosDBEmulatorResource', (handle, client) => new AzureCosmosDBEmulatorResourceImpl(handle, client));
+(0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.CosmosDB/Aspire.Hosting.AzureCosmosDBResource', (handle, client) => new AzureCosmosDBResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.Storage/Aspire.Hosting.Azure.AzureDataLakeStorageFileSystemResource', (handle, client) => new AzureDataLakeStorageFileSystemResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.Storage/Aspire.Hosting.Azure.AzureDataLakeStorageResource', (handle, client) => new AzureDataLakeStorageResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure/Aspire.Hosting.Azure.AzureEnvironmentResource', (handle, client) => new AzureEnvironmentResourceImpl(handle, client));
+(0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.KeyVault/Aspire.Hosting.Azure.AzureKeyVaultResource', (handle, client) => new AzureKeyVaultResourceImpl(handle, client));
+(0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.KeyVault/Aspire.Hosting.Azure.AzureKeyVaultSecretResource', (handle, client) => new AzureKeyVaultSecretResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.OperationalInsights/Aspire.Hosting.Azure.AzureLogAnalyticsWorkspaceResource', (handle, client) => new AzureLogAnalyticsWorkspaceResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure/Aspire.Hosting.Azure.AzureProvisioningResource', (handle, client) => new AzureProvisioningResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.Storage/Aspire.Hosting.Azure.AzureQueueStorageQueueResource', (handle, client) => new AzureQueueStorageQueueResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.Storage/Aspire.Hosting.Azure.AzureQueueStorageResource', (handle, client) => new AzureQueueStorageResourceImpl(handle, client));
+(0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.Search/Aspire.Hosting.Azure.AzureSearchResource', (handle, client) => new AzureSearchResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.Storage/Aspire.Hosting.Azure.AzureStorageEmulatorResource', (handle, client) => new AzureStorageEmulatorResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.Storage/Aspire.Hosting.Azure.AzureStorageResource', (handle, client) => new AzureStorageResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Azure.Storage/Aspire.Hosting.Azure.AzureTableStorageResource', (handle, client) => new AzureTableStorageResourceImpl(handle, client));
@@ -38835,6 +51826,8 @@ process.on('uncaughtException', (error) => {
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting/Aspire.Hosting.ApplicationModel.DotnetToolResource', (handle, client) => new DotnetToolResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting/Aspire.Hosting.ApplicationModel.ExecutableResource', (handle, client) => new ExecutableResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting/Aspire.Hosting.ExternalServiceResource', (handle, client) => new ExternalServiceResourceImpl(handle, client));
+(0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Foundry/Aspire.Hosting.Foundry.FoundryDeploymentResource', (handle, client) => new FoundryDeploymentResourceImpl(handle, client));
+(0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.Foundry/Aspire.Hosting.Foundry.FoundryResource', (handle, client) => new FoundryResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.JavaScript/Aspire.Hosting.JavaScript.JavaScriptAppResource', (handle, client) => new JavaScriptAppResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.JavaScript/Aspire.Hosting.JavaScript.NextJsAppResource', (handle, client) => new NextJsAppResourceImpl(handle, client));
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting.JavaScript/Aspire.Hosting.JavaScript.NodeAppResource', (handle, client) => new NodeAppResourceImpl(handle, client));

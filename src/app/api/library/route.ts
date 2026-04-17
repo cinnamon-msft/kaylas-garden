@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
 import ModelClient, { isUnexpected } from "@azure-rest/ai-inference";
-import { AzureKeyCredential } from "@azure/core-auth";
+import { DefaultAzureCredential } from "@azure/identity";
+import { downloadJson, uploadJson } from "@/lib/blob-storage";
 
-const CACHE_PATH = path.join(process.cwd(), "data", "library-cache.json");
+const CACHE_BLOB = "json/library-cache.json";
 
 interface LibraryPlantInfo {
   name: string;
@@ -22,33 +21,27 @@ interface LibraryPlantInfo {
   category: string;
 }
 
-async function getCache(): Promise<Record<string, LibraryPlantInfo>> {
-  try {
-    const data = await fs.readFile(CACHE_PATH, "utf-8");
-    return JSON.parse(data) as Record<string, LibraryPlantInfo>;
-  } catch {
-    return {};
-  }
-}
+function getAIClient(): { client: ReturnType<typeof ModelClient>; deploymentName: string } {
+  // Aspire passes individual env vars for the Foundry deployment
+  const endpoint = process.env["GPT_URI"];
+  const deploymentName = process.env["GPT_MODELNAME"] || "gpt-4.1";
 
-async function saveCache(cache: Record<string, LibraryPlantInfo>): Promise<void> {
-  await fs.writeFile(CACHE_PATH, JSON.stringify(cache, null, 2), "utf-8");
+  if (!endpoint) {
+    throw new Error(
+      "GPT_URI is not set. Run the app via Aspire to configure the Foundry AI deployment."
+    );
+  }
+
+  const client = ModelClient(endpoint, new DefaultAzureCredential());
+  return { client, deploymentName };
 }
 
 async function fetchPlantInfo(plantName: string): Promise<LibraryPlantInfo> {
-  const token = process.env.GITHUB_TOKEN;
-  if (!token) {
-    throw new Error("GITHUB_TOKEN environment variable is required for AI features");
-  }
-
-  const client = ModelClient(
-    "https://models.inference.ai.azure.com",
-    new AzureKeyCredential(token)
-  );
+  const { client, deploymentName } = getAIClient();
 
   const response = await client.path("/chat/completions").post({
     body: {
-      model: "gpt-4.1",
+      model: deploymentName,
       messages: [
         {
           role: "system",
@@ -109,7 +102,10 @@ export async function GET(request: Request): Promise<NextResponse> {
     }
 
     const cacheKey = plantName.toLowerCase().trim();
-    const cache = await getCache();
+    const { data: cache, etag } = await downloadJson<Record<string, LibraryPlantInfo>>(
+      CACHE_BLOB,
+      {}
+    );
 
     if (cache[cacheKey]) {
       return NextResponse.json(cache[cacheKey]);
@@ -117,7 +113,7 @@ export async function GET(request: Request): Promise<NextResponse> {
 
     const info = await fetchPlantInfo(plantName);
     cache[cacheKey] = info;
-    await saveCache(cache);
+    await uploadJson(CACHE_BLOB, cache, etag);
 
     return NextResponse.json(info);
   } catch (error) {
