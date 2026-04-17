@@ -1,11 +1,9 @@
-import { readFile, writeFile, mkdir } from "fs/promises";
-import { join } from "path";
 import { randomUUID } from "crypto";
 import type { Plant, PlantEntry, UserSettings, WateringEvent } from "./types";
+import { downloadJson, uploadJson } from "./blob-storage";
 
-const DATA_DIR = join(process.cwd(), "data");
-const PLANTS_FILE = join(DATA_DIR, "plants.json");
-const SETTINGS_FILE = join(DATA_DIR, "settings.json");
+const PLANTS_BLOB = "json/plants.json";
+const SETTINGS_BLOB = "json/settings.json";
 
 const DEFAULT_SETTINGS: UserSettings = {
   location: "Boston, MA",
@@ -13,28 +11,11 @@ const DEFAULT_SETTINGS: UserSettings = {
   frostDates: null,
 };
 
-async function ensureDataDir(): Promise<void> {
-  await mkdir(DATA_DIR, { recursive: true });
-}
-
-async function readJsonFile<T>(filePath: string, fallback: T): Promise<T> {
-  try {
-    const raw = await readFile(filePath, "utf-8");
-    return JSON.parse(raw) as T;
-  } catch {
-    return fallback;
-  }
-}
-
-async function writeJsonFile<T>(filePath: string, data: T): Promise<void> {
-  await ensureDataDir();
-  await writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
-}
-
 // --- Plants ---
 
 export async function getPlants(): Promise<Plant[]> {
-  return readJsonFile<Plant[]>(PLANTS_FILE, []);
+  const { data } = await downloadJson<Plant[]>(PLANTS_BLOB, []);
+  return data;
 }
 
 export async function getPlant(id: string): Promise<Plant | undefined> {
@@ -45,7 +26,7 @@ export async function getPlant(id: string): Promise<Plant | undefined> {
 export async function createPlant(
   plant: Omit<Plant, "id" | "dateAdded" | "entries" | "wateringHistory">
 ): Promise<Plant> {
-  const plants = await getPlants();
+  const { data: plants, etag } = await downloadJson<Plant[]>(PLANTS_BLOB, []);
   const newPlant: Plant = {
     ...plant,
     id: randomUUID(),
@@ -55,7 +36,7 @@ export async function createPlant(
     wateringHistory: [],
   };
   plants.push(newPlant);
-  await writeJsonFile(PLANTS_FILE, plants);
+  await uploadJson(PLANTS_BLOB, plants, etag);
   return newPlant;
 }
 
@@ -63,38 +44,38 @@ export async function updatePlant(
   id: string,
   updates: Partial<Plant>
 ): Promise<Plant> {
-  const plants = await getPlants();
+  const { data: plants, etag } = await downloadJson<Plant[]>(PLANTS_BLOB, []);
   const index = plants.findIndex((p) => p.id === id);
   if (index === -1) {
     throw new Error(`Plant with id "${id}" not found`);
   }
   const updated: Plant = { ...plants[index], ...updates, id };
   plants[index] = updated;
-  await writeJsonFile(PLANTS_FILE, plants);
+  await uploadJson(PLANTS_BLOB, plants, etag);
   return updated;
 }
 
 export async function deletePlant(id: string): Promise<void> {
-  const plants = await getPlants();
+  const { data: plants, etag } = await downloadJson<Plant[]>(PLANTS_BLOB, []);
   const filtered = plants.filter((p) => p.id !== id);
   if (filtered.length === plants.length) {
     throw new Error(`Plant with id "${id}" not found`);
   }
-  await writeJsonFile(PLANTS_FILE, filtered);
+  await uploadJson(PLANTS_BLOB, filtered, etag);
 }
 
 export async function addPlantEntry(
   plantId: string,
   entry: Omit<PlantEntry, "id">
 ): Promise<PlantEntry> {
-  const plants = await getPlants();
+  const { data: plants, etag } = await downloadJson<Plant[]>(PLANTS_BLOB, []);
   const plant = plants.find((p) => p.id === plantId);
   if (!plant) {
     throw new Error(`Plant with id "${plantId}" not found`);
   }
   const newEntry: PlantEntry = { ...entry, id: randomUUID() };
   plant.entries.push(newEntry);
-  await writeJsonFile(PLANTS_FILE, plants);
+  await uploadJson(PLANTS_BLOB, plants, etag);
   return newEntry;
 }
 
@@ -104,7 +85,7 @@ export async function waterPlant(
   plantId: string,
   event: Omit<WateringEvent, "id">
 ): Promise<WateringEvent> {
-  const plants = await getPlants();
+  const { data: plants, etag } = await downloadJson<Plant[]>(PLANTS_BLOB, []);
   const plant = plants.find((p) => p.id === plantId);
   if (!plant) {
     throw new Error(`Plant with id "${plantId}" not found`);
@@ -114,21 +95,28 @@ export async function waterPlant(
     plant.wateringHistory = [];
   }
   plant.wateringHistory.push(newEvent);
-  await writeJsonFile(PLANTS_FILE, plants);
+  await uploadJson(PLANTS_BLOB, plants, etag);
   return newEvent;
 }
 
 // --- Settings ---
 
 export async function getSettings(): Promise<UserSettings> {
-  return readJsonFile<UserSettings>(SETTINGS_FILE, DEFAULT_SETTINGS);
+  const { data } = await downloadJson<UserSettings>(
+    SETTINGS_BLOB,
+    DEFAULT_SETTINGS
+  );
+  return data;
 }
 
 export async function updateSettings(
   settings: Partial<UserSettings>
 ): Promise<UserSettings> {
-  const current = await getSettings();
+  const { data: current, etag } = await downloadJson<UserSettings>(
+    SETTINGS_BLOB,
+    DEFAULT_SETTINGS
+  );
   const updated: UserSettings = { ...current, ...settings };
-  await writeJsonFile(SETTINGS_FILE, updated);
+  await uploadJson(SETTINGS_BLOB, updated, etag);
   return updated;
 }

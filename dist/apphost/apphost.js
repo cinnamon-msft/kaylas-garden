@@ -3,10 +3,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const aspire_js_1 = require("./.modules/aspire.js");
 async function main() {
     const builder = await (0, aspire_js_1.createBuilder)();
+    await builder.addAzureContainerAppEnvironment('acaenv');
+    const blobs = builder.addAzureStorage('storage')
+        .runAsEmulator({
+        configureContainer: async (azurite) => {
+            await azurite.withDataVolume();
+            await azurite.withLifetime(aspire_js_1.ContainerLifetime.Persistent);
+        },
+    })
+        .addBlobContainer('blobs', { blobContainerName: 'plantdata' });
     await builder
-        .addJavaScriptApp('web', '.')
+        .addNextJsApp('web', '.')
+        .withReference(blobs)
         .withHttpEndpoint({ port: 3000, env: 'PORT' })
-        .withArgs(['--hostname', '0.0.0.0']);
+        .withExternalHttpEndpoints();
     await builder.build().run();
 }
 void main().catch((error) => {

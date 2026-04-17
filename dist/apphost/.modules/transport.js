@@ -38,6 +38,7 @@ exports.isAtsError = isAtsError;
 exports.isMarshalledHandle = isMarshalledHandle;
 exports.registerHandleWrapper = registerHandleWrapper;
 exports.wrapIfHandle = wrapIfHandle;
+exports.isPromiseLike = isPromiseLike;
 exports.registerCallback = registerCallback;
 exports.unregisterCallback = unregisterCallback;
 exports.getCallbackCount = getCallbackCount;
@@ -91,6 +92,14 @@ function isAbortSignal(value) {
         'addEventListener' in value &&
         'removeEventListener' in value);
 }
+function isCancellationTokenLike(value) {
+    return (value !== null &&
+        typeof value === 'object' &&
+        'register' in value &&
+        typeof value.register === 'function' &&
+        'toJSON' in value &&
+        typeof value.toJSON === 'function');
+}
 function isPlainObject(value) {
     if (value === null || typeof value !== 'object') {
         return false;
@@ -123,30 +132,22 @@ function createCircularReferenceError(capabilityId, path) {
  * @typeParam T - The ATS type ID (e.g., "Aspire.Hosting/IDistributedApplicationBuilder")
  */
 class Handle {
-    _handleId;
-    _typeId;
+    $handle;
+    $type;
     constructor(marshalled) {
-        this._handleId = marshalled.$handle;
-        this._typeId = marshalled.$type;
-    }
-    /** The handle ID (instance number) */
-    get $handle() {
-        return this._handleId;
-    }
-    /** The ATS type ID */
-    get $type() {
-        return this._typeId;
+        this.$handle = marshalled.$handle;
+        this.$type = marshalled.$type;
     }
     /** Serialize for JSON-RPC transport */
     toJSON() {
         return {
-            $handle: this._handleId,
-            $type: this._typeId
+            $handle: this.$handle,
+            $type: this.$type
         };
     }
     /** String representation for debugging */
     toString() {
-        return `Handle<${this._typeId}>(${this._handleId})`;
+        return `Handle<${this.$type}>(${this.$handle})`;
     }
 }
 exports.Handle = Handle;
@@ -176,19 +177,35 @@ exports.Handle = Handle;
  * const connectionString = await connectionStringExpression.getValue(cancellationToken);
  * ```
  */
+const cancellationTokenState = new WeakMap();
 class CancellationToken {
-    _signal;
-    _remoteTokenId;
     constructor(value) {
+        const state = {};
         if (typeof value === 'string') {
-            this._remoteTokenId = value;
+            state.remoteTokenId = value;
         }
         else if (isAbortSignal(value)) {
-            this._signal = value;
+            state.signal = value;
         }
+        cancellationTokenState.set(this, state);
     }
     /**
      * Creates a cancellation token from a local {@link AbortSignal}.
+     */
+    toJSON() {
+        return cancellationTokenState.get(this)?.remoteTokenId;
+    }
+    register(client) {
+        const state = cancellationTokenState.get(this);
+        if (state?.remoteTokenId !== undefined) {
+            return state.remoteTokenId;
+        }
+        return client
+            ? registerCancellation(client, state?.signal)
+            : registerCancellation(state?.signal);
+    }
+    /**
+     * Creates transport-safe cancellation token values for the generated SDK.
      */
     static from(signal) {
         return new CancellationToken(signal);
@@ -198,7 +215,7 @@ class CancellationToken {
      * Generated code uses this to materialize values that come from the AppHost.
      */
     static fromValue(value) {
-        if (value instanceof CancellationToken) {
+        if (isCancellationTokenLike(value)) {
             return value;
         }
         if (typeof value === 'string') {
@@ -208,20 +225,6 @@ class CancellationToken {
             return new CancellationToken(value);
         }
         return new CancellationToken();
-    }
-    /**
-     * Serializes the token for JSON-RPC transport.
-     */
-    toJSON() {
-        return this._remoteTokenId;
-    }
-    register(client) {
-        if (this._remoteTokenId !== undefined) {
-            return this._remoteTokenId;
-        }
-        return client
-            ? registerCancellation(client, this._signal)
-            : registerCancellation(this._signal);
     }
 }
 exports.CancellationToken = CancellationToken;
@@ -284,6 +287,7 @@ class CapabilityError extends Error {
         super(error.message);
         this.error = error;
         this.name = 'CapabilityError';
+        Object.setPrototypeOf(this, new.target.prototype);
     }
     /** Machine-readable error code */
     get code() {
@@ -302,6 +306,7 @@ class AppHostUsageError extends Error {
     constructor(message) {
         super(message);
         this.name = 'AppHostUsageError';
+        Object.setPrototypeOf(this, new.target.prototype);
     }
 }
 exports.AppHostUsageError = AppHostUsageError;
@@ -462,15 +467,24 @@ function resolveCancellationClient(client) {
     throw new Error('registerCancellation(signal) is ambiguous when multiple AspireClient instances are connected. ' +
         'Pass the client explicitly.');
 }
+function isAspireClientLike(value) {
+    if (!value || typeof value !== 'object') {
+        return false;
+    }
+    const candidate = value;
+    return typeof candidate.invokeCapability === 'function'
+        && typeof candidate.cancelToken === 'function'
+        && typeof candidate.connected === 'boolean';
+}
 function registerCancellation(clientOrSignalOrToken, maybeSignalOrToken) {
-    const client = clientOrSignalOrToken instanceof AspireClient ? clientOrSignalOrToken : undefined;
+    const client = isAspireClientLike(clientOrSignalOrToken) ? clientOrSignalOrToken : undefined;
     const signalOrToken = client
         ? maybeSignalOrToken
         : clientOrSignalOrToken;
     if (!signalOrToken) {
         return undefined;
     }
-    if (signalOrToken instanceof CancellationToken) {
+    if (isCancellationTokenLike(signalOrToken)) {
         return signalOrToken.register(client);
     }
     const signal = signalOrToken;
@@ -502,7 +516,7 @@ async function marshalTransportValue(value, client, cancellationIds, capabilityI
     if (value === null || value === undefined || typeof value !== 'object') {
         return value;
     }
-    if (value instanceof CancellationToken) {
+    if (isCancellationTokenLike(value)) {
         const cancellationId = value.register(client);
         if (cancellationId !== undefined) {
             cancellationIds.push(cancellationId);
@@ -556,8 +570,51 @@ class AspireClient {
     _pendingCalls = 0;
     _connectPromise = null;
     _disconnectNotified = false;
+    _pendingPromises = new Set();
+    _rejectedErrors = new Set();
+    throwOnPendingRejections = true;
     constructor(socketPath) {
         this.socketPath = socketPath;
+    }
+    trackPromise(promise) {
+        this._pendingPromises.add(promise);
+        // Remove on both resolve and reject. The reject handler swallows the
+        // error to prevent Node.js unhandled-rejection crashes.
+        //
+        // When throwOnPendingRejections is true (default), rejection errors are
+        // eagerly collected so that flushPendingPromises can re-throw them even
+        // if the promise settles before flush is called.
+        //
+        // Limitation: JavaScript provides no way to detect whether a rejection
+        // was already observed by the caller (e.g., try { await p } catch {}).
+        // The .then() reject handler fires regardless. This means user-caught
+        // rejections will also be re-thrown by build(). We accept this tradeoff
+        // because the common case — an un-awaited chain fails silently — should
+        // fail loud. The uncommon case (catch an error from an un-awaited chain,
+        // then continue to build) can opt out with:
+        //   createBuilder({ throwOnPendingRejections: false })
+        promise.then(() => this._pendingPromises.delete(promise), (err) => {
+            this._pendingPromises.delete(promise);
+            if (this.throwOnPendingRejections) {
+                this._rejectedErrors.add(err);
+            }
+        });
+    }
+    async flushPendingPromises() {
+        if (this._pendingPromises.size > 0) {
+            console.warn(`Flushing ${this._pendingPromises.size} pending promise(s). Consider awaiting fluent calls to avoid implicit flushing.`);
+            // Snapshot the current set before awaiting. Promises tracked after
+            // flush starts (e.g. by .then() callbacks or the build PromiseImpl
+            // constructor) are excluded. This prevents deadlocks where a tracked
+            // promise depends on flush completing.
+            const pending = [...this._pendingPromises];
+            await Promise.allSettled(pending);
+        }
+        if (this._rejectedErrors.size > 0) {
+            const errors = [...this._rejectedErrors];
+            this._rejectedErrors.clear();
+            throw new AggregateError(errors, 'One or more unawaited fluent calls failed');
+        }
     }
     /**
      * Register a callback to be called when the connection is lost
