@@ -5,17 +5,17 @@ async function main() {
     const builder = await (0, aspire_js_1.createBuilder)();
     await builder.addAzureContainerAppEnvironment('acaenv');
     const githubToken = builder.addParameter('github-token', { secret: true });
-    const blobs = builder.addAzureStorage('storage')
+    const plantdata = builder.addAzureStorage('storage')
         .runAsEmulator({
         configureContainer: async (azurite) => {
             await azurite.withDataVolume();
             await azurite.withLifetime(aspire_js_1.ContainerLifetime.Persistent);
         },
     })
-        .addBlobContainer('blobs', { blobContainerName: 'plantdata' });
+        .addBlobContainer('plantdata', { blobContainerName: 'plantdata' });
     await builder
         .addNextJsApp('web', '.')
-        .withReference(blobs)
+        .withReference(plantdata)
         .withEnvironment('GITHUB_TOKEN', githubToken)
         .withHttpEndpoint({ port: 3000, env: 'PORT' })
         .withExternalHttpEndpoints();

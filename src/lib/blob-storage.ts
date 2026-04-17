@@ -13,10 +13,10 @@ let _containerEnsured = false;
 function getContainerClient(): ContainerClient {
   if (_containerClient) return _containerClient;
 
-  const connectionString = process.env["ConnectionStrings__blobs"];
+  const connectionString = process.env["ConnectionStrings__plantdata"];
   if (!connectionString) {
     throw new Error(
-      "ConnectionStrings__blobs is not set. Run the app via Aspire to configure Azure Blob Storage."
+      "ConnectionStrings__plantdata is not set. Run the app via Aspire to configure Azure Blob Storage."
     );
   }
 
