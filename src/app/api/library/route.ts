@@ -21,18 +21,40 @@ interface LibraryPlantInfo {
   category: string;
 }
 
-function getAIClient(): { client: ReturnType<typeof ModelClient>; deploymentName: string } {
-  // Aspire passes individual env vars for the Foundry deployment
-  const endpoint = process.env["GPT_URI"];
-  const deploymentName = process.env["GPT_MODELNAME"] || "gpt-4.1";
+function parseConnectionProps(conn: string): Record<string, string> {
+  return Object.fromEntries(
+    conn
+      .split(";")
+      .filter(Boolean)
+      .map((part) => {
+        const idx = part.indexOf("=");
+        return [part.slice(0, idx), part.slice(idx + 1)];
+      })
+  );
+}
 
-  if (!endpoint) {
+function getAIClient(): { client: ReturnType<typeof ModelClient>; deploymentName: string } {
+  // ConnectionStrings__gpt format:
+  //   Endpoint=https://...;EndpointAIInference=https://...models;Deployment=gpt
+  // The ai-inference client needs EndpointAIInference, not the base Endpoint.
+  const connStr = process.env["ConnectionStrings__gpt"];
+  if (!connStr) {
     throw new Error(
-      "GPT_URI is not set. Run the app via Aspire to configure the Foundry AI deployment."
+      "ConnectionStrings__gpt is not set. Run the app via Aspire to configure the Foundry AI deployment."
     );
   }
 
-  const client = ModelClient(endpoint, new DefaultAzureCredential());
+  const props = parseConnectionProps(connStr);
+  const endpoint = props["EndpointAIInference"] || props["Endpoint"];
+  const deploymentName = props["Deployment"] || process.env["GPT_MODELNAME"] || "gpt-4.1";
+
+  if (!endpoint) {
+    throw new Error("No endpoint found in ConnectionStrings__gpt");
+  }
+
+  const client = ModelClient(endpoint, new DefaultAzureCredential(), {
+    credentials: { scopes: ["https://cognitiveservices.azure.com/.default"] },
+  });
   return { client, deploymentName };
 }
 
