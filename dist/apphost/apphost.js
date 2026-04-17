@@ -4,6 +4,7 @@ const aspire_js_1 = require("./.modules/aspire.js");
 async function main() {
     const builder = await (0, aspire_js_1.createBuilder)();
     await builder.addAzureContainerAppEnvironment('acaenv');
+    const githubToken = builder.addParameter('github-token', { secret: true });
     const blobs = builder.addAzureStorage('storage')
         .runAsEmulator({
         configureContainer: async (azurite) => {
@@ -15,6 +16,7 @@ async function main() {
     await builder
         .addNextJsApp('web', '.')
         .withReference(blobs)
+        .withEnvironment('GITHUB_TOKEN', githubToken)
         .withHttpEndpoint({ port: 3000, env: 'PORT' })
         .withExternalHttpEndpoints();
     await builder.build().run();

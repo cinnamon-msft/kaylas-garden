@@ -5,6 +5,8 @@ async function main(): Promise<void> {
 
   await builder.addAzureContainerAppEnvironment('acaenv');
 
+  const githubToken = builder.addParameter('github-token', { secret: true });
+
   const blobs = builder.addAzureStorage('storage')
     .runAsEmulator({
       configureContainer: async (azurite) => {
@@ -17,6 +19,7 @@ async function main(): Promise<void> {
   await builder
     .addNextJsApp('web', '.')
     .withReference(blobs)
+    .withEnvironment('GITHUB_TOKEN', githubToken)
     .withHttpEndpoint({ port: 3000, env: 'PORT' })
     .withExternalHttpEndpoints();
 
