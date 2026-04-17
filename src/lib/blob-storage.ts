@@ -1,7 +1,6 @@
 import {
   BlobServiceClient,
   ContainerClient,
-  StorageSharedKeyCredential,
 } from "@azure/storage-blob";
 import { DefaultAzureCredential } from "@azure/identity";
 
@@ -14,7 +13,8 @@ function getContainerClient(): ContainerClient {
   if (_containerClient) return _containerClient;
 
   const connectionString =
-    process.env["ConnectionStrings__plant"];
+    process.env["ConnectionStrings__plantdata"] ??
+    process.env["ConnectionStrings__blobs"];
   if (!connectionString) {
     throw new Error(
       "ConnectionStrings__plantdata (or ConnectionStrings__blobs) is not set. Run the app via Aspire to configure Azure Blob Storage."
@@ -23,16 +23,33 @@ function getContainerClient(): ContainerClient {
 
   let client: ContainerClient;
 
-  // Connection strings start with protocol or contain AccountName=
   if (
     connectionString.startsWith("DefaultEndpointsProtocol") ||
-    connectionString.includes("AccountName=")
+    connectionString.includes("AccountName=devstoreaccount1")
   ) {
-    // Emulator / shared key connection string
+    // Azurite emulator connection string
     const blobService = BlobServiceClient.fromConnectionString(connectionString);
     client = blobService.getContainerClient(CONTAINER_NAME);
+  } else if (connectionString.includes("Endpoint=")) {
+    // Production Aspire format: Endpoint=https://...blob.core.windows.net/;ContainerName=plantdata
+    const parts = Object.fromEntries(
+      connectionString.split(";").filter(Boolean).map((part) => {
+        const idx = part.indexOf("=");
+        return [part.slice(0, idx), part.slice(idx + 1)];
+      })
+    );
+    const endpoint = parts["Endpoint"];
+    const containerName = parts["ContainerName"] || CONTAINER_NAME;
+    if (!endpoint) {
+      throw new Error("Endpoint not found in connection string");
+    }
+    const blobService = new BlobServiceClient(
+      endpoint,
+      new DefaultAzureCredential()
+    );
+    client = blobService.getContainerClient(containerName);
   } else {
-    // Production: URI-based — use DefaultAzureCredential
+    // Plain URI — use DefaultAzureCredential
     const blobService = new BlobServiceClient(
       connectionString,
       new DefaultAzureCredential()
