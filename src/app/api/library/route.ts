@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import ModelClient, { isUnexpected } from "@azure-rest/ai-inference";
 import { DefaultAzureCredential } from "@azure/identity";
+import { trace, SpanKind, SpanStatusCode } from "@opentelemetry/api";
 import { downloadJson, uploadJson } from "@/lib/blob-storage";
 
 const CACHE_BLOB = "json/library-cache.json";
@@ -58,21 +59,20 @@ function getAIClient(): { client: ReturnType<typeof ModelClient>; deploymentName
   return { client, deploymentName };
 }
 
+const tracer = trace.getTracer("kaylas-garden");
+
 async function fetchPlantInfo(plantName: string): Promise<LibraryPlantInfo> {
   const { client, deploymentName } = getAIClient();
 
-  const response = await client.path("/chat/completions").post({
-    body: {
-      model: deploymentName,
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are a knowledgeable gardening expert. Return ONLY valid JSON with no markdown formatting, no code blocks, no extra text.",
-        },
-        {
-          role: "user",
-          content: `Provide comprehensive gardening information about "${plantName}". Return a JSON object with these exact fields:
+  const messages = [
+    {
+      role: "system" as const,
+      content:
+        "You are a knowledgeable gardening expert. Return ONLY valid JSON with no markdown formatting, no code blocks, no extra text.",
+    },
+    {
+      role: "user" as const,
+      content: `Provide comprehensive gardening information about "${plantName}". Return a JSON object with these exact fields:
 {
   "name": "common name",
   "scientificName": "scientific name",
@@ -88,27 +88,89 @@ async function fetchPlantInfo(plantName: string): Promise<LibraryPlantInfo> {
   "daysToHarvest": "days to harvest or bloom time",
   "category": "one of: vegetable, herb, flower, fruit, succulent, tree, shrub"
 }`,
-        },
-      ],
-      temperature: 0.3,
-      max_tokens: 1000,
     },
-  });
+  ];
 
-  if (isUnexpected(response)) {
-    throw new Error(`AI API error: ${response.status}`);
-  }
+  return tracer.startActiveSpan(
+    `chat ${deploymentName}`,
+    {
+      kind: SpanKind.CLIENT,
+      attributes: {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.system": "az.ai.inference",
+        "gen_ai.request.model": deploymentName,
+        "gen_ai.request.temperature": 0.3,
+        "gen_ai.request.max_tokens": 1000,
+      },
+    },
+    async (span) => {
+      try {
+        // Record input messages as GenAI events if content capture is enabled
+        const captureContent = process.env["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] === "true";
+        if (captureContent) {
+          for (let i = 0; i < messages.length; i++) {
+            span.addEvent("gen_ai.user.message", {
+              "gen_ai.system": "az.ai.inference",
+              "gen_ai.event.content": JSON.stringify({ role: messages[i].role, content: messages[i].content }),
+            });
+          }
+        }
 
-  const content = response.body.choices[0]?.message?.content;
-  if (!content) {
-    throw new Error("No response from AI");
-  }
+        const response = await client.path("/chat/completions").post({
+          body: {
+            model: deploymentName,
+            messages,
+            temperature: 0.3,
+            max_tokens: 1000,
+          },
+        });
 
-  const cleaned = content
-    .replace(/```json\n?/g, "")
-    .replace(/```\n?/g, "")
-    .trim();
-  return JSON.parse(cleaned) as LibraryPlantInfo;
+        if (isUnexpected(response)) {
+          span.setStatus({ code: SpanStatusCode.ERROR, message: `HTTP ${response.status}` });
+          throw new Error(`AI API error: ${response.status}`);
+        }
+
+        const choice = response.body.choices[0];
+        const content = choice?.message?.content;
+        if (!content) {
+          span.setStatus({ code: SpanStatusCode.ERROR, message: "No response content" });
+          throw new Error("No response from AI");
+        }
+
+        // Record response attributes
+        const usage = response.body.usage;
+        span.setAttributes({
+          "gen_ai.response.model": response.body.model ?? deploymentName,
+          "gen_ai.response.finish_reasons": [choice.finish_reason ?? "stop"],
+          ...(usage && {
+            "gen_ai.usage.input_tokens": usage.prompt_tokens,
+            "gen_ai.usage.output_tokens": usage.completion_tokens,
+          }),
+        });
+
+        if (captureContent) {
+          span.addEvent("gen_ai.assistant.message", {
+            "gen_ai.system": "az.ai.inference",
+            "gen_ai.event.content": JSON.stringify({ role: "assistant", content }),
+          });
+        }
+
+        span.setStatus({ code: SpanStatusCode.OK });
+
+        const cleaned = content
+          .replace(/```json\n?/g, "")
+          .replace(/```\n?/g, "")
+          .trim();
+        return JSON.parse(cleaned) as LibraryPlantInfo;
+      } catch (err) {
+        span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
+        span.recordException(err as Error);
+        throw err;
+      } finally {
+        span.end();
+      }
+    }
+  );
 }
 
 export async function GET(request: Request): Promise<NextResponse> {
