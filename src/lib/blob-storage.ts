@@ -1,7 +1,4 @@
-import {
-  BlobServiceClient,
-  ContainerClient,
-} from "@azure/storage-blob";
+import { BlobServiceClient, ContainerClient } from "@azure/storage-blob";
 import { DefaultAzureCredential } from "@azure/identity";
 
 const CONTAINER_NAME = "plantdata";
@@ -9,56 +6,59 @@ const CONTAINER_NAME = "plantdata";
 let _containerClient: ContainerClient | null = null;
 let _containerEnsured = false;
 
-function getContainerClient(): ContainerClient {
-  if (_containerClient) return _containerClient;
-
-  const connectionString =
-    process.env["ConnectionStrings__plantdata"] ??
-    process.env["ConnectionStrings__blobs"];
-  if (!connectionString) {
-    throw new Error(
-      "ConnectionStrings__plantdata (or ConnectionStrings__blobs) is not set. Run the app via Aspire to configure Azure Blob Storage."
-    );
-  }
-
-  let client: ContainerClient;
-
-  if (
-    connectionString.startsWith("DefaultEndpointsProtocol") ||
-    connectionString.includes("AccountName=devstoreaccount1")
-  ) {
-    // Azurite emulator connection string
-    const blobService = BlobServiceClient.fromConnectionString(connectionString);
-    client = blobService.getContainerClient(CONTAINER_NAME);
-  } else if (connectionString.includes("Endpoint=")) {
-    // Production Aspire format: Endpoint=https://...blob.core.windows.net/;ContainerName=plantdata
-    const parts = Object.fromEntries(
-      connectionString.split(";").filter(Boolean).map((part) => {
+/** Parse an Aspire-style semicolon-delimited connection string into key-value pairs. */
+function parseConnectionProps(conn: string): Record<string, string> {
+  return Object.fromEntries(
+    conn
+      .split(";")
+      .filter(Boolean)
+      .map((part) => {
         const idx = part.indexOf("=");
         return [part.slice(0, idx), part.slice(idx + 1)];
       })
+  );
+}
+
+function isEmulatorConnectionString(conn: string): boolean {
+  return (
+    conn.startsWith("DefaultEndpointsProtocol") ||
+    conn.includes("AccountName=devstoreaccount1")
+  );
+}
+
+function getContainerClient(): ContainerClient {
+  if (_containerClient) return _containerClient;
+
+  const conn =
+    process.env["ConnectionStrings__plantdata"] ??
+    process.env["ConnectionStrings__blobs"];
+  if (!conn) {
+    throw new Error(
+      "ConnectionStrings__plantdata is not set. Run the app via Aspire to configure Azure Blob Storage."
     );
-    const endpoint = parts["Endpoint"];
-    const containerName = parts["ContainerName"] || CONTAINER_NAME;
-    if (!endpoint) {
-      throw new Error("Endpoint not found in connection string");
-    }
-    const blobService = new BlobServiceClient(
-      endpoint,
-      new DefaultAzureCredential()
-    );
-    client = blobService.getContainerClient(containerName);
-  } else {
-    // Plain URI — use DefaultAzureCredential
-    const blobService = new BlobServiceClient(
-      connectionString,
-      new DefaultAzureCredential()
-    );
-    client = blobService.getContainerClient(CONTAINER_NAME);
   }
 
-  _containerClient = client;
-  return client;
+  let blobService: BlobServiceClient;
+  let containerName = CONTAINER_NAME;
+
+  if (isEmulatorConnectionString(conn)) {
+    blobService = BlobServiceClient.fromConnectionString(conn);
+  } else if (conn.includes("Endpoint=")) {
+    const props = parseConnectionProps(conn);
+    if (!props["Endpoint"]) {
+      throw new Error("Endpoint not found in connection string");
+    }
+    blobService = new BlobServiceClient(
+      props["Endpoint"],
+      new DefaultAzureCredential()
+    );
+    containerName = props["ContainerName"] || CONTAINER_NAME;
+  } else {
+    blobService = new BlobServiceClient(conn, new DefaultAzureCredential());
+  }
+
+  _containerClient = blobService.getContainerClient(containerName);
+  return _containerClient;
 }
 
 async function ensureContainer(): Promise<ContainerClient> {
@@ -70,6 +70,29 @@ async function ensureContainer(): Promise<ContainerClient> {
   return client;
 }
 
+async function streamToBuffer(
+  stream: NodeJS.ReadableStream
+): Promise<Buffer> {
+  const chunks: Buffer[] = [];
+  for await (const chunk of stream) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  }
+  return Buffer.concat(chunks);
+}
+
+function isNotFoundError(err: unknown): boolean {
+  return (
+    typeof err === "object" &&
+    err !== null &&
+    "statusCode" in err &&
+    (err as { statusCode: number }).statusCode === 404
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Public API
+// ---------------------------------------------------------------------------
+
 /**
  * Download a JSON blob, returning the parsed value or a fallback if the blob doesn't exist.
  * Throws on network/auth/parse errors (does NOT silently swallow them).
@@ -79,16 +102,14 @@ export async function downloadJson<T>(
   fallback: T
 ): Promise<{ data: T; etag: string | undefined }> {
   const container = await ensureContainer();
-  const blobClient = container.getBlockBlobClient(blobPath);
-
   try {
-    const response = await blobClient.download(0);
-    const body = await streamToString(response.readableStreamBody!);
+    const response = await container.getBlockBlobClient(blobPath).download(0);
+    const body = (await streamToBuffer(response.readableStreamBody!)).toString(
+      "utf-8"
+    );
     return { data: JSON.parse(body) as T, etag: response.etag };
   } catch (err: unknown) {
-    if (isNotFoundError(err)) {
-      return { data: fallback, etag: undefined };
-    }
+    if (isNotFoundError(err)) return { data: fallback, etag: undefined };
     throw err;
   }
 }
@@ -103,29 +124,24 @@ export async function uploadJson<T>(
   etag?: string
 ): Promise<string | undefined> {
   const container = await ensureContainer();
-  const blobClient = container.getBlockBlobClient(blobPath);
-
   const content = JSON.stringify(data, null, 2);
-  const response = await blobClient.upload(content, content.length, {
-    blobHTTPHeaders: { blobContentType: "application/json" },
-    conditions: etag ? { ifMatch: etag } : undefined,
-  });
-
+  const response = await container
+    .getBlockBlobClient(blobPath)
+    .upload(content, content.length, {
+      blobHTTPHeaders: { blobContentType: "application/json" },
+      conditions: etag ? { ifMatch: etag } : undefined,
+    });
   return response.etag;
 }
 
-/**
- * Upload a binary blob (e.g., an image).
- */
+/** Upload a binary blob (e.g., an image). */
 export async function uploadBlob(
   blobPath: string,
   data: Buffer,
   contentType: string
 ): Promise<void> {
   const container = await ensureContainer();
-  const blobClient = container.getBlockBlobClient(blobPath);
-
-  await blobClient.upload(data, data.length, {
+  await container.getBlockBlobClient(blobPath).upload(data, data.length, {
     blobHTTPHeaders: { blobContentType: contentType },
   });
 }
@@ -138,40 +154,14 @@ export async function downloadBlob(
   blobPath: string
 ): Promise<{ data: Buffer; contentType: string } | null> {
   const container = await ensureContainer();
-  const blobClient = container.getBlockBlobClient(blobPath);
-
   try {
-    const response = await blobClient.download(0);
-    const chunks: Buffer[] = [];
-    for await (const chunk of response.readableStreamBody!) {
-      chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
-    }
+    const response = await container.getBlockBlobClient(blobPath).download(0);
     return {
-      data: Buffer.concat(chunks),
-      contentType:
-        response.contentType ?? "application/octet-stream",
+      data: await streamToBuffer(response.readableStreamBody!),
+      contentType: response.contentType ?? "application/octet-stream",
     };
   } catch (err: unknown) {
     if (isNotFoundError(err)) return null;
     throw err;
   }
-}
-
-function isNotFoundError(err: unknown): boolean {
-  return (
-    typeof err === "object" &&
-    err !== null &&
-    "statusCode" in err &&
-    (err as { statusCode: number }).statusCode === 404
-  );
-}
-
-async function streamToString(
-  stream: NodeJS.ReadableStream
-): Promise<string> {
-  const chunks: Buffer[] = [];
-  for await (const chunk of stream) {
-    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
-  }
-  return Buffer.concat(chunks).toString("utf-8");
 }
