@@ -1,60 +1,32 @@
 import { BlobServiceClient, ContainerClient } from "@azure/storage-blob";
 import { DefaultAzureCredential } from "@azure/identity";
 
-const CONTAINER_NAME = "plantdata";
+const DEFAULT_CONTAINER = "plantdata";
 
 let _containerClient: ContainerClient | null = null;
 let _containerEnsured = false;
 
-/** Parse an Aspire-style semicolon-delimited connection string into key-value pairs. */
-function parseConnectionProps(conn: string): Record<string, string> {
-  return Object.fromEntries(
-    conn
-      .split(";")
-      .filter(Boolean)
-      .map((part) => {
-        const idx = part.indexOf("=");
-        return [part.slice(0, idx), part.slice(idx + 1)];
-      })
-  );
-}
-
-function isEmulatorConnectionString(conn: string): boolean {
-  return (
-    conn.startsWith("DefaultEndpointsProtocol") ||
-    conn.includes("AccountName=devstoreaccount1")
-  );
-}
-
 function getContainerClient(): ContainerClient {
   if (_containerClient) return _containerClient;
 
-  const conn =
-    process.env["ConnectionStrings__plantdata"] ??
-    process.env["ConnectionStrings__blobs"];
-  if (!conn) {
-    throw new Error(
-      "ConnectionStrings__plantdata is not set. Run the app via Aspire to configure Azure Blob Storage."
-    );
-  }
+  const containerName =
+    process.env["PLANTDATA_BLOBCONTAINERNAME"] || DEFAULT_CONTAINER;
+
+  // Aspire passes individual env vars for each connection property.
+  // Emulator: PLANTDATA_CONNECTIONSTRING is a full Azurite connection string.
+  // Production: PLANTDATA_URI is the blob endpoint, use managed identity.
+  const connStr = process.env["PLANTDATA_CONNECTIONSTRING"];
+  const uri = process.env["PLANTDATA_URI"];
 
   let blobService: BlobServiceClient;
-  let containerName = CONTAINER_NAME;
-
-  if (isEmulatorConnectionString(conn)) {
-    blobService = BlobServiceClient.fromConnectionString(conn);
-  } else if (conn.includes("Endpoint=")) {
-    const props = parseConnectionProps(conn);
-    if (!props["Endpoint"]) {
-      throw new Error("Endpoint not found in connection string");
-    }
-    blobService = new BlobServiceClient(
-      props["Endpoint"],
-      new DefaultAzureCredential()
-    );
-    containerName = props["ContainerName"] || CONTAINER_NAME;
+  if (connStr) {
+    blobService = BlobServiceClient.fromConnectionString(connStr);
+  } else if (uri) {
+    blobService = new BlobServiceClient(uri, new DefaultAzureCredential());
   } else {
-    blobService = new BlobServiceClient(conn, new DefaultAzureCredential());
+    throw new Error(
+      "No blob storage connection configured. Run the app via Aspire."
+    );
   }
 
   _containerClient = blobService.getContainerClient(containerName);
