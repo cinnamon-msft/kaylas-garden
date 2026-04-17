@@ -40,6 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# aspire generated modules
+/.modules/
+
 # uploaded images (served via API route)
 /data/uploads/*
 !/data/uploads/.gitkeep
