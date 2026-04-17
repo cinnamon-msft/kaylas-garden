@@ -21,6 +21,7 @@ async function main(): Promise<void> {
     .addNextJsApp('web', '.')
     .withReference(plantdata)
     .withReference(gpt)
+    .withEnvironment('OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT', 'true')
     .withHttpEndpoint({ port: 3000, env: 'PORT' })
     .withExternalHttpEndpoints();
 
