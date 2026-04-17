@@ -19,6 +19,7 @@ export async function POST(
     });
     return NextResponse.json(event, { status: 201 });
   } catch (err: unknown) {
+    console.error("POST /api/plants/[id]/water failed:", err);
     const message = err instanceof Error ? err.message : "Failed to log watering";
     const status = message.includes("not found") ? 404 : 500;
     return NextResponse.json({ error: message }, { status });

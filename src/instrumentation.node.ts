@@ -44,28 +44,34 @@ const originalWarn = console.warn
 const originalError = console.error
 
 console.log = (...args: unknown[]) => {
+  const msg = args.map(String).join(' ')
   otelLogger.emit({
     severityNumber: SeverityNumber.INFO,
     severityText: 'INFO',
-    body: args.map(String).join(' '),
+    body: msg,
+    attributes: { 'log.message': msg },
   })
   originalLog.apply(console, args)
 }
 
 console.warn = (...args: unknown[]) => {
+  const msg = args.map(String).join(' ')
   otelLogger.emit({
     severityNumber: SeverityNumber.WARN,
     severityText: 'WARN',
-    body: args.map(String).join(' '),
+    body: msg,
+    attributes: { 'log.message': msg },
   })
   originalWarn.apply(console, args)
 }
 
 console.error = (...args: unknown[]) => {
+  const msg = args.map(String).join(' ')
   otelLogger.emit({
     severityNumber: SeverityNumber.ERROR,
     severityText: 'ERROR',
-    body: args.map(String).join(' '),
+    body: msg,
+    attributes: { 'log.message': msg },
   })
   originalError.apply(console, args)
 }

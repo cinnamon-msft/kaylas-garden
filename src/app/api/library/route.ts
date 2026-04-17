@@ -121,6 +121,7 @@ export async function GET(request: Request): Promise<NextResponse> {
 
     return NextResponse.json(info);
   } catch (error) {
+    console.error("GET /api/library failed:", error);
     const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json({ error: message }, { status: 500 });
   }
