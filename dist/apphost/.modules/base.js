@@ -50,39 +50,31 @@ Object.defineProperty(exports, "wrapIfHandle", { enumerable: true, get: function
  * await api.withEnvironment("REDIS_URL", expr);
  * ```
  */
+const referenceExpressionState = new WeakMap();
 class ReferenceExpression {
-    // Expression mode fields
-    _format;
-    _valueProviders;
-    // Conditional mode fields
-    _condition;
-    _whenTrue;
-    _whenFalse;
-    _matchValue;
-    // Handle mode fields (when wrapping a server-returned handle)
-    _handle;
-    _client;
     constructor(handleOrFormatOrCondition, clientOrValueProvidersOrMatchValue, whenTrueOrWhenFalse, whenFalse) {
+        const state = {};
         if (typeof handleOrFormatOrCondition === 'string') {
-            this._format = handleOrFormatOrCondition;
-            this._valueProviders = clientOrValueProvidersOrMatchValue;
+            state.format = handleOrFormatOrCondition;
+            state.valueProviders = clientOrValueProvidersOrMatchValue;
         }
-        else if (handleOrFormatOrCondition instanceof transport_js_1.Handle) {
-            this._handle = handleOrFormatOrCondition;
-            this._client = clientOrValueProvidersOrMatchValue;
+        else if (isHandleLike(handleOrFormatOrCondition)) {
+            state.handle = handleOrFormatOrCondition;
+            state.client = clientOrValueProvidersOrMatchValue;
         }
         else {
-            this._condition = handleOrFormatOrCondition;
-            this._matchValue = clientOrValueProvidersOrMatchValue ?? 'True';
-            this._whenTrue = whenTrueOrWhenFalse;
-            this._whenFalse = whenFalse;
+            state.condition = handleOrFormatOrCondition;
+            state.matchValue = clientOrValueProvidersOrMatchValue ?? 'True';
+            state.whenTrue = whenTrueOrWhenFalse;
+            state.whenFalse = whenFalse;
         }
+        referenceExpressionState.set(this, state);
     }
     /**
      * Gets whether this reference expression is conditional.
      */
     get isConditional() {
-        return this._condition !== undefined;
+        return referenceExpressionState.get(this)?.condition !== undefined;
     }
     /**
      * Creates a reference expression from a tagged template literal.
@@ -91,31 +83,6 @@ class ReferenceExpression {
      * @param values - The interpolated values (handles to value providers)
      * @returns A ReferenceExpression instance
      */
-    static create(strings, ...values) {
-        // Build the format string with {0}, {1}, etc. placeholders
-        let format = '';
-        for (let i = 0; i < strings.length; i++) {
-            format += strings[i];
-            if (i < values.length) {
-                format += `{${i}}`;
-            }
-        }
-        // Extract handles from values
-        const valueProviders = values.map(extractHandleForExpr);
-        return new ReferenceExpression(format, valueProviders);
-    }
-    /**
-     * Creates a conditional reference expression from its constituent parts.
-     *
-     * @param condition - A value provider whose result is compared to matchValue
-     * @param whenTrue - The expression to use when the condition matches
-     * @param whenFalse - The expression to use when the condition does not match
-     * @param matchValue - The value to compare the condition against (defaults to "True")
-     * @returns A ReferenceExpression instance in conditional mode
-     */
-    static createConditional(condition, matchValue, whenTrue, whenFalse) {
-        return new ReferenceExpression(condition, matchValue, whenTrue, whenFalse);
-    }
     /**
      * Serializes the reference expression for JSON-RPC transport.
      * In expression mode, uses the $expr format with format + valueProviders.
@@ -123,23 +90,24 @@ class ReferenceExpression {
      * In handle mode, delegates to the handle's serialization.
      */
     toJSON() {
-        if (this._handle) {
-            return this._handle.toJSON();
+        const state = referenceExpressionState.get(this);
+        if (state.handle) {
+            return state.handle.toJSON();
         }
         if (this.isConditional) {
             return {
                 $expr: {
-                    condition: extractHandleForExpr(this._condition),
-                    whenTrue: this._whenTrue.toJSON(),
-                    whenFalse: this._whenFalse.toJSON(),
-                    matchValue: this._matchValue
+                    condition: extractHandleForExpr(state.condition),
+                    whenTrue: state.whenTrue.toJSON(),
+                    whenFalse: state.whenFalse.toJSON(),
+                    matchValue: state.matchValue
                 }
             };
         }
         return {
             $expr: {
-                format: this._format,
-                valueProviders: this._valueProviders && this._valueProviders.length > 0 ? this._valueProviders : undefined
+                format: state.format,
+                valueProviders: state.valueProviders && state.valueProviders.length > 0 ? state.valueProviders : undefined
             }
         };
     }
@@ -151,15 +119,16 @@ class ReferenceExpression {
      * @returns The resolved string value, or null if the expression resolves to null
      */
     async getValue(cancellationToken) {
-        if (!this._handle || !this._client) {
+        const state = referenceExpressionState.get(this);
+        if (!state.handle || !state.client) {
             throw new Error('getValue is only available on server-returned ReferenceExpression instances');
         }
-        const cancellationTokenId = (0, transport_js_1.registerCancellation)(this._client, cancellationToken);
+        const cancellationTokenId = (0, transport_js_1.registerCancellation)(state.client, cancellationToken);
         try {
-            const rpcArgs = { context: this._handle };
+            const rpcArgs = { context: state.handle };
             if (cancellationTokenId !== undefined)
                 rpcArgs.cancellationToken = cancellationTokenId;
-            return await this._client.invokeCapability('Aspire.Hosting.ApplicationModel/getValue', rpcArgs);
+            return await state.client.invokeCapability('Aspire.Hosting.ApplicationModel/getValue', rpcArgs);
         }
         finally {
             (0, transport_js_1.unregisterCancellation)(cancellationTokenId);
@@ -169,16 +138,43 @@ class ReferenceExpression {
      * String representation for debugging.
      */
     toString() {
-        if (this._handle) {
+        const state = referenceExpressionState.get(this);
+        if (state.handle) {
             return `ReferenceExpression(handle)`;
         }
         if (this.isConditional) {
             return `ReferenceExpression(conditional)`;
         }
-        return `ReferenceExpression(${this._format})`;
+        return `ReferenceExpression(${state.format})`;
+    }
+    static create(strings, ...values) {
+        return createReferenceExpression(strings, ...values);
+    }
+    static createConditional(condition, matchValueOrWhenTrue, whenTrueOrWhenFalse, whenFalse) {
+        if (typeof matchValueOrWhenTrue === 'string') {
+            return createConditionalReferenceExpression(condition, matchValueOrWhenTrue, whenTrueOrWhenFalse, whenFalse);
+        }
+        return createConditionalReferenceExpression(condition, matchValueOrWhenTrue, whenTrueOrWhenFalse);
     }
 }
 exports.ReferenceExpression = ReferenceExpression;
+function createReferenceExpression(strings, ...values) {
+    let format = '';
+    for (let i = 0; i < strings.length; i++) {
+        format += strings[i];
+        if (i < values.length) {
+            format += `{${i}}`;
+        }
+    }
+    const valueProviders = values.map(extractHandleForExpr);
+    return new ReferenceExpression(format, valueProviders);
+}
+function createConditionalReferenceExpression(condition, matchValueOrWhenTrue, whenTrueOrWhenFalse, whenFalse) {
+    if (typeof matchValueOrWhenTrue === 'string') {
+        return new ReferenceExpression(condition, matchValueOrWhenTrue, whenTrueOrWhenFalse, whenFalse);
+    }
+    return new ReferenceExpression(condition, 'True', matchValueOrWhenTrue, whenTrueOrWhenFalse);
+}
 (0, transport_js_1.registerHandleWrapper)('Aspire.Hosting/Aspire.Hosting.ApplicationModel.ReferenceExpression', (handle, client) => new ReferenceExpression(handle, client));
 /**
  * Extracts a value for use in reference expressions.
@@ -198,7 +194,7 @@ function extractHandleForExpr(value) {
         return String(value);
     }
     // Handle objects - get their JSON representation
-    if (value instanceof transport_js_1.Handle) {
+    if (isHandleLike(value)) {
         return value.toJSON();
     }
     // Objects with marshalled expression/handle payloads
@@ -214,6 +210,16 @@ function extractHandleForExpr(value) {
     }
     throw new Error(`Cannot use value of type ${typeof value} in reference expression. ` +
         `Expected a Handle, string, or number.`);
+}
+function isHandleLike(value) {
+    return (value !== null &&
+        typeof value === 'object' &&
+        '$handle' in value &&
+        typeof value.$handle === 'string' &&
+        '$type' in value &&
+        typeof value.$type === 'string' &&
+        'toJSON' in value &&
+        typeof value.toJSON === 'function');
 }
 /**
  * Tagged template function for creating reference expressions.
@@ -236,9 +242,6 @@ function extractHandleForExpr(value) {
 function refExpr(strings, ...values) {
     return ReferenceExpression.create(strings, ...values);
 }
-// ============================================================================
-// ResourceBuilderBase
-// ============================================================================
 /**
  * Base class for resource builders (e.g., RedisBuilder, ContainerBuilder).
  * Provides handle management and JSON serialization.
@@ -253,22 +256,7 @@ class ResourceBuilderBase {
     toJSON() { return this._handle.toJSON(); }
 }
 exports.ResourceBuilderBase = ResourceBuilderBase;
-// ============================================================================
-// AspireList<T> - Mutable List Wrapper
-// ============================================================================
-/**
- * Wrapper for a mutable .NET List<T>.
- * Provides array-like methods that invoke capabilities on the underlying collection.
- *
- * @example
- * ```typescript
- * const items = await resource.getItems(); // Returns AspireList<ItemBuilder>
- * const count = await items.count();
- * const first = await items.get(0);
- * await items.add(newItem);
- * ```
- */
-class AspireList {
+class AspireListImpl {
     _handleOrContext;
     _client;
     _typeId;
@@ -374,23 +362,8 @@ class AspireList {
         return this._resolvedHandle.toJSON();
     }
 }
-exports.AspireList = AspireList;
-// ============================================================================
-// AspireDict<K, V> - Mutable Dictionary Wrapper
-// ============================================================================
-/**
- * Wrapper for a mutable .NET Dictionary<K, V>.
- * Provides object-like methods that invoke capabilities on the underlying collection.
- *
- * @example
- * ```typescript
- * const config = await resource.getConfig(); // Returns AspireDict<string, string>
- * const value = await config.get("key");
- * await config.set("key", "value");
- * const hasKey = await config.containsKey("key");
- * ```
- */
-class AspireDict {
+exports.AspireList = AspireListImpl;
+class AspireDictImpl {
     _handleOrContext;
     _client;
     _typeId;
@@ -528,4 +501,4 @@ class AspireDict {
         return this._resolvedHandle.toJSON();
     }
 }
-exports.AspireDict = AspireDict;
+exports.AspireDict = AspireDictImpl;

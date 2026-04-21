@@ -1,11 +1,29 @@
-import { createBuilder } from './.modules/aspire.js';
+import { createBuilder, ContainerLifetime } from './.modules/aspire.js';
 
 async function main(): Promise<void> {
   const builder = await createBuilder();
 
+  await builder.addAzureContainerAppEnvironment('acaenv');
+
+  const foundry = builder.addFoundry('foundry');
+  const gpt = foundry.addDeployment('gpt', 'gpt-4.1', '2025-04-14', 'OpenAI');
+
+  const plantdata = builder.addAzureStorage('storage')
+    .runAsEmulator({
+      configureContainer: async (azurite) => {
+        await azurite.withDataVolume();
+        await azurite.withLifetime(ContainerLifetime.Persistent);
+      },
+    })
+    .addBlobContainer('plantdata', { blobContainerName: 'plantdata' });
+
   await builder
-    .addJavaScriptApp('web', '.')
-    .withHttpEndpoint({ port: 3000, env: 'PORT' });
+    .addNextJsApp('web', '.')
+    .withReference(plantdata)
+    .withReference(gpt)
+    .withEnvironment('OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT', 'true')
+    .withHttpEndpoint({ port: 3000, env: 'PORT' })
+    .withExternalHttpEndpoints();
 
   await builder.build().run();
 }

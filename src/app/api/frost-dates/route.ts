@@ -67,6 +67,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({ location, frostDates });
   } catch (err: unknown) {
+    console.error("GET /api/frost-dates failed:", err);
     const message = err instanceof Error ? err.message : "Failed to look up frost dates";
     return NextResponse.json({ error: message }, { status: 500 });
   }

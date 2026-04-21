@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import { join, extname } from "path";
+import { extname } from "path";
 import { randomUUID } from "crypto";
-
-const UPLOADS_DIR = join(process.cwd(), "data", "uploads");
+import { uploadBlob } from "@/lib/blob-storage";
 
 const ALLOWED_TYPES = new Set([
   "image/jpeg",
@@ -43,13 +41,12 @@ export async function POST(request: Request): Promise<NextResponse> {
     const ext = extname(originalName) || ".jpg";
     const filename = `${randomUUID()}${ext}`;
 
-    await mkdir(UPLOADS_DIR, { recursive: true });
-
     const buffer = Buffer.from(await file.arrayBuffer());
-    await writeFile(join(UPLOADS_DIR, filename), buffer);
+    await uploadBlob(`images/${filename}`, buffer, file.type);
 
     return NextResponse.json({ filename }, { status: 201 });
   } catch (err: unknown) {
+    console.error("POST /api/upload failed:", err);
     const message = err instanceof Error ? err.message : "Failed to upload file";
     return NextResponse.json({ error: message }, { status: 500 });
   }

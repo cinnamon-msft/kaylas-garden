@@ -7,6 +7,7 @@ export async function GET(): Promise<NextResponse> {
     const plants = await getPlants();
     return NextResponse.json(plants);
   } catch (err: unknown) {
+    console.error("GET /api/plants failed:", err);
     const message = err instanceof Error ? err.message : "Failed to fetch plants";
     return NextResponse.json({ error: message }, { status: 500 });
   }
@@ -18,6 +19,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const plant = await createPlant(body);
     return NextResponse.json(plant, { status: 201 });
   } catch (err: unknown) {
+    console.error("POST /api/plants failed:", err);
     const message = err instanceof Error ? err.message : "Failed to create plant";
     return NextResponse.json({ error: message }, { status: 500 });
   }

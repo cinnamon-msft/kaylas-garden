@@ -1,16 +1,5 @@
 import { NextResponse } from "next/server";
-import { readFile } from "fs/promises";
-import { join, extname } from "path";
-
-const UPLOADS_DIR = join(process.cwd(), "data", "uploads");
-
-const MIME_TYPES: Record<string, string> = {
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".png": "image/png",
-  ".gif": "image/gif",
-  ".webp": "image/webp",
-};
+import { downloadBlob } from "@/lib/blob-storage";
 
 export async function GET(
   _request: Request,
@@ -23,21 +12,17 @@ export async function GET(
     return NextResponse.json({ error: "Invalid filename" }, { status: 400 });
   }
 
-  const ext = extname(filename).toLowerCase();
-  const contentType = MIME_TYPES[ext];
-
-  if (!contentType) {
-    return NextResponse.json({ error: "Unsupported file type" }, { status: 400 });
-  }
-
   try {
-    const filePath = join(UPLOADS_DIR, filename);
-    const data = await readFile(filePath);
+    const result = await downloadBlob(`images/${filename}`);
 
-    return new NextResponse(data, {
+    if (!result) {
+      return NextResponse.json({ error: "Image not found" }, { status: 404 });
+    }
+
+    return new NextResponse(new Uint8Array(result.data), {
       status: 200,
       headers: {
-        "Content-Type": contentType,
+        "Content-Type": result.contentType,
         "Cache-Control": "public, max-age=31536000, immutable",
       },
     });

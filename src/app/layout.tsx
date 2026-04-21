@@ -6,6 +6,9 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 export const metadata: Metadata = {
   title: "Kayla's Garden",
   description: "Track your plants, upload progress photos, and learn about gardening 🌱",
+  icons: {
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>",
+  },
 };
 
 export default function RootLayout({

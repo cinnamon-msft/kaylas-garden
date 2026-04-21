@@ -16,6 +16,7 @@ export async function POST(
     const entry = await addPlantEntry(id, body);
     return NextResponse.json(entry, { status: 201 });
   } catch (err: unknown) {
+    console.error("POST /api/plants/[id]/entries failed:", err);
     const message = err instanceof Error ? err.message : "Failed to add entry";
     const status = message.includes("not found") ? 404 : 500;
     return NextResponse.json({ error: message }, { status });

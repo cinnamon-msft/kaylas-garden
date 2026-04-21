@@ -18,6 +18,7 @@ export async function GET(
     }
     return NextResponse.json(plant);
   } catch (err: unknown) {
+    console.error("GET /api/plants/[id] failed:", err);
     const message = err instanceof Error ? err.message : "Failed to fetch plant";
     return NextResponse.json({ error: message }, { status: 500 });
   }
@@ -33,6 +34,7 @@ export async function PUT(
     const updated = await updatePlant(id, body);
     return NextResponse.json(updated);
   } catch (err: unknown) {
+    console.error("PUT /api/plants/[id] failed:", err);
     const message = err instanceof Error ? err.message : "Failed to update plant";
     const status = message.includes("not found") ? 404 : 500;
     return NextResponse.json({ error: message }, { status });
@@ -48,6 +50,7 @@ export async function DELETE(
     await deletePlant(id);
     return NextResponse.json({ success: true });
   } catch (err: unknown) {
+    console.error("DELETE /api/plants/[id] failed:", err);
     const message = err instanceof Error ? err.message : "Failed to delete plant";
     const status = message.includes("not found") ? 404 : 500;
     return NextResponse.json({ error: message }, { status });
