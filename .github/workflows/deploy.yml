@@ -18,11 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Aspire reads these to skip interactive prompts in CI.
-      AzureSubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      AzureTenantId: ${{ secrets.AZURE_TENANT_ID }}
-      AzureLocation: ${{ vars.AZURE_LOCATION || 'eastus2' }}
-      AzureResourceGroup: ${{ vars.AZURE_RESOURCE_GROUP || 'rg-kaylas-garden' }}
-      AzureAllowResourceGroupCreation: 'true'
+      Azure__SubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      Azure__TenantId: ${{ secrets.AZURE_TENANT_ID }}
+      Azure__Location: ${{ vars.AZURE_LOCATION || 'eastus2' }}
+      Azure__ResourceGroup: ${{ vars.AZURE_RESOURCE_GROUP || 'rg-kaylas-garden' }}
+      Azure__AllowResourceGroupCreation: 'true'
 
     steps:
       - uses: actions/checkout@v4
