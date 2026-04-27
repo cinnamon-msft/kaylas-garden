@@ -16,7 +16,6 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: production
     env:
       # Aspire reads these to skip interactive prompts in CI.
       AzureSubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
