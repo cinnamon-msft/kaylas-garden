@@ -8,7 +8,18 @@ import Link from "next/link";
 // ── Helpers ──────────────────────────────────────────────────────────
 
 function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-US", {
+  // Date-only strings ("YYYY-MM-DD") are parsed as UTC midnight by `new Date()`,
+  // which can shift the displayed day in local time zones. Parse them as local
+  // dates so the displayed date matches what the user selected.
+  const dateOnlyMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+  const date = dateOnlyMatch
+    ? new Date(
+        Number(dateOnlyMatch[1]),
+        Number(dateOnlyMatch[2]) - 1,
+        Number(dateOnlyMatch[3]),
+      )
+    : new Date(iso);
+  return date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
