@@ -1,13 +1,13 @@
 # 🌱 Kayla's Garden
 
-A personal plant-tracking website to catalog plants, upload progress photos, track frost dates, and browse an AI-powered plant library.
+A personal plant-tracking website to catalog plants, upload progress photos, track frost dates, and browse a curated plant library.
 
 ## Features
 
 - **🌿 Plant Dashboard** — View all your tracked plants as cards with thumbnails, species info, and progress counts
 - **📸 Progress Tracking** — Add timeline entries with notes and photos to track each plant's growth
 - **📋 Care Information** — Store and edit care details: sunlight, watering, soil, hardiness zone, companion plants, pests
-- **🤖 AI Plant Library** — Search any plant and get AI-generated growing guidelines, care tips, and planting info
+- **📚 Plant Library** — Browse a curated collection of plants with growing guidelines, care tips, and planting info, and add them straight to your garden
 - **🥶 Frost Date Tracker** — Set your location to see frost date alerts and know when to plant
 - **🎨 Multiple Themes** — Switch between Green 🌿, Earth 🌾, and Ocean 🌊 color themes
 
@@ -15,7 +15,7 @@ A personal plant-tracking website to catalog plants, upload progress photos, tra
 
 - **Next.js 16** (App Router) + **React 19** + **TypeScript** (strict mode)
 - **Tailwind CSS v4** with CSS custom properties for theming
-- **GitHub Models API** for AI-powered plant information
+- Static, type-safe plant library bundled with the app
 - File-based JSON storage (no external database required)
 
 ## Getting Started
@@ -24,7 +24,6 @@ A personal plant-tracking website to catalog plants, upload progress photos, tra
 
 - Node.js 18+
 - npm
-- A GitHub personal access token (for AI plant library features)
 
 ### Installation
 
@@ -33,16 +32,6 @@ git clone https://github.com/cinnamon-msft/kaylas-garden.git
 cd kaylas-garden
 npm install
 ```
-
-### Environment Variables
-
-Create a `.env.local` file:
-
-```env
-GITHUB_TOKEN=your_github_personal_access_token
-```
-
-The `GITHUB_TOKEN` is used for the AI Plant Library feature (GitHub Models API).
 
 ### Development
 
@@ -73,7 +62,7 @@ npm start
 src/
   app/              # Next.js App Router pages & API routes
     api/plants/     # Plant CRUD endpoints
-    api/library/    # AI plant library endpoint
+    api/library/    # Static plant library endpoint
     api/frost-dates/# Frost date lookup
     api/settings/   # User settings
     api/upload/     # Image upload
@@ -81,8 +70,8 @@ src/
     plants/[id]/    # Plant detail page
     settings/       # Settings page
   components/       # Shared UI components
-  lib/              # Types, data access layer
-data/               # JSON data storage (plants, settings, cache)
+  lib/              # Types, data access layer, static plant library
+data/               # JSON data storage (plants, settings)
 public/uploads/     # Uploaded plant images
 ```
 

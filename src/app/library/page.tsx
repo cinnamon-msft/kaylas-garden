@@ -1,28 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, type FormEvent } from "react";
+import {
+  PLANT_LIBRARY,
+  searchLibraryPlants,
+  type LibraryPlant,
+} from "@/lib/plant-library";
 
-interface LibraryPlantInfo {
-  name: string;
-  scientificName: string;
-  description: string;
-  sunlight: string;
-  wateringSchedule: string;
-  soilType: string;
-  hardinessZones: string;
-  plantingGuidelines: string;
-  companionPlants: string[];
-  commonPests: string[];
-  growingTips: string[];
-  daysToHarvest: string;
-  category: string;
-}
-
-const POPULAR_PLANTS = [
-  "Tomato", "Basil", "Lavender", "Sunflower", "Mint",
-  "Strawberry", "Rose", "Pepper", "Cucumber", "Zucchini",
-  "Rosemary", "Thyme",
-];
+const POPULAR_PLANT_IDS = [
+  "tomato",
+  "basil",
+  "lavender",
+  "sunflower",
+  "mint",
+  "strawberry",
+  "rose",
+  "pepper",
+  "cucumber",
+  "zucchini",
+  "rosemary",
+  "thyme",
+] as const;
 
 const CATEGORY_EMOJI: Record<string, string> = {
   vegetable: "🥬",
@@ -34,82 +32,99 @@ const CATEGORY_EMOJI: Record<string, string> = {
   shrub: "🌲",
 };
 
+const POPULAR_PLANTS: readonly LibraryPlant[] = POPULAR_PLANT_IDS
+  .map((id) => PLANT_LIBRARY.find((p) => p.id === id))
+  .filter((p): p is LibraryPlant => Boolean(p));
+
 export default function LibraryPage() {
   const [query, setQuery] = useState("");
-  const [plantInfo, setPlantInfo] = useState<LibraryPlantInfo | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [activeQuery, setActiveQuery] = useState("");
+  const [selected, setSelected] = useState<LibraryPlant | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [addedToGarden, setAddedToGarden] = useState(false);
+  const [adding, setAdding] = useState(false);
 
   useEffect(() => {
     document.title = "Plant Library — Kayla's Garden";
   }, []);
 
-  const searchPlant = async (name: string) => {
-    setLoading(true);
-    setError(null);
-    setPlantInfo(null);
-    setAddedToGarden(false);
-    setQuery(name);
+  const results = useMemo(() => {
+    if (!activeQuery.trim()) return [] as readonly LibraryPlant[];
+    return [...searchLibraryPlants(activeQuery)].sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
+  }, [activeQuery]);
 
-    try {
-      const res = await fetch(`/api/library?plant=${encodeURIComponent(name)}`);
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Failed to fetch plant info");
-      }
-      const data: LibraryPlantInfo = await res.json();
-      setPlantInfo(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
+  const selectPlant = (plant: LibraryPlant) => {
+    setSelected(plant);
+    setAddedToGarden(false);
+    setError(null);
+    setQuery(plant.name);
   };
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = (e: FormEvent) => {
     e.preventDefault();
-    if (query.trim()) {
-      searchPlant(query.trim());
+    const trimmed = query.trim();
+    setActiveQuery(trimmed);
+    setSelected(null);
+    setAddedToGarden(false);
+    setError(null);
+    if (trimmed) {
+      const exact = searchLibraryPlants(trimmed).find(
+        (p) => p.name.toLowerCase() === trimmed.toLowerCase(),
+      );
+      if (exact) {
+        setSelected(exact);
+      }
     }
   };
 
   const addToGarden = async () => {
-    if (!plantInfo) return;
+    if (!selected) return;
+    setAdding(true);
+    setError(null);
 
     try {
       const res = await fetch("/api/plants", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: plantInfo.name,
-          species: plantInfo.scientificName,
+          name: selected.name,
+          species: selected.scientificName,
           thumbnailImage: "",
           careInfo: {
-            sunlight: plantInfo.sunlight,
-            wateringSchedule: plantInfo.wateringSchedule,
-            soilType: plantInfo.soilType,
-            hardinessZone: plantInfo.hardinessZones,
-            companionPlants: plantInfo.companionPlants,
-            commonPests: plantInfo.commonPests,
-            generalNotes: plantInfo.plantingGuidelines,
+            sunlight: selected.sunlight,
+            wateringSchedule: selected.wateringSchedule,
+            soilType: selected.soilType,
+            hardinessZone: selected.hardinessZones,
+            companionPlants: [...selected.companionPlants],
+            commonPests: [...selected.commonPests],
+            generalNotes: selected.plantingGuidelines,
           },
+          wateringIntervalDays: selected.wateringIntervalDays,
         }),
       });
 
-      if (!res.ok) throw new Error("Failed to add plant");
+      if (!res.ok) {
+        const body = (await res.json().catch(() => ({}))) as { error?: string };
+        throw new Error(body.error ?? "Failed to add plant");
+      }
       setAddedToGarden(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to add to garden");
+    } finally {
+      setAdding(false);
     }
   };
 
   return (
     <div>
       <div className="mb-8">
-        <h1 className="mb-2 text-3xl font-bold"><span aria-hidden="true">🌱</span> Plant Library</h1>
+        <h1 className="mb-2 text-3xl font-bold">
+          <span aria-hidden="true">🌱</span> Plant Library
+        </h1>
         <p className="text-text-secondary">
-          Search for any plant to get AI-powered growing information and care
+          Browse our curated collection of plants with growing info and care
           guidelines.
         </p>
       </div>
@@ -125,15 +140,15 @@ export default function LibraryPage() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="e.g., Tomato, Basil, Sunflower..."
+            placeholder="Search by name, scientific name, or category..."
             className="flex-1 rounded-lg border border-border bg-bg-card px-4 py-2.5 text-text-primary placeholder:text-text-secondary/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
           />
           <button
             type="submit"
-            disabled={loading || !query.trim()}
+            disabled={!query.trim()}
             className="rounded-lg bg-primary px-6 py-2.5 font-medium text-text-on-primary transition-colors hover:bg-primary-dark disabled:opacity-50"
           >
-            {loading ? "Searching..." : "Search"}
+            Search
           </button>
         </div>
       </form>
@@ -146,107 +161,149 @@ export default function LibraryPage() {
         <div className="flex flex-wrap gap-2">
           {POPULAR_PLANTS.map((plant) => (
             <button
-              key={plant}
-              onClick={() => searchPlant(plant)}
-              disabled={loading}
-              aria-pressed={query === plant && !loading}
-              className="rounded-full border border-border bg-bg-card px-4 py-1.5 text-sm font-medium text-text-primary transition-all hover:border-primary hover:bg-hover disabled:opacity-50"
+              key={plant.id}
+              type="button"
+              onClick={() => selectPlant(plant)}
+              aria-pressed={selected?.id === plant.id}
+              className="rounded-full border border-border bg-bg-card px-4 py-1.5 text-sm font-medium text-text-primary transition-all hover:border-primary hover:bg-hover"
             >
-              {plant}
+              {plant.name}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Loading */}
-      {loading && (
-        <div role="status" aria-live="polite" aria-label="Looking up plant information" className="flex items-center justify-center rounded-lg border border-border bg-bg-card p-12">
-          <div className="text-center">
-            <div className="mb-3 animate-bounce text-4xl" aria-hidden="true">🌱</div>
-            <p className="text-text-secondary">
-              Looking up plant information...
-            </p>
-          </div>
-        </div>
-      )}
-
       {/* Error */}
       {error && (
-        <div role="alert" className="rounded-lg border border-red-300 bg-red-50 p-4 text-red-800">
+        <div
+          role="alert"
+          className="mb-4 rounded-lg border border-red-300 bg-red-50 p-4 text-red-800"
+        >
           <p className="font-medium">Error</p>
           <p className="text-sm">{error}</p>
         </div>
       )}
 
+      {/* Search results grid (only when searching, no single selection) */}
+      {activeQuery && !selected && (
+        <div className="mb-8">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-text-secondary">
+            {results.length === 0
+              ? `No matches for "${activeQuery}"`
+              : `${results.length} result${results.length === 1 ? "" : "s"} for "${activeQuery}"`}
+          </h2>
+          {results.length > 0 && (
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {results.map((plant) => (
+                <button
+                  key={plant.id}
+                  type="button"
+                  onClick={() => selectPlant(plant)}
+                  className="flex flex-col items-start gap-1 rounded-lg border border-border bg-bg-card p-4 text-left transition-all hover:border-primary hover:bg-hover"
+                >
+                  <div className="flex items-center gap-2">
+                    <span aria-hidden="true" className="text-xl">
+                      {CATEGORY_EMOJI[plant.category] ?? "🌱"}
+                    </span>
+                    <span className="font-semibold text-text-primary">
+                      {plant.name}
+                    </span>
+                  </div>
+                  <span className="text-xs italic text-text-secondary">
+                    {plant.scientificName}
+                  </span>
+                  <span className="mt-1 inline-block rounded-full bg-accent px-2 py-0.5 text-xs font-medium capitalize text-text-primary">
+                    {plant.category}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Plant Info */}
-      {plantInfo && !loading && (
+      {selected && (
         <div className="space-y-6">
           {/* Header */}
           <div className="rounded-lg border border-border bg-bg-card p-6">
-            <div className="flex items-start justify-between">
+            <div className="flex items-start justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2">
                   <span aria-hidden="true" className="text-2xl">
-                    {CATEGORY_EMOJI[plantInfo.category] || "🌱"}
+                    {CATEGORY_EMOJI[selected.category] ?? "🌱"}
                   </span>
-                  <h2 className="text-2xl font-bold">{plantInfo.name}</h2>
+                  <h2 className="text-2xl font-bold">{selected.name}</h2>
                 </div>
                 <p className="mt-1 text-sm italic text-text-secondary">
-                  {plantInfo.scientificName}
+                  {selected.scientificName}
                 </p>
                 <span className="mt-2 inline-block rounded-full bg-accent px-3 py-0.5 text-xs font-medium capitalize text-text-primary">
-                  {plantInfo.category}
+                  {selected.category}
                 </span>
               </div>
               <div>
                 <div aria-live="polite" className="sr-only">
-                  {addedToGarden && `${plantInfo.name} added to your garden`}
+                  {addedToGarden && `${selected.name} added to your garden`}
                 </div>
                 <button
+                  type="button"
                   onClick={addToGarden}
-                  disabled={addedToGarden}
+                  disabled={addedToGarden || adding}
                   className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                     addedToGarden
                       ? "bg-green-100 text-green-700"
                       : "bg-primary text-text-on-primary hover:bg-primary-dark"
-                  }`}
+                  } disabled:opacity-60`}
                 >
-                  {addedToGarden ? "✓ Added to Garden" : "+ Add to My Garden"}
+                  {addedToGarden
+                    ? "✓ Added to Garden"
+                    : adding
+                      ? "Adding…"
+                      : "+ Add to My Garden"}
                 </button>
               </div>
             </div>
-            <p className="mt-4 text-text-secondary">{plantInfo.description}</p>
+            <p className="mt-4 text-text-secondary">{selected.description}</p>
           </div>
 
           {/* Care Grid */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-lg border border-border bg-bg-card p-4">
-              <div className="mb-1 text-lg">☀️</div>
+              <div className="mb-1 text-lg" aria-hidden="true">
+                ☀️
+              </div>
               <h3 className="text-sm font-semibold text-text-secondary">
                 Sunlight
               </h3>
-              <p className="mt-1 font-medium">{plantInfo.sunlight}</p>
+              <p className="mt-1 font-medium">{selected.sunlight}</p>
             </div>
             <div className="rounded-lg border border-border bg-bg-card p-4">
-              <div className="mb-1 text-lg">💧</div>
+              <div className="mb-1 text-lg" aria-hidden="true">
+                💧
+              </div>
               <h3 className="text-sm font-semibold text-text-secondary">
                 Watering
               </h3>
-              <p className="mt-1 font-medium">{plantInfo.wateringSchedule}</p>
+              <p className="mt-1 font-medium">{selected.wateringSchedule}</p>
             </div>
             <div className="rounded-lg border border-border bg-bg-card p-4">
-              <div className="mb-1 text-lg">🌍</div>
+              <div className="mb-1 text-lg" aria-hidden="true">
+                🌍
+              </div>
               <h3 className="text-sm font-semibold text-text-secondary">
                 Soil
               </h3>
-              <p className="mt-1 font-medium">{plantInfo.soilType}</p>
+              <p className="mt-1 font-medium">{selected.soilType}</p>
             </div>
             <div className="rounded-lg border border-border bg-bg-card p-4">
-              <div className="mb-1 text-lg">📅</div>
+              <div className="mb-1 text-lg" aria-hidden="true">
+                📅
+              </div>
               <h3 className="text-sm font-semibold text-text-secondary">
                 Days to Harvest
               </h3>
-              <p className="mt-1 font-medium">{plantInfo.daysToHarvest}</p>
+              <p className="mt-1 font-medium">{selected.daysToHarvest}</p>
             </div>
           </div>
 
@@ -254,14 +311,12 @@ export default function LibraryPage() {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="rounded-lg border border-border bg-bg-card p-5">
               <h3 className="mb-2 font-semibold">🗺️ Hardiness Zones</h3>
-              <p className="text-text-secondary">
-                {plantInfo.hardinessZones}
-              </p>
+              <p className="text-text-secondary">{selected.hardinessZones}</p>
             </div>
             <div className="rounded-lg border border-border bg-bg-card p-5">
               <h3 className="mb-2 font-semibold">🌱 Planting Guidelines</h3>
               <p className="text-text-secondary">
-                {plantInfo.plantingGuidelines}
+                {selected.plantingGuidelines}
               </p>
             </div>
           </div>
@@ -271,7 +326,7 @@ export default function LibraryPage() {
             <div className="rounded-lg border border-border bg-bg-card p-5">
               <h3 className="mb-3 font-semibold">🌻 Companion Plants</h3>
               <ul className="space-y-1">
-                {plantInfo.companionPlants.map((plant) => (
+                {selected.companionPlants.map((plant) => (
                   <li
                     key={plant}
                     className="flex items-center gap-2 text-sm text-text-secondary"
@@ -284,7 +339,7 @@ export default function LibraryPage() {
             <div className="rounded-lg border border-border bg-bg-card p-5">
               <h3 className="mb-3 font-semibold">🐛 Common Pests</h3>
               <ul className="space-y-1">
-                {plantInfo.commonPests.map((pest) => (
+                {selected.commonPests.map((pest) => (
                   <li
                     key={pest}
                     className="flex items-center gap-2 text-sm text-text-secondary"
@@ -297,9 +352,9 @@ export default function LibraryPage() {
             <div className="rounded-lg border border-border bg-bg-card p-5">
               <h3 className="mb-3 font-semibold">💡 Growing Tips</h3>
               <ul className="space-y-1">
-                {plantInfo.growingTips.map((tip, i) => (
+                {selected.growingTips.map((tip) => (
                   <li
-                    key={i}
+                    key={tip}
                     className="flex items-start gap-2 text-sm text-text-secondary"
                   >
                     <span className="mt-0.5 text-primary">✓</span> {tip}
