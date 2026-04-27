@@ -5,9 +5,6 @@ async function main(): Promise<void> {
 
   await builder.addAzureContainerAppEnvironment('acaenv');
 
-  const foundry = builder.addFoundry('foundry');
-  const gpt = foundry.addDeployment('gpt', 'gpt-4.1', '2025-04-14', 'OpenAI');
-
   const plantdata = builder.addAzureStorage('storage')
     .runAsEmulator({
       configureContainer: async (azurite) => {
@@ -20,8 +17,6 @@ async function main(): Promise<void> {
   await builder
     .addNextJsApp('web', '.')
     .withReference(plantdata)
-    .withReference(gpt)
-    .withEnvironment('OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT', 'true')
     .withHttpEndpoint({ port: 3000, env: 'PORT' })
     .withExternalHttpEndpoints();
 

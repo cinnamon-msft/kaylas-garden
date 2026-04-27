@@ -1,0 +1,16 @@
+node_modules
+.next
+dist
+.git
+.github
+aspire-output
+.aspire
+*.log
+.env*
+!.env.production
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+coverage
+.turbo
