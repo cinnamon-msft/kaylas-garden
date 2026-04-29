@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState, useCallback, useRef } from "react";
-import type { Plant, PlantCareInfo, PlantEntry, PlantImage, WateringEvent } from "@/lib/types";
+import type { Plant, PlantCareInfo, PlantEntry, PlantImage } from "@/lib/types";
 import Link from "next/link";
 
 // ── Helpers ──────────────────────────────────────────────────────────
@@ -151,7 +151,6 @@ function CareInfoCard({
   const infoGrid: { label: string; emoji: string; key: keyof PlantCareInfo }[] =
     [
       { label: "Sunlight", emoji: "☀️", key: "sunlight" },
-      { label: "Watering", emoji: "💧", key: "wateringSchedule" },
       { label: "Soil", emoji: "🌍", key: "soilType" },
       { label: "Hardiness Zone", emoji: "🗺️", key: "hardinessZone" },
     ];
@@ -191,7 +190,7 @@ function CareInfoCard({
         )}
       </div>
 
-      {/* Top grid: sunlight, watering, soil, hardiness */}
+      {/* Top grid: sunlight, soil, hardiness */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {infoGrid.map(({ label, emoji, key }) => {
           const inputId = `care-${key}`;
@@ -304,167 +303,6 @@ function CareInfoCard({
           </p>
         )}
       </div>
-    </section>
-  );
-}
-
-// ── Watering Card ────────────────────────────────────────────────────
-
-function WateringCard({
-  plant,
-  onWatered,
-  onIntervalChanged,
-}: {
-  plant: Plant;
-  onWatered: () => void;
-  onIntervalChanged: (days: number) => Promise<void>;
-}) {
-  const [watering, setWatering] = useState(false);
-  const [note, setNote] = useState("");
-  const [showHistory, setShowHistory] = useState(false);
-  const [editingInterval, setEditingInterval] = useState(false);
-  const [intervalValue, setIntervalValue] = useState(plant.wateringIntervalDays || 3);
-
-  const lastWatering = plant.wateringHistory?.length
-    ? plant.wateringHistory.reduce((latest, w) =>
-        new Date(w.date) > new Date(latest.date) ? w : latest
-      )
-    : null;
-
-  const daysSinceWatering = lastWatering
-    ? Math.floor((Date.now() - new Date(lastWatering.date).getTime()) / (1000 * 60 * 60 * 24))
-    : null;
-
-  const daysUntilNext = daysSinceWatering !== null
-    ? (plant.wateringIntervalDays || 3) - daysSinceWatering
-    : null;
-
-  const handleWater = async () => {
-    setWatering(true);
-    try {
-      const res = await fetch(`/api/plants/${plant.id}/water`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          date: new Date().toISOString(),
-          note: note || "Watered plant",
-        }),
-      });
-      if (!res.ok) throw new Error("Failed to log watering");
-      setNote("");
-      onWatered();
-    } catch {
-      // silently handle error — user sees button re-enable
-    } finally {
-      setWatering(false);
-    }
-  };
-
-  const handleSaveInterval = async () => {
-    await onIntervalChanged(intervalValue);
-    setEditingInterval(false);
-  };
-
-  const recentHistory = [...(plant.wateringHistory || [])]
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 10);
-
-  return (
-    <section className="rounded-lg border border-border bg-bg-card p-4 sm:p-6">
-      <h2 className="mb-4 text-xl font-semibold text-text-primary">💧 Watering</h2>
-
-      {/* Status row */}
-      <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border border-border p-3">
-          <p className="text-xs font-medium text-text-secondary">Last Watered</p>
-          <p className="mt-1 text-sm font-medium text-text-primary">
-            {lastWatering ? formatDate(lastWatering.date) : "Never"}
-          </p>
-          {daysSinceWatering !== null && (
-            <p className="text-xs text-text-secondary">{daysSinceWatering} day{daysSinceWatering !== 1 ? "s" : ""} ago</p>
-          )}
-        </div>
-
-        <div className="rounded-lg border border-border p-3">
-          <p className="text-xs font-medium text-text-secondary">Watering Interval</p>
-          {editingInterval ? (
-            <div className="mt-1 flex items-center gap-2">
-              <input
-                type="number"
-                min={1}
-                max={90}
-                value={intervalValue}
-                onChange={(e) => setIntervalValue(Number(e.target.value))}
-                className="w-16 rounded border border-border bg-bg-page px-2 py-1 text-sm"
-              />
-              <span className="text-xs text-text-secondary">days</span>
-              <button onClick={handleSaveInterval} className="text-xs text-primary hover:underline">Save</button>
-              <button onClick={() => { setEditingInterval(false); setIntervalValue(plant.wateringIntervalDays || 3); }} className="text-xs text-text-secondary hover:underline">Cancel</button>
-            </div>
-          ) : (
-            <div className="mt-1 flex items-center gap-2">
-              <p className="text-sm font-medium text-text-primary">Every {plant.wateringIntervalDays || 3} days</p>
-              <button onClick={() => setEditingInterval(true)} className="text-xs text-primary hover:underline">Edit</button>
-            </div>
-          )}
-        </div>
-
-        <div className="rounded-lg border border-border p-3">
-          <p className="text-xs font-medium text-text-secondary">Next Watering</p>
-          <p className={`mt-1 text-sm font-medium ${
-            daysUntilNext !== null && daysUntilNext <= 0 ? "text-red-600" : "text-text-primary"
-          }`}>
-            {daysUntilNext === null
-              ? "Water now to start tracking"
-              : daysUntilNext <= 0
-                ? daysUntilNext === 0 ? "Today!" : `Overdue by ${Math.abs(daysUntilNext)} day${Math.abs(daysUntilNext) !== 1 ? "s" : ""}`
-                : `In ${daysUntilNext} day${daysUntilNext !== 1 ? "s" : ""}`}
-          </p>
-        </div>
-      </div>
-
-      {/* Water Now */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-        <div className="flex-1">
-          <label className="mb-1 block text-xs font-medium text-text-secondary">Quick note (optional)</label>
-          <input
-            type="text"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            placeholder="e.g., Gave extra water, soil was dry..."
-            className="w-full rounded border border-border bg-bg-page px-3 py-2 text-sm text-text-primary"
-          />
-        </div>
-        <button
-          onClick={handleWater}
-          disabled={watering}
-          className="w-full rounded-lg bg-blue-500 px-5 py-2 text-sm font-medium text-white hover:bg-blue-600 disabled:opacity-50 sm:w-auto"
-        >
-          {watering ? "Logging…" : "💧 Water Now"}
-        </button>
-      </div>
-
-      {/* History toggle */}
-      {recentHistory.length > 0 && (
-        <div className="mt-4">
-          <button
-            onClick={() => setShowHistory(!showHistory)}
-            className="text-sm text-primary hover:underline"
-          >
-            {showHistory ? "Hide" : "Show"} watering history ({plant.wateringHistory?.length || 0} events)
-          </button>
-          {showHistory && (
-            <div className="mt-3 space-y-2">
-              {recentHistory.map((event) => (
-                <div key={event.id} className="flex items-start gap-3 rounded border border-border p-2 text-sm">
-                  <span className="text-text-secondary">{formatDate(event.date)}</span>
-                  <span className="text-text-primary">{event.note}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
     </section>
   );
 }
@@ -818,21 +656,6 @@ export default function PlantDetailPage() {
       <PlantHeader plant={plant} onDelete={handleDelete} />
 
       <CareInfoCard careInfo={plant.careInfo} onSave={handleSaveCare} />
-
-      <WateringCard
-        plant={plant}
-        onWatered={fetchPlant}
-        onIntervalChanged={async (days) => {
-          const res = await fetch(`/api/plants/${params.id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ wateringIntervalDays: days }),
-          });
-          if (!res.ok) throw new Error("Failed to update interval");
-          const updatedPlant = (await res.json()) as Plant;
-          setPlant(updatedPlant);
-        }}
-      />
 
       {/* Progress Timeline */}
       <section className="space-y-4">

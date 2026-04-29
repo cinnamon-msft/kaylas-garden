@@ -14,18 +14,11 @@ export interface PlantEntry {
 
 export interface PlantCareInfo {
   sunlight: string; // e.g., "Full sun", "Partial shade"
-  wateringSchedule: string; // e.g., "Every 2-3 days"
   soilType: string; // e.g., "Well-draining, loamy"
   hardinessZone: string; // e.g., "5-9"
   companionPlants: string[];
   commonPests: string[];
   generalNotes: string;
-}
-
-export interface WateringEvent {
-  id: string;
-  date: string; // ISO date
-  note: string;
 }
 
 export interface Plant {
@@ -36,8 +29,6 @@ export interface Plant {
   thumbnailImage: string; // filename in public/uploads
   careInfo: PlantCareInfo;
   entries: PlantEntry[];
-  wateringIntervalDays: number; // how often to water, in days (e.g., 3 = every 3 days)
-  wateringHistory: WateringEvent[];
 }
 
 export interface FrostDates {

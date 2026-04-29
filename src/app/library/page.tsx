@@ -94,14 +94,12 @@ export default function LibraryPage() {
           thumbnailImage: "",
           careInfo: {
             sunlight: selected.sunlight,
-            wateringSchedule: selected.wateringSchedule,
             soilType: selected.soilType,
             hardinessZone: selected.hardinessZones,
             companionPlants: [...selected.companionPlants],
             commonPests: [...selected.commonPests],
             generalNotes: selected.plantingGuidelines,
           },
-          wateringIntervalDays: selected.wateringIntervalDays,
         }),
       });
 
@@ -268,7 +266,7 @@ export default function LibraryPage() {
           </div>
 
           {/* Care Grid */}
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             <div className="rounded-lg border border-border bg-bg-card p-4">
               <div className="mb-1 text-lg" aria-hidden="true">
                 ☀️
@@ -277,15 +275,6 @@ export default function LibraryPage() {
                 Sunlight
               </h3>
               <p className="mt-1 font-medium">{selected.sunlight}</p>
-            </div>
-            <div className="rounded-lg border border-border bg-bg-card p-4">
-              <div className="mb-1 text-lg" aria-hidden="true">
-                💧
-              </div>
-              <h3 className="text-sm font-semibold text-text-secondary">
-                Watering
-              </h3>
-              <p className="mt-1 font-medium">{selected.wateringSchedule}</p>
             </div>
             <div className="rounded-lg border border-border bg-bg-card p-4">
               <div className="mb-1 text-lg" aria-hidden="true">
