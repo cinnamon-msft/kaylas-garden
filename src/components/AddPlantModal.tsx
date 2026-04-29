@@ -48,7 +48,6 @@ export function AddPlantModal({
   const [name, setName] = useState("");
   const [species, setSpecies] = useState("");
   const [sunlight, setSunlight] = useState<string>(SUNLIGHT_OPTIONS[0]);
-  const [wateringSchedule, setWateringSchedule] = useState("");
   const [soilType, setSoilType] = useState("");
   const [generalNotes, setGeneralNotes] = useState("");
 
@@ -98,7 +97,6 @@ export function AddPlantModal({
     setName("");
     setSpecies("");
     setSunlight(SUNLIGHT_OPTIONS[0]);
-    setWateringSchedule("");
     setSoilType("");
     setGeneralNotes("");
     setError(null);
@@ -122,14 +120,12 @@ export function AddPlantModal({
           thumbnailImage: "",
           careInfo: {
             sunlight: selectedLibraryPlant.sunlight,
-            wateringSchedule: selectedLibraryPlant.wateringSchedule,
             soilType: selectedLibraryPlant.soilType,
             hardinessZone: selectedLibraryPlant.hardinessZones,
             companionPlants: [...selectedLibraryPlant.companionPlants],
             commonPests: [...selectedLibraryPlant.commonPests],
             generalNotes: selectedLibraryPlant.plantingGuidelines,
           },
-          wateringIntervalDays: selectedLibraryPlant.wateringIntervalDays,
         };
       } else {
         payload = {
@@ -138,7 +134,6 @@ export function AddPlantModal({
           thumbnailImage: "",
           careInfo: {
             sunlight,
-            wateringSchedule: wateringSchedule.trim(),
             soilType: soilType.trim(),
             hardinessZone: "",
             companionPlants: [],
@@ -350,8 +345,6 @@ export function AddPlantModal({
                 <dl className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1 text-text-secondary">
                   <dt className="font-medium">Sunlight</dt>
                   <dd>{selectedLibraryPlant.sunlight}</dd>
-                  <dt className="font-medium">Water</dt>
-                  <dd>{selectedLibraryPlant.wateringSchedule}</dd>
                   <dt className="font-medium">Soil</dt>
                   <dd>{selectedLibraryPlant.soilType}</dd>
                   <dt className="font-medium">Zones</dt>
@@ -412,19 +405,6 @@ export function AddPlantModal({
                   </option>
                 ))}
               </select>
-            </label>
-
-            <label className="flex flex-col gap-1">
-              <span className="text-sm font-medium text-text-secondary">
-                Watering Schedule
-              </span>
-              <input
-                type="text"
-                value={wateringSchedule}
-                onChange={(e) => setWateringSchedule(e.target.value)}
-                placeholder="e.g., Every 2-3 days"
-                className={inputClasses}
-              />
             </label>
 
             <label className="flex flex-col gap-1">

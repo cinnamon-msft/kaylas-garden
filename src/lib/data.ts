@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import type { Plant, PlantEntry, UserSettings, WateringEvent } from "./types";
+import type { Plant, PlantEntry, UserSettings } from "./types";
 import { downloadJson, uploadJson } from "./blob-storage";
 
 const PLANTS_BLOB = "json/plants.json";
@@ -24,7 +24,7 @@ export async function getPlant(id: string): Promise<Plant | undefined> {
 }
 
 export async function createPlant(
-  plant: Omit<Plant, "id" | "dateAdded" | "entries" | "wateringHistory">
+  plant: Omit<Plant, "id" | "dateAdded" | "entries">
 ): Promise<Plant> {
   const { data: plants, etag } = await downloadJson<Plant[]>(PLANTS_BLOB, []);
   const newPlant: Plant = {
@@ -32,8 +32,6 @@ export async function createPlant(
     id: randomUUID(),
     dateAdded: new Date().toISOString(),
     entries: [],
-    wateringIntervalDays: plant.wateringIntervalDays ?? 3,
-    wateringHistory: [],
   };
   plants.push(newPlant);
   await uploadJson(PLANTS_BLOB, plants, etag);
@@ -77,26 +75,6 @@ export async function addPlantEntry(
   plant.entries.push(newEntry);
   await uploadJson(PLANTS_BLOB, plants, etag);
   return newEntry;
-}
-
-// --- Watering ---
-
-export async function waterPlant(
-  plantId: string,
-  event: Omit<WateringEvent, "id">
-): Promise<WateringEvent> {
-  const { data: plants, etag } = await downloadJson<Plant[]>(PLANTS_BLOB, []);
-  const plant = plants.find((p) => p.id === plantId);
-  if (!plant) {
-    throw new Error(`Plant with id "${plantId}" not found`);
-  }
-  const newEvent: WateringEvent = { ...event, id: randomUUID() };
-  if (!plant.wateringHistory) {
-    plant.wateringHistory = [];
-  }
-  plant.wateringHistory.push(newEvent);
-  await uploadJson(PLANTS_BLOB, plants, etag);
-  return newEvent;
 }
 
 // --- Settings ---

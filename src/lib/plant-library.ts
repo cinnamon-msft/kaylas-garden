@@ -13,8 +13,6 @@ export interface LibraryPlant {
   readonly scientificName: string;
   readonly description: string;
   readonly sunlight: string;
-  readonly wateringSchedule: string;
-  readonly wateringIntervalDays: number;
   readonly soilType: string;
   readonly hardinessZones: string;
   readonly plantingGuidelines: string;
@@ -34,8 +32,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "A warm-season fruiting vegetable prized for its juicy, flavorful fruits used fresh, cooked, and preserved.",
     sunlight: "Full sun",
-    wateringSchedule: "Deeply 1-2 times per week; keep soil evenly moist",
-    wateringIntervalDays: 3,
     soilType: "Well-draining, fertile loam rich in organic matter; pH 6.2-6.8",
     hardinessZones: "USDA zones 3-11 (grown as an annual)",
     plantingGuidelines:
@@ -58,8 +54,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Warm-season vegetable producing sweet or hot fruits in a wide range of colors and shapes.",
     sunlight: "Full sun",
-    wateringSchedule: "Consistently moist, about 1-2 inches per week",
-    wateringIntervalDays: 3,
     soilType: "Well-draining, fertile loam; pH 6.0-6.8",
     hardinessZones: "USDA zones 4-11 (annual in most regions)",
     plantingGuidelines:
@@ -81,8 +75,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Vining warm-season vegetable that produces crisp, refreshing fruits great for fresh eating and pickling.",
     sunlight: "Full sun",
-    wateringSchedule: "1-2 inches per week, more in hot weather",
-    wateringIntervalDays: 2,
     soilType: "Loose, well-draining soil rich in compost; pH 6.0-7.0",
     hardinessZones: "USDA zones 4-11 (grown as an annual)",
     plantingGuidelines:
@@ -104,8 +96,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Prolific summer squash with mild, tender fruits picked young for the best flavor and texture.",
     sunlight: "Full sun",
-    wateringSchedule: "Deep watering 1-2 times per week, about 1 inch",
-    wateringIntervalDays: 3,
     soilType: "Rich, well-draining soil amended with compost; pH 6.0-7.5",
     hardinessZones: "USDA zones 3-10 (annual)",
     plantingGuidelines:
@@ -127,8 +117,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Cool-season root vegetable producing sweet, crunchy taproots in shades of orange, purple, yellow, and white.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "About 1 inch per week, evenly",
-    wateringIntervalDays: 3,
     soilType: "Loose, sandy, stone-free soil; pH 6.0-6.8",
     hardinessZones: "USDA zones 3-10",
     plantingGuidelines:
@@ -150,8 +138,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Fast-growing cool-season leafy green available in loose-leaf, butterhead, romaine, and crisphead types.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "Frequent shallow watering to keep soil moist",
-    wateringIntervalDays: 2,
     soilType: "Loose, well-draining soil rich in organic matter; pH 6.0-7.0",
     hardinessZones: "USDA zones 4-9",
     plantingGuidelines:
@@ -173,8 +159,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Nutrient-dense cool-season leafy green that grows quickly in spring and fall.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "Consistent moisture; about 1-1.5 inches per week",
-    wateringIntervalDays: 2,
     soilType: "Fertile, well-draining loam; pH 6.5-7.5",
     hardinessZones: "USDA zones 3-9",
     plantingGuidelines:
@@ -196,8 +180,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Hardy cool-season leafy green that gets sweeter after frost. Excellent for fresh, sautéed, or baked use.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "1-1.5 inches per week",
-    wateringIntervalDays: 3,
     soilType: "Fertile, well-draining; pH 6.0-7.5",
     hardinessZones: "USDA zones 3-9",
     plantingGuidelines:
@@ -219,8 +201,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Cool-season brassica grown for its dense flower heads and tender side shoots.",
     sunlight: "Full sun",
-    wateringSchedule: "1-1.5 inches per week, evenly",
-    wateringIntervalDays: 3,
     soilType: "Rich, well-draining loam; pH 6.0-7.0",
     hardinessZones: "USDA zones 3-10",
     plantingGuidelines:
@@ -242,8 +222,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Cool-season climbing legume with sweet, edible pods. Great fresh, steamed, or in stir-fries.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "Even moisture; about 1 inch per week",
-    wateringIntervalDays: 3,
     soilType: "Well-draining, fertile loam; pH 6.0-7.5",
     hardinessZones: "USDA zones 3-11",
     plantingGuidelines:
@@ -265,8 +243,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Warm-season legume available in bush and pole varieties, prized for tender, crisp pods.",
     sunlight: "Full sun",
-    wateringSchedule: "1 inch per week, deeply",
-    wateringIntervalDays: 3,
     soilType: "Well-draining, moderately fertile; pH 6.0-7.0",
     hardinessZones: "USDA zones 3-10",
     plantingGuidelines:
@@ -288,8 +264,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Fast-growing cool-season root vegetable with peppery, crunchy roots ready in just a few weeks.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "Even moisture, about 1 inch per week",
-    wateringIntervalDays: 2,
     soilType: "Loose, well-draining soil free of stones; pH 6.0-7.0",
     hardinessZones: "USDA zones 2-10",
     plantingGuidelines:
@@ -311,8 +285,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Versatile bulb crop grown from sets, seeds, or transplants in a wide range of sweet to pungent varieties.",
     sunlight: "Full sun",
-    wateringSchedule: "About 1 inch per week",
-    wateringIntervalDays: 4,
     soilType: "Loose, well-draining loam rich in organic matter; pH 6.0-7.0",
     hardinessZones: "USDA zones 3-9",
     plantingGuidelines:
@@ -334,8 +306,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Pungent bulb crop typically planted in fall and harvested the following summer.",
     sunlight: "Full sun",
-    wateringSchedule: "About 1 inch per week during active growth",
-    wateringIntervalDays: 5,
     soilType: "Well-draining, fertile loam; pH 6.0-7.0",
     hardinessZones: "USDA zones 3-9",
     plantingGuidelines:
@@ -357,8 +327,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Versatile starchy tuber grown from seed potatoes in a wide variety of skin and flesh colors.",
     sunlight: "Full sun",
-    wateringSchedule: "1-2 inches per week, especially when tubers form",
-    wateringIntervalDays: 3,
     soilType: "Loose, well-draining, slightly acidic soil; pH 5.5-6.5",
     hardinessZones: "USDA zones 3-10",
     plantingGuidelines:
@@ -380,8 +348,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Cool-season root vegetable with sweet, earthy roots and edible nutrient-rich greens.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "About 1 inch per week, evenly",
-    wateringIntervalDays: 3,
     soilType: "Loose, well-draining soil; pH 6.0-7.0",
     hardinessZones: "USDA zones 2-10",
     plantingGuidelines:
@@ -403,8 +369,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Warm-season grain grown for tender, sweet kernels best eaten fresh from the garden.",
     sunlight: "Full sun",
-    wateringSchedule: "1-1.5 inches per week, especially when silking",
-    wateringIntervalDays: 3,
     soilType: "Fertile, well-draining loam; pH 6.0-6.8",
     hardinessZones: "USDA zones 4-11 (annual)",
     plantingGuidelines:
@@ -428,8 +392,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Tender, aromatic warm-season herb essential to Italian and Southeast Asian cooking.",
     sunlight: "Full sun",
-    wateringSchedule: "Keep soil consistently moist; water 2-3 times per week",
-    wateringIntervalDays: 2,
     soilType: "Well-draining, fertile soil rich in organic matter; pH 6.0-7.5",
     hardinessZones: "USDA zones 10-11 (annual elsewhere)",
     plantingGuidelines:
@@ -452,8 +414,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Vigorous perennial herb with refreshing flavor; best contained as it spreads aggressively.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "Keep evenly moist; water 1-2 times per week",
-    wateringIntervalDays: 3,
     soilType: "Moist, well-draining soil; pH 6.0-7.0",
     hardinessZones: "USDA zones 3-11 (varies by species)",
     plantingGuidelines:
@@ -475,8 +435,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Evergreen Mediterranean herb with needle-like leaves and a piney aroma. Drought-tolerant once established.",
     sunlight: "Full sun",
-    wateringSchedule: "Allow soil to dry between waterings; about every 7-10 days",
-    wateringIntervalDays: 7,
     soilType: "Well-draining, sandy or loamy soil; pH 6.0-7.5",
     hardinessZones: "USDA zones 7-10 (overwinter indoors in colder zones)",
     plantingGuidelines:
@@ -498,8 +456,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Low-growing perennial Mediterranean herb with tiny aromatic leaves used in many cuisines.",
     sunlight: "Full sun",
-    wateringSchedule: "Allow soil to dry; water about every 7-10 days",
-    wateringIntervalDays: 7,
     soilType: "Well-draining, sandy or rocky soil; pH 6.0-8.0",
     hardinessZones: "USDA zones 5-9",
     plantingGuidelines:
@@ -521,8 +477,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Hardy perennial herb essential to Italian, Greek, and Mexican cooking, with a warm, peppery flavor.",
     sunlight: "Full sun",
-    wateringSchedule: "Allow soil to dry between waterings",
-    wateringIntervalDays: 7,
     soilType: "Well-draining, moderately fertile soil; pH 6.0-8.0",
     hardinessZones: "USDA zones 4-10",
     plantingGuidelines:
@@ -544,8 +498,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Biennial herb commonly grown as an annual; available in flat-leaf (Italian) and curly forms.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "Keep evenly moist; about 1 inch per week",
-    wateringIntervalDays: 3,
     soilType: "Rich, well-draining loam; pH 6.0-7.0",
     hardinessZones: "USDA zones 3-9",
     plantingGuidelines:
@@ -567,8 +519,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Cool-season annual herb with bright, citrusy leaves; produces coriander seed when allowed to flower.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "Keep evenly moist; about 1 inch per week",
-    wateringIntervalDays: 2,
     soilType: "Well-draining, fertile loam; pH 6.2-6.8",
     hardinessZones: "USDA zones 3-11 (cool-season annual)",
     plantingGuidelines:
@@ -590,8 +540,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Annual herb prized for its feathery leaves and seeds; classic with pickles and fish.",
     sunlight: "Full sun",
-    wateringSchedule: "Even moisture; about 1 inch per week",
-    wateringIntervalDays: 3,
     soilType: "Well-draining, slightly acidic soil; pH 5.5-6.5",
     hardinessZones: "USDA zones 3-7 (annual)",
     plantingGuidelines:
@@ -613,8 +561,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Hardy perennial herb in the onion family with mild flavor and edible purple flowers.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "About 1 inch per week",
-    wateringIntervalDays: 4,
     soilType: "Well-draining, fertile soil; pH 6.0-7.0",
     hardinessZones: "USDA zones 3-9",
     plantingGuidelines:
@@ -636,8 +582,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Hardy perennial Mediterranean herb with soft gray-green leaves and an earthy, peppery flavor.",
     sunlight: "Full sun",
-    wateringSchedule: "Allow soil to dry between waterings",
-    wateringIntervalDays: 7,
     soilType: "Well-draining, sandy loam; pH 6.0-7.0",
     hardinessZones: "USDA zones 4-10",
     plantingGuidelines:
@@ -659,8 +603,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Fragrant perennial subshrub with silvery foliage and purple flower spikes loved by pollinators.",
     sunlight: "Full sun",
-    wateringSchedule: "Drought-tolerant once established; water deeply but infrequently",
-    wateringIntervalDays: 10,
     soilType: "Sandy, very well-draining alkaline soil; pH 6.7-7.3",
     hardinessZones: "USDA zones 5-9 (variety dependent)",
     plantingGuidelines:
@@ -684,8 +626,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Low-growing perennial fruit available in June-bearing, everbearing, and day-neutral varieties.",
     sunlight: "Full sun",
-    wateringSchedule: "1-2 inches per week, more during fruiting",
-    wateringIntervalDays: 3,
     soilType: "Well-draining, slightly acidic loam; pH 5.5-6.5",
     hardinessZones: "USDA zones 3-10",
     plantingGuidelines:
@@ -707,8 +647,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Long-lived deciduous shrub producing antioxidant-rich blue berries; needs acidic soil to thrive.",
     sunlight: "Full sun",
-    wateringSchedule: "1-2 inches per week, especially during fruit development",
-    wateringIntervalDays: 4,
     soilType: "Acidic, well-draining, organic-rich soil; pH 4.5-5.5",
     hardinessZones: "USDA zones 3-9 (variety dependent)",
     plantingGuidelines:
@@ -730,8 +668,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Cane fruit producing sweet, delicate berries; available in summer-bearing and everbearing types.",
     sunlight: "Full sun",
-    wateringSchedule: "About 1 inch per week, more during fruiting",
-    wateringIntervalDays: 4,
     soilType: "Well-draining loam rich in organic matter; pH 5.5-6.5",
     hardinessZones: "USDA zones 3-9",
     plantingGuidelines:
@@ -753,8 +689,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Sprawling warm-season vine producing large, juicy fruits beloved in summer.",
     sunlight: "Full sun",
-    wateringSchedule: "1-2 inches per week, reducing as fruit ripens",
-    wateringIntervalDays: 3,
     soilType: "Sandy, well-draining loam rich in compost; pH 6.0-6.8",
     hardinessZones: "USDA zones 3-11 (annual)",
     plantingGuidelines:
@@ -778,8 +712,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Iconic warm-season annual with cheerful flower heads that follow the sun and produce edible seeds.",
     sunlight: "Full sun",
-    wateringSchedule: "Deep watering once per week",
-    wateringIntervalDays: 5,
     soilType: "Well-draining, moderately fertile soil; pH 6.0-7.5",
     hardinessZones: "USDA zones 2-11 (annual)",
     plantingGuidelines:
@@ -801,8 +733,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Cheerful warm-season annual flower; widely planted as a companion to repel pests.",
     sunlight: "Full sun",
-    wateringSchedule: "Allow to dry between waterings; drought-tolerant",
-    wateringIntervalDays: 5,
     soilType: "Well-draining, moderately fertile soil; pH 6.0-7.5",
     hardinessZones: "USDA zones 2-11 (annual)",
     plantingGuidelines:
@@ -824,8 +754,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Easy-to-grow warm-season annual with vibrant blooms in nearly every color, beloved by butterflies.",
     sunlight: "Full sun",
-    wateringSchedule: "1 inch per week, at the base of plants",
-    wateringIntervalDays: 4,
     soilType: "Well-draining, fertile soil; pH 5.5-7.5",
     hardinessZones: "USDA zones 2-11 (annual)",
     plantingGuidelines:
@@ -847,8 +775,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Classic flowering shrub available in countless cultivars from miniatures to climbers.",
     sunlight: "Full sun",
-    wateringSchedule: "Deep watering 1-2 times per week",
-    wateringIntervalDays: 4,
     soilType: "Well-draining, fertile loam; pH 6.0-6.5",
     hardinessZones: "USDA zones 3-11 (variety dependent)",
     plantingGuidelines:
@@ -870,8 +796,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Airy, daisy-like annual flower that thrives in poor soil and reseeds readily.",
     sunlight: "Full sun",
-    wateringSchedule: "Drought-tolerant once established; water about every 7 days",
-    wateringIntervalDays: 7,
     soilType: "Well-draining, low-fertility soil; pH 6.0-7.0",
     hardinessZones: "USDA zones 2-11 (annual)",
     plantingGuidelines:
@@ -893,8 +817,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Hardy native perennial with daisy-like blooms that attract pollinators and birds.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "Drought-tolerant once established; water weekly first year",
-    wateringIntervalDays: 7,
     soilType: "Well-draining, average to lean soil; pH 6.0-7.0",
     hardinessZones: "USDA zones 3-9",
     plantingGuidelines:
@@ -916,8 +838,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Classic spring-blooming bulb in a wide range of colors and forms; planted in fall.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "Water at planting; minimal water in summer dormancy",
-    wateringIntervalDays: 14,
     soilType: "Well-draining, sandy loam; pH 6.0-7.0",
     hardinessZones: "USDA zones 3-8",
     plantingGuidelines:
@@ -939,8 +859,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Cheerful spring-blooming bulb that's deer- and rodent-resistant and naturalizes well.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "Water at planting; little needed in summer dormancy",
-    wateringIntervalDays: 14,
     soilType: "Well-draining loam; pH 6.0-7.0",
     hardinessZones: "USDA zones 3-9",
     plantingGuidelines:
@@ -962,8 +880,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Easy-to-grow edible flower with peppery leaves and bright blooms; great for trailing or climbing.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "About 1 inch per week",
-    wateringIntervalDays: 4,
     soilType: "Well-draining, lean soil; pH 6.0-7.5",
     hardinessZones: "USDA zones 2-11 (annual)",
     plantingGuidelines:
@@ -985,8 +901,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Cool-season annual with cheerful 'face' flowers; perfect for early spring and fall color.",
     sunlight: "Full sun to partial shade",
-    wateringSchedule: "Keep evenly moist; about 1 inch per week",
-    wateringIntervalDays: 3,
     soilType: "Rich, well-draining loam; pH 5.4-5.8",
     hardinessZones: "USDA zones 4-8 (cool-season annual)",
     plantingGuidelines:
@@ -1010,8 +924,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Easy-to-grow medicinal succulent with thick, gel-filled leaves; great houseplant.",
     sunlight: "Bright indirect light to full sun",
-    wateringSchedule: "Allow soil to dry completely; water every 2-3 weeks",
-    wateringIntervalDays: 14,
     soilType: "Sandy, well-draining cactus mix; pH 7.0-8.5",
     hardinessZones: "USDA zones 9-11 (houseplant elsewhere)",
     plantingGuidelines:
@@ -1033,8 +945,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Rosette-forming succulent in many shades; popular for arrangements and centerpieces.",
     sunlight: "Bright sun",
-    wateringSchedule: "Water deeply when soil is fully dry; about every 2 weeks",
-    wateringIntervalDays: 14,
     soilType: "Sandy, well-draining cactus mix; pH 6.0-7.0",
     hardinessZones: "USDA zones 9-11",
     plantingGuidelines:
@@ -1056,8 +966,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Long-lived succulent with thick, glossy leaves; symbol of prosperity in many cultures.",
     sunlight: "Bright sun to bright indirect light",
-    wateringSchedule: "Water when soil is fully dry; about every 2-3 weeks",
-    wateringIntervalDays: 14,
     soilType: "Well-draining cactus mix; pH 6.0-7.0",
     hardinessZones: "USDA zones 10-11 (houseplant elsewhere)",
     plantingGuidelines:
@@ -1081,8 +989,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Productive citrus tree producing fragrant flowers and tart fruit; can grow in containers in cold climates.",
     sunlight: "Full sun",
-    wateringSchedule: "Deep watering every 5-7 days; let top inch dry",
-    wateringIntervalDays: 5,
     soilType: "Well-draining, slightly acidic loam; pH 5.5-6.5",
     hardinessZones: "USDA zones 9-11 (container in colder zones)",
     plantingGuidelines:
@@ -1104,8 +1010,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Long-lived deciduous shrub producing flavorful blue berries in summer; needs acidic soil.",
     sunlight: "Full sun",
-    wateringSchedule: "1-2 inches per week, especially during fruiting",
-    wateringIntervalDays: 4,
     soilType: "Acidic, well-draining, organic-rich; pH 4.5-5.5",
     hardinessZones: "USDA zones 3-9",
     plantingGuidelines:
@@ -1127,8 +1031,6 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     description:
       "Showy deciduous shrub with large flower clusters; flower color depends on soil pH in many varieties.",
     sunlight: "Morning sun, afternoon shade",
-    wateringSchedule: "Deeply 2-3 times per week, especially in hot weather",
-    wateringIntervalDays: 3,
     soilType: "Rich, well-draining loam; pH determines flower color (acid = blue, alkaline = pink)",
     hardinessZones: "USDA zones 3-9 (variety dependent)",
     plantingGuidelines:

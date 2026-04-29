@@ -14,36 +14,6 @@ function formatDate(iso: string): string {
   });
 }
 
-// ── Watering status helper ────────────────────────────────────────────
-
-interface WateringStatus {
-  label: string;
-  urgent: boolean;
-  daysUntil: number | null;
-}
-
-function getWateringStatus(plant: Plant): WateringStatus {
-  if (!plant.wateringHistory || plant.wateringHistory.length === 0) {
-    return { label: "Not yet watered", urgent: false, daysUntil: null };
-  }
-
-  const lastWatering = plant.wateringHistory
-    .map((w) => new Date(w.date).getTime())
-    .reduce((a, b) => Math.max(a, b), 0);
-
-  const now = Date.now();
-  const daysSinceWatering = Math.floor((now - lastWatering) / (1000 * 60 * 60 * 24));
-  const interval = plant.wateringIntervalDays || 3;
-  const daysUntil = interval - daysSinceWatering;
-
-  if (daysUntil < 0) {
-    return { label: `Overdue by ${Math.abs(daysUntil)}d`, urgent: true, daysUntil };
-  }
-  if (daysUntil === 0) {
-    return { label: "Water today!", urgent: true, daysUntil: 0 };
-  }
-  return { label: `Water in ${daysUntil}d`, urgent: false, daysUntil };
-}
 
 function PlantCard({ plant }: { readonly plant: Plant }) {
   const lastEntry =
@@ -81,18 +51,6 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
         {plant.species && (
           <p className="text-sm italic text-text-secondary">{plant.species}</p>
         )}
-        {(() => {
-          const status = getWateringStatus(plant);
-          return (
-            <div className={`mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${
-              status.urgent
-                ? "bg-red-100 text-red-700"
-                : "bg-blue-50 text-blue-600"
-            }`}>
-              💧 {status.label}
-            </div>
-          );
-        })()}
         <p className="mt-1 text-xs text-text-secondary">
           Added {formatDate(plant.dateAdded)}
         </p>
