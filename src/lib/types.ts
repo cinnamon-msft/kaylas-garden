@@ -34,6 +34,7 @@ export interface Plant {
   species: string;
   dateAdded: string; // ISO date
   thumbnailImage: string; // filename in public/uploads
+  imageUrl?: string; // optional sample image URL
   careInfo: PlantCareInfo;
   entries: PlantEntry[];
   wateringIntervalDays: number; // how often to water, in days (e.g., 3 = every 3 days)

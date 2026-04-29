@@ -289,12 +289,22 @@ export function AddPlantModal({
                                 : "hover:bg-hover"
                             }`}
                           >
-                            <span
-                              aria-hidden="true"
-                              className="text-xl leading-none"
-                            >
-                              {CATEGORY_EMOJI[plant.category] ?? "🌱"}
-                            </span>
+                            <div className="relative h-12 w-12 flex-shrink-0 rounded-md overflow-hidden border border-border bg-hover">
+                               <img
+                                 src={plant.imageUrl}
+                                 alt=""
+                                 className="h-full w-full object-cover"
+                                 onError={(e) => {
+                                   (e.currentTarget as HTMLImageElement).style.display = "none";
+                                 }}
+                               />
+                               <span
+                                 aria-hidden="true"
+                                 className="absolute inset-0 flex items-center justify-center text-lg leading-none"
+                               >
+                                 {CATEGORY_EMOJI[plant.category] ?? "🌱"}
+                               </span>
+                             </div>
                             <span className="flex min-w-0 flex-1 flex-col">
                               <span className="truncate text-sm font-semibold">
                                 {plant.name}

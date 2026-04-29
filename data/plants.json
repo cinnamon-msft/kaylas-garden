@@ -1,10 +1,11 @@
 [
   {
     "id": "866868fe-d09c-40e5-a8f2-986c3f23c558",
-    "name": "Sugar Snap Peas",
+    "name": "Sugar Snap Peas",D
     "species": "Pisum sativum var. macrocarpon",
     "dateAdded": "2026-03-29T00:00:00.000Z",
     "thumbnailImage": "snap-peas-3-29.jpg",
+    "imageUrl": "https://picsum.photos/400/300?random=snap-peas",
     "careInfo": {
       "sunlight": "Full sun to partial shade",
       "wateringSchedule": "Every 2-3 days, keep soil evenly moist",

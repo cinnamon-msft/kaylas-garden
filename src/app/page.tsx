@@ -56,7 +56,7 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
       aria-labelledby={`plant-${plant.id}-name`}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-bg-card shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
     >
-      <div className="relative flex h-48 items-center justify-center bg-hover">
+      <div className="relative flex h-32 items-center justify-center bg-hover sm:h-48">
         {plant.thumbnailImage ? (
           <Image
             src={`/api/uploads/${plant.thumbnailImage}`}
@@ -64,13 +64,22 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
             fill
             className="object-cover"
           />
+        ) : plant.imageUrl ? (
+          <img
+            src={plant.imageUrl}
+            alt={plant.name}
+            className="h-full w-full object-cover"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).style.display = "none";
+            }}
+          />
         ) : (
-          <span aria-hidden="true" className="text-6xl">🌿</span>
+          <span aria-hidden="true" className="text-4xl sm:text-6xl">🌿</span>
         )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-1 p-4">
-        <h3 id={`plant-${plant.id}-name`} className="text-lg font-bold text-text-primary">
+      <div className="flex flex-1 flex-col gap-1 p-2 sm:p-4">
+        <h3 id={`plant-${plant.id}-name`} className="text-base sm:text-lg font-bold text-text-primary">
           <a
             href={`/plants/${plant.id}`}
             className="group-hover:text-primary after:absolute after:inset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-1"
@@ -79,7 +88,7 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
           </a>
         </h3>
         {plant.species && (
-          <p className="text-sm italic text-text-secondary">{plant.species}</p>
+          <p className="text-xs sm:text-sm italic text-text-secondary">{plant.species}</p>
         )}
         {(() => {
           const status = getWateringStatus(plant);
@@ -189,7 +198,7 @@ export default function Home() {
       )}
 
       {!loading && !error && plants.length > 0 && (
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {plants.map((plant) => (
             <PlantCard key={plant.id} plant={plant} />
           ))}

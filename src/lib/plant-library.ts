@@ -12,6 +12,7 @@ export interface LibraryPlant {
   readonly name: string;
   readonly scientificName: string;
   readonly description: string;
+  readonly imageUrl?: string; // optional sample image URL
   readonly sunlight: string;
   readonly wateringSchedule: string;
   readonly wateringIntervalDays: number;
@@ -33,6 +34,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Solanum lycopersicum",
     description:
       "A warm-season fruiting vegetable prized for its juicy, flavorful fruits used fresh, cooked, and preserved.",
+    imageUrl: "https://picsum.photos/400/300?random=tomato",
     sunlight: "Full sun",
     wateringSchedule: "Deeply 1-2 times per week; keep soil evenly moist",
     wateringIntervalDays: 3,
@@ -57,6 +59,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Capsicum annuum",
     description:
       "Warm-season vegetable producing sweet or hot fruits in a wide range of colors and shapes.",
+    imageUrl: "https://picsum.photos/400/300?random=pepper",
     sunlight: "Full sun",
     wateringSchedule: "Consistently moist, about 1-2 inches per week",
     wateringIntervalDays: 3,
@@ -80,6 +83,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Cucumis sativus",
     description:
       "Vining warm-season vegetable that produces crisp, refreshing fruits great for fresh eating and pickling.",
+    imageUrl: "https://picsum.photos/400/300?random=cucumber",
     sunlight: "Full sun",
     wateringSchedule: "1-2 inches per week, more in hot weather",
     wateringIntervalDays: 2,
@@ -103,6 +107,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Cucurbita pepo",
     description:
       "Prolific summer squash with mild, tender fruits picked young for the best flavor and texture.",
+    imageUrl: "https://picsum.photos/400/300?random=zucchini",
     sunlight: "Full sun",
     wateringSchedule: "Deep watering 1-2 times per week, about 1 inch",
     wateringIntervalDays: 3,
@@ -126,6 +131,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Daucus carota",
     description:
       "Cool-season root vegetable producing sweet, crunchy taproots in shades of orange, purple, yellow, and white.",
+    imageUrl: "https://picsum.photos/400/300?random=carrot",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "About 1 inch per week, evenly",
     wateringIntervalDays: 3,
@@ -149,6 +155,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Lactuca sativa",
     description:
       "Fast-growing cool-season leafy green available in loose-leaf, butterhead, romaine, and crisphead types.",
+    imageUrl: "https://picsum.photos/400/300?random=lettuce",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "Frequent shallow watering to keep soil moist",
     wateringIntervalDays: 2,
@@ -172,6 +179,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Spinacia oleracea",
     description:
       "Nutrient-dense cool-season leafy green that grows quickly in spring and fall.",
+    imageUrl: "https://picsum.photos/400/300?random=spinach",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "Consistent moisture; about 1-1.5 inches per week",
     wateringIntervalDays: 2,
@@ -195,6 +203,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Brassica oleracea var. sabellica",
     description:
       "Hardy cool-season leafy green that gets sweeter after frost. Excellent for fresh, sautéed, or baked use.",
+    imageUrl: "https://picsum.photos/400/300?random=kale",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "1-1.5 inches per week",
     wateringIntervalDays: 3,
@@ -218,6 +227,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Brassica oleracea var. italica",
     description:
       "Cool-season brassica grown for its dense flower heads and tender side shoots.",
+    imageUrl: "https://picsum.photos/400/300?random=broccoli",
     sunlight: "Full sun",
     wateringSchedule: "1-1.5 inches per week, evenly",
     wateringIntervalDays: 3,
@@ -241,6 +251,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Pisum sativum var. macrocarpon",
     description:
       "Cool-season climbing legume with sweet, edible pods. Great fresh, steamed, or in stir-fries.",
+    imageUrl: "https://picsum.photos/400/300?random=snap-peas",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "Even moisture; about 1 inch per week",
     wateringIntervalDays: 3,
@@ -264,6 +275,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Phaseolus vulgaris",
     description:
       "Warm-season legume available in bush and pole varieties, prized for tender, crisp pods.",
+    imageUrl: "https://picsum.photos/400/300?random=green-bean",
     sunlight: "Full sun",
     wateringSchedule: "1 inch per week, deeply",
     wateringIntervalDays: 3,
@@ -287,6 +299,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Raphanus sativus",
     description:
       "Fast-growing cool-season root vegetable with peppery, crunchy roots ready in just a few weeks.",
+    imageUrl: "https://picsum.photos/400/300?random=radish",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "Even moisture, about 1 inch per week",
     wateringIntervalDays: 2,
@@ -310,6 +323,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Allium cepa",
     description:
       "Versatile bulb crop grown from sets, seeds, or transplants in a wide range of sweet to pungent varieties.",
+    imageUrl: "https://picsum.photos/400/300?random=onion",
     sunlight: "Full sun",
     wateringSchedule: "About 1 inch per week",
     wateringIntervalDays: 4,
@@ -333,6 +347,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Allium sativum",
     description:
       "Pungent bulb crop typically planted in fall and harvested the following summer.",
+    imageUrl: "https://picsum.photos/400/300?random=garlic",
     sunlight: "Full sun",
     wateringSchedule: "About 1 inch per week during active growth",
     wateringIntervalDays: 5,
@@ -356,6 +371,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Solanum tuberosum",
     description:
       "Versatile starchy tuber grown from seed potatoes in a wide variety of skin and flesh colors.",
+    imageUrl: "https://picsum.photos/400/300?random=potato",
     sunlight: "Full sun",
     wateringSchedule: "1-2 inches per week, especially when tubers form",
     wateringIntervalDays: 3,
@@ -379,6 +395,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Beta vulgaris",
     description:
       "Cool-season root vegetable with sweet, earthy roots and edible nutrient-rich greens.",
+    imageUrl: "https://picsum.photos/400/300?random=beet",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "About 1 inch per week, evenly",
     wateringIntervalDays: 3,
@@ -402,6 +419,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Zea mays",
     description:
       "Warm-season grain grown for tender, sweet kernels best eaten fresh from the garden.",
+    imageUrl: "https://picsum.photos/400/300?random=corn",
     sunlight: "Full sun",
     wateringSchedule: "1-1.5 inches per week, especially when silking",
     wateringIntervalDays: 3,
@@ -427,6 +445,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Ocimum basilicum",
     description:
       "Tender, aromatic warm-season herb essential to Italian and Southeast Asian cooking.",
+    imageUrl: "https://picsum.photos/400/300?random=basil",
     sunlight: "Full sun",
     wateringSchedule: "Keep soil consistently moist; water 2-3 times per week",
     wateringIntervalDays: 2,
@@ -451,6 +470,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Mentha spp.",
     description:
       "Vigorous perennial herb with refreshing flavor; best contained as it spreads aggressively.",
+    imageUrl: "https://picsum.photos/400/300?random=mint",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "Keep evenly moist; water 1-2 times per week",
     wateringIntervalDays: 3,
@@ -474,6 +494,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Salvia rosmarinus",
     description:
       "Evergreen Mediterranean herb with needle-like leaves and a piney aroma. Drought-tolerant once established.",
+    imageUrl: "https://picsum.photos/400/300?random=rosemary",
     sunlight: "Full sun",
     wateringSchedule: "Allow soil to dry between waterings; about every 7-10 days",
     wateringIntervalDays: 7,
@@ -497,6 +518,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Thymus vulgaris",
     description:
       "Low-growing perennial Mediterranean herb with tiny aromatic leaves used in many cuisines.",
+    imageUrl: "https://picsum.photos/400/300?random=thyme",
     sunlight: "Full sun",
     wateringSchedule: "Allow soil to dry; water about every 7-10 days",
     wateringIntervalDays: 7,
@@ -520,6 +542,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Origanum vulgare",
     description:
       "Hardy perennial herb essential to Italian, Greek, and Mexican cooking, with a warm, peppery flavor.",
+    imageUrl: "https://picsum.photos/400/300?random=oregano",
     sunlight: "Full sun",
     wateringSchedule: "Allow soil to dry between waterings",
     wateringIntervalDays: 7,
@@ -543,6 +566,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Petroselinum crispum",
     description:
       "Biennial herb commonly grown as an annual; available in flat-leaf (Italian) and curly forms.",
+    imageUrl: "https://picsum.photos/400/300?random=parsley",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "Keep evenly moist; about 1 inch per week",
     wateringIntervalDays: 3,
@@ -566,6 +590,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Coriandrum sativum",
     description:
       "Cool-season annual herb with bright, citrusy leaves; produces coriander seed when allowed to flower.",
+    imageUrl: "https://picsum.photos/400/300?random=cilantro",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "Keep evenly moist; about 1 inch per week",
     wateringIntervalDays: 2,
@@ -589,6 +614,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Anethum graveolens",
     description:
       "Annual herb prized for its feathery leaves and seeds; classic with pickles and fish.",
+    imageUrl: "https://picsum.photos/400/300?random=dill",
     sunlight: "Full sun",
     wateringSchedule: "Even moisture; about 1 inch per week",
     wateringIntervalDays: 3,
@@ -612,6 +638,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Allium schoenoprasum",
     description:
       "Hardy perennial herb in the onion family with mild flavor and edible purple flowers.",
+    imageUrl: "https://picsum.photos/400/300?random=chives",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "About 1 inch per week",
     wateringIntervalDays: 4,
@@ -635,6 +662,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Salvia officinalis",
     description:
       "Hardy perennial Mediterranean herb with soft gray-green leaves and an earthy, peppery flavor.",
+    imageUrl: "https://picsum.photos/400/300?random=sage",
     sunlight: "Full sun",
     wateringSchedule: "Allow soil to dry between waterings",
     wateringIntervalDays: 7,
@@ -658,6 +686,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Lavandula angustifolia",
     description:
       "Fragrant perennial subshrub with silvery foliage and purple flower spikes loved by pollinators.",
+    imageUrl: "https://picsum.photos/400/300?random=lavender",
     sunlight: "Full sun",
     wateringSchedule: "Drought-tolerant once established; water deeply but infrequently",
     wateringIntervalDays: 10,
@@ -683,6 +712,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Fragaria × ananassa",
     description:
       "Low-growing perennial fruit available in June-bearing, everbearing, and day-neutral varieties.",
+    imageUrl: "https://picsum.photos/400/300?random=strawberry",
     sunlight: "Full sun",
     wateringSchedule: "1-2 inches per week, more during fruiting",
     wateringIntervalDays: 3,
@@ -706,6 +736,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Vaccinium corymbosum",
     description:
       "Long-lived deciduous shrub producing antioxidant-rich blue berries; needs acidic soil to thrive.",
+    imageUrl: "https://picsum.photos/400/300?random=blueberry",
     sunlight: "Full sun",
     wateringSchedule: "1-2 inches per week, especially during fruit development",
     wateringIntervalDays: 4,
@@ -729,6 +760,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Rubus idaeus",
     description:
       "Cane fruit producing sweet, delicate berries; available in summer-bearing and everbearing types.",
+    imageUrl: "https://picsum.photos/400/300?random=raspberry",
     sunlight: "Full sun",
     wateringSchedule: "About 1 inch per week, more during fruiting",
     wateringIntervalDays: 4,
@@ -752,6 +784,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Citrullus lanatus",
     description:
       "Sprawling warm-season vine producing large, juicy fruits beloved in summer.",
+    imageUrl: "https://picsum.photos/400/300?random=watermelon",
     sunlight: "Full sun",
     wateringSchedule: "1-2 inches per week, reducing as fruit ripens",
     wateringIntervalDays: 3,
@@ -777,6 +810,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Helianthus annuus",
     description:
       "Iconic warm-season annual with cheerful flower heads that follow the sun and produce edible seeds.",
+    imageUrl: "https://picsum.photos/400/300?random=sunflower",
     sunlight: "Full sun",
     wateringSchedule: "Deep watering once per week",
     wateringIntervalDays: 5,
@@ -800,6 +834,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Tagetes spp.",
     description:
       "Cheerful warm-season annual flower; widely planted as a companion to repel pests.",
+    imageUrl: "https://picsum.photos/400/300?random=marigold",
     sunlight: "Full sun",
     wateringSchedule: "Allow to dry between waterings; drought-tolerant",
     wateringIntervalDays: 5,
@@ -823,6 +858,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Zinnia elegans",
     description:
       "Easy-to-grow warm-season annual with vibrant blooms in nearly every color, beloved by butterflies.",
+    imageUrl: "https://picsum.photos/400/300?random=zinnia",
     sunlight: "Full sun",
     wateringSchedule: "1 inch per week, at the base of plants",
     wateringIntervalDays: 4,
@@ -846,6 +882,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Rosa spp.",
     description:
       "Classic flowering shrub available in countless cultivars from miniatures to climbers.",
+    imageUrl: "https://picsum.photos/400/300?random=rose",
     sunlight: "Full sun",
     wateringSchedule: "Deep watering 1-2 times per week",
     wateringIntervalDays: 4,
@@ -869,6 +906,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Cosmos bipinnatus",
     description:
       "Airy, daisy-like annual flower that thrives in poor soil and reseeds readily.",
+    imageUrl: "https://picsum.photos/400/300?random=cosmos",
     sunlight: "Full sun",
     wateringSchedule: "Drought-tolerant once established; water about every 7 days",
     wateringIntervalDays: 7,
@@ -892,6 +930,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Echinacea purpurea",
     description:
       "Hardy native perennial with daisy-like blooms that attract pollinators and birds.",
+    imageUrl: "https://picsum.photos/400/300?random=echinacea",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "Drought-tolerant once established; water weekly first year",
     wateringIntervalDays: 7,
@@ -915,6 +954,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Tulipa spp.",
     description:
       "Classic spring-blooming bulb in a wide range of colors and forms; planted in fall.",
+    imageUrl: "https://picsum.photos/400/300?random=tulip",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "Water at planting; minimal water in summer dormancy",
     wateringIntervalDays: 14,
@@ -961,6 +1001,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Tropaeolum majus",
     description:
       "Easy-to-grow edible flower with peppery leaves and bright blooms; great for trailing or climbing.",
+    imageUrl: "https://picsum.photos/400/300?random=daffodil",
     sunlight: "Full sun to partial shade",
     wateringSchedule: "About 1 inch per week",
     wateringIntervalDays: 4,
@@ -1009,6 +1050,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Aloe barbadensis miller",
     description:
       "Easy-to-grow medicinal succulent with thick, gel-filled leaves; great houseplant.",
+    imageUrl: "https://picsum.photos/400/300?random=nasturtium",
     sunlight: "Bright indirect light to full sun",
     wateringSchedule: "Allow soil to dry completely; water every 2-3 weeks",
     wateringIntervalDays: 14,
@@ -1032,6 +1074,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Echeveria spp.",
     description:
       "Rosette-forming succulent in many shades; popular for arrangements and centerpieces.",
+    imageUrl: "https://picsum.photos/400/300?random=pansy",
     sunlight: "Bright sun",
     wateringSchedule: "Water deeply when soil is fully dry; about every 2 weeks",
     wateringIntervalDays: 14,
@@ -1055,6 +1098,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Crassula ovata",
     description:
       "Long-lived succulent with thick, glossy leaves; symbol of prosperity in many cultures.",
+    imageUrl: "https://picsum.photos/400/300?random=aloe-vera",
     sunlight: "Bright sun to bright indirect light",
     wateringSchedule: "Water when soil is fully dry; about every 2-3 weeks",
     wateringIntervalDays: 14,
@@ -1080,6 +1124,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Citrus limon",
     description:
       "Productive citrus tree producing fragrant flowers and tart fruit; can grow in containers in cold climates.",
+    imageUrl: "https://picsum.photos/400/300?random=echeveria",
     sunlight: "Full sun",
     wateringSchedule: "Deep watering every 5-7 days; let top inch dry",
     wateringIntervalDays: 5,
@@ -1103,6 +1148,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Vaccinium corymbosum",
     description:
       "Long-lived deciduous shrub producing flavorful blue berries in summer; needs acidic soil.",
+    imageUrl: "https://picsum.photos/400/300?random=jade-plant",
     sunlight: "Full sun",
     wateringSchedule: "1-2 inches per week, especially during fruiting",
     wateringIntervalDays: 4,
@@ -1126,6 +1172,7 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     scientificName: "Hydrangea macrophylla",
     description:
       "Showy deciduous shrub with large flower clusters; flower color depends on soil pH in many varieties.",
+    imageUrl: "https://picsum.photos/400/300?random=lemon-tree",
     sunlight: "Morning sun, afternoon shade",
     wateringSchedule: "Deeply 2-3 times per week, especially in hot weather",
     wateringIntervalDays: 3,

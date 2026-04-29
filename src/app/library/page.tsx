@@ -225,6 +225,17 @@ export default function LibraryPage() {
       {/* Plant Info */}
       {selected && (
         <div className="space-y-6">
+           {/* Image */}
+           <div className="relative h-64 w-full overflow-hidden rounded-lg border border-border bg-bg-card sm:h-80">
+             <img
+               src={selected.imageUrl}
+               alt={selected.name}
+               className="h-full w-full object-cover"
+               onError={(e) => {
+                 (e.currentTarget as HTMLImageElement).style.display = "none";
+               }}
+             />
+           </div>
           {/* Header */}
           <div className="rounded-lg border border-border bg-bg-card p-4 sm:p-6">
             <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
@@ -368,3 +379,4 @@ export default function LibraryPage() {
     </div>
   );
 }
+

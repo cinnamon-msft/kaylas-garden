@@ -55,6 +55,15 @@ function PlantHeader({
             alt={plant.name}
             className="h-20 w-20 rounded-lg border border-border object-cover sm:h-28 sm:w-28"
           />
+        ) : plant.imageUrl ? (
+          <img
+            src={plant.imageUrl}
+            alt={plant.name}
+            className="h-20 w-20 rounded-lg border border-border object-cover sm:h-28 sm:w-28"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).style.display = "none";
+            }}
+          />
         ) : (
           <div aria-hidden="true" className="flex h-20 w-20 items-center justify-center rounded-lg border border-border bg-bg-card text-4xl sm:h-28 sm:w-28 sm:text-5xl">
             🌱
