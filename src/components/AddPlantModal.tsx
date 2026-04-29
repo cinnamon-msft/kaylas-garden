@@ -184,9 +184,9 @@ export function AddPlantModal({
     <dialog
       ref={dialogRef}
       aria-labelledby="add-plant-dialog-title"
-      className="w-full max-w-lg rounded-2xl border border-border bg-bg-card p-0 shadow-xl backdrop:bg-black/50"
+      className="max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-lg overflow-y-auto rounded-2xl border border-border bg-bg-card p-0 shadow-xl backdrop:bg-black/50"
     >
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5 p-6">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 sm:gap-5 sm:p-6">
         <div className="flex items-center justify-between">
           <h2
             id="add-plant-dialog-title"
@@ -208,7 +208,7 @@ export function AddPlantModal({
         <div
           role="tablist"
           aria-label="Add plant mode"
-          className="flex gap-2 rounded-lg border border-border p-1"
+          className="flex flex-col gap-2 rounded-lg border border-border p-1 sm:flex-row"
         >
           <button
             type="button"
@@ -455,7 +455,7 @@ export function AddPlantModal({
           </>
         )}
 
-        <div className="flex justify-end gap-3 pt-2">
+        <div className="flex flex-col-reverse justify-end gap-2 pt-2 sm:flex-row sm:gap-3">
           <button
             type="button"
             onClick={onClose}

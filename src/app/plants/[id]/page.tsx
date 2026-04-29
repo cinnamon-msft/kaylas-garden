@@ -53,26 +53,26 @@ function PlantHeader({
           <img
             src={`/api/uploads/${plant.thumbnailImage}`}
             alt={plant.name}
-            className="h-28 w-28 rounded-lg border border-border object-cover"
+            className="h-20 w-20 rounded-lg border border-border object-cover sm:h-28 sm:w-28"
           />
         ) : (
-          <div aria-hidden="true" className="flex h-28 w-28 items-center justify-center rounded-lg border border-border bg-bg-card text-5xl">
+          <div aria-hidden="true" className="flex h-20 w-20 items-center justify-center rounded-lg border border-border bg-bg-card text-4xl sm:h-28 sm:w-28 sm:text-5xl">
             🌱
           </div>
         )}
 
-        <div>
-          <h1 className="text-3xl font-bold text-text-primary">
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold text-text-primary sm:text-3xl">
             {plant.name}
           </h1>
-          <p className="text-lg italic text-text-secondary">{plant.species}</p>
+          <p className="text-base italic text-text-secondary sm:text-lg">{plant.species}</p>
           <p className="mt-1 text-sm text-text-secondary">
             Added {formatDate(plant.dateAdded)}
           </p>
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
         <Link
           href="/"
           className="rounded-lg border border-border px-4 py-2 text-sm text-text-secondary hover:bg-hover"
@@ -157,8 +157,8 @@ function CareInfoCard({
     ];
 
   return (
-    <section className="rounded-lg border border-border bg-bg-card p-6">
-      <div className="mb-4 flex items-center justify-between">
+    <section className="rounded-lg border border-border bg-bg-card p-4 sm:p-6">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-xl font-semibold text-text-primary">
           <span aria-hidden="true">🌿</span> Care Information
         </h2>
@@ -370,7 +370,7 @@ function WateringCard({
     .slice(0, 10);
 
   return (
-    <section className="rounded-lg border border-border bg-bg-card p-6">
+    <section className="rounded-lg border border-border bg-bg-card p-4 sm:p-6">
       <h2 className="mb-4 text-xl font-semibold text-text-primary">💧 Watering</h2>
 
       {/* Status row */}
@@ -424,7 +424,7 @@ function WateringCard({
       </div>
 
       {/* Water Now */}
-      <div className="flex items-end gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
         <div className="flex-1">
           <label className="mb-1 block text-xs font-medium text-text-secondary">Quick note (optional)</label>
           <input
@@ -438,7 +438,7 @@ function WateringCard({
         <button
           onClick={handleWater}
           disabled={watering}
-          className="rounded-lg bg-blue-500 px-5 py-2 text-sm font-medium text-white hover:bg-blue-600 disabled:opacity-50"
+          className="w-full rounded-lg bg-blue-500 px-5 py-2 text-sm font-medium text-white hover:bg-blue-600 disabled:opacity-50 sm:w-auto"
         >
           {watering ? "Logging…" : "💧 Water Now"}
         </button>
@@ -814,7 +814,7 @@ export default function PlantDetailPage() {
   );
 
   return (
-    <div className="mx-auto max-w-4xl space-y-8 p-4 sm:p-6">
+    <div className="mx-auto max-w-4xl space-y-6 sm:space-y-8">
       <PlantHeader plant={plant} onDelete={handleDelete} />
 
       <CareInfoCard careInfo={plant.careInfo} onSave={handleSaveCare} />

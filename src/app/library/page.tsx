@@ -134,7 +134,7 @@ export default function LibraryPage() {
         <label htmlFor="plant-search" className="sr-only">
           Search for a plant
         </label>
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <input
             id="plant-search"
             type="text"
@@ -226,9 +226,9 @@ export default function LibraryPage() {
       {selected && (
         <div className="space-y-6">
           {/* Header */}
-          <div className="rounded-lg border border-border bg-bg-card p-6">
-            <div className="flex items-start justify-between gap-4">
-              <div>
+          <div className="rounded-lg border border-border bg-bg-card p-4 sm:p-6">
+            <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+              <div className="min-w-0">
                 <div className="flex items-center gap-2">
                   <span aria-hidden="true" className="text-2xl">
                     {CATEGORY_EMOJI[selected.category] ?? "🌱"}
@@ -242,7 +242,7 @@ export default function LibraryPage() {
                   {selected.category}
                 </span>
               </div>
-              <div>
+              <div className="w-full sm:w-auto">
                 <div aria-live="polite" className="sr-only">
                   {addedToGarden && `${selected.name} added to your garden`}
                 </div>
@@ -250,7 +250,7 @@ export default function LibraryPage() {
                   type="button"
                   onClick={addToGarden}
                   disabled={addedToGarden || adding}
-                  className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`w-full rounded-lg px-4 py-2 text-sm font-medium transition-colors sm:w-auto ${
                     addedToGarden
                       ? "bg-green-100 text-green-700"
                       : "bg-primary text-text-on-primary hover:bg-primary-dark"

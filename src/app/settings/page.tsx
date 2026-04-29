@@ -73,17 +73,17 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl space-y-8 px-4 py-8">
+    <div className="mx-auto max-w-2xl space-y-8">
       <h1 className="text-3xl font-bold text-text-primary"><span aria-hidden="true">⚙️</span> Settings</h1>
 
       {/* Location & Frost Dates */}
-      <section className="rounded-xl border border-border bg-bg-card p-6 shadow-sm">
+      <section className="rounded-xl border border-border bg-bg-card p-4 shadow-sm sm:p-6">
         <h2 className="mb-4 text-xl font-semibold text-text-primary"><span aria-hidden="true">📍</span> Location &amp; Frost Dates</h2>
         <div className="flex flex-col gap-2">
           <label htmlFor="location-input" className="text-sm font-medium text-text-secondary">
             City name or zip code
           </label>
-          <div className="flex gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row">
             <input
               id="location-input"
               type="text"
@@ -138,25 +138,25 @@ export default function SettingsPage() {
       </section>
 
       {/* Theme */}
-      <section className="rounded-xl border border-border bg-bg-card p-6 shadow-sm">
+      <section className="rounded-xl border border-border bg-bg-card p-4 shadow-sm sm:p-6">
         <h2 className="mb-4 text-xl font-semibold text-text-primary"><span aria-hidden="true">🎨</span> Theme</h2>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4">
           {themes.map((theme) => (
             <button
               key={theme.id}
               onClick={() => void handleThemeChange(theme.id)}
               aria-pressed={settings.theme === theme.id}
-              className={`flex flex-col items-center gap-3 rounded-xl border-2 p-5 transition-all ${
+              className={`flex flex-col items-center gap-2 rounded-xl border-2 p-3 transition-all sm:gap-3 sm:p-5 ${
                 settings.theme === theme.id
                   ? "border-primary bg-accent shadow-md"
                   : "border-border bg-bg-page hover:bg-hover"
               }`}
             >
-              <span aria-hidden="true" className="text-3xl">{theme.emoji}</span>
-              <span className="text-sm font-semibold text-text-primary">{theme.label}</span>
+              <span aria-hidden="true" className="text-2xl sm:text-3xl">{theme.emoji}</span>
+              <span className="text-xs font-semibold text-text-primary sm:text-sm">{theme.label}</span>
               <div className="flex gap-1.5" aria-hidden="true">
                 {theme.swatches.map((swatch) => (
-                  <div key={swatch} className={`h-4 w-4 rounded-full ${swatch}`} />
+                  <div key={swatch} className={`h-3 w-3 rounded-full sm:h-4 sm:w-4 ${swatch}`} />
                 ))}
               </div>
             </button>
@@ -165,7 +165,7 @@ export default function SettingsPage() {
       </section>
 
       {/* About */}
-      <section className="rounded-xl border border-border bg-bg-card p-6 shadow-sm">
+      <section className="rounded-xl border border-border bg-bg-card p-4 shadow-sm sm:p-6">
         <h2 className="mb-3 text-xl font-semibold text-text-primary"><span aria-hidden="true">🌱</span> About</h2>
         <p className="text-text-secondary">
           Kayla&apos;s Garden helps you track your plants, monitor their progress, and learn about gardening. 🌱

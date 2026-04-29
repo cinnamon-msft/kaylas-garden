@@ -137,9 +137,9 @@ export default function Home() {
   return (
     <>
       {/* Welcome Banner */}
-      <section className="mb-8 rounded-2xl bg-primary p-6 text-text-on-primary shadow-md">
-        <h2 className="text-3xl font-bold"><span aria-hidden="true">🌱</span> My Garden</h2>
-        <p className="mt-1 text-text-on-primary/80">
+      <section className="mb-6 rounded-2xl bg-primary p-5 text-text-on-primary shadow-md sm:mb-8 sm:p-6">
+        <h2 className="text-2xl font-bold sm:text-3xl"><span aria-hidden="true">🌱</span> My Garden</h2>
+        <p className="mt-1 text-sm text-text-on-primary/80 sm:text-base">
           Track your plants, upload photos, and watch them grow!
         </p>
       </section>
@@ -148,7 +148,7 @@ export default function Home() {
       <FrostDateBanner />
 
       {/* Actions */}
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 mt-4 flex flex-wrap items-center justify-between gap-3">
         <h3 className="text-lg font-semibold text-text-primary">
           Your Plants{!loading && ` (${plants.length})`}
         </h3>

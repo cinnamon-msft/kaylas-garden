@@ -31,7 +31,7 @@ export default function RootLayout({
         </a>
         <ThemeProvider>
           <Header />
-          <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
+          <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-3 py-4 sm:px-4 sm:py-6">
             {children}
           </main>
           <footer className="border-t border-border py-4 text-center text-sm text-text-secondary">

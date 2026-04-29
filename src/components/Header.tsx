@@ -15,15 +15,15 @@ export function Header() {
 
   return (
     <header className="bg-bg-header shadow-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-3 gap-y-2 px-3 py-3 sm:px-4">
         <Link href="/" aria-label="Kayla's Garden – Home" className="flex items-center gap-2">
           <span aria-hidden="true" className="text-2xl">🌱</span>
-          <span className="text-xl font-bold text-text-on-primary">
+          <span className="text-lg font-bold text-text-on-primary sm:text-xl">
             Kayla&apos;s Garden
           </span>
         </Link>
-        <div className="flex items-center gap-4">
-          <nav aria-label="Main navigation" className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 sm:gap-4">
+          <nav aria-label="Main navigation" className="flex flex-wrap items-center gap-x-3 gap-y-1 sm:gap-4">
             {navLinks.map(({ href, label }) => {
               const isActive = pathname === href;
               return (
@@ -43,7 +43,7 @@ export function Header() {
             })}
           </nav>
           <div
-            className="ml-2 border-l border-white/20 pl-3"
+            className="border-l border-white/20 pl-3 sm:ml-2"
             role="group"
             aria-label="Theme selection"
           >
