@@ -48,6 +48,7 @@ export interface FrostDates {
 
 export interface UserSettings {
   location: string; // city or zip
-  theme: "green" | "earth" | "ocean";
+  gardenName: string;
+  theme: "green" | "earth" | "ocean" | "space";
   frostDates: FrostDates | null;
 }

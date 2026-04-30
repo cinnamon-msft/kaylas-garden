@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react";
 
-type Theme = "green" | "earth" | "ocean";
+type Theme = "green" | "earth" | "ocean" | "space";
 
 const themes: { id: Theme; label: string; emoji: string }[] = [
   { id: "green", label: "Garden", emoji: "🌿" },
   { id: "earth", label: "Earth", emoji: "🌾" },
   { id: "ocean", label: "Ocean", emoji: "🌊" },
+  { id: "space", label: "Space", emoji: "🔮" },
 ];
 
 export function ThemeSwitcher() {

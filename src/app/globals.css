@@ -50,6 +50,22 @@
   --color-hover: #e0f2fe;
 }
 
+[data-theme="space"] {
+  --color-primary: #7c3aed;
+  --color-primary-light: #a78bfa;
+  --color-primary-dark: #5b21b6;
+  --color-secondary: #4c1d95;
+  --color-accent: #c4b5fd;
+  --color-bg-page: #0f0a1e;
+  --color-bg-card: #1a1230;
+  --color-bg-header: #2e1065;
+  --color-text-primary: #ede9fe;
+  --color-text-secondary: #c4b5fd;
+  --color-text-on-primary: #ffffff;
+  --color-border: #3b2770;
+  --color-hover: #251a40;
+}
+
 @theme inline {
   --color-primary: var(--color-primary);
   --color-primary-light: var(--color-primary-light);

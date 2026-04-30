@@ -121,6 +121,7 @@ async function main() {
     CREATE TABLE IF NOT EXISTS user_settings (
       user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
       theme TEXT NOT NULL DEFAULT 'green',
+      garden_name TEXT,
       location TEXT,
       frost_dates JSONB
     );

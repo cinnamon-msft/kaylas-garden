@@ -231,6 +231,7 @@ export async function waterPlant(
 
 const DEFAULT_SETTINGS: UserSettings = {
   location: "",
+  gardenName: "My Garden",
   theme: "green",
   frostDates: null,
 };
@@ -242,6 +243,7 @@ export async function getSettings(userId: string): Promise<UserSettings> {
   if (!row) return DEFAULT_SETTINGS;
   return {
     location: row.location || "",
+    gardenName: row.gardenName || "My Garden",
     theme: row.theme,
     frostDates: row.frostDates as FrostDates | null,
   };
@@ -259,12 +261,14 @@ export async function updateSettings(
     const updateValues: Record<string, unknown> = {};
     if (settings.theme !== undefined) updateValues.theme = settings.theme;
     if (settings.location !== undefined) updateValues.location = settings.location;
+    if (settings.gardenName !== undefined) updateValues.gardenName = settings.gardenName;
     if (settings.frostDates !== undefined) updateValues.frostDates = settings.frostDates;
     await db.update(schema.userSettings).set(updateValues).where(eq(schema.userSettings.userId, userId));
   } else {
     await db.insert(schema.userSettings).values({
       userId,
       theme: settings.theme || "green",
+      gardenName: settings.gardenName || null,
       location: settings.location || null,
       frostDates: settings.frostDates || null,
     });

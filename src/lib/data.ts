@@ -7,6 +7,7 @@ const SETTINGS_BLOB = "json/settings.json";
 
 const DEFAULT_SETTINGS: UserSettings = {
   location: "Boston, MA",
+  gardenName: "My Garden",
   theme: "green",
   frostDates: null,
 };

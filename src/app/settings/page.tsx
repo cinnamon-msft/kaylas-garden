@@ -3,23 +3,25 @@
 import { useState, useEffect } from "react";
 import type { UserSettings, FrostDates } from "@/lib/types";
 
-type Theme = "green" | "earth" | "ocean";
+type Theme = "green" | "earth" | "ocean" | "space";
 
 const themes: { id: Theme; label: string; emoji: string; swatches: string[] }[] = [
   { id: "green", label: "Garden", emoji: "🌿", swatches: ["bg-green-600", "bg-green-400", "bg-green-100"] },
   { id: "earth", label: "Earth", emoji: "🌾", swatches: ["bg-amber-700", "bg-amber-500", "bg-amber-100"] },
   { id: "ocean", label: "Ocean", emoji: "🌊", swatches: ["bg-blue-700", "bg-blue-400", "bg-blue-100"] },
+  { id: "space", label: "Space", emoji: "🔮", swatches: ["bg-purple-700", "bg-purple-400", "bg-purple-950"] },
 ];
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState<UserSettings | null>(null);
   const [location, setLocation] = useState("");
+  const [gardenName, setGardenName] = useState("");
   const [frostDates, setFrostDates] = useState<FrostDates | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    document.title = "Settings — Kayla's Garden";
+    document.title = "Settings — The Seed Feed";
   }, []);
 
   useEffect(() => {
@@ -28,6 +30,7 @@ export default function SettingsPage() {
       .then((data: UserSettings) => {
         setSettings(data);
         setLocation(data.location);
+        setGardenName(data.gardenName || "My Garden");
         setFrostDates(data.frostDates);
       })
       .catch(() => setError("Failed to load settings"));
@@ -75,6 +78,44 @@ export default function SettingsPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-8">
       <h1 className="text-3xl font-bold text-text-primary"><span aria-hidden="true">⚙️</span> Settings</h1>
+
+      {/* Garden Name */}
+      <section className="rounded-xl border border-border bg-bg-card p-4 shadow-sm sm:p-6">
+        <h2 className="mb-4 text-xl font-semibold text-text-primary"><span aria-hidden="true">🌱</span> Garden Name</h2>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="garden-name-input" className="text-sm font-medium text-text-secondary">
+            Give your garden a name
+          </label>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <input
+              id="garden-name-input"
+              type="text"
+              value={gardenName}
+              onChange={(e) => setGardenName(e.target.value)}
+              placeholder="e.g., Sunny Side Plot"
+              className="flex-1 rounded-lg border border-border bg-bg-page px-4 py-2 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+            <button
+              onClick={async () => {
+                try {
+                  await fetch("/api/settings", {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ gardenName: gardenName.trim() || "My Garden" }),
+                  });
+                  setSettings((prev) => prev ? { ...prev, gardenName: gardenName.trim() || "My Garden" } : prev);
+                } catch {
+                  setError("Failed to save garden name");
+                }
+              }}
+              disabled={!gardenName.trim()}
+              className="rounded-lg bg-primary px-5 py-2 font-medium text-text-on-primary transition-colors hover:opacity-90 disabled:opacity-50"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </section>
 
       {/* Location & Frost Dates */}
       <section className="rounded-xl border border-border bg-bg-card p-4 shadow-sm sm:p-6">

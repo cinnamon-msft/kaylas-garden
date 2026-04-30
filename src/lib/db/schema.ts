@@ -165,7 +165,8 @@ export const comments = pgTable("comments", {
 
 export const userSettings = pgTable("user_settings", {
   userId: text("user_id").primaryKey().references(() => users.id, { onDelete: "cascade" }),
-  theme: text("theme").$type<"green" | "earth" | "ocean">().notNull().default("green"),
+  theme: text("theme").$type<"green" | "earth" | "ocean" | "space">().notNull().default("green"),
+  gardenName: text("garden_name"),
   location: text("location"),
   frostDates: jsonb("frost_dates").$type<{
     lastSpringFrost: string;
