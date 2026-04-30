@@ -6,7 +6,9 @@ async function main(): Promise<void> {
   await builder.addAzureContainerAppEnvironment('acaenv');
 
   // ─── Parameters ────────────────────────────────────────────────────────────
-  // GitHub OAuth credentials (prompted in the Aspire dashboard if not configured)
+  // GitHub OAuth credentials — set via Aspire dashboard prompt or environment variables.
+  // Create a GitHub OAuth App at https://github.com/settings/developers
+  // Callback URL: http://localhost:3000/api/auth/callback/github
   const githubId = builder.addParameter('github-id', { secret: true });
   const githubSecret = builder.addParameter('github-secret', { secret: true });
 
@@ -38,7 +40,7 @@ async function main(): Promise<void> {
   const gardenDb = postgres.addDatabase('gardendb');
 
   // ─── Database migration (runs once before the web app starts) ─────────────
-  const dbMigration = builder.addNodeApp('db-migration', '.', 'scripts/init-db.ts')
+  const dbMigration = builder.addJavaScriptApp('db-migration', '.', { runScriptName: 'db:init' })
     .withReference(gardenDb)
     .waitFor(gardenDb);
 
