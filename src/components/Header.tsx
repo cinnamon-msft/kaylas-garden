@@ -22,10 +22,10 @@ export function Header() {
   return (
     <header className="bg-bg-header shadow-md">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-3 gap-y-2 px-3 py-3 sm:px-4">
-        <Link href="/" aria-label="Garden Friends – Home" className="flex items-center gap-2">
+        <Link href="/" aria-label="The Seed Feed – Home" className="flex items-center gap-2">
           <span aria-hidden="true" className="text-2xl">🌱</span>
           <span className="text-lg font-bold text-text-on-primary sm:text-xl">
-            Garden Friends
+            The Seed Feed
           </span>
         </Link>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 sm:gap-4">

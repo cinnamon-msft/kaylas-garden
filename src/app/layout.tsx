@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
-  title: "Garden Friends",
+  title: "The Seed Feed",
   description: "Track your plants, share your garden, and connect with fellow gardeners 🌱",
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>",
@@ -37,7 +37,7 @@ export default function RootLayout({
               {children}
             </main>
             <footer className="border-t border-border py-4 text-center text-sm text-text-secondary">
-              🌱 Garden Friends &mdash; Happy Growing!
+              🌱 The Seed Feed &mdash; Happy Growing!
             </footer>
           </ThemeProvider>
         </AuthProvider>

@@ -14,7 +14,7 @@ function LoginForm() {
         <div className="mb-6 text-center">
           <span className="text-5xl">🌱</span>
           <h1 className="mt-3 text-2xl font-bold text-text-primary">
-            Garden Friends
+            The Seed Feed
           </h1>
           <p className="mt-2 text-sm text-text-secondary">
             Track your plants, share your garden, and connect with fellow gardeners.
