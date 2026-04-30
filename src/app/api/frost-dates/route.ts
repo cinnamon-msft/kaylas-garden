@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { updateSettings } from "@/lib/data";
+import { updateSettings } from "@/lib/data-social";
+import { getAuthUserId } from "@/lib/auth-helpers";
 import type { FrostDates } from "@/lib/types";
+
+export const dynamic = "force-dynamic";
 
 const FROST_DATA: Record<string, FrostDates> = {
   boston: { lastSpringFrost: "April 15", firstFallFrost: "October 15", growingSeasonDays: 183 },
@@ -51,6 +54,9 @@ function findFrostDates(location: string): FrostDates {
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    const userId = await getAuthUserId();
+    if (userId instanceof NextResponse) return userId;
+
     const { searchParams } = new URL(request.url);
     const location = searchParams.get("location");
 
@@ -63,7 +69,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     const frostDates = findFrostDates(location);
 
-    await updateSettings({ location, frostDates });
+    await updateSettings(userId, { location, frostDates });
 
     return NextResponse.json({ location, frostDates });
   } catch (err: unknown) {

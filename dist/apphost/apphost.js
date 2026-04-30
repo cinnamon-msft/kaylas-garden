@@ -12,9 +12,14 @@ async function main() {
         },
     })
         .addBlobContainer('plantdata', { blobContainerName: 'plantdata' });
+    // PostgreSQL for user data, social features, and plant records
+    const gardenDb = builder.addPostgres("postgres")
+        .withDataVolume()
+        .addDatabase("gardendb");
     await builder
         .addNextJsApp('web', '.')
         .withReference(plantdata)
+        .withReference(gardenDb)
         .withHttpEndpoint({ port: 3000, env: 'PORT' })
         .withExternalHttpEndpoints();
     await builder.build().run();

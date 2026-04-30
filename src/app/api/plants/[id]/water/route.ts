@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { waterPlant } from "@/lib/data";
+import { waterPlant } from "@/lib/data-social";
+import { getAuthUserId } from "@/lib/auth-helpers";
+
+export const dynamic = "force-dynamic";
 
 interface WaterRequestBody {
   date: string;
@@ -11,9 +14,11 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
+    const userId = await getAuthUserId();
+    if (userId instanceof NextResponse) return userId;
     const { id } = await params;
     const body = (await request.json()) as WaterRequestBody;
-    const event = await waterPlant(id, {
+    const event = await waterPlant(userId, id, {
       date: body.date || new Date().toISOString(),
       note: body.note || "",
     });

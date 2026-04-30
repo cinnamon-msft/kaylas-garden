@@ -21,6 +21,7 @@
     "Aspire.Hosting.Docker": "13.3.0-preview.1.26217.2",
     "Aspire.Hosting.Azure.AppContainers": "13.3.0-preview.1.26217.2",
     "Aspire.Hosting.Azure.Storage": "13.3.0-preview.1.26217.2",
-    "Aspire.Hosting.Foundry": "13.3.0-preview.1.26217.2"
+    "Aspire.Hosting.Foundry": "13.3.0-preview.1.26217.2",
+    "Aspire.Hosting.PostgreSQL": "13.4.0-preview.1.26230.1"
   }
 }

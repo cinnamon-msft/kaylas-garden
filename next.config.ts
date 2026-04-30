@@ -4,7 +4,15 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: __dirname,
   },
-  output: 'standalone'
+  output: 'standalone',
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

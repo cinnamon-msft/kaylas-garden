@@ -1,0 +1,47 @@
+import { NextResponse } from "next/server";
+import { addComment, getComments } from "@/lib/data-social";
+import { getAuthUserId } from "@/lib/auth-helpers";
+
+export const dynamic = "force-dynamic";
+
+interface RouteContext {
+  params: Promise<{ id: string }>;
+}
+
+export async function GET(
+  _request: Request,
+  context: RouteContext
+): Promise<NextResponse> {
+  try {
+    const userId = await getAuthUserId();
+    if (userId instanceof NextResponse) return userId;
+    const { id } = await context.params;
+    const comments = await getComments(id);
+    return NextResponse.json(comments);
+  } catch (err: unknown) {
+    console.error("GET /api/feed/[id]/comments failed:", err);
+    const message = err instanceof Error ? err.message : "Failed to fetch comments";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
+
+export async function POST(
+  request: Request,
+  context: RouteContext
+): Promise<NextResponse> {
+  try {
+    const userId = await getAuthUserId();
+    if (userId instanceof NextResponse) return userId;
+    const { id } = await context.params;
+    const body = (await request.json()) as { text: string };
+    if (!body.text?.trim()) {
+      return NextResponse.json({ error: "Comment text is required" }, { status: 400 });
+    }
+    const comment = await addComment(userId, id, body.text.trim());
+    return NextResponse.json(comment, { status: 201 });
+  } catch (err: unknown) {
+    console.error("POST /api/feed/[id]/comments failed:", err);
+    const message = err instanceof Error ? err.message : "Failed to add comment";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
