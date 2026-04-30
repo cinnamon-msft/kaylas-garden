@@ -259,13 +259,13 @@ export default function FeedPage() {
         <div className="flex flex-col items-center gap-4 rounded-2xl border border-border bg-bg-card py-20 text-center">
           <span className="text-5xl">🌿</span>
           <p className="text-lg text-text-secondary">
-            Your feed is empty! Follow some gardeners to see their updates.
+            Your feed is empty! Follow some friends to fertilize your feed.
           </p>
           <a
             href="/users/search"
             className="rounded-lg bg-primary px-5 py-2.5 font-medium text-text-on-primary hover:bg-primary-dark"
           >
-            Find Gardeners
+            Find Seeders
           </a>
         </div>
       )}

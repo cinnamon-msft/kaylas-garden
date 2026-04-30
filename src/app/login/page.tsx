@@ -17,7 +17,7 @@ function LoginForm() {
             The Seed Feed
           </h1>
           <p className="mt-2 text-sm text-text-secondary">
-            Track your plants, share your garden, and connect with fellow gardeners.
+            Track your plants, share your garden, and grow with fellow seeders.
           </p>
         </div>
 

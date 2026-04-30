@@ -6,7 +6,7 @@ import { AuthProvider } from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
   title: "The Seed Feed",
-  description: "Track your plants, share your garden, and connect with fellow gardeners 🌱",
+  description: "Track your plants, share your garden, and grow with fellow seeders 🌱",
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>",
   },

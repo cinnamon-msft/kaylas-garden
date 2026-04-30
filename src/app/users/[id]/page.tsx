@@ -104,15 +104,15 @@ export default function UserProfilePage() {
           )}
           <div className="flex-1 text-center sm:text-left">
             <h1 className="text-2xl font-bold text-text-primary">
-              {profile.name || "Unnamed Gardener"}
+              {profile.name || "Unnamed Seeder"}
             </h1>
             {profile.username && (
               <p className="text-sm text-text-secondary">@{profile.username}</p>
             )}
             <div className="mt-2 flex justify-center gap-6 text-sm text-text-secondary sm:justify-start">
               <span><strong className="text-text-primary">{profile.plantCount}</strong> plants</span>
-              <span><strong className="text-text-primary">{profile.followerCount}</strong> followers</span>
-              <span><strong className="text-text-primary">{profile.followingCount}</strong> following</span>
+              <span><strong className="text-text-primary">{profile.followerCount}</strong> seeders</span>
+              <span><strong className="text-text-primary">{profile.followingCount}</strong> seeding</span>
             </div>
           </div>
           {!isOwnProfile && (
