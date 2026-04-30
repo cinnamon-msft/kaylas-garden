@@ -125,6 +125,9 @@ async function main() {
       location TEXT,
       frost_dates JSONB
     );
+
+    -- Migrations for existing tables
+    ALTER TABLE user_settings ADD COLUMN IF NOT EXISTS garden_name TEXT;
   `);
 
   console.log("✅ Database schema initialized successfully!");
