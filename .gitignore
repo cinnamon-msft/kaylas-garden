@@ -40,8 +40,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# aspire generated modules
+# aspire
 /.modules/
+/dist/apphost/
+.aspire/
+
+# playwright
+.playwright-cli/
 
 # uploaded images (served via API route)
 /data/uploads/*
