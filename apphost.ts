@@ -1,13 +1,7 @@
-import pg from 'pg';
 import { createBuilder, ContainerLifetime } from './.modules/aspire.js';
-import type { CommandResultFormat } from './.modules/aspire.js';
-
-const { Client } = pg;
-const markdownCommandResultFormat = 'Markdown' as CommandResultFormat;
-
-function quoteIdentifier(identifier: string): string {
-  return `"${identifier.replaceAll('"', '""')}"`;
-}
+import { createClearDatabaseCommand } from './scripts/commands/clear-database.js';
+import { createAspireDescribeConnectionStringProvider } from './scripts/commands/connection-string.js';
+import { createSeedDatabaseCommand } from './scripts/commands/seed-database.js';
 
 async function main(): Promise<void> {
   const builder = await createBuilder();
@@ -47,79 +41,13 @@ async function main(): Promise<void> {
     .withPgAdmin();
 
   const gardenDbName = 'gardendb';
-  const gardenDb = await postgres.addDatabase(gardenDbName)
-    .withCommand('clear-database', 'Clear database', async () => {
-      let client: pg.Client | undefined;
-
-      try {
-        const configuration = await builder.getConfiguration();
-        const connectionString = await configuration.getConnectionString(gardenDbName);
-        client = new Client({ connectionString });
-
-        await client.connect();
-
-        const tables = await client.query<{ tablename: string }>(`
-          SELECT tablename
-          FROM pg_tables
-          WHERE schemaname = 'public'
-            AND tablename <> '__drizzle_migrations'
-          ORDER BY tablename
-        `);
-
-        if (tables.rows.length === 0) {
-          return {
-            success: true,
-            message: 'No public database tables found to clear.',
-            data: {
-              value: '### Database already clear\n\nNo public database tables were found to clear.',
-              format: markdownCommandResultFormat,
-              displayImmediately: true,
-            },
-          };
-        }
-
-        const tableNames = tables.rows.map((row) => row.tablename);
-        const tableList = tableNames.map(quoteIdentifier).join(', ');
-        await client.query(`TRUNCATE TABLE ${tableList} RESTART IDENTITY CASCADE`);
-
-        return {
-          success: true,
-          message: `Cleared ${tableNames.length} database table(s).`,
-          data: {
-            value: [
-              '### Database cleared',
-              '',
-              `Cleared **${tableNames.length}** public table(s) from \`${gardenDbName}\`:`,
-              '',
-              ...tableNames.map((tableName) => `- \`${tableName}\``),
-            ].join('\n'),
-            format: markdownCommandResultFormat,
-            displayImmediately: true,
-          },
-        };
-      } catch (error: unknown) {
-        const message = error instanceof Error ? error.message : String(error);
-        return {
-          success: false,
-          errorMessage: `Failed to clear database: ${message}`,
-          data: {
-            value: `### Failed to clear database\n\n\`${message}\``,
-            format: markdownCommandResultFormat,
-            displayImmediately: true,
-          },
-        };
-      } finally {
-        if (client) {
-          await client.end();
-        }
-      }
-    }, {
-      commandOptions: {
-        description: 'Deletes all rows from the public PostgreSQL tables while preserving the schema.',
-        confirmationMessage: 'This deletes all rows from every public table in gardendb. Continue?',
-        iconName: 'Delete',
-      },
-    });
+  const gardenDb = await postgres.addDatabase(gardenDbName);
+  const getGardenDbUri = createAspireDescribeConnectionStringProvider(gardenDbName);
+  const clearDb = createClearDatabaseCommand(gardenDbName, getGardenDbUri);
+  const seedDb = createSeedDatabaseCommand(gardenDbName, getGardenDbUri);
+  await gardenDb
+    .withCommand(clearDb.name, clearDb.displayName, clearDb.handler, clearDb.options)
+    .withCommand(seedDb.name, seedDb.displayName, seedDb.handler, seedDb.options);
 
   // ─── Database migration (runs once before the web app starts) ─────────────
   const dbMigration = builder.addJavaScriptApp('db-migration', '.', { runScriptName: 'db:init' })
