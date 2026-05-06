@@ -47,7 +47,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 npm run aspire:start
 ```
 
-This starts the Next.js app through the Aspire AppHost.
+This starts the Next.js app through the Aspire AppHost. For local development, use the highlighted **Dev login** command on the `web` resource in the Aspire dashboard to sign in as a generated development user without configuring GitHub OAuth.
 
 ### Build
 

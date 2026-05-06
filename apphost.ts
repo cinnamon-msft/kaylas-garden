@@ -1,6 +1,8 @@
+import { randomUUID } from 'node:crypto';
 import { createBuilder, ContainerLifetime } from './.modules/aspire.js';
 import { createClearDatabaseCommand } from './scripts/commands/clear-database.js';
 import { createAspireDescribeConnectionStringProvider } from './scripts/commands/connection-string.js';
+import { createDevLoginCommand } from './scripts/commands/dev-login.js';
 import { createSeedDatabaseCommand } from './scripts/commands/seed-database.js';
 
 async function main(): Promise<void> {
@@ -23,6 +25,7 @@ async function main(): Promise<void> {
     numeric: true,
     special: true,
   }, { secret: true, persist: true });
+  const devAuthToken = randomUUID();
 
   // ─── Azure Blob Storage (images) ──────────────────────────────────────────
   const plantdata = builder.addAzureStorage('storage')
@@ -45,6 +48,7 @@ async function main(): Promise<void> {
   const getGardenDbUri = createAspireDescribeConnectionStringProvider(gardenDbName);
   const clearDb = createClearDatabaseCommand(gardenDbName, getGardenDbUri);
   const seedDb = createSeedDatabaseCommand(gardenDbName, getGardenDbUri);
+  const devLogin = createDevLoginCommand('http://localhost:3000', devAuthToken);
   await gardenDb
     .withCommand(clearDb.name, clearDb.displayName, clearDb.handler, clearDb.options)
     .withCommand(seedDb.name, seedDb.displayName, seedDb.handler, seedDb.options);
@@ -63,10 +67,13 @@ async function main(): Promise<void> {
     .withEnvironment('GITHUB_SECRET', githubSecret)
     .withEnvironment('AUTH_SECRET', authSecret)
     .withEnvironment('NEXTAUTH_URL', 'http://localhost:3000')
+    .withEnvironment('DEV_AUTH_ENABLED', 'true')
+    .withEnvironment('DEV_AUTH_TOKEN', devAuthToken)
     .waitFor(gardenDb)
     .waitForCompletion(dbMigration)
     .withHttpEndpoint({ port: 3000, env: 'PORT' })
     .withBrowserLogs()
+    .withCommand(devLogin.name, devLogin.displayName, devLogin.handler, devLogin.options)
     .withExternalHttpEndpoints();
 
   await builder.build().run();
