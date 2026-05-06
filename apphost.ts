@@ -3,7 +3,14 @@ import { createBuilder, ContainerLifetime } from './.modules/aspire.js';
 import { createClearDatabaseCommand } from './scripts/commands/clear-database.js';
 import { createAspireDescribeConnectionStringProvider } from './scripts/commands/connection-string.js';
 import { createDevLoginCommand } from './scripts/commands/dev-login.js';
+import { createDevTunnelUrlsCommand } from './scripts/commands/devtunnel-urls.js';
+import { createGitHubAuthCommand } from './scripts/commands/github-auth.js';
 import { createSeedDatabaseCommand } from './scripts/commands/seed-database.js';
+
+const webBaseUrl = 'http://localhost:3000';
+const devTunnelLabel = 'kaylas-garden';
+const webPort = 3000;
+const devAuthEnabled = process.env.DEV_AUTH_ENABLED ?? 'true';
 
 async function main(): Promise<void> {
   const builder = await createBuilder();
@@ -48,7 +55,9 @@ async function main(): Promise<void> {
   const getGardenDbUri = createAspireDescribeConnectionStringProvider(gardenDbName);
   const clearDb = createClearDatabaseCommand(gardenDbName, getGardenDbUri);
   const seedDb = createSeedDatabaseCommand(gardenDbName, getGardenDbUri);
-  const devLogin = createDevLoginCommand('http://localhost:3000', devAuthToken);
+  const devLogin = createDevLoginCommand(webBaseUrl, devAuthToken);
+  const devTunnelUrls = createDevTunnelUrlsCommand(devTunnelLabel, webPort, webBaseUrl, devAuthToken);
+  const githubAuth = createGitHubAuthCommand(webBaseUrl, devAuthToken);
   await gardenDb
     .withCommand(clearDb.name, clearDb.displayName, clearDb.handler, clearDb.options)
     .withCommand(seedDb.name, seedDb.displayName, seedDb.handler, seedDb.options);
@@ -59,22 +68,44 @@ async function main(): Promise<void> {
     .waitFor(gardenDb);
 
   // ─── Web Application ──────────────────────────────────────────────────────
-  await builder
+  const web = await builder
     .addNextJsApp('web', '.')
     .withReference(plantdata)
     .withReference(gardenDb)
     .withEnvironment('GITHUB_ID', githubId)
     .withEnvironment('GITHUB_SECRET', githubSecret)
     .withEnvironment('AUTH_SECRET', authSecret)
-    .withEnvironment('NEXTAUTH_URL', 'http://localhost:3000')
-    .withEnvironment('DEV_AUTH_ENABLED', 'true')
+    .withEnvironment('NEXTAUTH_URL', webBaseUrl)
+    .withEnvironment('DEV_AUTH_ENABLED', devAuthEnabled)
     .withEnvironment('DEV_AUTH_TOKEN', devAuthToken)
     .waitFor(gardenDb)
     .waitForCompletion(dbMigration)
     .withHttpEndpoint({ port: 3000, env: 'PORT' })
     .withBrowserLogs()
     .withCommand(devLogin.name, devLogin.displayName, devLogin.handler, devLogin.options)
+    .withCommand(githubAuth.name, githubAuth.displayName, githubAuth.handler, githubAuth.options)
     .withExternalHttpEndpoints();
+
+  await builder
+    .addExecutable('devtunnel-web', 'devtunnel', '.', [
+      'host',
+      '--port-numbers',
+      webPort.toString(),
+      '--protocol',
+      'http',
+      '--host-header',
+      'unchanged',
+      '--origin-header',
+      'unchanged',
+      '--allow-anonymous',
+      '--description',
+      'Kayla\'s Garden local web tunnel',
+      '--labels',
+      devTunnelLabel,
+    ])
+    .waitFor(web)
+    .withExplicitStart()
+    .withCommand(devTunnelUrls.name, devTunnelUrls.displayName, devTunnelUrls.handler, devTunnelUrls.options);
 
   await builder.build().run();
 }

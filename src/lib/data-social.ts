@@ -430,16 +430,31 @@ export async function getComments(feedItemId: string) {
 
 export async function searchUsers(query: string, currentUserId: string, limit = 20) {
   // Simple search by name - in production you'd use full-text search
-  const allUsers = await db.query.users.findMany({ limit: 100 });
-  const q = query.toLowerCase();
+  const [allUsers, followRows] = await Promise.all([
+    db.query.users.findMany({ limit: 100 }),
+    db.query.follows.findMany({ where: eq(schema.follows.followerId, currentUserId) }),
+  ]);
+  const followingIds = new Set(followRows.map((row) => row.followingId));
+  const q = query.trim().toLowerCase();
   return allUsers
-    .filter((u) => u.id !== currentUserId && (
-      u.name?.toLowerCase().includes(q) ||
-      u.username?.toLowerCase().includes(q) ||
-      u.email?.toLowerCase().includes(q)
-    ))
+    .filter((u) => {
+      if (u.id === currentUserId) return false;
+      if (!q) return true;
+
+      return (
+        u.name?.toLowerCase().includes(q) ||
+        u.username?.toLowerCase().includes(q) ||
+        u.email?.toLowerCase().includes(q)
+      );
+    })
     .slice(0, limit)
-    .map((u) => ({ id: u.id, name: u.name, image: u.image, username: u.username }));
+    .map((u) => ({
+      id: u.id,
+      name: u.name,
+      image: u.image,
+      username: u.username,
+      following: followingIds.has(u.id),
+    }));
 }
 
 export async function getUserProfile(userId: string) {

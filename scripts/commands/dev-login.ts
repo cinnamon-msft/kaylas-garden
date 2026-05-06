@@ -6,6 +6,7 @@ import type {
 } from '../../.modules/aspire.js';
 
 const markdownFormat = 'Markdown' as CommandResultFormat;
+const localDevProfile = 'local';
 
 interface DevLoginCommand {
   name: string;
@@ -24,6 +25,7 @@ export function createDevLoginCommand(
     handler: async () => {
       const loginUrl = new URL('/api/dev-auth/login', webBaseUrl);
       loginUrl.searchParams.set('token', devAuthToken);
+      loginUrl.searchParams.set('profile', localDevProfile);
 
       return {
         success: true,
@@ -32,11 +34,13 @@ export function createDevLoginCommand(
           value: [
             '### Development login',
             '',
-            'Open this local-only URL to sign in as the development user:',
+            'Open this local-only URL to sign in as `dev-feeder`:',
             '',
-            `[Sign in as Dev Seeder](${loginUrl.toString()})`,
+            `[Sign in as Dev Feeder](${loginUrl.toString()})`,
             '',
             `Direct URL: \`${loginUrl.toString()}\``,
+            '',
+            'Use `devtunnel-web` -> `Show tunnel URLs` to sign in a remote browser as `remote-feeder`.',
           ].join('\n'),
           format: markdownFormat,
           displayImmediately: true,
@@ -46,8 +50,7 @@ export function createDevLoginCommand(
     options: {
       commandOptions: {
         description: 'Creates a local development login URL for the web app.',
-        iconName: 'SignIn',
-        isHighlighted: true,
+        iconName: 'Key',
       },
     },
   };

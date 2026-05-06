@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["*.use.devtunnels.ms"],
   turbopack: {
     root: __dirname,
   },
