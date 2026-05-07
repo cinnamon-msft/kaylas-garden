@@ -47,7 +47,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 npm run aspire:start
 ```
 
-This starts the Next.js app through the Aspire AppHost. For local development, use the **Dev login** command in the `web` resource action menu to sign in as `dev-feeder` without configuring GitHub OAuth.
+This starts the Next.js app through the Aspire AppHost. For local development, use the **Dev login** command in the `web` resource action menu to sign in as `dev-feeder` without configuring GitHub OAuth. Use the **Seed dev gardens** command in the `gardendb` resource action menu to create/update the dev login users and add sample plants for both dev profiles.
 
 To switch a browser back to the normal GitHub OAuth flow, use the **GitHub auth** command in the `web` resource action menu. To hide the dev-auth endpoint entirely, restart Aspire with dev auth disabled:
 
@@ -58,7 +58,7 @@ npm run aspire:start
 
 Set `DEV_AUTH_ENABLED` back to `true` or remove the environment variable before restarting if you want the dev-auth commands to work again.
 
-To share the running web app from another device or with a friend, install the `devtunnel` CLI and start the explicit **devtunnel-web** resource from the Aspire dashboard or run:
+To share the running web app from another device or with a friend, start the Aspire **devtunnel-web** resource from the dashboard or run:
 
 ```bash
 aspire resource devtunnel-web start

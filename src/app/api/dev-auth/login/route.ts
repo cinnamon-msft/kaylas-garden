@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { db, schema } from "@/lib/db";
+import { getDevProfile, type DevProfile } from "@/lib/dev-auth-profiles";
 import {
   getRequestOrigin,
   getSafeCallbackUrl,
@@ -14,50 +15,20 @@ export const runtime = "nodejs";
 
 const SESSION_DURATION_DAYS = 30;
 
-const devProfiles = {
-  local: {
-    id: "dev-feeder",
-    name: "Dev Feeder",
-    email: "dev-feeder@example.test",
-    username: "dev-feeder",
-    gardenName: "Dev Feeder's Garden",
-  },
-  remote: {
-    id: "remote-feeder",
-    name: "Remote Feeder",
-    email: "remote-feeder@example.test",
-    username: "remote-feeder",
-    gardenName: "Remote Feeder's Garden",
-  },
-} as const;
-
-type DevProfile = (typeof devProfiles)[keyof typeof devProfiles];
-type DevProfileKey = keyof typeof devProfiles;
-
-function getDevProfile(requestUrl: URL): DevProfile | undefined {
-  const requestedProfile = requestUrl.searchParams.get("profile") || "local";
-
-  if (requestedProfile === "local" || requestedProfile === "remote") {
-    return devProfiles[requestedProfile satisfies DevProfileKey];
-  }
-
-  return undefined;
-}
-
 async function ensureDevUser(profile: DevProfile): Promise<void> {
   await db.insert(schema.users).values({
     id: profile.id,
     name: profile.name,
     email: profile.email,
     username: profile.username,
-    location: "Seattle, WA",
+    location: profile.location,
   }).onConflictDoUpdate({
     target: schema.users.id,
     set: {
       name: profile.name,
       email: profile.email,
       username: profile.username,
-      location: "Seattle, WA",
+      location: profile.location,
     },
   });
 
@@ -65,14 +36,14 @@ async function ensureDevUser(profile: DevProfile): Promise<void> {
     userId: profile.id,
     theme: "green",
     gardenName: profile.gardenName,
-    location: "Seattle, WA",
+    location: profile.location,
   }).onConflictDoNothing();
 }
 
 export async function GET(request: Request): Promise<NextResponse> {
   const requestUrl = new URL(request.url);
   const tokenError = validateDevAuthToken(requestUrl);
-  const profile = getDevProfile(requestUrl);
+  const profile = getDevProfile(requestUrl.searchParams.get("profile"));
 
   if (tokenError) {
     return tokenError;

@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import pg from 'pg';
 import type {
   CommandResultFormat,
@@ -5,6 +6,7 @@ import type {
   ExecuteCommandResult,
   WithCommandOptions,
 } from '../../.modules/aspire.js';
+import { getDevProfileEntries, type DevProfile } from '../../src/lib/dev-auth-profiles.js';
 
 const { Client } = pg;
 const markdownFormat = 'Markdown' as CommandResultFormat;
@@ -91,13 +93,71 @@ const samplePlants = [
   },
 ];
 
+async function ensureDevProfile(client: pg.Client, profile: DevProfile): Promise<void> {
+  await client.query(
+    `INSERT INTO users (id, name, email, username, location, created_at)
+     VALUES ($1, $2, $3, $4, $5, NOW())
+     ON CONFLICT (id) DO UPDATE
+     SET name = EXCLUDED.name,
+         email = EXCLUDED.email,
+         username = EXCLUDED.username,
+         location = EXCLUDED.location`,
+    [profile.id, profile.name, profile.email, profile.username, profile.location]
+  );
+
+  await client.query(
+    `INSERT INTO user_settings (user_id, theme, garden_name, location)
+     VALUES ($1, 'green', $2, $3)
+     ON CONFLICT (user_id) DO UPDATE
+     SET garden_name = EXCLUDED.garden_name,
+         location = EXCLUDED.location`,
+    [profile.id, profile.gardenName, profile.location]
+  );
+}
+
+async function seedPlantsForUser(client: pg.Client, userId: string): Promise<string[]> {
+  const plantNames: string[] = [];
+
+  for (const plant of samplePlants) {
+    const existingPlant = await client.query<{ id: string }>(
+      `SELECT id
+       FROM plants
+       WHERE user_id = $1
+         AND name = $2
+         AND species = $3
+       LIMIT 1`,
+      [userId, plant.name, plant.species]
+    );
+
+    if (existingPlant.rows.length > 0) {
+      await client.query(
+        `UPDATE plants
+         SET care_info = $1,
+             watering_interval_days = $2
+         WHERE id = $3`,
+        [JSON.stringify(plant.careInfo), plant.wateringIntervalDays, existingPlant.rows[0].id]
+      );
+    } else {
+      await client.query(
+        `INSERT INTO plants (id, user_id, name, species, date_added, care_info, watering_interval_days, created_at)
+         VALUES ($1, $2, $3, $4, NOW(), $5, $6, NOW())`,
+        [randomUUID(), userId, plant.name, plant.species, JSON.stringify(plant.careInfo), plant.wateringIntervalDays]
+      );
+    }
+
+    plantNames.push(plant.name);
+  }
+
+  return plantNames;
+}
+
 export function createSeedDatabaseCommand(
   gardenDbName: string,
   getConnectionString: ConnectionStringProvider
 ): DatabaseCommand {
   return {
     name: 'seed-database',
-    displayName: 'Seed sample plants',
+    displayName: 'Seed dev gardens',
     handler: async (context) => {
       let client: pg.Client | undefined;
 
@@ -107,66 +167,26 @@ export function createSeedDatabaseCommand(
 
         await client.connect();
 
-        // Ensure there's at least one user to attach plants to
-        const userResult = await client.query<{ id: string }>(`
-          SELECT id FROM users LIMIT 1
-        `);
+        const seededProfiles: Array<{ username: string; plantNames: string[] }> = [];
 
-        if (userResult.rows.length === 0) {
-          return {
-            success: false,
-            errorMessage: 'No users found. Sign in to the app first, then run this command.',
-            data: {
-              value: '### Cannot seed database\n\nNo users exist yet. Sign in to the app first to create your account, then run this command again.',
-              format: markdownFormat,
-              displayImmediately: true,
-            },
-          };
-        }
-
-        const userId = userResult.rows[0].id;
-        const plantNames: string[] = [];
-
-        for (const plant of samplePlants) {
-          const existingPlant = await client.query<{ id: string }>(
-            `SELECT id
-             FROM plants
-             WHERE user_id = $1
-               AND name = $2
-               AND species = $3
-             LIMIT 1`,
-            [userId, plant.name, plant.species]
-          );
-
-          if (existingPlant.rows.length > 0) {
-            await client.query(
-              `UPDATE plants
-               SET care_info = $1,
-                   watering_interval_days = $2
-               WHERE id = $3`,
-              [JSON.stringify(plant.careInfo), plant.wateringIntervalDays, existingPlant.rows[0].id]
-            );
-          } else {
-            await client.query(
-              `INSERT INTO plants (id, user_id, name, species, date_added, care_info, watering_interval_days, created_at)
-               VALUES ($1, $2, $3, $4, NOW(), $5, $6, NOW())`,
-              [crypto.randomUUID(), userId, plant.name, plant.species, JSON.stringify(plant.careInfo), plant.wateringIntervalDays]
-            );
-          }
-
-          plantNames.push(plant.name);
+        for (const [, profile] of getDevProfileEntries()) {
+          await ensureDevProfile(client, profile);
+          seededProfiles.push({
+            username: profile.username,
+            plantNames: await seedPlantsForUser(client, profile.id),
+          });
         }
 
         return {
           success: true,
-          message: `Seeded ${plantNames.length} sample plant(s).`,
+          message: `Seeded ${seededProfiles.length} development garden(s).`,
           data: {
             value: [
               '### Database seeded',
               '',
-              `Seeded **${plantNames.length}** sample plant(s) in \`${gardenDbName}\` for user \`${userId}\`:`,
+              `Seeded **${seededProfiles.length}** development garden(s) in \`${gardenDbName}\`:`,
               '',
-              ...plantNames.map((name) => `- ${name}`),
+              ...seededProfiles.map(({ username, plantNames }) => `- \`${username}\`: ${plantNames.join(', ')}`),
             ].join('\n'),
             format: markdownFormat,
             displayImmediately: true,
@@ -191,8 +211,8 @@ export function createSeedDatabaseCommand(
     },
     options: {
       commandOptions: {
-        description: 'Inserts sample plants (tomato, basil, pepper, strawberry, lavender) into the database for the first user.',
-        confirmationMessage: 'This will add sample plants to the database. Continue?',
+        description: 'Creates the development login users and inserts sample plants for their gardens.',
+        confirmationMessage: 'This will create/update dev login users and add sample plants to their gardens. Continue?',
         iconName: 'Add',
       },
     },

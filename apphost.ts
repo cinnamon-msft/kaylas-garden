@@ -56,7 +56,6 @@ async function main(): Promise<void> {
   const clearDb = createClearDatabaseCommand(gardenDbName, getGardenDbUri);
   const seedDb = createSeedDatabaseCommand(gardenDbName, getGardenDbUri);
   const devLogin = createDevLoginCommand(webBaseUrl, devAuthToken);
-  const devTunnelUrls = createDevTunnelUrlsCommand(devTunnelLabel, webPort, webBaseUrl, devAuthToken);
   const githubAuth = createGitHubAuthCommand(webBaseUrl, devAuthToken);
   await gardenDb
     .withCommand(clearDb.name, clearDb.displayName, clearDb.handler, clearDb.options)
@@ -65,7 +64,8 @@ async function main(): Promise<void> {
   // ─── Database migration (runs once before the web app starts) ─────────────
   const dbMigration = builder.addJavaScriptApp('db-migration', '.', { runScriptName: 'db:init' })
     .withReference(gardenDb)
-    .waitFor(gardenDb);
+    .waitFor(gardenDb)
+    .publishAsNpmScript();
 
   // ─── Web Application ──────────────────────────────────────────────────────
   const web = await builder
@@ -86,23 +86,15 @@ async function main(): Promise<void> {
     .withCommand(githubAuth.name, githubAuth.displayName, githubAuth.handler, githubAuth.options)
     .withExternalHttpEndpoints();
 
+  const webEndpoint = web.getEndpoint('http');
+  const devTunnelUrls = createDevTunnelUrlsCommand(devTunnelLabel, webPort, webBaseUrl, devAuthToken);
   await builder
-    .addExecutable('devtunnel-web', 'devtunnel', '.', [
-      'host',
-      '--port-numbers',
-      webPort.toString(),
-      '--protocol',
-      'http',
-      '--host-header',
-      'unchanged',
-      '--origin-header',
-      'unchanged',
-      '--allow-anonymous',
-      '--description',
-      'Kayla\'s Garden local web tunnel',
-      '--labels',
-      devTunnelLabel,
-    ])
+    .addDevTunnel('devtunnel-web', {
+      allowAnonymous: true,
+      description: 'Kayla\'s Garden local web tunnel',
+      labels: [devTunnelLabel],
+    })
+    .withTunnelReferenceAnonymous(webEndpoint, true)
     .waitFor(web)
     .withExplicitStart()
     .withCommand(devTunnelUrls.name, devTunnelUrls.displayName, devTunnelUrls.handler, devTunnelUrls.options);

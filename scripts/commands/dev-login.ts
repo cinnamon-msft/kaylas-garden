@@ -4,9 +4,9 @@ import type {
   ExecuteCommandResult,
   WithCommandOptions,
 } from '../../.modules/aspire.js';
+import { devProfiles, localDevProfileKey } from '../../src/lib/dev-auth-profiles.js';
 
 const markdownFormat = 'Markdown' as CommandResultFormat;
-const localDevProfile = 'local';
 
 interface DevLoginCommand {
   name: string;
@@ -25,7 +25,8 @@ export function createDevLoginCommand(
     handler: async () => {
       const loginUrl = new URL('/api/dev-auth/login', webBaseUrl);
       loginUrl.searchParams.set('token', devAuthToken);
-      loginUrl.searchParams.set('profile', localDevProfile);
+      loginUrl.searchParams.set('profile', localDevProfileKey);
+      const profile = devProfiles[localDevProfileKey];
 
       return {
         success: true,
@@ -34,9 +35,9 @@ export function createDevLoginCommand(
           value: [
             '### Development login',
             '',
-            'Open this local-only URL to sign in as `dev-feeder`:',
+            `Open this local-only URL to sign in as \`${profile.username}\`:`,
             '',
-            `[Sign in as Dev Feeder](${loginUrl.toString()})`,
+            `[Sign in as ${profile.name}](${loginUrl.toString()})`,
             '',
             `Direct URL: \`${loginUrl.toString()}\``,
             '',
