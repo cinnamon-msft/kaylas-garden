@@ -5,6 +5,11 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import type { Plant } from "@/lib/types";
 import { useSession } from "next-auth/react";
+import {
+  getPlantCategoryEmoji,
+  getPlantDisplayName,
+  getPlantIdentityLine,
+} from "@/lib/plant-display";
 
 interface UserProfile {
   id: string;
@@ -139,31 +144,37 @@ export default function UserProfilePage() {
           <p className="text-text-secondary">No plants yet.</p>
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {profile.plants.map((plant) => (
-              <article
-                key={plant.id}
-                className="overflow-hidden rounded-xl border border-border bg-bg-card shadow-sm"
-              >
-                <div className="relative h-32 bg-hover">
-                  {plant.thumbnailImage ? (
-                    <Image
-                      src={`/api/uploads/${plant.thumbnailImage}`}
-                      alt={plant.name}
-                      fill
-                      className="object-cover"
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center text-4xl">🌿</div>
-                  )}
-                </div>
-                <div className="p-3">
-                  <h3 className="font-semibold text-text-primary">{plant.name}</h3>
-                  {plant.species && (
-                    <p className="text-xs italic text-text-secondary">{plant.species}</p>
-                  )}
-                </div>
-              </article>
-            ))}
+            {profile.plants.map((plant) => {
+              const displayName = getPlantDisplayName(plant);
+              const identityLine = getPlantIdentityLine(plant);
+              const categoryEmoji = getPlantCategoryEmoji(plant);
+
+              return (
+                <article
+                  key={plant.id}
+                  className="overflow-hidden rounded-xl border border-border bg-bg-card shadow-sm"
+                >
+                  <div className="relative h-32 bg-hover">
+                    {plant.thumbnailImage ? (
+                      <Image
+                        src={`/api/uploads/${plant.thumbnailImage}`}
+                        alt={displayName}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center text-4xl">{categoryEmoji}</div>
+                    )}
+                  </div>
+                  <div className="p-3">
+                    <h3 className="font-semibold text-text-primary">{displayName}</h3>
+                    {identityLine && (
+                      <p className="text-xs italic text-text-secondary">{identityLine}</p>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
           </div>
         )}
       </section>

@@ -2,8 +2,12 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState, useCallback, useRef } from "react";
+import * as Popover from "@radix-ui/react-popover";
+import { DayPicker } from "react-day-picker";
+import { CalendarDays, Camera, ImageUp, PencilLine } from "lucide-react";
 import type { Plant, PlantCareInfo, PlantEntry, PlantImage, WateringEvent } from "@/lib/types";
 import Link from "next/link";
+import { getPlantCategoryEmoji, getPlantDisplayName, getPlantIdentityLine } from "@/lib/plant-display";
 
 // ── Helpers ──────────────────────────────────────────────────────────
 
@@ -30,42 +34,229 @@ function todayISO(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
+function parseDateOnly(iso: string): Date | undefined {
+  const dateOnlyMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+  if (!dateOnlyMatch) return undefined;
+  return new Date(
+    Number(dateOnlyMatch[1]),
+    Number(dateOnlyMatch[2]) - 1,
+    Number(dateOnlyMatch[3]),
+  );
+}
+
+function toDateOnly(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function formatDatePickerValue(iso: string): string {
+  const date = parseDateOnly(iso);
+  if (!date) return "Pick a date";
+  return date.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function getLatestProgressImage(plant: Plant): PlantImage | null {
+  return [...plant.entries]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .flatMap((entry) => entry.images)
+    .at(0) ?? null;
+}
+
 // ── Sub-components ───────────────────────────────────────────────────
 
 function PlantHeader({
   plant,
   onDelete,
+  onSavePlant,
 }: {
   plant: Plant;
   onDelete: () => void;
+  onSavePlant: (updates: Partial<Pick<Plant, "nickname" | "thumbnailImage">>) => Promise<void>;
 }) {
   const [confirming, setConfirming] = useState(false);
+  const [editingIdentity, setEditingIdentity] = useState(false);
+  const [nicknameDraft, setNicknameDraft] = useState(plant.nickname || "");
+  const [savingIdentity, setSavingIdentity] = useState(false);
+  const [savingPhoto, setSavingPhoto] = useState(false);
+  const [photoError, setPhotoError] = useState("");
   const confirmRef = useRef<HTMLDivElement>(null);
+  const photoInputRef = useRef<HTMLInputElement>(null);
+  const displayName = getPlantDisplayName(plant);
+  const identityLine = getPlantIdentityLine(plant);
+  const categoryEmoji = getPlantCategoryEmoji(plant);
+  const latestProgressImage = getLatestProgressImage(plant);
 
   useEffect(() => {
     if (confirming) confirmRef.current?.focus();
   }, [confirming]);
 
+  useEffect(() => {
+    setNicknameDraft(plant.nickname || "");
+  }, [plant.nickname]);
+
+  const handleSaveIdentity = async () => {
+    setSavingIdentity(true);
+    try {
+      await onSavePlant({ nickname: nicknameDraft });
+      setEditingIdentity(false);
+    } finally {
+      setSavingIdentity(false);
+    }
+  };
+
+  const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setSavingPhoto(true);
+    setPhotoError("");
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const uploadRes = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!uploadRes.ok) {
+        const body = (await uploadRes.json().catch(() => ({}))) as { error?: string };
+        throw new Error(body.error ?? "Failed to upload plant photo");
+      }
+
+      const { filename } = (await uploadRes.json()) as { filename: string };
+      await onSavePlant({ thumbnailImage: filename });
+    } catch (err) {
+      setPhotoError(err instanceof Error ? err.message : "Failed to update plant photo");
+    } finally {
+      setSavingPhoto(false);
+      event.target.value = "";
+    }
+  };
+
+  const handleUseLatestProgressPhoto = async () => {
+    if (!latestProgressImage) return;
+    setSavingPhoto(true);
+    setPhotoError("");
+    try {
+      await onSavePlant({ thumbnailImage: latestProgressImage.filename });
+    } catch (err) {
+      setPhotoError(err instanceof Error ? err.message : "Failed to update plant photo");
+    } finally {
+      setSavingPhoto(false);
+    }
+  };
+
   return (
     <section className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
       <div className="flex items-start gap-4">
-        {plant.thumbnailImage ? (
-          <img
-            src={`/api/uploads/${plant.thumbnailImage}`}
-            alt={plant.name}
-            className="h-20 w-20 rounded-lg border border-border object-cover sm:h-28 sm:w-28"
-          />
-        ) : (
-          <div aria-hidden="true" className="flex h-20 w-20 items-center justify-center rounded-lg border border-border bg-bg-card text-4xl sm:h-28 sm:w-28 sm:text-5xl">
-            🌱
+        <div className="w-20 shrink-0 sm:w-28">
+          <div className="relative">
+            {plant.thumbnailImage ? (
+              <img
+                src={`/api/uploads/${plant.thumbnailImage}`}
+                alt={plant.name}
+                className="h-20 w-20 rounded-lg border border-border object-cover sm:h-28 sm:w-28"
+              />
+            ) : (
+              <div aria-hidden="true" className="flex h-20 w-20 items-center justify-center rounded-lg border border-border bg-bg-card text-4xl sm:h-28 sm:w-28 sm:text-5xl">
+                {categoryEmoji}
+              </div>
+            )}
+            <input
+              ref={photoInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoUpload}
+              className="sr-only"
+              aria-label="Choose plant photo"
+            />
+            <button
+              type="button"
+              onClick={() => photoInputRef.current?.click()}
+              disabled={savingPhoto}
+              aria-label="Change plant photo"
+              title="Change plant photo"
+              className="absolute -bottom-2 -right-2 inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-bg-card text-primary shadow-sm transition-colors hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-60"
+            >
+              <Camera aria-hidden="true" className="h-4 w-4" />
+            </button>
           </div>
-        )}
+          {latestProgressImage && (
+            <button
+              type="button"
+              onClick={handleUseLatestProgressPhoto}
+              disabled={savingPhoto || plant.thumbnailImage === latestProgressImage.filename}
+              className="mt-3 inline-flex w-full items-center justify-center gap-1 rounded-md border border-border bg-bg-card px-2 py-1 text-[11px] font-medium text-text-secondary hover:bg-hover hover:text-primary disabled:cursor-default disabled:opacity-60 disabled:hover:bg-bg-card disabled:hover:text-text-secondary"
+            >
+              <ImageUp aria-hidden="true" className="h-3.5 w-3.5" />
+              Latest photo
+            </button>
+          )}
+          {photoError && (
+            <p role="alert" className="mt-2 text-xs text-red-600">
+              {photoError}
+            </p>
+          )}
+        </div>
 
         <div className="min-w-0">
-          <h1 className="text-2xl font-bold text-text-primary sm:text-3xl">
-            {plant.name}
-          </h1>
-          <p className="text-base italic text-text-secondary sm:text-lg">{plant.species}</p>
+          {editingIdentity ? (
+            <div className="mb-2 rounded-lg border border-border bg-bg-card p-3">
+              <label htmlFor="plant-nickname" className="mb-1 block text-xs font-medium text-text-secondary">
+                Nickname <span className="font-normal">(optional)</span>
+              </label>
+              <input
+                id="plant-nickname"
+                value={nicknameDraft}
+                onChange={(event) => setNicknameDraft(event.target.value)}
+                placeholder={`e.g., Patio ${plant.name}`}
+                className="w-full rounded border border-border bg-bg-page px-3 py-2 text-sm text-text-primary"
+              />
+              <div className="mt-2 flex gap-2">
+                <button
+                  onClick={handleSaveIdentity}
+                  disabled={savingIdentity}
+                  className="rounded-lg bg-primary px-3 py-1.5 text-sm text-text-on-primary hover:bg-primary-dark disabled:opacity-50"
+                >
+                  {savingIdentity ? "Saving…" : "Save nickname"}
+                </button>
+                <button
+                  onClick={() => {
+                    setNicknameDraft(plant.nickname || "");
+                    setEditingIdentity(false);
+                  }}
+                  className="rounded-lg border border-border px-3 py-1.5 text-sm text-text-secondary hover:bg-hover"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              <h1 className="text-2xl font-bold text-text-primary sm:text-3xl">
+                {displayName}
+              </h1>
+              <button
+                type="button"
+                onClick={() => setEditingIdentity(true)}
+                aria-label={plant.nickname ? "Edit nickname" : "Add nickname"}
+                title={plant.nickname ? "Edit nickname" : "Add nickname"}
+                className="mt-1 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-text-secondary transition-colors hover:bg-hover hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+              >
+                <PencilLine aria-hidden="true" className="h-4 w-4" strokeWidth={1.8} />
+              </button>
+            </div>
+          )}
+          {identityLine && (
+            <p className="text-base italic text-text-secondary sm:text-lg">{identityLine}</p>
+          )}
           <p className="mt-1 text-sm text-text-secondary">
             Added {formatDate(plant.dateAdded)}
           </p>
@@ -471,6 +662,73 @@ function WateringCard({
 
 // ── Add Entry Form ───────────────────────────────────────────────────
 
+function DesktopDatePicker({
+  ariaLabelledBy,
+  value,
+  onChange,
+}: {
+  ariaLabelledBy: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const selectedDate = parseDateOnly(value);
+
+  return (
+    <Popover.Root open={open} onOpenChange={setOpen}>
+      <Popover.Trigger asChild>
+        <button
+          type="button"
+          aria-labelledby={ariaLabelledBy}
+          className="flex h-[38px] w-full items-center justify-between gap-2 rounded border border-border bg-bg-page px-3 text-left text-sm text-text-primary transition-colors hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+        >
+          <span>{formatDatePickerValue(value)}</span>
+          <CalendarDays aria-hidden="true" className="h-4 w-4 text-text-secondary" />
+        </button>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          align="start"
+          sideOffset={8}
+          className="z-50 rounded-xl border border-border bg-bg-card p-3 text-text-primary shadow-xl"
+        >
+          <DayPicker
+            mode="single"
+            selected={selectedDate}
+            defaultMonth={selectedDate}
+            onSelect={(date) => {
+              if (!date) return;
+              onChange(toDateOnly(date));
+              setOpen(false);
+            }}
+            classNames={{
+              root: "relative",
+              months: "flex",
+              month: "space-y-3",
+              month_caption: "flex h-9 items-center justify-center px-8",
+              caption_label: "text-sm font-semibold text-text-primary",
+              nav: "absolute left-0 right-0 top-0 flex items-center justify-between",
+              button_previous: "inline-flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary hover:bg-hover hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary",
+              button_next: "inline-flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary hover:bg-hover hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary",
+              chevron: "h-4 w-4 fill-current",
+              month_grid: "w-full border-collapse",
+              weekdays: "border-b border-border",
+              weekday: "h-8 w-9 text-center text-xs font-medium text-text-secondary",
+              week: "",
+              day: "p-0 text-center text-sm",
+              day_button: "h-9 w-9 rounded-lg text-sm text-text-primary transition-colors hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary",
+              selected: "[&>button]:bg-primary [&>button]:font-semibold [&>button]:text-text-on-primary [&>button]:hover:bg-primary-dark",
+              today: "[&>button]:border [&>button]:border-primary",
+              outside: "[&>button]:text-text-secondary/40",
+              disabled: "[&>button]:cursor-not-allowed [&>button]:opacity-40",
+            }}
+          />
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
+  );
+}
+
 function AddEntryForm({
   plantId,
   onAdded,
@@ -557,17 +815,30 @@ function AddEntryForm({
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div>
-          <label htmlFor="entry-date" className="mb-1 block text-xs font-medium text-text-secondary">
+          <label
+            id="entry-date-label"
+            htmlFor="entry-date"
+            className="mb-1 block text-xs font-medium text-text-secondary"
+          >
             Date
           </label>
-          <input
-            id="entry-date"
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="w-full rounded border border-border bg-bg-page px-3 py-2 text-sm text-text-primary"
-            required
-          />
+          <div className="sm:hidden">
+            <input
+              id="entry-date"
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="w-full rounded border border-border bg-bg-page px-3 py-2 text-sm text-text-primary"
+              required
+            />
+          </div>
+          <div className="hidden sm:block">
+            <DesktopDatePicker
+              ariaLabelledBy="entry-date-label"
+              value={date}
+              onChange={setDate}
+            />
+          </div>
         </div>
 
         <div>
@@ -752,7 +1023,7 @@ export default function PlantDetailPage() {
   }, [params.id]);
 
   useEffect(() => {
-    if (plant) document.title = `${plant.name} — Kayla's Garden`;
+    if (plant) document.title = `${getPlantDisplayName(plant)} — Kayla's Garden`;
   }, [plant]);
 
   useEffect(() => {
@@ -815,7 +1086,20 @@ export default function PlantDetailPage() {
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 sm:space-y-8">
-      <PlantHeader plant={plant} onDelete={handleDelete} />
+      <PlantHeader
+        plant={plant}
+        onDelete={handleDelete}
+        onSavePlant={async (updates) => {
+          const res = await fetch(`/api/plants/${params.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updates),
+          });
+          if (!res.ok) throw new Error("Failed to update plant");
+          const updatedPlant = (await res.json()) as Plant;
+          setPlant(updatedPlant);
+        }}
+      />
 
       <CareInfoCard careInfo={plant.careInfo} onSave={handleSaveCare} />
 

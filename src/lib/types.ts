@@ -31,6 +31,7 @@ export interface WateringEvent {
 export interface Plant {
   id: string;
   name: string;
+  nickname?: string;
   species: string;
   dateAdded: string; // ISO date
   thumbnailImage: string; // filename in public/uploads
@@ -49,6 +50,7 @@ export interface FrostDates {
 export interface UserSettings {
   location: string; // city or zip
   gardenName: string;
+  gardenIcon: string;
   theme: "green" | "earth" | "ocean" | "space";
   frostDates: FrostDates | null;
 }

@@ -18,10 +18,10 @@ This inventory captures end-to-end user scenarios that are implemented in the ap
 | E2E-005 | Theme | As a user, I can switch between Garden, Earth, Ocean, and Space themes from the header and settings. | P1 |
 | E2E-006 | My Garden | As a gardener, I can see my garden name, frost-date banner state, plant count, and plant cards. | P0 |
 | E2E-007 | My Garden | As a gardener with no plants, I see an empty state with a clear "add first plant" action. | P1 |
-| E2E-008 | My Garden | As a gardener, I can review each plant card's name, species, watering status, date added, entry count, and last-entry date. | P0 |
-| E2E-009 | Add Plant | As a gardener, I can add a plant from the library picker modal with prefilled care information. | P0 |
+| E2E-008 | My Garden | As a gardener, I can review each plant card's display name, identity line, watering status, date added, entry count, and last-entry date. | P0 |
+| E2E-009 | Add Plant | As a gardener, I can add a plant from the library picker modal with prefilled care information and an optional nickname. | P0 |
 | E2E-010 | Add Plant | As a gardener, I can search/filter the library inside the add-plant modal before selecting a plant. | P1 |
-| E2E-011 | Add Plant | As a gardener, I can add a custom plant with name, species, sunlight, watering schedule, soil type, and notes. | P0 |
+| E2E-011 | Add Plant | As a gardener, I can add a custom plant with name, optional nickname, species, sunlight, watering schedule, soil type, and notes. | P0 |
 | E2E-012 | Add Plant | As a gardener, I am prevented from submitting the library add flow without selecting a plant and the custom flow without a name. | P1 |
 | E2E-013 | Plant Detail | As a gardener, I can open a plant detail page from My Garden and return back to My Garden. | P0 |
 | E2E-014 | Plant Care | As a gardener, I can view care info: sunlight, watering, soil, hardiness zone, companion plants, pests, and general notes. | P0 |
@@ -38,8 +38,8 @@ This inventory captures end-to-end user scenarios that are implemented in the ap
 | E2E-025 | Library | As a gardener, I can browse popular plants in the Plant Library. | P1 |
 | E2E-026 | Library | As a gardener, I can search plants by name, scientific name, or category and see result counts/no-match states. | P0 |
 | E2E-027 | Library | As a gardener, I can select a library plant and view detailed growing information. | P0 |
-| E2E-028 | Library | As a gardener, I can add a selected library plant directly to My Garden from the library detail view. | P0 |
-| E2E-029 | Settings | As a gardener, I can rename my garden and see the new name reflected on My Garden. | P0 |
+| E2E-028 | Library | As a gardener, I can add a selected library plant directly to My Garden from the library detail view with an optional nickname and post-add next actions. | P0 |
+| E2E-029 | Settings | As a gardener, I can rename my garden, pick a garden icon, and see both reflected on My Garden while the app brand icon stays consistent. | P0 |
 | E2E-030 | Settings | As a gardener, I can set a location or ZIP and look up frost dates. | P0 |
 | E2E-031 | Settings | As a gardener, I can see last spring frost, first fall frost, growing season length, and explanatory planting guidance. | P1 |
 | E2E-032 | Frost Banner | As a gardener, I see a prompt to set location when frost dates are missing. | P1 |
@@ -51,7 +51,7 @@ This inventory captures end-to-end user scenarios that are implemented in the ap
 | E2E-038 | Profile | As a gardener, I can follow or unfollow another seeder from their profile. | P0 |
 | E2E-039 | Feed | As a gardener following people, I can see feed activity from followed seeders. | P0 |
 | E2E-040 | Feed | As a gardener following nobody, I see an empty feed state with a "Find Seeders" CTA. | P1 |
-| E2E-041 | Feed | As a gardener, I can understand feed item type: plant added, progress entry added, or watered. | P0 |
+| E2E-041 | Feed | As a gardener, I can understand feed item type: plant added, progress entry added, or watered, with nickname-aware plant names where available. | P0 |
 | E2E-042 | Feed | As a gardener, I can like and unlike a feed item and see the count/state update. | P0 |
 | E2E-043 | Feed | As a gardener, I can open comments for a feed item and see existing comments. | P0 |
 | E2E-044 | Feed | As a gardener, I can post a non-empty comment and see it appear in the comments list. | P0 |
@@ -59,21 +59,24 @@ This inventory captures end-to-end user scenarios that are implemented in the ap
 | E2E-046 | Social Side Effects | As a gardener, when I add a plant, add an entry, or water a plant, followers can later see that activity in their feed. | P0 |
 | E2E-047 | Data Ownership | As a signed-in user, I only see and mutate my own private garden plants, while public profiles expose read-only garden cards. | P0 |
 | E2E-048 | Error States | As a user, I see meaningful error states when plants, settings, feed, search, profile, upload, or comments fail to load/save. | P1 |
+| E2E-049 | Plant Identity | As a gardener, I can add, edit, or clear an optional plant nickname while preserving the plant's library/common name and species identity. | P0 |
+| E2E-050 | Add Plant | As a gardener adding a library plant I already have, I see duplicate/specimen language and can add it as a separate plant. | P1 |
+| E2E-051 | Plant Identity | As a gardener, I can update a plant's display photo by uploading an image or using the latest progress photo. | P1 |
 
 ## Suggested automation groups
 
 | Group | Scenarios |
 | --- | --- |
 | Auth and shell | E2E-001, E2E-002, E2E-003, E2E-004, E2E-005 |
-| Garden management | E2E-006, E2E-007, E2E-008, E2E-009, E2E-010, E2E-011, E2E-012, E2E-024 |
-| Plant detail, care, watering, and progress | E2E-013 through E2E-023 |
-| Library | E2E-025, E2E-026, E2E-027, E2E-028 |
+| Garden management | E2E-006, E2E-007, E2E-008, E2E-009, E2E-010, E2E-011, E2E-012, E2E-024, E2E-050 |
+| Plant detail, care, watering, and progress | E2E-013 through E2E-023, E2E-049, E2E-051 |
+| Library | E2E-025, E2E-026, E2E-027, E2E-028, E2E-050 |
 | Settings and frost dates | E2E-029, E2E-030, E2E-031, E2E-032, E2E-033 |
 | Social, profile, and feed | E2E-034 through E2E-047 |
-| Errors and resilience | E2E-022, E2E-045, E2E-048 |
+| Errors and resilience | E2E-012, E2E-022, E2E-045, E2E-048 |
 
 ## Recommended first P0 pack
 
 Start with these to cover the highest-value product loops:
 
-E2E-001, E2E-003, E2E-006, E2E-009, E2E-011, E2E-013, E2E-015, E2E-017, E2E-018, E2E-020, E2E-021, E2E-024, E2E-026, E2E-028, E2E-029, E2E-030, E2E-034, E2E-035, E2E-037, E2E-039, E2E-042, E2E-044, E2E-046, E2E-047.
+E2E-001, E2E-003, E2E-006, E2E-009, E2E-011, E2E-013, E2E-015, E2E-017, E2E-018, E2E-020, E2E-021, E2E-024, E2E-026, E2E-028, E2E-029, E2E-030, E2E-034, E2E-035, E2E-037, E2E-039, E2E-042, E2E-044, E2E-046, E2E-047, E2E-049.

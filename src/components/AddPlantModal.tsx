@@ -1,12 +1,16 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useRef, useEffect, useMemo, type FormEvent } from "react";
 import { PLANT_LIBRARY, type LibraryPlant } from "@/lib/plant-library";
+import { getPlantDisplayName } from "@/lib/plant-display";
+import type { Plant } from "@/lib/types";
 
 interface AddPlantModalProps {
   readonly open: boolean;
+  readonly existingPlants?: readonly Plant[];
   readonly onClose: () => void;
-  readonly onPlantAdded: () => void;
+  readonly onPlantAdded: (plant: Plant) => void;
 }
 
 const SUNLIGHT_OPTIONS = [
@@ -34,6 +38,7 @@ type Mode = "library" | "custom";
 
 export function AddPlantModal({
   open,
+  existingPlants = [],
   onClose,
   onPlantAdded,
 }: AddPlantModalProps) {
@@ -43,6 +48,7 @@ export function AddPlantModal({
   // Library mode
   const [libraryQuery, setLibraryQuery] = useState("");
   const [selectedId, setSelectedId] = useState<string>("");
+  const [nickname, setNickname] = useState("");
 
   // Custom mode
   const [name, setName] = useState("");
@@ -54,6 +60,27 @@ export function AddPlantModal({
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [createdPlant, setCreatedPlant] = useState<Plant | null>(null);
+
+  const resetForm = () => {
+    setMode("library");
+    setLibraryQuery("");
+    setSelectedId("");
+    setNickname("");
+    setName("");
+    setSpecies("");
+    setSunlight(SUNLIGHT_OPTIONS[0]);
+    setWateringSchedule("");
+    setSoilType("");
+    setGeneralNotes("");
+    setError(null);
+    setCreatedPlant(null);
+  };
+
+  const closeModal = () => {
+    resetForm();
+    onClose();
+  };
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -91,18 +118,14 @@ export function AddPlantModal({
     [selectedId],
   );
 
-  const resetForm = () => {
-    setMode("library");
-    setLibraryQuery("");
-    setSelectedId("");
-    setName("");
-    setSpecies("");
-    setSunlight(SUNLIGHT_OPTIONS[0]);
-    setWateringSchedule("");
-    setSoilType("");
-    setGeneralNotes("");
-    setError(null);
-  };
+  const selectedAlreadyInGarden = Boolean(
+    selectedLibraryPlant &&
+      existingPlants.some(
+        (plant) =>
+          plant.name.toLowerCase() === selectedLibraryPlant.name.toLowerCase() &&
+          plant.species.toLowerCase() === selectedLibraryPlant.scientificName.toLowerCase(),
+      ),
+  );
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -118,6 +141,7 @@ export function AddPlantModal({
         }
         payload = {
           name: selectedLibraryPlant.name,
+          nickname: nickname.trim() || undefined,
           species: selectedLibraryPlant.scientificName,
           thumbnailImage: "",
           careInfo: {
@@ -134,6 +158,7 @@ export function AddPlantModal({
       } else {
         payload = {
           name: name.trim(),
+          nickname: nickname.trim() || undefined,
           species: species.trim(),
           thumbnailImage: "",
           careInfo: {
@@ -159,9 +184,9 @@ export function AddPlantModal({
         throw new Error(body.error ?? "Failed to create plant");
       }
 
-      resetForm();
-      onPlantAdded();
-      onClose();
+      const created = (await res.json()) as Plant;
+      setCreatedPlant(created);
+      onPlantAdded(created);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Something went wrong";
       setError(message);
@@ -184,7 +209,7 @@ export function AddPlantModal({
     <dialog
       ref={dialogRef}
       aria-labelledby="add-plant-dialog-title"
-      className="max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-lg overflow-y-auto rounded-2xl border border-border bg-bg-card p-0 shadow-xl backdrop:bg-black/50"
+      className="fixed left-1/2 top-1/2 m-0 max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-border bg-bg-card p-0 shadow-xl backdrop:bg-black/50"
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 sm:gap-5 sm:p-6">
         <div className="flex items-center justify-between">
@@ -196,7 +221,7 @@ export function AddPlantModal({
           </h2>
           <button
             type="button"
-            onClick={onClose}
+            onClick={closeModal}
             className="rounded-lg p-1 text-text-secondary hover:bg-hover"
             aria-label="Close"
           >
@@ -204,31 +229,76 @@ export function AddPlantModal({
           </button>
         </div>
 
-        {/* Mode toggle */}
-        <div
-          role="tablist"
-          aria-label="Add plant mode"
-          className="flex flex-col gap-2 rounded-lg border border-border p-1 sm:flex-row"
-        >
-          <button
-            type="button"
-            role="tab"
-            aria-selected={mode === "library"}
-            onClick={() => setMode("library")}
-            className={tabClasses(mode === "library")}
-          >
-            📚 Pick from library
-          </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={mode === "custom"}
-            onClick={() => setMode("custom")}
-            className={tabClasses(mode === "custom")}
-          >
-            ✏️ Custom plant
-          </button>
-        </div>
+        {createdPlant ? (
+          <div className="space-y-4 rounded-xl border border-green-200 bg-green-50 p-4 text-green-900">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-green-700">
+                Added to your garden
+              </p>
+              <h3 className="mt-1 text-xl font-bold">
+                {getPlantDisplayName(createdPlant)}
+              </h3>
+              {createdPlant.nickname && (
+                <p className="text-sm text-green-800">
+                  {createdPlant.name}
+                  {createdPlant.species ? ` • ${createdPlant.species}` : ""}
+                </p>
+              )}
+            </div>
+            <p className="text-sm text-green-800">
+              Next, open the plant to log watering, add a progress note, or tune the care details.
+            </p>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Link
+                href={`/plants/${createdPlant.id}`}
+                onClick={closeModal}
+                className="rounded-lg bg-primary px-4 py-2 text-center text-sm font-medium text-text-on-primary hover:bg-primary-dark"
+              >
+                View plant
+              </Link>
+              <button
+                type="button"
+                onClick={resetForm}
+                className="rounded-lg border border-green-300 bg-white px-4 py-2 text-sm font-medium text-green-800 hover:bg-green-100"
+              >
+                Add another
+              </button>
+              <button
+                type="button"
+                onClick={closeModal}
+                className="rounded-lg border border-green-300 px-4 py-2 text-sm font-medium text-green-800 hover:bg-green-100"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Mode toggle */}
+            <div
+              role="tablist"
+              aria-label="Add plant mode"
+              className="flex flex-col gap-2 rounded-lg border border-border p-1 sm:flex-row"
+            >
+              <button
+                type="button"
+                role="tab"
+                aria-selected={mode === "library"}
+                onClick={() => setMode("library")}
+                className={tabClasses(mode === "library")}
+              >
+                📚 Pick from library
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={mode === "custom"}
+                onClick={() => setMode("custom")}
+                className={tabClasses(mode === "custom")}
+              >
+                ✏️ Custom plant
+              </button>
+            </div>
 
         {error && (
           <p
@@ -361,8 +431,25 @@ export function AddPlantModal({
                   Care info will be pre-filled from the library. You can edit
                   it after adding.
                 </p>
+                {selectedAlreadyInGarden && (
+                  <p className="mt-2 rounded-md bg-accent px-2 py-1 text-xs text-text-primary">
+                    You already have this plant in your garden. Adding it again will track a separate specimen.
+                  </p>
+                )}
               </div>
             )}
+            <label className="flex flex-col gap-1">
+              <span className="text-sm font-medium text-text-secondary">
+                Nickname <span className="font-normal">(optional)</span>
+              </span>
+              <input
+                type="text"
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+                placeholder={selectedLibraryPlant ? `e.g., Patio ${selectedLibraryPlant.name}` : "e.g., Patio Basil"}
+                className={inputClasses}
+              />
+            </label>
           </>
         ) : (
           <>
@@ -380,6 +467,19 @@ export function AddPlantModal({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g., My Tomato Plant"
+                className={inputClasses}
+              />
+            </label>
+
+            <label className="flex flex-col gap-1">
+              <span className="text-sm font-medium text-text-secondary">
+                Nickname <span className="font-normal">(optional)</span>
+              </span>
+              <input
+                type="text"
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+                placeholder="e.g., Front porch favorite"
                 className={inputClasses}
               />
             </label>
@@ -455,22 +555,28 @@ export function AddPlantModal({
           </>
         )}
 
-        <div className="flex flex-col-reverse justify-end gap-2 pt-2 sm:flex-row sm:gap-3">
+            <div className="flex flex-col-reverse justify-end gap-2 pt-2 sm:flex-row sm:gap-3">
           <button
             type="button"
-            onClick={onClose}
+            onClick={closeModal}
             className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-text-secondary hover:bg-hover"
           >
             Cancel
           </button>
           <button
             type="submit"
-            disabled={submitting || (mode === "library" && !selectedId)}
+            disabled={submitting || (mode === "library" ? !selectedId : !name.trim())}
             className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-text-on-primary hover:bg-primary-dark disabled:opacity-50"
           >
-            {submitting ? "Adding…" : "Add Plant"}
+            {submitting
+              ? "Adding…"
+              : mode === "library" && selectedAlreadyInGarden
+                ? "Add Another Plant"
+                : "Add Plant"}
           </button>
-        </div>
+            </div>
+          </>
+        )}
       </form>
     </dialog>
   );

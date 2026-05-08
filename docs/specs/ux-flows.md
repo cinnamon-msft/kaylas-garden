@@ -2,7 +2,20 @@
 
 This document describes broader user experience flows for The Seed Feed as the app exists today. These flows are intentionally less granular than the E2E test inventory and are meant to help reason about journeys, intent, entry points, and cross-feature continuity.
 
+## Area tags
+
+- `auth`: Sign-in, sign-out, sessions, and protected-route access.
+- `shell`: Global navigation, header, theme switcher, and app orientation.
+- `garden`: My Garden, plant cards, plant creation, plant detail, and plant deletion.
+- `library`: Plant Library browsing, search, plant details, and library-to-garden actions.
+- `care`: Care information, watering cadence, watering events, and progress tracking.
+- `settings`: Garden name, location, frost dates, and personalization.
+- `social`: Seeder discovery, following, profiles, feed, likes, and comments.
+- `safety`: Validation, destructive confirmations, upload constraints, and error states.
+
 ## UXF-001: First authenticated visit and orientation
+
+**Areas:** `auth`, `shell`, `garden`, `settings`
 
 **User intent:** Get into the app, understand what it is for, and know where to start.
 
@@ -21,6 +34,8 @@ This document describes broader user experience flows for The Seed Feed as the a
 
 ## UXF-002: Build out my garden
 
+**Areas:** `garden`, `library`
+
 **User intent:** Add plants so the app reflects what the user is growing.
 
 **Entry points:** My Garden add button, empty-state CTA, Plant Library "Add to My Garden" action.
@@ -29,14 +44,17 @@ This document describes broader user experience flows for The Seed Feed as the a
 
 1. The user starts from My Garden or Plant Library.
 2. The user chooses between a library-backed plant and a custom plant.
-3. Library-backed plants provide care defaults automatically.
-4. Custom plants let the user capture personal or non-library plants.
-5. After creation, the plant appears as a card in My Garden.
-6. The plant card summarizes identity, watering status, date added, and progress count.
+3. Library-backed plants provide care defaults automatically and can be personalized with an optional nickname.
+4. If the user already has a selected library plant, the app frames the add action as tracking another specimen rather than blocking the duplicate.
+5. Custom plants let the user capture personal or non-library plants, with the custom submit action disabled until a name is present.
+6. After creation, the user sees post-add actions to view the plant, add another, or return to the garden.
+7. The plant appears as a card in My Garden with a nickname-aware display name, identity line, category-aware visual, watering status, date added, and progress count.
 
 **Successful outcome:** The user has one or more plants represented in My Garden and can open each plant for deeper tracking.
 
 ## UXF-003: Learn before adding
+
+**Areas:** `library`, `garden`
 
 **User intent:** Browse and compare plants before deciding what belongs in the garden.
 
@@ -47,11 +65,13 @@ This document describes broader user experience flows for The Seed Feed as the a
 1. The user opens Plant Library.
 2. The user either selects a popular plant or searches by common name, scientific name, or category.
 3. The user reviews plant details: description, sunlight, watering, soil, days to harvest, hardiness zones, planting guidance, companions, pests, and growing tips.
-4. The user can add the selected plant directly to My Garden.
+4. The user can add the selected plant directly to My Garden, optionally nickname that plant instance, and then jump to the new plant or back to My Garden.
 
 **Successful outcome:** The user can make an informed add/no-add decision from a single plant detail surface.
 
 ## UXF-004: Maintain a plant over time
+
+**Areas:** `garden`, `care`, `social`
 
 **User intent:** Keep plant care information current and log day-to-day maintenance.
 
@@ -60,15 +80,19 @@ This document describes broader user experience flows for The Seed Feed as the a
 **Flow:**
 
 1. The user opens a plant detail page.
-2. The user reviews care details and updates them when their understanding changes.
-3. The user reviews watering status: last watered, interval, and next watering.
-4. The user updates the watering interval when the plant's needs change.
-5. The user logs watering with an optional note.
-6. The app updates watering history and creates a social feed activity for followers.
+2. The user can add, edit, or clear an optional nickname without losing the plant's common name and species identity.
+3. The user can update the plant display photo by uploading a new image or reusing the latest progress photo.
+4. The user reviews care details and updates them when their understanding changes.
+5. The user reviews watering status: last watered, interval, and next watering.
+6. The user updates the watering interval when the plant's needs change.
+7. The user logs watering with an optional note.
+8. The app updates watering history and creates a social feed activity for followers.
 
 **Successful outcome:** The plant detail page becomes the source of truth for ongoing plant care and recent maintenance.
 
 ## UXF-005: Document growth progress
+
+**Areas:** `garden`, `care`, `social`
 
 **User intent:** Capture observations and photos to build a timeline of plant growth.
 
@@ -87,6 +111,8 @@ This document describes broader user experience flows for The Seed Feed as the a
 
 ## UXF-006: Personalize garden context
 
+**Areas:** `settings`, `garden`, `shell`
+
 **User intent:** Make the app feel like the user's garden and get location-aware guidance.
 
 **Entry points:** Settings navigation, frost-date prompt on My Garden, theme switcher in the header.
@@ -94,8 +120,8 @@ This document describes broader user experience flows for The Seed Feed as the a
 **Flow:**
 
 1. The user opens Settings.
-2. The user renames their garden.
-3. The new garden name appears on My Garden.
+2. The user renames their garden and picks a garden icon from curated options.
+3. The new garden name and icon appear on My Garden, while The Seed Feed header keeps its consistent app brand icon.
 4. The user enters a city or ZIP-like location and looks up frost dates.
 5. Settings displays last spring frost, first fall frost, and growing season length.
 6. My Garden displays a season-aware frost or growing-season banner.
@@ -104,6 +130,8 @@ This document describes broader user experience flows for The Seed Feed as the a
 **Successful outcome:** The app reflects the user's garden identity, preferred visual theme, and rough planting-season context.
 
 ## UXF-007: Discover and follow other seeders
+
+**Areas:** `social`
 
 **User intent:** Find other gardeners whose activity should appear in the feed.
 
@@ -121,6 +149,8 @@ This document describes broader user experience flows for The Seed Feed as the a
 
 ## UXF-008: Understand another gardener
 
+**Areas:** `social`, `garden`
+
 **User intent:** See who another seeder is and what they are growing.
 
 **Entry points:** Feed item author link, Find Seeders result, direct profile URL.
@@ -129,12 +159,14 @@ This document describes broader user experience flows for The Seed Feed as the a
 
 1. The user opens another seeder's profile.
 2. The profile shows name, username, follower count, following count, and plant count.
-3. The profile shows the seeder's public garden as read-only plant cards.
+3. The profile shows the seeder's public garden as read-only plant cards with nickname-aware display names and identity context.
 4. The user follows or unfollows that seeder from the profile.
 
 **Successful outcome:** The user can evaluate a seeder's garden and manage the relationship from the profile page.
 
 ## UXF-009: Consume and participate in the feed
+
+**Areas:** `social`
 
 **User intent:** See what followed seeders are doing and respond socially.
 
@@ -145,7 +177,7 @@ This document describes broader user experience flows for The Seed Feed as the a
 1. The user opens Feed.
 2. If the user follows nobody or no activity exists, the app prompts them to find seeders.
 3. If activity exists, the user sees activity cards from followed seeders.
-4. Feed cards communicate the activity type: plant added, progress update, or watering.
+4. Feed cards communicate the activity type: plant added, progress update, or watering, using plant nicknames where available while retaining identity context.
 5. The user can open author profiles.
 6. The user can like or unlike an activity.
 7. The user can open comments, read existing comments, and post a non-empty comment.
@@ -153,6 +185,8 @@ This document describes broader user experience flows for The Seed Feed as the a
 **Successful outcome:** The feed becomes a social layer over garden activity rather than a separate content creation surface.
 
 ## UXF-010: Manage destructive and failure-prone actions safely
+
+**Areas:** `safety`, `garden`, `care`
 
 **User intent:** Avoid accidental loss and understand when something goes wrong.
 
@@ -170,13 +204,13 @@ This document describes broader user experience flows for The Seed Feed as the a
 
 ## Journey map summary
 
-| Journey | Primary surfaces | Related E2E coverage |
-| --- | --- | --- |
-| Get oriented | Login, header, My Garden | E2E-001 through E2E-008 |
-| Build garden | My Garden, add modal, Plant Library | E2E-009 through E2E-013, E2E-025 through E2E-028 |
-| Maintain plants | Plant detail, care card, watering card | E2E-014 through E2E-019 |
-| Track growth | Plant detail, progress timeline, upload | E2E-020 through E2E-023 |
-| Personalize context | Settings, frost banner, theme switcher | E2E-005, E2E-029 through E2E-033 |
-| Build social graph | Find Seeders, user profiles | E2E-034 through E2E-038 |
-| Participate socially | Feed, likes, comments, profile links | E2E-039 through E2E-046 |
-| Stay safe | Confirmation, validation, error states | E2E-012, E2E-022, E2E-024, E2E-045, E2E-048 |
+| Journey | Areas | Primary surfaces | Related E2E coverage |
+| --- | --- | --- | --- |
+| Get oriented | `auth`, `shell`, `garden`, `settings` | Login, header, My Garden | E2E-001 through E2E-008 |
+| Build garden | `garden`, `library` | My Garden, add modal, Plant Library | E2E-009 through E2E-013, E2E-025 through E2E-028 |
+| Maintain plants | `garden`, `care`, `social` | Plant detail, care card, watering card | E2E-014 through E2E-019 |
+| Track growth | `garden`, `care`, `social` | Plant detail, progress timeline, upload | E2E-020 through E2E-023 |
+| Personalize context | `settings`, `garden`, `shell` | Settings, frost banner, theme switcher | E2E-005, E2E-029 through E2E-033 |
+| Build social graph | `social` | Find Seeders, user profiles | E2E-034 through E2E-038 |
+| Participate socially | `social` | Feed, likes, comments, profile links | E2E-039 through E2E-046 |
+| Stay safe | `safety`, `garden`, `care` | Confirmation, validation, error states | E2E-012, E2E-022, E2E-024, E2E-045, E2E-048 |

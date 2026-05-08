@@ -2,13 +2,14 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
+import { getPlantDisplayName, getPlantIdentityLine } from "@/lib/plant-display";
 
 interface FeedItem {
   id: string;
   type: "plant_added" | "entry_added" | "watered";
   createdAt: string;
   user: { id: string; name: string | null; image: string | null } | null;
-  plant: { id: string; name: string; species: string; thumbnailImage: string | null } | null;
+  plant: { id: string; name: string; nickname?: string; species: string; thumbnailImage: string | null } | null;
   likeCount: number;
   commentCount: number;
   likedByMe: boolean;
@@ -57,6 +58,8 @@ function FeedCard({ item, onLikeToggle }: { readonly item: FeedItem; readonly on
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
   const [loadingComments, setLoadingComments] = useState(false);
+  const plantName = item.plant ? getPlantDisplayName(item.plant) : "a plant";
+  const plantIdentity = item.plant ? getPlantIdentityLine(item.plant) : "";
 
   const loadComments = async () => {
     setLoadingComments(true);
@@ -109,9 +112,12 @@ function FeedCard({ item, onLikeToggle }: { readonly item: FeedItem; readonly on
             <a href={`/users/${item.user?.id}`} className="font-semibold hover:underline">
               {item.user?.name || "Unknown"}
             </a>{" "}
-            {getActivityText(item.type, item.plant?.name || "a plant")}
+            {getActivityText(item.type, plantName)}
           </p>
           <p className="text-xs text-text-secondary">{formatTimeAgo(item.createdAt)}</p>
+          {plantIdentity && (
+            <p className="text-xs italic text-text-secondary">{plantIdentity}</p>
+          )}
         </div>
         <span className="text-2xl" aria-hidden="true">{getActivityEmoji(item.type)}</span>
       </div>
@@ -121,7 +127,7 @@ function FeedCard({ item, onLikeToggle }: { readonly item: FeedItem; readonly on
         <div className="mt-3 overflow-hidden rounded-lg">
           <Image
             src={`/api/uploads/${item.plant.thumbnailImage}`}
-            alt={item.plant.name}
+            alt={plantName}
             width={600}
             height={300}
             className="w-full object-cover"

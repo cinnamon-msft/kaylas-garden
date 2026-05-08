@@ -53,6 +53,7 @@ async function main() {
       id TEXT PRIMARY KEY,
       user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
       name TEXT NOT NULL,
+      nickname TEXT,
       species TEXT NOT NULL DEFAULT '',
       date_added TIMESTAMP NOT NULL DEFAULT NOW(),
       thumbnail_image TEXT,
@@ -122,12 +123,15 @@ async function main() {
       user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
       theme TEXT NOT NULL DEFAULT 'green',
       garden_name TEXT,
+      garden_icon TEXT,
       location TEXT,
       frost_dates JSONB
     );
 
     -- Migrations for existing tables
     ALTER TABLE user_settings ADD COLUMN IF NOT EXISTS garden_name TEXT;
+    ALTER TABLE user_settings ADD COLUMN IF NOT EXISTS garden_icon TEXT;
+    ALTER TABLE plants ADD COLUMN IF NOT EXISTS nickname TEXT;
   `);
 
   console.log("✅ Database schema initialized successfully!");
