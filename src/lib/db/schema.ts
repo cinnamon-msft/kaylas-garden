@@ -66,6 +66,7 @@ export const plants = pgTable("plants", {
   id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
+  nickname: text("nickname"),
   species: text("species").notNull().default(""),
   dateAdded: timestamp("date_added", { mode: "date" }).defaultNow().notNull(),
   thumbnailImage: text("thumbnail_image"),
@@ -167,6 +168,7 @@ export const userSettings = pgTable("user_settings", {
   userId: text("user_id").primaryKey().references(() => users.id, { onDelete: "cascade" }),
   theme: text("theme").$type<"green" | "earth" | "ocean" | "space">().notNull().default("green"),
   gardenName: text("garden_name"),
+  gardenIcon: text("garden_icon"),
   location: text("location"),
   frostDates: jsonb("frost_dates").$type<{
     lastSpringFrost: string;

@@ -106,10 +106,11 @@ async function ensureDevProfile(client: pg.Client, profile: DevProfile): Promise
   );
 
   await client.query(
-    `INSERT INTO user_settings (user_id, theme, garden_name, location)
-     VALUES ($1, 'green', $2, $3)
+    `INSERT INTO user_settings (user_id, theme, garden_name, garden_icon, location)
+     VALUES ($1, 'green', $2, '🌱', $3)
      ON CONFLICT (user_id) DO UPDATE
      SET garden_name = EXCLUDED.garden_name,
+         garden_icon = COALESCE(user_settings.garden_icon, EXCLUDED.garden_icon),
          location = EXCLUDED.location`,
     [profile.id, profile.gardenName, profile.location]
   );

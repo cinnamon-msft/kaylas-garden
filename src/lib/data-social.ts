@@ -2,6 +2,7 @@ import { db } from "./db";
 import { schema } from "./db";
 import { eq, and, desc, inArray } from "drizzle-orm";
 import type { Plant, PlantEntry, PlantCareInfo, WateringEvent, UserSettings, FrostDates } from "./types";
+import { DEFAULT_GARDEN_ICON, normalizeGardenIcon } from "./garden-icons";
 
 // ─── Helper: Convert DB plant row to API Plant type ──────────────────────────
 
@@ -12,6 +13,7 @@ function toPlantApi(row: typeof schema.plants.$inferSelect & {
   return {
     id: row.id,
     name: row.name,
+    nickname: row.nickname || undefined,
     species: row.species,
     dateAdded: row.dateAdded.toISOString(),
     thumbnailImage: row.thumbnailImage || "",
@@ -110,6 +112,7 @@ export async function createPlant(
   const [row] = await db.insert(schema.plants).values({
     userId,
     name: plant.name,
+    nickname: plant.nickname?.trim() || null,
     species: plant.species,
     thumbnailImage: plant.thumbnailImage || null,
     careInfo: plant.careInfo,
@@ -129,7 +132,7 @@ export async function createPlant(
 export async function updatePlant(
   userId: string,
   plantId: string,
-  updates: Partial<Pick<Plant, "name" | "species" | "thumbnailImage" | "careInfo" | "wateringIntervalDays">>
+  updates: Partial<Pick<Plant, "name" | "nickname" | "species" | "thumbnailImage" | "careInfo" | "wateringIntervalDays">>
 ): Promise<Plant> {
   const existing = await db.query.plants.findFirst({
     where: and(eq(schema.plants.id, plantId), eq(schema.plants.userId, userId)),
@@ -138,6 +141,7 @@ export async function updatePlant(
 
   const updateValues: Record<string, unknown> = {};
   if (updates.name !== undefined) updateValues.name = updates.name;
+  if (updates.nickname !== undefined) updateValues.nickname = updates.nickname.trim() || null;
   if (updates.species !== undefined) updateValues.species = updates.species;
   if (updates.thumbnailImage !== undefined) updateValues.thumbnailImage = updates.thumbnailImage;
   if (updates.careInfo !== undefined) updateValues.careInfo = updates.careInfo;
@@ -232,6 +236,7 @@ export async function waterPlant(
 const DEFAULT_SETTINGS: UserSettings = {
   location: "",
   gardenName: "My Garden",
+  gardenIcon: DEFAULT_GARDEN_ICON,
   theme: "green",
   frostDates: null,
 };
@@ -244,6 +249,7 @@ export async function getSettings(userId: string): Promise<UserSettings> {
   return {
     location: row.location || "",
     gardenName: row.gardenName || "My Garden",
+    gardenIcon: normalizeGardenIcon(row.gardenIcon),
     theme: row.theme,
     frostDates: row.frostDates as FrostDates | null,
   };
@@ -262,6 +268,7 @@ export async function updateSettings(
     if (settings.theme !== undefined) updateValues.theme = settings.theme;
     if (settings.location !== undefined) updateValues.location = settings.location;
     if (settings.gardenName !== undefined) updateValues.gardenName = settings.gardenName;
+    if (settings.gardenIcon !== undefined) updateValues.gardenIcon = normalizeGardenIcon(settings.gardenIcon);
     if (settings.frostDates !== undefined) updateValues.frostDates = settings.frostDates;
     await db.update(schema.userSettings).set(updateValues).where(eq(schema.userSettings.userId, userId));
   } else {
@@ -269,6 +276,7 @@ export async function updateSettings(
       userId,
       theme: settings.theme || "green",
       gardenName: settings.gardenName || null,
+      gardenIcon: normalizeGardenIcon(settings.gardenIcon),
       location: settings.location || null,
       frostDates: settings.frostDates || null,
     });
@@ -371,7 +379,7 @@ export async function getFeed(userId: string, limit = 50, offset = 0) {
       type: item.type,
       createdAt: item.createdAt.toISOString(),
       user: user ? { id: user.id, name: user.name, image: user.image } : null,
-      plant: plant ? { id: plant.id, name: plant.name, species: plant.species, thumbnailImage: plant.thumbnailImage } : null,
+      plant: plant ? { id: plant.id, name: plant.name, nickname: plant.nickname || undefined, species: plant.species, thumbnailImage: plant.thumbnailImage } : null,
       likeCount: itemLikes.length,
       commentCount: itemComments.length,
       likedByMe: itemLikes.some((l) => l.userId === userId),

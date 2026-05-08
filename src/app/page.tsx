@@ -5,6 +5,12 @@ import Image from "next/image";
 import type { Plant } from "@/lib/types";
 import { AddPlantModal } from "@/components/AddPlantModal";
 import { FrostDateBanner } from "@/components/FrostDateBanner";
+import {
+  getPlantCategoryEmoji,
+  getPlantDisplayName,
+  getPlantIdentityLine,
+} from "@/lib/plant-display";
+import { DEFAULT_GARDEN_ICON, normalizeGardenIcon } from "@/lib/garden-icons";
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString(undefined, {
@@ -46,6 +52,9 @@ function getWateringStatus(plant: Plant): WateringStatus {
 }
 
 function PlantCard({ plant }: { readonly plant: Plant }) {
+  const displayName = getPlantDisplayName(plant);
+  const identityLine = getPlantIdentityLine(plant);
+  const categoryEmoji = getPlantCategoryEmoji(plant);
   const lastEntry =
     plant.entries.length > 0
       ? plant.entries[plant.entries.length - 1]
@@ -60,12 +69,12 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
         {plant.thumbnailImage ? (
           <Image
             src={`/api/uploads/${plant.thumbnailImage}`}
-            alt={plant.name}
+            alt={displayName}
             fill
             className="object-cover"
           />
         ) : (
-          <span aria-hidden="true" className="text-6xl">🌿</span>
+          <span aria-hidden="true" className="text-6xl">{categoryEmoji}</span>
         )}
       </div>
 
@@ -75,11 +84,11 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
             href={`/plants/${plant.id}`}
             className="group-hover:text-primary after:absolute after:inset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-1"
           >
-            {plant.name}
+            {displayName}
           </a>
         </h3>
-        {plant.species && (
-          <p className="text-sm italic text-text-secondary">{plant.species}</p>
+        {identityLine && (
+          <p className="text-sm italic text-text-secondary">{identityLine}</p>
         )}
         {(() => {
           const status = getWateringStatus(plant);
@@ -112,6 +121,7 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
 export default function Home() {
   const [plants, setPlants] = useState<Plant[]>([]);
   const [gardenName, setGardenName] = useState("My Garden");
+  const [gardenIcon, setGardenIcon] = useState(DEFAULT_GARDEN_ICON);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -135,8 +145,9 @@ export default function Home() {
     void fetchPlants();
     fetch("/api/settings")
       .then((res) => res.json())
-      .then((data: { gardenName?: string }) => {
+      .then((data: { gardenName?: string; gardenIcon?: string }) => {
         if (data.gardenName) setGardenName(data.gardenName);
+        setGardenIcon(normalizeGardenIcon(data.gardenIcon));
       })
       .catch(() => {});
   }, [fetchPlants]);
@@ -145,7 +156,7 @@ export default function Home() {
     <>
       {/* Welcome Banner */}
       <section className="mb-6 rounded-2xl bg-primary p-5 text-text-on-primary shadow-md sm:mb-8 sm:p-6">
-        <h2 className="text-2xl font-bold sm:text-3xl"><span aria-hidden="true">🌱</span> {gardenName}</h2>
+        <h2 className="text-2xl font-bold sm:text-3xl"><span aria-hidden="true">{gardenIcon}</span> {gardenName}</h2>
         <p className="mt-1 text-sm text-text-on-primary/80 sm:text-base">
           Track your plants, upload photos, and watch them grow!
         </p>
@@ -205,8 +216,11 @@ export default function Home() {
 
       <AddPlantModal
         open={modalOpen}
+        existingPlants={plants}
         onClose={() => setModalOpen(false)}
-        onPlantAdded={fetchPlants}
+        onPlantAdded={() => {
+          void fetchPlants();
+        }}
       />
     </>
   );
