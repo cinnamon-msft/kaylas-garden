@@ -96,6 +96,7 @@ async function main(): Promise<void> {
     // .withEnvironment('CDN_URL', builder.addParameter('cdn-url', { secret: false }))
     .withCommand(devLogin.name, devLogin.displayName, devLogin.handler, devLogin.options)
     .withCommand(githubAuth.name, githubAuth.displayName, githubAuth.handler, githubAuth.options)
+    .withBrowserLogs()
     .withExternalHttpEndpoints();
 
   // Dev-only: Add PgAdmin command and dev tunnel
