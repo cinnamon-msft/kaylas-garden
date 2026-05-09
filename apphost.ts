@@ -83,6 +83,11 @@ async function main(): Promise<void> {
   // Production: Deployed to Azure Container Apps
   const web = await builder
     .addNextJsApp('web', '.')
+    .withHttpEndpoint({
+      name: 'http',
+      port: webPort,
+      isProxied: false,
+    })
     .withReference(plantdata)
     .withReference(gardenDb)
     .withEnvironment('GITHUB_ID', githubId)

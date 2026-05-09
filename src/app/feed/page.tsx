@@ -12,7 +12,11 @@ interface FeedItem {
   user: { id: string; name: string | null; image: string | null } | null;
   gardenName: string | null;
   plant: { id: string; name: string; nickname?: string; species: string; thumbnailImage: string | null } | null;
-  entry: { note: string; images: Array<{ id: string; filename: string; caption: string; uploadedAt: string }> } | null;
+  entry: {
+    note: string;
+    plantingLocation?: string;
+    images: Array<{ id: string; filename: string; caption: string; uploadedAt: string }>;
+  } | null;
   wateringEvent: { note: string } | null;
   waterCount: number;
   commentCount: number;
@@ -192,6 +196,11 @@ function FeedCard({ item, onWaterToggle }: { readonly item: FeedItem; readonly o
                 "{item.entry.note}"
               </p>
             )}
+            {item.entry?.plantingLocation && (
+              <p className="mt-2 inline-flex rounded-full border border-border bg-bg-card px-2 py-0.5 text-xs text-text-secondary">
+                📍 {item.entry.plantingLocation}
+              </p>
+            )}
           </div>
           {/* Images on right */}
           {item.entry && item.entry.images && item.entry.images.length > 0 && (
@@ -256,6 +265,11 @@ function FeedCard({ item, onWaterToggle }: { readonly item: FeedItem; readonly o
               {item.entry.note && (
                 <p className="text-sm text-text-primary bg-bg-page rounded-lg p-3 italic font-body">
                   "{item.entry.note}"
+                </p>
+              )}
+              {item.entry.plantingLocation && (
+                <p className="mt-2 inline-flex rounded-full border border-border bg-bg-card px-2 py-0.5 text-xs text-text-secondary">
+                  📍 {item.entry.plantingLocation}
                 </p>
               )}
             </div>

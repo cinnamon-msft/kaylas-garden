@@ -30,6 +30,7 @@ function toPlantApi(row: typeof schema.plants.$inferSelect & {
       id: e.id,
       date: e.date.toISOString(),
       note: e.note,
+      plantingLocation: e.plantingLocation || undefined,
       images: e.images || [],
     })),
     wateringIntervalDays: row.wateringIntervalDays,
@@ -178,6 +179,7 @@ export async function addPlantEntry(
     plantId,
     date: new Date(entry.date),
     note: entry.note,
+    plantingLocation: entry.plantingLocation?.trim() || null,
     images: entry.images,
   }).returning();
 
@@ -193,6 +195,7 @@ export async function addPlantEntry(
     id: row.id,
     date: row.date.toISOString(),
     note: row.note,
+    plantingLocation: row.plantingLocation || undefined,
     images: row.images || [],
   };
 }
@@ -398,7 +401,13 @@ export async function getFeed(userId: string, limit = 50, offset = 0) {
       user: user ? { id: user.id, name: user.name, image: user.image } : null,
       gardenName: userSettings?.gardenName || null,
       plant: plant ? { id: plant.id, name: plant.name, nickname: plant.nickname || undefined, species: plant.species, thumbnailImage: plant.thumbnailImage } : null,
-      entry: entry ? { note: entry.note, images: entry.images || [] } : null,
+      entry: entry
+        ? {
+            note: entry.note,
+            plantingLocation: entry.plantingLocation || undefined,
+            images: entry.images || [],
+          }
+        : null,
       wateringEvent: wateringEvent ? { note: wateringEvent.note } : null,
       waterCount: itemWaters.length,
       commentCount: itemComments.length,

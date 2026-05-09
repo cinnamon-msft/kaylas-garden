@@ -69,6 +69,45 @@ function getLatestProgressImage(plant: Plant): PlantImage | null {
     .at(0) ?? null;
 }
 
+const PLANTING_LOCATION_OPTIONS = [
+  "Pot",
+  "Hanging",
+  "Ground",
+  "Raised Bed",
+  "Indoor Shelf",
+  "Greenhouse",
+  "Hydroponic",
+  "Other",
+] as const;
+
+type PlantingLocationOption = (typeof PLANTING_LOCATION_OPTIONS)[number];
+
+function getPlantingLocationDefaults(currentPlantingLocation: string | null): {
+  selected: PlantingLocationOption;
+  custom: string;
+} {
+  if (!currentPlantingLocation?.trim()) {
+    return { selected: "Pot", custom: "" };
+  }
+
+  const normalized = currentPlantingLocation.trim();
+  const predefined = PLANTING_LOCATION_OPTIONS.find((option) => option === normalized);
+  if (predefined && predefined !== "Other") {
+    return { selected: predefined, custom: "" };
+  }
+
+  return { selected: "Other", custom: normalized };
+}
+
+function getLatestPlantingLocation(entries: PlantEntry[]): string | null {
+  return (
+    [...entries]
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .find((entry) => entry.plantingLocation?.trim())
+      ?.plantingLocation?.trim() ?? null
+  );
+}
+
 // ── Sub-components ───────────────────────────────────────────────────
 
 function PlantHeader({
@@ -731,17 +770,30 @@ function DesktopDatePicker({
 
 function AddEntryForm({
   plantId,
+  currentPlantingLocation,
   onAdded,
 }: {
   plantId: string;
+  currentPlantingLocation: string | null;
   onAdded: () => void;
 }) {
+  const initialLocation = getPlantingLocationDefaults(currentPlantingLocation);
   const [date, setDate] = useState(todayISO());
   const [note, setNote] = useState("");
+  const [plantingLocation, setPlantingLocation] = useState<PlantingLocationOption>(
+    initialLocation.selected,
+  );
+  const [customPlantingLocation, setCustomPlantingLocation] = useState(initialLocation.custom);
   const [files, setFiles] = useState<File[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const defaults = getPlantingLocationDefaults(currentPlantingLocation);
+    setPlantingLocation(defaults.selected);
+    setCustomPlantingLocation(defaults.custom);
+  }, [currentPlantingLocation]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -749,6 +801,12 @@ function AddEntryForm({
     setError("");
 
     try {
+      const resolvedPlantingLocation =
+        plantingLocation === "Other" ? customPlantingLocation.trim() : plantingLocation;
+      if (!resolvedPlantingLocation) {
+        throw new Error("Please enter a planting location for Other.");
+      }
+
       // Upload images first
       const uploadedImages: PlantImage[] = [];
 
@@ -781,6 +839,7 @@ function AddEntryForm({
         body: JSON.stringify({
           date,
           note,
+          plantingLocation: resolvedPlantingLocation,
           images: uploadedImages,
         }),
       });
@@ -792,6 +851,9 @@ function AddEntryForm({
       // Reset form
       setDate(todayISO());
       setNote("");
+      const defaults = getPlantingLocationDefaults(resolvedPlantingLocation);
+      setPlantingLocation(defaults.selected);
+      setCustomPlantingLocation(defaults.custom);
       setFiles([]);
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
@@ -842,6 +904,34 @@ function AddEntryForm({
         </div>
 
         <div>
+          <label htmlFor="entry-location" className="mb-1 block text-xs font-medium text-text-secondary">
+            Planting Location
+          </label>
+          <select
+            id="entry-location"
+            value={plantingLocation}
+            onChange={(e) => setPlantingLocation(e.target.value as PlantingLocationOption)}
+            className="w-full rounded border border-border bg-bg-page px-3 py-2 text-sm text-text-primary"
+          >
+            {PLANTING_LOCATION_OPTIONS.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          {plantingLocation === "Other" && (
+            <input
+              type="text"
+              value={customPlantingLocation}
+              onChange={(e) => setCustomPlantingLocation(e.target.value)}
+              placeholder="Enter current location"
+              className="mt-2 w-full rounded border border-border bg-bg-page px-3 py-2 text-sm text-text-primary"
+              required
+            />
+          )}
+        </div>
+
+        <div className="sm:col-span-2">
           <label htmlFor="entry-photos" className="mb-1 block text-xs font-medium text-text-secondary">
             Photos
           </label>
@@ -965,6 +1055,11 @@ function TimelineEntry({ entry }: { entry: PlantEntry }) {
         <p className="text-xs font-medium text-text-secondary">
           {formatDate(entry.date)}
         </p>
+        {entry.plantingLocation?.trim() && (
+          <p className="mt-1 inline-flex rounded-full border border-border bg-bg-card px-2 py-0.5 text-xs text-text-secondary">
+            📍 {entry.plantingLocation.trim()}
+          </p>
+        )}
         <p className="mt-1 text-sm text-text-primary">{entry.note}</p>
 
         {entry.images.length > 0 && (
@@ -1083,6 +1178,7 @@ export default function PlantDetailPage() {
   const sortedEntries = [...plant.entries].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
+  const latestPlantingLocation = getLatestPlantingLocation(plant.entries);
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 sm:space-y-8">
@@ -1124,7 +1220,17 @@ export default function PlantDetailPage() {
           <span aria-hidden="true">📅</span> Progress Timeline
         </h2>
 
-        <AddEntryForm plantId={params.id} onAdded={fetchPlant} />
+        {latestPlantingLocation && (
+          <p className="rounded-lg border border-border bg-bg-card px-3 py-2 text-sm text-text-primary">
+            Current planting location: <span className="font-semibold">{latestPlantingLocation}</span>
+          </p>
+        )}
+
+        <AddEntryForm
+          plantId={params.id}
+          currentPlantingLocation={latestPlantingLocation}
+          onAdded={fetchPlant}
+        />
 
         {sortedEntries.length > 0 ? (
           <div className="mt-4">
