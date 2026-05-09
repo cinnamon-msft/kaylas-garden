@@ -25,8 +25,9 @@ export async function GET(
     }
 
     const { data: buffer, contentType } = result;
+    const body = new Uint8Array(buffer);
 
-    return new NextResponse(buffer, {
+    return new NextResponse(body, {
       headers: {
         "Content-Type": contentType,
         "Cache-Control": "public, max-age=31536000, immutable", // Cache for 1 year
