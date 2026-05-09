@@ -9,6 +9,7 @@ export interface PlantEntry {
   id: string;
   date: string; // ISO date
   note: string;
+  plantingLocation?: string; // "potted", "in-ground", "hanging", etc.
   images: PlantImage[];
 }
 

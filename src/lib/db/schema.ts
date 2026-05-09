@@ -90,6 +90,7 @@ export const plantEntries = pgTable("plant_entries", {
   plantId: text("plant_id").notNull().references(() => plants.id, { onDelete: "cascade" }),
   date: timestamp("date", { mode: "date" }).notNull(),
   note: text("note").notNull().default(""),
+  plantingLocation: text("planting_location"), // "potted", "in-ground", "hanging", etc.
   images: jsonb("images").$type<Array<{
     id: string;
     filename: string;

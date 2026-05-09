@@ -81,17 +81,30 @@
   --color-border: var(--color-border);
   --color-hover: var(--color-hover);
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-fredoka: var(--font-fredoka);
+  --font-quicksand: var(--font-quicksand);
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 }
 
 body {
   background-color: var(--color-bg-page);
   color: var(--color-text-primary);
-  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+  font-family: var(--font-quicksand, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
 }
 
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
   border-radius: 4px;
+}
+
+/* Font utility classes */
+.font-title {
+  font-family: var(--font-fredoka);
+  font-weight: 600;
+  letter-spacing: -0.25px;
+}
+
+.font-body {
+  font-family: var(--font-quicksand);
 }

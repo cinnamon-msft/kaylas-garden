@@ -19,7 +19,7 @@ export async function POST(
     await waterFeedItem(userId, id);
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (err: unknown) {
-    console.error("POST /api/feed/[id]/like failed:", err);
+    console.error("POST /api/feed/[id]/water failed:", err);
     const message = err instanceof Error ? err.message : "Failed to water";
     return NextResponse.json({ error: message }, { status: 500 });
   }
@@ -36,7 +36,7 @@ export async function DELETE(
     await unwaterFeedItem(userId, id);
     return NextResponse.json({ success: true });
   } catch (err: unknown) {
-    console.error("DELETE /api/feed/[id]/like failed:", err);
+    console.error("DELETE /api/feed/[id]/water failed:", err);
     const message = err instanceof Error ? err.message : "Failed to unwater";
     return NextResponse.json({ error: message }, { status: 500 });
   }

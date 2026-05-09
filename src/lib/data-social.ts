@@ -349,8 +349,10 @@ export async function getFeed(userId: string, limit = 50, offset = 0) {
   const userIds = [...new Set(items.map((i) => i.userId))];
   const plantIds = [...new Set(items.filter((i) => i.plantId).map((i) => i.plantId!))];
   const feedItemIds = items.map((i) => i.id);
+  const entryIds = items.filter((i) => i.entryId).map((i) => i.entryId!);
+  const wateringEventIds = items.filter((i) => i.wateringEventId).map((i) => i.wateringEventId!);
 
-  const [feedUsers, feedPlants, feedLikes, feedComments] = await Promise.all([
+  const [feedUsers, feedPlants, feedLikes, feedComments, userSettingsList, feedEntries, feedWateringEvents] = await Promise.all([
     userIds.length > 0
       ? db.query.users.findMany({ where: inArray(schema.users.id, userIds) })
       : [],
@@ -363,15 +365,30 @@ export async function getFeed(userId: string, limit = 50, offset = 0) {
     feedItemIds.length > 0
       ? db.query.comments.findMany({ where: inArray(schema.comments.feedItemId, feedItemIds) })
       : [],
+    userIds.length > 0
+      ? db.query.userSettings.findMany({ where: inArray(schema.userSettings.userId, userIds) })
+      : [],
+    entryIds.length > 0
+      ? db.query.plantEntries.findMany({ where: inArray(schema.plantEntries.id, entryIds) })
+      : [],
+    wateringEventIds.length > 0
+      ? db.query.wateringEvents.findMany({ where: inArray(schema.wateringEvents.id, wateringEventIds) })
+      : [],
   ]);
 
   const usersMap = new Map(feedUsers.map((u) => [u.id, u]));
   const plantsMap = new Map(feedPlants.map((p) => [p.id, p]));
+  const userSettingsMap = new Map(userSettingsList.map((s) => [s.userId, s]));
+  const entriesMap = new Map(feedEntries.map((e) => [e.id, e]));
+  const wateringEventsMap = new Map(feedWateringEvents.map((w) => [w.id, w]));
 
   return items.map((item) => {
     const user = usersMap.get(item.userId);
     const plant = item.plantId ? plantsMap.get(item.plantId) : null;
-    const itemLikes = feedLikes.filter((l) => l.feedItemId === item.id);
+    const userSettings = userSettingsMap.get(item.userId);
+    const entry = item.entryId ? entriesMap.get(item.entryId) : null;
+    const wateringEvent = item.wateringEventId ? wateringEventsMap.get(item.wateringEventId) : null;
+    const itemWaters = feedLikes.filter((l) => l.feedItemId === item.id);
     const itemComments = feedComments.filter((c) => c.feedItemId === item.id);
 
     return {
@@ -379,25 +396,32 @@ export async function getFeed(userId: string, limit = 50, offset = 0) {
       type: item.type,
       createdAt: item.createdAt.toISOString(),
       user: user ? { id: user.id, name: user.name, image: user.image } : null,
+      gardenName: userSettings?.gardenName || null,
       plant: plant ? { id: plant.id, name: plant.name, nickname: plant.nickname || undefined, species: plant.species, thumbnailImage: plant.thumbnailImage } : null,
-      likeCount: itemLikes.length,
+      entry: entry ? { note: entry.note, images: entry.images || [] } : null,
+      wateringEvent: wateringEvent ? { note: wateringEvent.note } : null,
+      waterCount: itemWaters.length,
       commentCount: itemComments.length,
-      likedByMe: itemLikes.some((l) => l.userId === userId),
+      wateredByMe: itemWaters.some((l) => l.userId === userId),
     };
   });
 }
 
-// ─── Social: Likes ───────────────────────────────────────────────────────────
+// ─── Social: Waters ──────────────────────────────────────────────────────────
 
-export async function likeFeedItem(userId: string, feedItemId: string): Promise<void> {
+export async function waterFeedItem(userId: string, feedItemId: string): Promise<void> {
   await db.insert(schema.likes).values({ userId, feedItemId }).onConflictDoNothing();
 }
 
-export async function unlikeFeedItem(userId: string, feedItemId: string): Promise<void> {
+export async function unwaterFeedItem(userId: string, feedItemId: string): Promise<void> {
   await db.delete(schema.likes).where(
     and(eq(schema.likes.userId, userId), eq(schema.likes.feedItemId, feedItemId))
   );
 }
+
+// Backwards compatibility aliases
+export const likeFeedItem = waterFeedItem;
+export const unlikeFeedItem = unwaterFeedItem;
 
 // ─── Social: Comments ────────────────────────────────────────────────────────
 

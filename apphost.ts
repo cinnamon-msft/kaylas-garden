@@ -16,11 +16,12 @@ async function main(): Promise<void> {
   const builder = await createBuilder();
 
   await builder.addAzureContainerAppEnvironment('acaenv');
+  
+  // Check if deploying to Azure (vs local development)
+  const isPublishMode = (await builder.executionContext()).isPublishMode;
 
   // ─── Parameters ────────────────────────────────────────────────────────────
-  // GitHub OAuth credentials — set via Aspire dashboard prompt or environment variables.
-  // Create a GitHub OAuth App at https://github.com/settings/developers
-  // Callback URL: http://localhost:3000/api/auth/callback/github
+  // GitHub OAuth credentials
   const githubId = builder.addParameter('github-id', { secret: true });
   const githubSecret = builder.addParameter('github-secret', { secret: true });
 
@@ -35,16 +36,26 @@ async function main(): Promise<void> {
   const devAuthToken = randomUUID();
 
   // ─── Azure Blob Storage (images) ──────────────────────────────────────────
-  const plantdata = builder.addAzureStorage('storage')
+  // Production: Uses Azure Blob Storage with CDN for image serving
+  // Development: Uses Azurite emulator
+  const plantdata = builder.addAzureStorage('plantdata')
     .runAsEmulator({
       configureContainer: async (azurite) => {
         await azurite.withDataVolume();
         await azurite.withLifetime(ContainerLifetime.Persistent);
       },
     })
-    .addBlobContainer('plantdata', { blobContainerName: 'plantdata' });
+    .addBlobContainer('plantdata', { 
+      blobContainerName: 'plantdata',
+      // Production note: Configure lifecycle policies in Azure Portal:
+      // - Move blobs older than 90 days to Cool tier ($0.01/GB vs $0.021/GB)
+      // - Delete blobs older than 1 year (customize as needed)
+    });
 
-  // ─── PostgreSQL (users, plants, social data) ──────────────────────────────
+  // ─── PostgreSQL ────────────────────────────────────────────────────────────
+  // Development: Local PostgreSQL with Pgadmin
+  // Production: Azure PostgreSQL Flexible Server (B1s Burstable, ~$25-35/month)
+  // TODO: For production, swap to builder.addAzurePostgresFlexibleServer('postgres')
   const postgres = builder.addPostgres('postgres')
     .withDataVolume()
     .withLifetime(ContainerLifetime.Persistent)
@@ -68,6 +79,8 @@ async function main(): Promise<void> {
     .publishAsNpmScript();
 
   // ─── Web Application ──────────────────────────────────────────────────────
+  // Development: Runs locally on port 3000
+  // Production: Deployed to Azure Container Apps
   const web = await builder
     .addNextJsApp('web', '.')
     .withReference(plantdata)
@@ -78,14 +91,14 @@ async function main(): Promise<void> {
     .withEnvironment('NEXTAUTH_URL', webBaseUrl)
     .withEnvironment('DEV_AUTH_ENABLED', devAuthEnabled)
     .withEnvironment('DEV_AUTH_TOKEN', devAuthToken)
-    .waitFor(gardenDb)
-    .waitForCompletion(dbMigration)
-    .withHttpEndpoint({ port: 3000, env: 'PORT' })
-    .withBrowserLogs()
+    .withEnvironment('NODE_ENV', 'development')
+    // Production: Configure CDN URL after setting up Azure CDN
+    // .withEnvironment('CDN_URL', builder.addParameter('cdn-url', { secret: false }))
     .withCommand(devLogin.name, devLogin.displayName, devLogin.handler, devLogin.options)
     .withCommand(githubAuth.name, githubAuth.displayName, githubAuth.handler, githubAuth.options)
     .withExternalHttpEndpoints();
 
+  // Dev-only: Add PgAdmin command and dev tunnel
   const webEndpoint = web.getEndpoint('http');
   const devTunnelUrls = createDevTunnelUrlsCommand(devTunnelLabel, webPort, webBaseUrl, devAuthToken);
   await builder

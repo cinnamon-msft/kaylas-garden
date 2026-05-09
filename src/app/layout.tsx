@@ -1,9 +1,20 @@
 import type { Metadata } from "next";
+import { Fredoka, Quicksand } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/components/AuthProvider";
 import { DEFAULT_GARDEN_ICON, getGardenIconFaviconHref } from "@/lib/garden-icons";
+
+const fredoka = Fredoka({
+  subsets: ["latin"],
+  variable: "--font-fredoka",
+});
+
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  variable: "--font-quicksand",
+});
 
 export const metadata: Metadata = {
   title: "The Seed Feed",
@@ -22,7 +33,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-theme="green"
-      className="h-full antialiased"
+      className={`h-full antialiased ${fredoka.variable} ${quicksand.variable}`}
     >
       <body className="min-h-full flex flex-col bg-bg-page text-text-primary">
         <a
