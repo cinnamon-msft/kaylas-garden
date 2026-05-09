@@ -38,7 +38,7 @@ async function main(): Promise<void> {
   // ─── Azure Blob Storage (images) ──────────────────────────────────────────
   // Production: Uses Azure Blob Storage with CDN for image serving
   // Development: Uses Azurite emulator
-  const plantdata = builder.addAzureStorage('plantdata')
+  const plantdata = builder.addAzureStorage('plantdata-storage')
     .runAsEmulator({
       configureContainer: async (azurite) => {
         await azurite.withDataVolume();
