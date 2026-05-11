@@ -40,6 +40,18 @@ export function getSafeCallbackUrl(requestUrl: URL, requestOrigin: string, defau
   return new URL(callbackUrl, requestOrigin);
 }
 
+const LOOPBACK_HOSTNAMES = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
+
+export function isLoopbackHostHeader(host: string | null | undefined): boolean {
+  if (!host) return false;
+  const first = host.split(",")[0]?.trim();
+  if (!first) return false;
+  const hostname = first.startsWith("[")
+    ? first.slice(0, first.indexOf("]") + 1)
+    : first.split(":")[0];
+  return LOOPBACK_HOSTNAMES.has(hostname);
+}
+
 export function validateDevAuthToken(requestUrl: URL): NextResponse | undefined {
   if (!isDevAuthEnabled()) {
     return NextResponse.json({ error: "Development auth is not enabled." }, { status: 404 });
