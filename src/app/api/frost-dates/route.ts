@@ -6,6 +6,7 @@ import {
   resolveByCoordinates,
   type RegionalFrostData,
 } from "@/lib/server/location-lookup";
+import { geocodeWithNominatim } from "@/lib/server/geocoding";
 
 export const dynamic = "force-dynamic";
 
@@ -107,7 +108,29 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       });
     }
 
-    // Unmatched: also no persistence. The user's existing settings (if any)
+    // Unmatched against the bundled table — try Nominatim as a geocoding
+    // fallback, then snap to the nearest known region. This lets users type
+    // any city (e.g., "Memphis, TN") and still get approximate frost data.
+    const geocoded = await geocodeWithNominatim(location);
+    if (geocoded) {
+      const nearest = resolveByCoordinates(geocoded.lat, geocoded.lon);
+      if (nearest) {
+        await persistMatch(userId, nearest.match);
+        return NextResponse.json({
+          status: "matched",
+          location: nearest.match.displayLabel,
+          resolvedLocation: nearest.match.key,
+          frostDates: nearest.match.frostDates,
+          approximate: true,
+          viaGeocoding: true,
+          geocodedFrom: location.trim(),
+          geocodedName: geocoded.displayName,
+          distanceKm: Math.round(nearest.distanceKm),
+        });
+      }
+    }
+
+    // True unmatched. Do not persist; the user's existing settings (if any)
     // remain authoritative until they pick a known location.
     return NextResponse.json({
       status: "unmatched",

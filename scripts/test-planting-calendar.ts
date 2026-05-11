@@ -334,9 +334,31 @@ ok(
   PLANT_LIBRARY.filter((p) => p.plantingCalendar).length >= 25,
 );
 
+// ─── Geocoding fallback ──────────────────────────────────────────────────────
+
+section("geocodeWithNominatim (offline checks only)");
+
+import {
+  geocodeWithNominatim,
+  _clearGeocodingCache,
+} from "../src/lib/server/geocoding";
+
+async function runGeocodingTests() {
+  _clearGeocodingCache();
+  process.env["NOMINATIM_ENABLED"] = "false";
+  ok(
+    "geocoder returns null when NOMINATIM_ENABLED=false",
+    (await geocodeWithNominatim("Memphis, TN")) === null,
+  );
+  process.env["NOMINATIM_ENABLED"] = "true";
+  ok("geocoder returns null on empty input", (await geocodeWithNominatim("")) === null);
+}
+
 // ─── Summary ─────────────────────────────────────────────────────────────────
 
-console.log(`\n${total - failed}/${total} passed`);
-if (failed > 0) {
-  process.exit(1);
-}
+runGeocodingTests().then(() => {
+  console.log(`\n${total - failed}/${total} passed`);
+  if (failed > 0) {
+    process.exit(1);
+  }
+});
