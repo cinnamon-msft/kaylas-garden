@@ -47,10 +47,23 @@ export function LocationPrompt({
 }: LocationPromptProps) {
   const [value, setValue] = useState(initialValue);
   const [loading, setLoading] = useState(false);
+  const [geoLoading, setGeoLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [candidates, setCandidates] = useState<CandidateDto[] | null>(null);
   const [unmatched, setUnmatched] = useState(false);
   const copy = copyForMode(mode);
+
+  async function persistMatch(data: Extract<FrostLookupResponse, { status: "matched" }>) {
+    onResolved?.({
+      location: data.location,
+      resolvedLocation: data.resolvedLocation,
+      frostDates: data.frostDates,
+      locationResolved: true,
+    });
+    setValue(data.location);
+    setCandidates(null);
+    setUnmatched(false);
+  }
 
   async function lookup(rawLocation: string) {
     const trimmed = rawLocation.trim();
@@ -66,14 +79,7 @@ export function LocationPrompt({
       }
       const data = (await res.json()) as FrostLookupResponse;
       if (data.status === "matched") {
-        onResolved?.({
-          location: data.location,
-          resolvedLocation: data.resolvedLocation,
-          frostDates: data.frostDates,
-          locationResolved: true,
-        });
-        // Reflect canonical label in the input.
-        setValue(data.location);
+        await persistMatch(data);
       } else if (data.status === "ambiguous") {
         setCandidates(data.candidates);
       } else {
@@ -87,10 +93,60 @@ export function LocationPrompt({
     }
   }
 
+  function useMyLocation() {
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      setError("This browser doesn't support geolocation.");
+      return;
+    }
+    setGeoLoading(true);
+    setError(null);
+    setUnmatched(false);
+    setCandidates(null);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const { latitude, longitude } = position.coords;
+          const res = await fetch(
+            `/api/frost-dates?lat=${latitude.toFixed(5)}&lon=${longitude.toFixed(5)}`,
+          );
+          if (!res.ok) {
+            throw new Error(`Lookup failed (${res.status})`);
+          }
+          const data = (await res.json()) as FrostLookupResponse;
+          if (data.status === "matched") {
+            await persistMatch(data);
+          } else {
+            setUnmatched(true);
+          }
+        } catch (err: unknown) {
+          const msg = err instanceof Error ? err.message : "Lookup failed";
+          setError(msg);
+        } finally {
+          setGeoLoading(false);
+        }
+      },
+      (err) => {
+        setGeoLoading(false);
+        if (err.code === err.PERMISSION_DENIED) {
+          setError("Permission denied. Allow location access or type your city, ZIP, or postal code.");
+        } else if (err.code === err.POSITION_UNAVAILABLE) {
+          setError("Couldn't determine your location. Try typing your city or ZIP instead.");
+        } else if (err.code === err.TIMEOUT) {
+          setError("Location request timed out. Try typing your city or ZIP instead.");
+        } else {
+          setError("Couldn't read your location. Try typing your city or ZIP instead.");
+        }
+      },
+      { enableHighAccuracy: false, maximumAge: 10 * 60 * 1000, timeout: 10_000 },
+    );
+  }
+
   const containerClass =
     variant === "card"
       ? "rounded-xl border border-border bg-bg-card p-4 shadow-sm sm:p-6"
       : "rounded-lg border border-border bg-bg-page p-4";
+
+  const busy = loading || geoLoading;
 
   return (
     <section className={containerClass} aria-labelledby="location-prompt-heading">
@@ -115,12 +171,22 @@ export function LocationPrompt({
         />
         <button
           onClick={() => void lookup(value)}
-          disabled={loading || value.trim().length === 0}
+          disabled={busy || value.trim().length === 0}
           className="rounded-lg bg-primary px-5 py-2 font-medium text-text-on-primary transition-colors hover:opacity-90 disabled:opacity-50"
         >
           {loading ? "Looking up…" : "Look Up"}
         </button>
       </div>
+
+      <button
+        type="button"
+        onClick={useMyLocation}
+        disabled={busy}
+        className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-border bg-bg-page px-3 py-1.5 text-sm font-medium text-text-primary transition-colors hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-50"
+      >
+        <span aria-hidden="true">🧭</span>
+        {geoLoading ? "Locating…" : "Use my location"}
+      </button>
 
       {error && (
         <p role="alert" className="mt-3 text-sm text-red-600">
@@ -137,7 +203,7 @@ export function LocationPrompt({
                 key={candidate.key}
                 type="button"
                 onClick={() => void lookup(candidate.key)}
-                disabled={loading}
+                disabled={busy}
                 className="rounded-lg border border-border bg-bg-page px-3 py-1.5 text-sm text-text-primary transition-colors hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-50"
               >
                 <span aria-hidden="true">📍</span> {candidate.displayLabel}
@@ -152,7 +218,8 @@ export function LocationPrompt({
           We don&apos;t have frost data for that location yet. Try a nearby major city, US ZIP code,
           or Canadian postal code (e.g., <code className="rounded bg-bg-page px-1">Boston, MA</code>,{" "}
           <code className="rounded bg-bg-page px-1">98101</code>,{" "}
-          <code className="rounded bg-bg-page px-1">M5V 3A8</code>).
+          <code className="rounded bg-bg-page px-1">M5V 3A8</code>) — or click{" "}
+          <span className="font-medium">Use my location</span>.
         </p>
       )}
     </section>

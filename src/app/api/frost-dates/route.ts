@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { updateSettings } from "@/lib/data-social";
 import { getAuthUserId } from "@/lib/auth-helpers";
-import { resolveLocation, type RegionalFrostData } from "@/lib/server/location-lookup";
+import {
+  resolveLocation,
+  resolveByCoordinates,
+  type RegionalFrostData,
+} from "@/lib/server/location-lookup";
 
 export const dynamic = "force-dynamic";
 
@@ -23,6 +27,18 @@ function toCandidate(entry: RegionalFrostData): CandidateDto {
   };
 }
 
+async function persistMatch(
+  userId: string,
+  match: RegionalFrostData,
+): Promise<void> {
+  await updateSettings(userId, {
+    location: match.displayLabel,
+    frostDates: match.frostDates,
+    locationResolved: true,
+    resolvedLocation: match.key,
+  });
+}
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const userId = await getAuthUserId();
@@ -30,6 +46,36 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     const { searchParams } = new URL(request.url);
     const location = searchParams.get("location");
+    const latParam = searchParams.get("lat");
+    const lonParam = searchParams.get("lon");
+
+    // Geolocation path: resolve the nearest known climate region.
+    if (latParam !== null && lonParam !== null) {
+      const lat = Number(latParam);
+      const lon = Number(lonParam);
+      if (!Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) {
+        return NextResponse.json(
+          { error: "Invalid 'lat'/'lon' coordinates" },
+          { status: 400 },
+        );
+      }
+      const nearest = resolveByCoordinates(lat, lon);
+      if (!nearest) {
+        return NextResponse.json({
+          status: "unmatched",
+          location: "",
+        });
+      }
+      await persistMatch(userId, nearest.match);
+      return NextResponse.json({
+        status: "matched",
+        location: nearest.match.displayLabel,
+        resolvedLocation: nearest.match.key,
+        frostDates: nearest.match.frostDates,
+        approximate: nearest.distanceKm > 80,
+        distanceKm: Math.round(nearest.distanceKm),
+      });
+    }
 
     if (!location || location.trim().length === 0) {
       return NextResponse.json(
@@ -41,19 +87,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const result = resolveLocation(location);
 
     if (result.status === "matched") {
-      const match = result.match;
-      // Persist canonical fields so future page loads short-circuit the prompt.
-      await updateSettings(userId, {
-        location: match.displayLabel,
-        frostDates: match.frostDates,
-        locationResolved: true,
-        resolvedLocation: match.key,
-      });
+      await persistMatch(userId, result.match);
       return NextResponse.json({
         status: "matched",
-        location: match.displayLabel,
-        resolvedLocation: match.key,
-        frostDates: match.frostDates,
+        location: result.match.displayLabel,
+        resolvedLocation: result.match.key,
+        frostDates: result.match.frostDates,
       });
     }
 

@@ -15,6 +15,7 @@ import { buildPlantingCalendar } from "../src/lib/planting-calendar";
 import {
   parseLocationInput,
   resolveLocation,
+  resolveByCoordinates,
   REGIONAL_FROST_DATA,
 } from "../src/lib/server/location-lookup";
 import { PLANT_LIBRARY } from "../src/lib/plant-library";
@@ -136,6 +137,71 @@ ok(
 ok(
   "all canonical keys are unique",
   new Set(REGIONAL_FROST_DATA.map((e) => e.key)).size === REGIONAL_FROST_DATA.length,
+);
+
+ok(
+  "every entry has lat/lon coordinates",
+  REGIONAL_FROST_DATA.every(
+    (e) =>
+      Number.isFinite(e.lat) &&
+      Number.isFinite(e.lon) &&
+      Math.abs(e.lat) <= 90 &&
+      Math.abs(e.lon) <= 180,
+  ),
+);
+
+ok(
+  "dataset covers all 50 US states + DC",
+  (() => {
+    const usStates = new Set(
+      REGIONAL_FROST_DATA.filter((e) => e.country === "US").map((e) => e.region),
+    );
+    return usStates.size >= 51; // 50 states + DC
+  })(),
+);
+
+ok(
+  "dataset covers all 13 Canadian provinces and territories",
+  (() => {
+    const caRegions = new Set(
+      REGIONAL_FROST_DATA.filter((e) => e.country === "CA").map((e) => e.region),
+    );
+    return caRegions.size >= 13;
+  })(),
+);
+
+// ─── Geolocation (nearest-neighbor) ──────────────────────────────────────────
+
+section("resolveByCoordinates");
+
+ok(
+  "Boston coords resolve to Boston, MA",
+  (() => {
+    const r = resolveByCoordinates(42.3601, -71.0589);
+    return r !== null && r.match.key === "boston-ma" && r.distanceKm < 10;
+  })(),
+);
+
+ok(
+  "Toronto coords resolve to Toronto, ON",
+  (() => {
+    const r = resolveByCoordinates(43.6532, -79.3832);
+    return r !== null && r.match.key === "toronto-on";
+  })(),
+);
+
+ok(
+  "coords inside a small US city snap to the nearest known entry",
+  (() => {
+    // Brookline, MA (a Boston suburb) ~ 42.33, -71.12
+    const r = resolveByCoordinates(42.3318, -71.1212);
+    return r !== null && r.match.country === "US" && r.distanceKm < 50;
+  })(),
+);
+
+ok(
+  "invalid coordinates return null",
+  resolveByCoordinates(NaN, 0) === null && resolveByCoordinates(91, 0) === null,
 );
 
 // ─── Calendar engine ─────────────────────────────────────────────────────────
