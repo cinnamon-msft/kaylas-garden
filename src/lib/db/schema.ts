@@ -4,6 +4,7 @@ import {
   timestamp,
   integer,
   jsonb,
+  boolean,
   primaryKey,
   uniqueIndex,
   index,
@@ -176,4 +177,6 @@ export const userSettings = pgTable("user_settings", {
     firstFallFrost: string;
     growingSeasonDays: number;
   } | null>(),
+  locationResolved: boolean("location_resolved").notNull().default(false),
+  resolvedLocation: text("resolved_location"),
 });

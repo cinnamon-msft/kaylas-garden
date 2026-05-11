@@ -1,55 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { updateSettings } from "@/lib/data-social";
 import { getAuthUserId } from "@/lib/auth-helpers";
-import type { FrostDates } from "@/lib/types";
+import { resolveLocation, type RegionalFrostData } from "@/lib/server/location-lookup";
 
 export const dynamic = "force-dynamic";
 
-const FROST_DATA: Record<string, FrostDates> = {
-  boston: { lastSpringFrost: "April 15", firstFallFrost: "October 15", growingSeasonDays: 183 },
-  miami: { lastSpringFrost: "January 1", firstFallFrost: "December 31", growingSeasonDays: 365 },
-  chicago: { lastSpringFrost: "April 20", firstFallFrost: "October 10", growingSeasonDays: 173 },
-  denver: { lastSpringFrost: "May 5", firstFallFrost: "October 5", growingSeasonDays: 153 },
-  seattle: { lastSpringFrost: "March 15", firstFallFrost: "November 15", growingSeasonDays: 245 },
-  portland: { lastSpringFrost: "March 25", firstFallFrost: "November 10", growingSeasonDays: 230 },
-  "new york": { lastSpringFrost: "April 10", firstFallFrost: "October 25", growingSeasonDays: 198 },
-  "los angeles": { lastSpringFrost: "February 1", firstFallFrost: "December 15", growingSeasonDays: 317 },
-  "san francisco": { lastSpringFrost: "February 10", firstFallFrost: "December 10", growingSeasonDays: 303 },
-  atlanta: { lastSpringFrost: "March 20", firstFallFrost: "November 10", growingSeasonDays: 235 },
-  dallas: { lastSpringFrost: "March 10", firstFallFrost: "November 20", growingSeasonDays: 255 },
-  houston: { lastSpringFrost: "February 15", firstFallFrost: "December 5", growingSeasonDays: 293 },
-  phoenix: { lastSpringFrost: "February 5", firstFallFrost: "December 15", growingSeasonDays: 313 },
-  minneapolis: { lastSpringFrost: "May 1", firstFallFrost: "October 1", growingSeasonDays: 153 },
-  detroit: { lastSpringFrost: "April 25", firstFallFrost: "October 10", growingSeasonDays: 168 },
-  philadelphia: { lastSpringFrost: "April 5", firstFallFrost: "October 25", growingSeasonDays: 203 },
-  "san diego": { lastSpringFrost: "January 15", firstFallFrost: "December 20", growingSeasonDays: 340 },
-  nashville: { lastSpringFrost: "April 1", firstFallFrost: "October 25", growingSeasonDays: 207 },
-  austin: { lastSpringFrost: "March 1", firstFallFrost: "November 25", growingSeasonDays: 269 },
-  "salt lake city": { lastSpringFrost: "May 5", firstFallFrost: "October 10", growingSeasonDays: 158 },
-};
+interface CandidateDto {
+  key: string;
+  displayLabel: string;
+  region: string;
+  country: "US" | "CA";
+  frostDates: RegionalFrostData["frostDates"];
+}
 
-const DEFAULT_FROST: FrostDates = {
-  lastSpringFrost: "April 15",
-  firstFallFrost: "October 15",
-  growingSeasonDays: 183,
-};
-
-function findFrostDates(location: string): FrostDates {
-  const query = location.toLowerCase().trim();
-
-  // Exact match
-  if (FROST_DATA[query]) {
-    return FROST_DATA[query];
-  }
-
-  // Partial / fuzzy match
-  for (const [city, data] of Object.entries(FROST_DATA)) {
-    if (query.includes(city) || city.includes(query)) {
-      return data;
-    }
-  }
-
-  return DEFAULT_FROST;
+function toCandidate(entry: RegionalFrostData): CandidateDto {
+  return {
+    key: entry.key,
+    displayLabel: entry.displayLabel,
+    region: entry.region,
+    country: entry.country,
+    frostDates: entry.frostDates,
+  };
 }
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
@@ -60,18 +31,49 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { searchParams } = new URL(request.url);
     const location = searchParams.get("location");
 
-    if (!location) {
+    if (!location || location.trim().length === 0) {
       return NextResponse.json(
         { error: "Missing 'location' query parameter" },
         { status: 400 },
       );
     }
 
-    const frostDates = findFrostDates(location);
+    const result = resolveLocation(location);
 
-    await updateSettings(userId, { location, frostDates });
+    if (result.status === "matched") {
+      const match = result.match;
+      // Persist canonical fields so future page loads short-circuit the prompt.
+      await updateSettings(userId, {
+        location: match.displayLabel,
+        frostDates: match.frostDates,
+        locationResolved: true,
+        resolvedLocation: match.key,
+      });
+      return NextResponse.json({
+        status: "matched",
+        location: match.displayLabel,
+        resolvedLocation: match.key,
+        frostDates: match.frostDates,
+      });
+    }
 
-    return NextResponse.json({ location, frostDates });
+    if (result.status === "ambiguous") {
+      // Do NOT persist on ambiguity: leaving previously-resolved settings
+      // intact avoids overwriting valid frost dates with stale data while
+      // the user is mid-clarification. The chooser is page-level state.
+      return NextResponse.json({
+        status: "ambiguous",
+        location: location.trim(),
+        candidates: result.candidates.map(toCandidate),
+      });
+    }
+
+    // Unmatched: also no persistence. The user's existing settings (if any)
+    // remain authoritative until they pick a known location.
+    return NextResponse.json({
+      status: "unmatched",
+      location: location.trim(),
+    });
   } catch (err: unknown) {
     console.error("GET /api/frost-dates failed:", err);
     const message = err instanceof Error ? err.message : "Failed to look up frost dates";

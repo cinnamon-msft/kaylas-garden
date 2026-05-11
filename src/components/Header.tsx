@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/", label: "My Garden" },
   { href: "/feed", label: "Feed" },
   { href: "/library", label: "Plant Library" },
+  { href: "/calendar", label: "Planting Calendar" },
   { href: "/settings", label: "Settings" },
 ];
 

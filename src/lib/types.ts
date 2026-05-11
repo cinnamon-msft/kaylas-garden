@@ -54,4 +54,16 @@ export interface UserSettings {
   gardenIcon: string;
   theme: "green" | "earth" | "ocean" | "space";
   frostDates: FrostDates | null;
+  /**
+   * True only after the saved `location` resolved to a known entry in the
+   * frost-data lookup table with a single, unambiguous match. Existing rows
+   * without this flag are treated as `false` until a one-time backfill in
+   * `getSettings` re-resolves the value.
+   */
+  locationResolved: boolean;
+  /**
+   * Canonical key of the resolved location entry (e.g. `"boston-ma"`).
+   * `null` when the saved location is unresolved.
+   */
+  resolvedLocation: string | null;
 }
