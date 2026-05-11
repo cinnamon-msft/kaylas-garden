@@ -176,6 +176,7 @@ export const userSettings = pgTable("user_settings", {
     lastSpringFrost: string;
     firstFallFrost: string;
     growingSeasonDays: number;
+    hardinessZone?: string;
   } | null>(),
   locationResolved: boolean("location_resolved").notNull().default(false),
   resolvedLocation: text("resolved_location"),

@@ -151,6 +151,25 @@ ok(
 );
 
 ok(
+  "every entry has a USDA hardiness zone (e.g. 6a, 9b, 11a)",
+  REGIONAL_FROST_DATA.every(
+    (e) =>
+      typeof e.hardinessZone === "string" &&
+      /^(0|1[0-3]|[1-9])[ab]$/.test(e.hardinessZone),
+  ),
+);
+
+ok(
+  "Boston, MA is zone 7a",
+  REGIONAL_FROST_DATA.find((e) => e.key === "boston-ma")?.hardinessZone === "7a",
+);
+
+ok(
+  "Miami, FL is zone 11a",
+  REGIONAL_FROST_DATA.find((e) => e.key === "miami-fl")?.hardinessZone === "11a",
+);
+
+ok(
   "dataset covers all 50 US states + DC",
   (() => {
     const usStates = new Set(

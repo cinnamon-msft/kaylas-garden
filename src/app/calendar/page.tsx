@@ -252,6 +252,7 @@ function CalendarReady({
           {" · "}
           {frostPhaseSummary(data)}
           {data.locationDisplayLabel ? ` · ${data.locationDisplayLabel}` : null}
+          {data.frostDates.hardinessZone ? ` · Zone ${data.frostDates.hardinessZone}` : null}
         </p>
         {!data.locationResolved && (
           <div className="rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">

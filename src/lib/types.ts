@@ -46,6 +46,12 @@ export interface FrostDates {
   lastSpringFrost: string; // e.g., "April 15"
   firstFallFrost: string; // e.g., "October 20"
   growingSeasonDays: number;
+  /**
+   * USDA Plant Hardiness Zone (2023 map), e.g. "6a", "7b", "10a". Optional
+   * for backward compatibility with rows persisted before the zone was added;
+   * fresh lookups will always include it.
+   */
+  hardinessZone?: string;
 }
 
 export interface UserSettings {

@@ -32,12 +32,25 @@ async function persistMatch(
   userId: string,
   match: RegionalFrostData,
 ): Promise<void> {
+  const frostDatesWithZone = {
+    ...match.frostDates,
+    hardinessZone: match.hardinessZone,
+  };
   await updateSettings(userId, {
     location: match.displayLabel,
-    frostDates: match.frostDates,
+    frostDates: frostDatesWithZone,
     locationResolved: true,
     resolvedLocation: match.key,
   });
+}
+
+function matchedResponseBody(match: RegionalFrostData) {
+  return {
+    status: "matched" as const,
+    location: match.displayLabel,
+    resolvedLocation: match.key,
+    frostDates: { ...match.frostDates, hardinessZone: match.hardinessZone },
+  };
 }
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
@@ -69,10 +82,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       }
       await persistMatch(userId, nearest.match);
       return NextResponse.json({
-        status: "matched",
-        location: nearest.match.displayLabel,
-        resolvedLocation: nearest.match.key,
-        frostDates: nearest.match.frostDates,
+        ...matchedResponseBody(nearest.match),
         approximate: nearest.distanceKm > 80,
         distanceKm: Math.round(nearest.distanceKm),
       });
@@ -89,12 +99,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     if (result.status === "matched") {
       await persistMatch(userId, result.match);
-      return NextResponse.json({
-        status: "matched",
-        location: result.match.displayLabel,
-        resolvedLocation: result.match.key,
-        frostDates: result.match.frostDates,
-      });
+      return NextResponse.json(matchedResponseBody(result.match));
     }
 
     if (result.status === "ambiguous") {
@@ -117,10 +122,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       if (nearest) {
         await persistMatch(userId, nearest.match);
         return NextResponse.json({
-          status: "matched",
-          location: nearest.match.displayLabel,
-          resolvedLocation: nearest.match.key,
-          frostDates: nearest.match.frostDates,
+          ...matchedResponseBody(nearest.match),
           approximate: true,
           viaGeocoding: true,
           geocodedFrom: location.trim(),

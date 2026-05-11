@@ -207,6 +207,13 @@ export default function SettingsPage() {
               <span className="font-medium text-text-primary">Growing Season:</span>
               <span className="text-text-secondary">{frostDates.growingSeasonDays} days</span>
             </div>
+            {frostDates.hardinessZone && (
+              <div className="flex items-center gap-2">
+                <span className="text-lg">🌡️</span>
+                <span className="font-medium text-text-primary">USDA Hardiness Zone:</span>
+                <span className="text-text-secondary">{frostDates.hardinessZone}</span>
+              </div>
+            )}
           </div>
           <p className="mt-4 text-sm text-text-secondary">
             💡 Frost dates help you decide when to plant outdoors. Wait until after the last spring frost to
