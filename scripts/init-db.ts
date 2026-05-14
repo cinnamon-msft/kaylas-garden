@@ -132,6 +132,7 @@ async function main() {
     ALTER TABLE user_settings ADD COLUMN IF NOT EXISTS garden_name TEXT;
     ALTER TABLE user_settings ADD COLUMN IF NOT EXISTS garden_icon TEXT;
     ALTER TABLE plants ADD COLUMN IF NOT EXISTS nickname TEXT;
+    ALTER TABLE plant_entries ADD COLUMN IF NOT EXISTS planting_location TEXT;
   `);
 
   console.log("✅ Database schema initialized successfully!");

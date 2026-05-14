@@ -80,9 +80,8 @@
   --color-text-on-primary: var(--color-text-on-primary);
   --color-border: var(--color-border);
   --color-hover: var(--color-hover);
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-fredoka: var(--font-fredoka);
-  --font-quicksand: var(--font-quicksand);
+  --font-sans: var(--font-quicksand), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-fredoka), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 }
 
