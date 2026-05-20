@@ -1,12 +1,15 @@
 import { randomUUID } from "crypto";
 import type { Plant, PlantEntry, UserSettings, WateringEvent } from "./types";
 import { downloadJson, uploadJson } from "./blob-storage";
+import { DEFAULT_GARDEN_ICON } from "./garden-icons";
 
 const PLANTS_BLOB = "json/plants.json";
 const SETTINGS_BLOB = "json/settings.json";
 
 const DEFAULT_SETTINGS: UserSettings = {
   location: "Boston, MA",
+  gardenName: "My Garden",
+  gardenIcon: DEFAULT_GARDEN_ICON,
   theme: "green",
   frostDates: null,
 };

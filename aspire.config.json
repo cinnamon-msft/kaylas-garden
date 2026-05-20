@@ -4,9 +4,9 @@
     "language": "typescript/nodejs"
   },
   "sdk": {
-    "version": "13.3.0-preview.1.26217.2"
+    "version": "13.3.0"
   },
-  "channel": "daily",
+  "channel": "stable",
   "profiles": {
     "https": {
       "applicationUrl": "https://localhost:10322;http://localhost:55295",
@@ -17,10 +17,10 @@
     }
   },
   "packages": {
-    "Aspire.Hosting.JavaScript": "13.3.0-preview.1.26217.2",
-    "Aspire.Hosting.Docker": "13.3.0-preview.1.26217.2",
-    "Aspire.Hosting.Azure.AppContainers": "13.3.0-preview.1.26217.2",
-    "Aspire.Hosting.Azure.Storage": "13.3.0-preview.1.26217.2",
-    "Aspire.Hosting.Foundry": "13.3.0-preview.1.26217.2"
+    "Aspire.Hosting.JavaScript": "13.3.0",
+    "Aspire.Hosting.Docker": "13.3.0",
+    "Aspire.Hosting.Azure.AppContainers": "13.3.0",
+    "Aspire.Hosting.Azure.Storage": "13.3.0",
+    "Aspire.Hosting.PostgreSQL": "13.3.0"
   }
 }

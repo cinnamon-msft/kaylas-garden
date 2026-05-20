@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
-import { getPlant, updatePlant, deletePlant } from "@/lib/data";
+import { getPlant, updatePlant, deletePlant } from "@/lib/data-social";
+import { getAuthUserId } from "@/lib/auth-helpers";
 import type { Plant } from "@/lib/types";
+
+export const dynamic = "force-dynamic";
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -11,8 +14,10 @@ export async function GET(
   context: RouteContext
 ): Promise<NextResponse> {
   try {
+    const userId = await getAuthUserId();
+    if (userId instanceof NextResponse) return userId;
     const { id } = await context.params;
-    const plant = await getPlant(id);
+    const plant = await getPlant(userId, id);
     if (!plant) {
       return NextResponse.json({ error: "Plant not found" }, { status: 404 });
     }
@@ -29,9 +34,11 @@ export async function PUT(
   context: RouteContext
 ): Promise<NextResponse> {
   try {
+    const userId = await getAuthUserId();
+    if (userId instanceof NextResponse) return userId;
     const { id } = await context.params;
     const body = (await request.json()) as Partial<Plant>;
-    const updated = await updatePlant(id, body);
+    const updated = await updatePlant(userId, id, body);
     return NextResponse.json(updated);
   } catch (err: unknown) {
     console.error("PUT /api/plants/[id] failed:", err);
@@ -46,8 +53,10 @@ export async function DELETE(
   context: RouteContext
 ): Promise<NextResponse> {
   try {
+    const userId = await getAuthUserId();
+    if (userId instanceof NextResponse) return userId;
     const { id } = await context.params;
-    await deletePlant(id);
+    await deletePlant(userId, id);
     return NextResponse.json({ success: true });
   } catch (err: unknown) {
     console.error("DELETE /api/plants/[id] failed:", err);

@@ -9,7 +9,7 @@ const ALLOWED_TYPES = new Set([
   "image/gif",
   "image/webp",
 ]);
-const MAX_SIZE = 10 * 1024 * 1024; // 10 MB
+const MAX_SIZE = 5 * 1024 * 1024; // 5 MB (compressed)
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
@@ -32,19 +32,26 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     if (file.size > MAX_SIZE) {
       return NextResponse.json(
-        { error: "File too large. Maximum size is 10 MB" },
+        { error: `File too large. Maximum size is ${MAX_SIZE / (1024 * 1024)}MB` },
         { status: 400 }
       );
     }
 
     const originalName = file instanceof File ? file.name : "upload.jpg";
-    const ext = extname(originalName) || ".jpg";
+    const ext = extname(originalName) || ".webp";
     const filename = `${randomUUID()}${ext}`;
 
     const buffer = Buffer.from(await file.arrayBuffer());
     await uploadBlob(`images/${filename}`, buffer, file.type);
 
-    return NextResponse.json({ filename }, { status: 201 });
+    return NextResponse.json(
+      { 
+        filename,
+        size: buffer.length,
+        url: `/api/uploads/${filename}`,
+      },
+      { status: 201 }
+    );
   } catch (err: unknown) {
     console.error("POST /api/upload failed:", err);
     const message = err instanceof Error ? err.message : "Failed to upload file";

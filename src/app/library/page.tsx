@@ -1,11 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect, useMemo, type FormEvent } from "react";
 import {
   PLANT_LIBRARY,
   searchLibraryPlants,
   type LibraryPlant,
 } from "@/lib/plant-library";
+import type { Plant } from "@/lib/types";
 
 const POPULAR_PLANT_IDS = [
   "tomato",
@@ -41,11 +43,23 @@ export default function LibraryPage() {
   const [activeQuery, setActiveQuery] = useState("");
   const [selected, setSelected] = useState<LibraryPlant | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [addedToGarden, setAddedToGarden] = useState(false);
+  const [gardenPlants, setGardenPlants] = useState<Plant[]>([]);
+  const [addedPlant, setAddedPlant] = useState<Plant | null>(null);
+  const [nickname, setNickname] = useState("");
   const [adding, setAdding] = useState(false);
 
   useEffect(() => {
     document.title = "Plant Library — Kayla's Garden";
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/plants")
+      .then((res) => res.ok ? res.json() : Promise.reject(new Error("Failed to load garden plants")))
+      .then((plants: Plant[]) => setGardenPlants(plants))
+      .catch((err: unknown) => {
+        console.error("Failed to load garden plants:", err);
+        setGardenPlants([]);
+      });
   }, []);
 
   const results = useMemo(() => {
@@ -57,7 +71,8 @@ export default function LibraryPage() {
 
   const selectPlant = (plant: LibraryPlant) => {
     setSelected(plant);
-    setAddedToGarden(false);
+    setAddedPlant(null);
+    setNickname("");
     setError(null);
     setQuery(plant.name);
   };
@@ -67,7 +82,8 @@ export default function LibraryPage() {
     const trimmed = query.trim();
     setActiveQuery(trimmed);
     setSelected(null);
-    setAddedToGarden(false);
+    setAddedPlant(null);
+    setNickname("");
     setError(null);
     if (trimmed) {
       const exact = searchLibraryPlants(trimmed).find(
@@ -90,6 +106,7 @@ export default function LibraryPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: selected.name,
+          nickname: nickname.trim() || undefined,
           species: selected.scientificName,
           thumbnailImage: "",
           careInfo: {
@@ -109,13 +126,24 @@ export default function LibraryPage() {
         const body = (await res.json().catch(() => ({}))) as { error?: string };
         throw new Error(body.error ?? "Failed to add plant");
       }
-      setAddedToGarden(true);
+      const plant = (await res.json()) as Plant;
+      setAddedPlant(plant);
+      setGardenPlants((current) => [plant, ...current]);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to add to garden");
     } finally {
       setAdding(false);
     }
   };
+
+  const selectedAlreadyInGarden = Boolean(
+    selected &&
+      gardenPlants.some(
+        (plant) =>
+          plant.name.toLowerCase() === selected.name.toLowerCase() &&
+          plant.species.toLowerCase() === selected.scientificName.toLowerCase(),
+      ),
+  );
 
   return (
     <div>
@@ -255,27 +283,67 @@ export default function LibraryPage() {
               </div>
               <div className="w-full sm:w-auto">
                 <div aria-live="polite" className="sr-only">
-                  {addedToGarden && `${selected.name} added to your garden`}
+                  {addedPlant && `${selected.name} added to your garden`}
                 </div>
-                <button
-                  type="button"
-                  onClick={addToGarden}
-                  disabled={addedToGarden || adding}
-                  className={`w-full rounded-lg px-4 py-2 text-sm font-medium transition-colors sm:w-auto ${
-                    addedToGarden
-                      ? "bg-green-100 text-green-700"
-                      : "bg-primary text-text-on-primary hover:bg-primary-dark"
-                  } disabled:opacity-60`}
-                >
-                  {addedToGarden
-                    ? "✓ Added to Garden"
-                    : adding
+                {addedPlant ? (
+                  <div className="flex flex-col gap-2 sm:items-end">
+                    <span className="rounded-lg bg-green-100 px-4 py-2 text-sm font-medium text-green-700">
+                      ✓ Added to Garden
+                    </span>
+                    <div className="flex flex-wrap gap-2 text-sm">
+                      <Link href={`/plants/${addedPlant.id}`} className="font-medium text-primary hover:underline">
+                        View plant
+                      </Link>
+                      <Link href="/" className="font-medium text-primary hover:underline">
+                        Go to My Garden
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setAddedPlant(null);
+                          setNickname("");
+                        }}
+                        className="font-medium text-primary hover:underline"
+                      >
+                        Add another
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={addToGarden}
+                    disabled={adding}
+                    className="w-full rounded-lg bg-primary px-4 py-2 text-sm font-medium text-text-on-primary transition-colors hover:bg-primary-dark disabled:opacity-60 sm:w-auto"
+                  >
+                    {adding
                       ? "Adding…"
-                      : "+ Add to My Garden"}
-                </button>
+                      : selectedAlreadyInGarden
+                        ? "+ Add Another to My Garden"
+                        : "+ Add to My Garden"}
+                  </button>
+                )}
               </div>
             </div>
             <p className="mt-4 text-text-secondary">{selected.description}</p>
+            <div className="mt-4 max-w-md">
+              <label htmlFor="library-plant-nickname" className="mb-1 block text-sm font-medium text-text-secondary">
+                Nickname <span className="font-normal">(optional)</span>
+              </label>
+              <input
+                id="library-plant-nickname"
+                value={nickname}
+                onChange={(event) => setNickname(event.target.value)}
+                disabled={Boolean(addedPlant)}
+                placeholder={`e.g., Patio ${selected.name}`}
+                className="w-full rounded-lg border border-border bg-bg-page px-3 py-2 text-text-primary placeholder:text-text-secondary/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 disabled:opacity-60"
+              />
+              {selectedAlreadyInGarden && !addedPlant && (
+                <p className="mt-2 rounded-md bg-accent px-2 py-1 text-xs text-text-primary">
+                  You already have this plant in your garden. Add another to track a separate specimen.
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Care Grid */}

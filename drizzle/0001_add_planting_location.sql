@@ -1,0 +1,1 @@
+ALTER TABLE "plant_entries" ADD COLUMN "planting_location" text;

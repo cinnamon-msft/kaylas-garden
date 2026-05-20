@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { AuthProvider } from "@/components/AuthProvider";
+import { DEFAULT_GARDEN_ICON, getGardenIconFaviconHref } from "@/lib/garden-icons";
 
 export const metadata: Metadata = {
-  title: "Kayla's Garden",
-  description: "Track your plants, upload progress photos, and learn about gardening 🌱",
+  title: "The Seed Feed",
+  description: "Track your plants, share your garden, and grow with fellow seeders 🌱",
   icons: {
-    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>",
+    icon: getGardenIconFaviconHref(DEFAULT_GARDEN_ICON),
   },
 };
 
@@ -29,15 +31,17 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <ThemeProvider>
-          <Header />
-          <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-3 py-4 sm:px-4 sm:py-6">
-            {children}
-          </main>
-          <footer className="border-t border-border py-4 text-center text-sm text-text-secondary">
-            🌱 Kayla&apos;s Garden &mdash; Happy Growing!
-          </footer>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <Header />
+            <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-3 py-4 sm:px-4 sm:py-6">
+              {children}
+            </main>
+            <footer className="border-t border-border py-4 text-center text-sm text-text-secondary">
+              🌱 The Seed Feed &mdash; Happy Growing!
+            </footer>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

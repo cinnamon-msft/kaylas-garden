@@ -3,16 +3,21 @@
 import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
-export default defineConfig({
-  files: ['apphost.ts'],
-  extends: [tseslint.configs.base],
-  languageOptions: {
-    parserOptions: {
-      projectService: true,
-      tsconfigRootDir: import.meta.dirname,
+export default defineConfig([
+  {
+    ignores: ['.next/**'],
+  },
+  {
+    files: ['apphost.ts'],
+    extends: [tseslint.configs.base],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-floating-promises': ['error', { checkThenables: true }],
     },
   },
-  rules: {
-    '@typescript-eslint/no-floating-promises': ['error', { checkThenables: true }],
-  },
-});
+]);

@@ -2,24 +2,32 @@
 
 import { useState, useEffect } from "react";
 import type { UserSettings, FrostDates } from "@/lib/types";
+import {
+  DEFAULT_GARDEN_ICON,
+  GARDEN_ICON_OPTIONS,
+  normalizeGardenIcon,
+} from "@/lib/garden-icons";
 
-type Theme = "green" | "earth" | "ocean";
+type Theme = "green" | "earth" | "ocean" | "space";
 
 const themes: { id: Theme; label: string; emoji: string; swatches: string[] }[] = [
   { id: "green", label: "Garden", emoji: "🌿", swatches: ["bg-green-600", "bg-green-400", "bg-green-100"] },
   { id: "earth", label: "Earth", emoji: "🌾", swatches: ["bg-amber-700", "bg-amber-500", "bg-amber-100"] },
   { id: "ocean", label: "Ocean", emoji: "🌊", swatches: ["bg-blue-700", "bg-blue-400", "bg-blue-100"] },
+  { id: "space", label: "Space", emoji: "🔮", swatches: ["bg-purple-700", "bg-purple-400", "bg-purple-950"] },
 ];
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState<UserSettings | null>(null);
   const [location, setLocation] = useState("");
+  const [gardenName, setGardenName] = useState("");
+  const [gardenIcon, setGardenIcon] = useState(DEFAULT_GARDEN_ICON);
   const [frostDates, setFrostDates] = useState<FrostDates | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    document.title = "Settings — Kayla's Garden";
+    document.title = "Settings — The Seed Feed";
   }, []);
 
   useEffect(() => {
@@ -28,9 +36,24 @@ export default function SettingsPage() {
       .then((data: UserSettings) => {
         setSettings(data);
         setLocation(data.location);
+        setGardenName(data.gardenName || "My Garden");
+        setGardenIcon(normalizeGardenIcon(data.gardenIcon));
         setFrostDates(data.frostDates);
+        document.documentElement.setAttribute("data-theme", data.theme);
+        localStorage.setItem("kaylas-garden-theme", data.theme);
       })
       .catch(() => setError("Failed to load settings"));
+  }, []);
+
+  useEffect(() => {
+    const handleThemeEvent = (event: Event) => {
+      const theme = (event as CustomEvent<Theme>).detail;
+      if (!themes.some((candidate) => candidate.id === theme)) return;
+      setSettings((prev) => (prev ? { ...prev, theme } : prev));
+    };
+
+    window.addEventListener("garden-theme-change", handleThemeEvent);
+    return () => window.removeEventListener("garden-theme-change", handleThemeEvent);
   }, []);
 
   const lookUpFrostDates = async () => {
@@ -53,6 +76,7 @@ export default function SettingsPage() {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("kaylas-garden-theme", theme);
     setSettings((prev) => (prev ? { ...prev, theme } : prev));
+    window.dispatchEvent(new CustomEvent("garden-theme-change", { detail: theme }));
     try {
       await fetch("/api/settings", {
         method: "PUT",
@@ -75,6 +99,76 @@ export default function SettingsPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-8">
       <h1 className="text-3xl font-bold text-text-primary"><span aria-hidden="true">⚙️</span> Settings</h1>
+
+      {/* Garden identity */}
+      <section className="rounded-xl border border-border bg-bg-card p-4 shadow-sm sm:p-6">
+        <h2 className="mb-4 text-xl font-semibold text-text-primary"><span aria-hidden="true">{gardenIcon}</span> Garden Identity</h2>
+        <div className="flex flex-col gap-4">
+          <label htmlFor="garden-name-input" className="text-sm font-medium text-text-secondary">
+            Garden name
+          </label>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <input
+              id="garden-name-input"
+              type="text"
+              value={gardenName}
+              onChange={(e) => setGardenName(e.target.value)}
+              placeholder="e.g., Sunny Side Plot"
+              className="flex-1 rounded-lg border border-border bg-bg-page px-4 py-2 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+            <button
+              onClick={async () => {
+                try {
+                  const nextGardenName = gardenName.trim() || "My Garden";
+                  const nextGardenIcon = normalizeGardenIcon(gardenIcon);
+                  await fetch("/api/settings", {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      gardenName: nextGardenName,
+                      gardenIcon: nextGardenIcon,
+                    }),
+                  });
+                  setSettings((prev) => prev ? { ...prev, gardenName: nextGardenName, gardenIcon: nextGardenIcon } : prev);
+                } catch {
+                  setError("Failed to save garden name");
+                }
+              }}
+              disabled={!gardenName.trim()}
+              className="rounded-lg bg-primary px-5 py-2 font-medium text-text-on-primary transition-colors hover:opacity-90 disabled:opacity-50"
+            >
+              Save
+            </button>
+          </div>
+          <fieldset className="flex flex-col gap-2">
+            <legend className="text-sm font-medium text-text-secondary">
+              Pick a garden icon
+            </legend>
+            <div className="grid grid-cols-5 gap-2 sm:grid-cols-10">
+              {GARDEN_ICON_OPTIONS.map((option) => {
+                const selected = gardenIcon === option.icon;
+                return (
+                  <button
+                    key={option.icon}
+                    type="button"
+                    onClick={() => setGardenIcon(option.icon)}
+                    aria-label={option.label}
+                    aria-pressed={selected}
+                    title={option.label}
+                    className={`flex aspect-square items-center justify-center rounded-xl border-2 text-2xl transition-all hover:bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary ${
+                      selected
+                        ? "border-primary bg-accent shadow-sm"
+                        : "border-border bg-bg-page"
+                    }`}
+                  >
+                    <span aria-hidden="true">{option.icon}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+        </div>
+      </section>
 
       {/* Location & Frost Dates */}
       <section className="rounded-xl border border-border bg-bg-card p-4 shadow-sm sm:p-6">
@@ -168,7 +262,7 @@ export default function SettingsPage() {
       <section className="rounded-xl border border-border bg-bg-card p-4 shadow-sm sm:p-6">
         <h2 className="mb-3 text-xl font-semibold text-text-primary"><span aria-hidden="true">🌱</span> About</h2>
         <p className="text-text-secondary">
-          Kayla&apos;s Garden helps you track your plants, monitor their progress, and learn about gardening. 🌱
+          Seed Feed, originally Kayla&apos;s Garden, helps you track your plants, monitor their progress, and learn about gardening. 🌱
         </p>
       </section>
     </div>

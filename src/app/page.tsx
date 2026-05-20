@@ -5,6 +5,12 @@ import Image from "next/image";
 import type { Plant } from "@/lib/types";
 import { AddPlantModal } from "@/components/AddPlantModal";
 import { FrostDateBanner } from "@/components/FrostDateBanner";
+import {
+  getPlantCategoryEmoji,
+  getPlantDisplayName,
+  getPlantIdentityLine,
+} from "@/lib/plant-display";
+import { DEFAULT_GARDEN_ICON, normalizeGardenIcon } from "@/lib/garden-icons";
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString(undefined, {
@@ -46,6 +52,9 @@ function getWateringStatus(plant: Plant): WateringStatus {
 }
 
 function PlantCard({ plant }: { readonly plant: Plant }) {
+  const displayName = getPlantDisplayName(plant);
+  const identityLine = getPlantIdentityLine(plant);
+  const categoryEmoji = getPlantCategoryEmoji(plant);
   const lastEntry =
     plant.entries.length > 0
       ? plant.entries[plant.entries.length - 1]
@@ -54,13 +63,13 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
   return (
     <article
       aria-labelledby={`plant-${plant.id}-name`}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-bg-card shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+      className="group relative flex flex-row overflow-hidden rounded-2xl border border-border bg-bg-card shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
     >
-      <div className="relative flex h-32 items-center justify-center bg-hover sm:h-48">
+      <div className="relative flex w-20 shrink-0 items-center justify-center bg-hover sm:w-28">
         {plant.thumbnailImage ? (
           <Image
             src={`/api/uploads/${plant.thumbnailImage}`}
-            alt={plant.name}
+            alt={displayName}
             fill
             className="object-cover"
           />
@@ -74,44 +83,44 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
             }}
           />
         ) : (
-          <span aria-hidden="true" className="text-4xl sm:text-6xl">🌿</span>
+          <span aria-hidden="true" className="text-4xl">{categoryEmoji}</span>
         )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-1 p-2 sm:p-4">
-        <h3 id={`plant-${plant.id}-name`} className="text-base sm:text-lg font-bold text-text-primary">
-          <a
-            href={`/plants/${plant.id}`}
-            className="group-hover:text-primary after:absolute after:inset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-1"
-          >
-            {plant.name}
-          </a>
-        </h3>
-        {plant.species && (
-          <p className="text-xs sm:text-sm italic text-text-secondary">{plant.species}</p>
+      <div className="flex flex-1 flex-col justify-center gap-0.5 p-3 sm:p-4">
+        <div className="flex items-start justify-between gap-2">
+          <h3 id={`plant-${plant.id}-name`} className="text-base sm:text-lg font-bold text-text-primary">
+            <a
+              href={`/plants/${plant.id}`}
+              className="group-hover:text-primary after:absolute after:inset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-1"
+            >
+              {displayName}
+            </a>
+          </h3>
+          {(() => {
+            const status = getWateringStatus(plant);
+            return (
+              <div className={`shrink-0 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${
+                status.urgent
+                  ? "bg-red-100 text-red-700"
+                  : "bg-blue-50 text-blue-600"
+              }`}>
+                💧 {status.label}
+              </div>
+            );
+          })()}
+        </div>
+        {identityLine && (
+          <p className="text-sm italic text-text-secondary">{identityLine}</p>
         )}
-        {(() => {
-          const status = getWateringStatus(plant);
-          return (
-            <div className={`mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${
-              status.urgent
-                ? "bg-red-100 text-red-700"
-                : "bg-blue-50 text-blue-600"
-            }`}>
-              💧 {status.label}
-            </div>
-          );
-        })()}
-        <p className="mt-1 text-xs text-text-secondary">
-          Added {formatDate(plant.dateAdded)}
-        </p>
-        <div className="mt-auto flex items-center justify-between pt-3 text-xs text-text-secondary">
+        <div className="flex items-center gap-3 text-xs text-text-secondary">
           <span>
             <span aria-hidden="true">📝</span>{" "}
             {plant.entries.length}{" "}
             {plant.entries.length === 1 ? "entry" : "entries"}
           </span>
           {lastEntry && <span>Last: {formatDate(lastEntry.date)}</span>}
+          <span>Added {formatDate(plant.dateAdded)}</span>
         </div>
       </div>
     </article>
@@ -120,6 +129,8 @@ function PlantCard({ plant }: { readonly plant: Plant }) {
 
 export default function Home() {
   const [plants, setPlants] = useState<Plant[]>([]);
+  const [gardenName, setGardenName] = useState("My Garden");
+  const [gardenIcon, setGardenIcon] = useState(DEFAULT_GARDEN_ICON);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -141,13 +152,20 @@ export default function Home() {
 
   useEffect(() => {
     void fetchPlants();
+    fetch("/api/settings")
+      .then((res) => res.json())
+      .then((data: { gardenName?: string; gardenIcon?: string }) => {
+        if (data.gardenName) setGardenName(data.gardenName);
+        setGardenIcon(normalizeGardenIcon(data.gardenIcon));
+      })
+      .catch(() => {});
   }, [fetchPlants]);
 
   return (
     <>
       {/* Welcome Banner */}
       <section className="mb-6 rounded-2xl bg-primary p-5 text-text-on-primary shadow-md sm:mb-8 sm:p-6">
-        <h2 className="text-2xl font-bold sm:text-3xl"><span aria-hidden="true">🌱</span> My Garden</h2>
+        <h2 className="text-2xl font-bold sm:text-3xl"><span aria-hidden="true">{gardenIcon}</span> {gardenName}</h2>
         <p className="mt-1 text-sm text-text-on-primary/80 sm:text-base">
           Track your plants, upload photos, and watch them grow!
         </p>
@@ -198,7 +216,7 @@ export default function Home() {
       )}
 
       {!loading && !error && plants.length > 0 && (
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+        <div className="flex flex-col gap-2 sm:gap-3">
           {plants.map((plant) => (
             <PlantCard key={plant.id} plant={plant} />
           ))}
@@ -207,8 +225,11 @@ export default function Home() {
 
       <AddPlantModal
         open={modalOpen}
+        existingPlants={plants}
         onClose={() => setModalOpen(false)}
-        onPlantAdded={fetchPlants}
+        onPlantAdded={() => {
+          void fetchPlants();
+        }}
       />
     </>
   );
