@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test:feature": "tsx scripts/test-planting-calendar.ts",
     "db:init": "tsx scripts/init-db.ts",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",

@@ -12,6 +12,8 @@ const DEFAULT_SETTINGS: UserSettings = {
   gardenIcon: DEFAULT_GARDEN_ICON,
   theme: "green",
   frostDates: null,
+  locationResolved: false,
+  resolvedLocation: null,
 };
 
 // --- Plants ---

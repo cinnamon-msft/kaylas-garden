@@ -131,6 +131,8 @@ async function main() {
     -- Migrations for existing tables
     ALTER TABLE user_settings ADD COLUMN IF NOT EXISTS garden_name TEXT;
     ALTER TABLE user_settings ADD COLUMN IF NOT EXISTS garden_icon TEXT;
+    ALTER TABLE user_settings ADD COLUMN IF NOT EXISTS location_resolved BOOLEAN NOT NULL DEFAULT FALSE;
+    ALTER TABLE user_settings ADD COLUMN IF NOT EXISTS resolved_location TEXT;
     ALTER TABLE plants ADD COLUMN IF NOT EXISTS nickname TEXT;
     ALTER TABLE plant_entries ADD COLUMN IF NOT EXISTS planting_location TEXT;
   `);

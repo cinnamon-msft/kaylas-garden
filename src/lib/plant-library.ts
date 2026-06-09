@@ -23,6 +23,35 @@ export interface LibraryPlant {
   readonly growingTips: readonly string[];
   readonly daysToHarvest: string;
   readonly category: PlantCategory;
+  readonly plantingCalendar?: PlantingCalendarOffsets;
+}
+
+export type PlantingStage =
+  | "start_seeds_indoors"
+  | "direct_sow_outdoors"
+  | "transplant_outdoors"
+  | "harvest";
+
+/**
+ * A planting window expressed as an inclusive range of WEEKS relative to
+ * one of the user's frost dates. Positive numbers are after the reference,
+ * negative are before.
+ */
+export interface WeekOffsetRange {
+  readonly startWeeks: number;
+  readonly endWeeks: number;
+  readonly reference: "last_spring" | "first_fall";
+}
+
+export interface PlantingCalendarOffsets {
+  readonly startSeedsIndoors?: WeekOffsetRange;
+  readonly directSowOutdoors?: WeekOffsetRange;
+  readonly transplantOutdoors?: WeekOffsetRange;
+  readonly harvest?: WeekOffsetRange;
+  /** Optional second sowing window (e.g. fall sowing for cool-season crops). */
+  readonly secondaryDirectSowOutdoors?: WeekOffsetRange;
+  readonly secondaryHarvest?: WeekOffsetRange;
+  readonly coolSeason?: boolean;
 }
 
 export const PLANT_LIBRARY: readonly LibraryPlant[] = [
@@ -50,6 +79,11 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "60-85 days from transplant",
     category: "vegetable",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -8, endWeeks: -6, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: 1, endWeeks: 3, reference: "last_spring" },
+      harvest: { startWeeks: 10, endWeeks: 16, reference: "last_spring" },
+    },
   },
   {
     id: "pepper",
@@ -73,6 +107,11 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "60-90 days from transplant",
     category: "vegetable",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -10, endWeeks: -8, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: 2, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 11, endWeeks: 17, reference: "last_spring" },
+    },
   },
   {
     id: "cucumber",
@@ -96,6 +135,12 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "50-70 days from sowing",
     category: "vegetable",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -3, endWeeks: -2, reference: "last_spring" },
+      directSowOutdoors: { startWeeks: 1, endWeeks: 4, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: 2, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 8, endWeeks: 14, reference: "last_spring" },
+    },
   },
   {
     id: "zucchini",
@@ -119,6 +164,12 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "45-60 days from sowing",
     category: "vegetable",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -3, endWeeks: -2, reference: "last_spring" },
+      directSowOutdoors: { startWeeks: 1, endWeeks: 4, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: 2, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 7, endWeeks: 13, reference: "last_spring" },
+    },
   },
   {
     id: "carrot",
@@ -142,6 +193,13 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "60-80 days from sowing",
     category: "vegetable",
+    plantingCalendar: {
+      coolSeason: true,
+      directSowOutdoors: { startWeeks: -3, endWeeks: 0, reference: "last_spring" },
+      harvest: { startWeeks: 7, endWeeks: 12, reference: "last_spring" },
+      secondaryDirectSowOutdoors: { startWeeks: -12, endWeeks: -10, reference: "first_fall" },
+      secondaryHarvest: { startWeeks: -2, endWeeks: 2, reference: "first_fall" },
+    },
   },
   {
     id: "lettuce",
@@ -165,6 +223,13 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "30-60 days from sowing",
     category: "vegetable",
+    plantingCalendar: {
+      coolSeason: true,
+      directSowOutdoors: { startWeeks: -4, endWeeks: -2, reference: "last_spring" },
+      harvest: { startWeeks: 1, endWeeks: 6, reference: "last_spring" },
+      secondaryDirectSowOutdoors: { startWeeks: -10, endWeeks: -8, reference: "first_fall" },
+      secondaryHarvest: { startWeeks: -4, endWeeks: 0, reference: "first_fall" },
+    },
   },
   {
     id: "spinach",
@@ -188,6 +253,13 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "35-50 days from sowing",
     category: "vegetable",
+    plantingCalendar: {
+      coolSeason: true,
+      directSowOutdoors: { startWeeks: -6, endWeeks: -3, reference: "last_spring" },
+      harvest: { startWeeks: 0, endWeeks: 4, reference: "last_spring" },
+      secondaryDirectSowOutdoors: { startWeeks: -8, endWeeks: -6, reference: "first_fall" },
+      secondaryHarvest: { startWeeks: -3, endWeeks: 1, reference: "first_fall" },
+    },
   },
   {
     id: "kale",
@@ -211,6 +283,13 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "55-75 days from sowing",
     category: "vegetable",
+    plantingCalendar: {
+      coolSeason: true,
+      directSowOutdoors: { startWeeks: -4, endWeeks: -2, reference: "last_spring" },
+      harvest: { startWeeks: 4, endWeeks: 12, reference: "last_spring" },
+      secondaryDirectSowOutdoors: { startWeeks: -12, endWeeks: -10, reference: "first_fall" },
+      secondaryHarvest: { startWeeks: -4, endWeeks: 4, reference: "first_fall" },
+    },
   },
   {
     id: "broccoli",
@@ -234,6 +313,15 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "55-100 days from transplant",
     category: "vegetable",
+    plantingCalendar: {
+      coolSeason: true,
+      startSeedsIndoors: { startWeeks: -8, endWeeks: -6, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: -3, endWeeks: -1, reference: "last_spring" },
+      directSowOutdoors: { startWeeks: -3, endWeeks: -1, reference: "last_spring" },
+      harvest: { startWeeks: 6, endWeeks: 12, reference: "last_spring" },
+      secondaryDirectSowOutdoors: { startWeeks: -12, endWeeks: -10, reference: "first_fall" },
+      secondaryHarvest: { startWeeks: -2, endWeeks: 2, reference: "first_fall" },
+    },
   },
   {
     id: "snap-peas",
@@ -257,6 +345,13 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "55-70 days from sowing",
     category: "vegetable",
+    plantingCalendar: {
+      coolSeason: true,
+      directSowOutdoors: { startWeeks: -6, endWeeks: -4, reference: "last_spring" },
+      harvest: { startWeeks: 4, endWeeks: 9, reference: "last_spring" },
+      secondaryDirectSowOutdoors: { startWeeks: -12, endWeeks: -10, reference: "first_fall" },
+      secondaryHarvest: { startWeeks: -4, endWeeks: 0, reference: "first_fall" },
+    },
   },
   {
     id: "green-bean",
@@ -280,6 +375,10 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "50-65 days from sowing",
     category: "vegetable",
+    plantingCalendar: {
+      directSowOutdoors: { startWeeks: 1, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 8, endWeeks: 13, reference: "last_spring" },
+    },
   },
   {
     id: "radish",
@@ -303,6 +402,13 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "20-30 days from sowing",
     category: "vegetable",
+    plantingCalendar: {
+      coolSeason: true,
+      directSowOutdoors: { startWeeks: -6, endWeeks: -4, reference: "last_spring" },
+      harvest: { startWeeks: -3, endWeeks: 0, reference: "last_spring" },
+      secondaryDirectSowOutdoors: { startWeeks: -8, endWeeks: -6, reference: "first_fall" },
+      secondaryHarvest: { startWeeks: -5, endWeeks: -3, reference: "first_fall" },
+    },
   },
   {
     id: "onion",
@@ -326,6 +432,12 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "90-120 days from planting",
     category: "vegetable",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -12, endWeeks: -10, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: -6, endWeeks: -4, reference: "last_spring" },
+      directSowOutdoors: { startWeeks: -6, endWeeks: -4, reference: "last_spring" },
+      harvest: { startWeeks: 12, endWeeks: 18, reference: "last_spring" },
+    },
   },
   {
     id: "garlic",
@@ -349,6 +461,14 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "240+ days from fall planting",
     category: "vegetable",
+    plantingCalendar: {
+      directSowOutdoors: { startWeeks: -2, endWeeks: 2, reference: "first_fall" },
+      // Harvest is anchored to `first_fall` (the same anchor as planting)
+      // with a long offset so the harvest window correctly lands the SUMMER
+      // AFTER the fall planting (~35-41 weeks ≈ 8-10 months later) rather
+      // than appearing alongside the current fall sowing window.
+      harvest: { startWeeks: 35, endWeeks: 41, reference: "first_fall" },
+    },
   },
   {
     id: "potato",
@@ -372,6 +492,10 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "70-120 days from planting",
     category: "vegetable",
+    plantingCalendar: {
+      directSowOutdoors: { startWeeks: -4, endWeeks: -2, reference: "last_spring" },
+      harvest: { startWeeks: 8, endWeeks: 14, reference: "last_spring" },
+    },
   },
   {
     id: "beet",
@@ -395,6 +519,13 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "55-70 days from sowing",
     category: "vegetable",
+    plantingCalendar: {
+      coolSeason: true,
+      directSowOutdoors: { startWeeks: -4, endWeeks: -2, reference: "last_spring" },
+      harvest: { startWeeks: 4, endWeeks: 9, reference: "last_spring" },
+      secondaryDirectSowOutdoors: { startWeeks: -12, endWeeks: -10, reference: "first_fall" },
+      secondaryHarvest: { startWeeks: -4, endWeeks: 0, reference: "first_fall" },
+    },
   },
   {
     id: "corn",
@@ -418,6 +549,10 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "60-100 days from sowing",
     category: "vegetable",
+    plantingCalendar: {
+      directSowOutdoors: { startWeeks: 1, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 10, endWeeks: 18, reference: "last_spring" },
+    },
   },
 
   // --- Herbs ---
@@ -444,6 +579,12 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "50-60 days from sowing",
     category: "herb",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -6, endWeeks: -4, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: 1, endWeeks: 3, reference: "last_spring" },
+      directSowOutdoors: { startWeeks: 2, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 6, endWeeks: 22, reference: "last_spring" },
+    },
   },
   {
     id: "mint",
@@ -467,6 +608,11 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "60-90 days from planting",
     category: "herb",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -10, endWeeks: -6, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: 0, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 8, endWeeks: 24, reference: "last_spring" },
+    },
   },
   {
     id: "rosemary",
@@ -490,6 +636,11 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "Year-round once established",
     category: "herb",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -10, endWeeks: -6, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: 0, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 8, endWeeks: 24, reference: "last_spring" },
+    },
   },
   {
     id: "thyme",
@@ -513,6 +664,11 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "Harvest as needed once established",
     category: "herb",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -10, endWeeks: -6, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: 0, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 8, endWeeks: 24, reference: "last_spring" },
+    },
   },
   {
     id: "oregano",
@@ -536,6 +692,11 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "80-90 days from sowing",
     category: "herb",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -10, endWeeks: -6, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: 0, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 8, endWeeks: 24, reference: "last_spring" },
+    },
   },
   {
     id: "parsley",
@@ -559,6 +720,13 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "70-90 days from sowing",
     category: "herb",
+    plantingCalendar: {
+      coolSeason: true,
+      directSowOutdoors: { startWeeks: -3, endWeeks: 0, reference: "last_spring" },
+      harvest: { startWeeks: 4, endWeeks: 10, reference: "last_spring" },
+      secondaryDirectSowOutdoors: { startWeeks: -10, endWeeks: -8, reference: "first_fall" },
+      secondaryHarvest: { startWeeks: -4, endWeeks: 0, reference: "first_fall" },
+    },
   },
   {
     id: "cilantro",
@@ -582,6 +750,13 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "30-45 days for leaves",
     category: "herb",
+    plantingCalendar: {
+      coolSeason: true,
+      directSowOutdoors: { startWeeks: -3, endWeeks: 0, reference: "last_spring" },
+      harvest: { startWeeks: 4, endWeeks: 10, reference: "last_spring" },
+      secondaryDirectSowOutdoors: { startWeeks: -10, endWeeks: -8, reference: "first_fall" },
+      secondaryHarvest: { startWeeks: -4, endWeeks: 0, reference: "first_fall" },
+    },
   },
   {
     id: "dill",
@@ -605,6 +780,13 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "40-60 days from sowing",
     category: "herb",
+    plantingCalendar: {
+      coolSeason: true,
+      directSowOutdoors: { startWeeks: -3, endWeeks: 0, reference: "last_spring" },
+      harvest: { startWeeks: 4, endWeeks: 10, reference: "last_spring" },
+      secondaryDirectSowOutdoors: { startWeeks: -10, endWeeks: -8, reference: "first_fall" },
+      secondaryHarvest: { startWeeks: -4, endWeeks: 0, reference: "first_fall" },
+    },
   },
   {
     id: "chives",
@@ -628,6 +810,11 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "60-90 days from sowing",
     category: "herb",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -10, endWeeks: -6, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: 0, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 8, endWeeks: 24, reference: "last_spring" },
+    },
   },
   {
     id: "sage",
@@ -651,6 +838,11 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "75 days from transplant",
     category: "herb",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -10, endWeeks: -6, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: 0, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 8, endWeeks: 24, reference: "last_spring" },
+    },
   },
   {
     id: "lavender",
@@ -674,6 +866,11 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "First-year light bloom; full bloom year 2",
     category: "herb",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -10, endWeeks: -6, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: 0, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 8, endWeeks: 24, reference: "last_spring" },
+    },
   },
 
   // --- Fruits ---
@@ -768,6 +965,12 @@ export const PLANT_LIBRARY: readonly LibraryPlant[] = [
     ],
     daysToHarvest: "70-90 days from sowing",
     category: "fruit",
+    plantingCalendar: {
+      startSeedsIndoors: { startWeeks: -4, endWeeks: -2, reference: "last_spring" },
+      transplantOutdoors: { startWeeks: 2, endWeeks: 4, reference: "last_spring" },
+      directSowOutdoors: { startWeeks: 2, endWeeks: 4, reference: "last_spring" },
+      harvest: { startWeeks: 12, endWeeks: 16, reference: "last_spring" },
+    },
   },
 
   // --- Flowers ---

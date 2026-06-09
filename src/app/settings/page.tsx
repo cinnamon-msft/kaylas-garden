@@ -7,6 +7,7 @@ import {
   GARDEN_ICON_OPTIONS,
   normalizeGardenIcon,
 } from "@/lib/garden-icons";
+import { LocationPrompt } from "@/components/LocationPrompt";
 
 type Theme = "green" | "earth" | "ocean" | "space";
 
@@ -19,11 +20,8 @@ const themes: { id: Theme; label: string; emoji: string; swatches: string[] }[] 
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState<UserSettings | null>(null);
-  const [location, setLocation] = useState("");
   const [gardenName, setGardenName] = useState("");
   const [gardenIcon, setGardenIcon] = useState(DEFAULT_GARDEN_ICON);
-  const [frostDates, setFrostDates] = useState<FrostDates | null>(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -32,15 +30,27 @@ export default function SettingsPage() {
 
   useEffect(() => {
     fetch("/api/settings")
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Failed to load settings (${res.status})`);
+        }
+        return res.json();
+      })
       .then((data: UserSettings) => {
-        setSettings(data);
-        setLocation(data.location);
-        setGardenName(data.gardenName || "My Garden");
-        setGardenIcon(normalizeGardenIcon(data.gardenIcon));
-        setFrostDates(data.frostDates);
-        document.documentElement.setAttribute("data-theme", data.theme);
-        localStorage.setItem("kaylas-garden-theme", data.theme);
+        const normalized: UserSettings = {
+          location: data.location ?? "",
+          gardenName: data.gardenName ?? "My Garden",
+          gardenIcon: normalizeGardenIcon(data.gardenIcon),
+          theme: data.theme ?? "green",
+          frostDates: data.frostDates ?? null,
+          locationResolved: data.locationResolved ?? false,
+          resolvedLocation: data.resolvedLocation ?? null,
+        };
+        setSettings(normalized);
+        setGardenName(normalized.gardenName);
+        setGardenIcon(normalized.gardenIcon);
+        document.documentElement.setAttribute("data-theme", normalized.theme);
+        localStorage.setItem("kaylas-garden-theme", normalized.theme);
       })
       .catch(() => setError("Failed to load settings"));
   }, []);
@@ -56,20 +66,8 @@ export default function SettingsPage() {
     return () => window.removeEventListener("garden-theme-change", handleThemeEvent);
   }, []);
 
-  const lookUpFrostDates = async () => {
-    if (!location.trim()) return;
-    setLoading(true);
-    setError("");
-    try {
-      const res = await fetch(`/api/frost-dates?location=${encodeURIComponent(location.trim())}`);
-      const data = (await res.json()) as { frostDates: FrostDates };
-      setFrostDates(data.frostDates);
-      setSettings((prev) => (prev ? { ...prev, location: location.trim(), frostDates: data.frostDates } : prev));
-    } catch {
-      setError("Failed to look up frost dates");
-    } finally {
-      setLoading(false);
-    }
+  const handleLocationResolved = (patch: Partial<UserSettings>) => {
+    setSettings((prev) => (prev ? { ...prev, ...patch } : prev));
   };
 
   const handleThemeChange = async (theme: Theme) => {
@@ -95,6 +93,10 @@ export default function SettingsPage() {
       </div>
     );
   }
+
+  const locationPromptMode =
+    settings.location.trim().length > 0 && !settings.locationResolved ? "unclear" : "missing";
+  const frostDates: FrostDates | null = settings.frostDates;
 
   return (
     <div className="mx-auto max-w-2xl space-y-8">
@@ -171,65 +173,54 @@ export default function SettingsPage() {
       </section>
 
       {/* Location & Frost Dates */}
-      <section className="rounded-xl border border-border bg-bg-card p-4 shadow-sm sm:p-6">
-        <h2 className="mb-4 text-xl font-semibold text-text-primary"><span aria-hidden="true">📍</span> Location &amp; Frost Dates</h2>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="location-input" className="text-sm font-medium text-text-secondary">
-            City name or zip code
-          </label>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <input
-              id="location-input"
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="e.g., Seattle, WA or 98101"
-              className="flex-1 rounded-lg border border-border bg-bg-page px-4 py-2 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-primary"
-              aria-describedby={error ? "location-error" : undefined}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  void lookUpFrostDates();
-                }
-              }}
-            />
-            <button
-              onClick={() => void lookUpFrostDates()}
-              disabled={loading || !location.trim()}
-              className="rounded-lg bg-primary px-5 py-2 font-medium text-text-on-primary transition-colors hover:opacity-90 disabled:opacity-50"
-            >
-              {loading ? "Looking up…" : "Look Up Frost Dates"}
-            </button>
-          </div>
-        </div>
+      <LocationPrompt
+        mode={locationPromptMode}
+        initialValue={settings.location}
+        onResolved={handleLocationResolved}
+      />
 
-        {error && <p id="location-error" role="alert" className="mt-3 text-sm text-red-600">{error}</p>}
+      {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
 
-        {frostDates && (
-          <div className="mt-5 rounded-lg border border-border bg-bg-page p-5">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-lg">🌸</span>
-                <span className="font-medium text-text-primary">Last Spring Frost:</span>
-                <span className="text-text-secondary">{frostDates.lastSpringFrost}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg">🍂</span>
-                <span className="font-medium text-text-primary">First Fall Frost:</span>
-                <span className="text-text-secondary">{frostDates.firstFallFrost}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg">📅</span>
-                <span className="font-medium text-text-primary">Growing Season:</span>
-                <span className="text-text-secondary">{frostDates.growingSeasonDays} days</span>
-              </div>
+      {frostDates && (
+        <section className="rounded-xl border border-border bg-bg-card p-4 shadow-sm sm:p-6">
+          <h2 className="mb-4 text-xl font-semibold text-text-primary">
+            <span aria-hidden="true">🥶</span> Frost Dates
+            {settings.locationResolved ? null : (
+              <span className="ml-2 rounded bg-amber-100 px-2 py-0.5 align-middle text-xs font-medium text-amber-900">
+                approximate
+              </span>
+            )}
+          </h2>
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">🌸</span>
+              <span className="font-medium text-text-primary">Last Spring Frost:</span>
+              <span className="text-text-secondary">{frostDates.lastSpringFrost}</span>
             </div>
-            <p className="mt-4 text-sm text-text-secondary">
-              💡 Frost dates help you decide when to plant outdoors. Wait until after the last spring frost to
-              transplant tender seedlings, and plan to harvest or protect plants before the first fall frost.
-            </p>
+            <div className="flex items-center gap-2">
+              <span className="text-lg">🍂</span>
+              <span className="font-medium text-text-primary">First Fall Frost:</span>
+              <span className="text-text-secondary">{frostDates.firstFallFrost}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-lg">📅</span>
+              <span className="font-medium text-text-primary">Growing Season:</span>
+              <span className="text-text-secondary">{frostDates.growingSeasonDays} days</span>
+            </div>
+            {frostDates.hardinessZone && (
+              <div className="flex items-center gap-2">
+                <span className="text-lg">🌡️</span>
+                <span className="font-medium text-text-primary">USDA Hardiness Zone:</span>
+                <span className="text-text-secondary">{frostDates.hardinessZone}</span>
+              </div>
+            )}
           </div>
-        )}
-      </section>
+          <p className="mt-4 text-sm text-text-secondary">
+            💡 Frost dates help you decide when to plant outdoors. Wait until after the last spring frost to
+            transplant tender seedlings, and plan to harvest or protect plants before the first fall frost.
+          </p>
+        </section>
+      )}
 
       {/* Theme */}
       <section className="rounded-xl border border-border bg-bg-card p-4 shadow-sm sm:p-6">

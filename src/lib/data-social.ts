@@ -3,6 +3,7 @@ import { schema } from "./db";
 import { eq, and, desc, inArray } from "drizzle-orm";
 import type { Plant, PlantEntry, PlantCareInfo, WateringEvent, UserSettings, FrostDates } from "./types";
 import { DEFAULT_GARDEN_ICON, normalizeGardenIcon } from "./garden-icons";
+import { tryBackfillResolvedLocation } from "./server/location-lookup";
 
 // ─── Helper: Convert DB plant row to API Plant type ──────────────────────────
 
@@ -242,6 +243,8 @@ const DEFAULT_SETTINGS: UserSettings = {
   gardenIcon: DEFAULT_GARDEN_ICON,
   theme: "green",
   frostDates: null,
+  locationResolved: false,
+  resolvedLocation: null,
 };
 
 export async function getSettings(userId: string): Promise<UserSettings> {
@@ -249,13 +252,47 @@ export async function getSettings(userId: string): Promise<UserSettings> {
     where: eq(schema.userSettings.userId, userId),
   });
   if (!row) return DEFAULT_SETTINGS;
-  return {
+  const base: UserSettings = {
     location: row.location || "",
     gardenName: row.gardenName || "My Garden",
     gardenIcon: normalizeGardenIcon(row.gardenIcon),
     theme: row.theme,
     frostDates: row.frostDates as FrostDates | null,
+    locationResolved: row.locationResolved ?? false,
+    resolvedLocation: row.resolvedLocation ?? null,
   };
+
+  // One-time backfill: legacy rows have `locationResolved=false` even when
+  // their saved `location` still maps to a known entry in the new lookup
+  // table. Re-resolve once and persist so the user is not nagged with a
+  // "please clarify" prompt for a city we already understand.
+  if (
+    !base.locationResolved &&
+    base.location.trim().length > 0 &&
+    base.frostDates !== null
+  ) {
+    const resolved = tryBackfillResolvedLocation(base.location);
+    if (resolved) {
+      await db
+        .update(schema.userSettings)
+        .set({
+          locationResolved: true,
+          resolvedLocation: resolved.key,
+          location: resolved.displayLabel,
+          frostDates: resolved.frostDates,
+        })
+        .where(eq(schema.userSettings.userId, userId));
+      return {
+        ...base,
+        location: resolved.displayLabel,
+        frostDates: resolved.frostDates,
+        locationResolved: true,
+        resolvedLocation: resolved.key,
+      };
+    }
+  }
+
+  return base;
 }
 
 export async function updateSettings(
@@ -273,6 +310,8 @@ export async function updateSettings(
     if (settings.gardenName !== undefined) updateValues.gardenName = settings.gardenName;
     if (settings.gardenIcon !== undefined) updateValues.gardenIcon = normalizeGardenIcon(settings.gardenIcon);
     if (settings.frostDates !== undefined) updateValues.frostDates = settings.frostDates;
+    if (settings.locationResolved !== undefined) updateValues.locationResolved = settings.locationResolved;
+    if (settings.resolvedLocation !== undefined) updateValues.resolvedLocation = settings.resolvedLocation;
     await db.update(schema.userSettings).set(updateValues).where(eq(schema.userSettings.userId, userId));
   } else {
     await db.insert(schema.userSettings).values({
@@ -282,6 +321,8 @@ export async function updateSettings(
       gardenIcon: normalizeGardenIcon(settings.gardenIcon),
       location: settings.location || null,
       frostDates: settings.frostDates || null,
+      locationResolved: settings.locationResolved ?? false,
+      resolvedLocation: settings.resolvedLocation ?? null,
     });
   }
 
