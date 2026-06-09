@@ -76,7 +76,7 @@ async function main(): Promise<void> {
   const dbMigration = builder.addJavaScriptApp('db-migration', '.', { runScriptName: 'db:init' })
     .withReference(gardenDb)
     .waitFor(gardenDb)
-    .publishAsNpmScript();
+    .publishAsPackageScript({ scriptName: 'db:init' });
 
   // ─── Web Application ──────────────────────────────────────────────────────
   // Development: Runs locally on port 3000
